@@ -1,0 +1,24 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Create a Flutter app that helps Iranian Persian-speaking users learn English through daily AI-generated vocabulary and phrases. The content is tailored to the user's English level and interests and is presented in a clean, modern, mobile-friendly UI.
+
+## ✅ 2. Target Audience
+- Native Persian speakers (mainly Iranian)
+- Teenagers to adults
+- English level: Beginner to Advanced
+- Especially helpful for IELTS preparation or practical conversation learners
+
+## ✅ 3. App Features
+- Login via Google (Firebase Authentication)
+- Choose English proficiency level
+- Select subject area (e.g., Business, Travel, Daily Conversation)
+- Get daily AI-generated:
+  - 5 vocabularies with Persian translations
+  - 5 phrases with Persian translations
+- Refresh content for new lessons
+- Store user preferences and progress in Firebase Firestore
+- RTL UI support
+- Responsive, clean design using defined fonts and color scheme

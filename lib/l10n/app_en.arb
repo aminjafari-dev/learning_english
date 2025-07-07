@@ -3,5 +3,15 @@
   "signInWithGoogle": "Sign in with Google",
   "learnEnglishTitle": "Learn English",
   "loginWithGoogle": "Login with Google",
-  "termsAndConditions": "By logging in, you agree to our Terms & Conditions"
+  "termsAndConditions": "By logging in, you agree to our Terms & Conditions",
+  "levelSelectionTitle": "Select Your English Level",
+  "levelBeginner": "Beginner",
+  "levelBeginnerDesc": "For those with little to no English knowledge.",
+  "levelElementary": "Elementary",
+  "levelElementaryDesc": "Can understand basic phrases and simple sentences.",
+  "levelIntermediate": "Intermediate",
+  "levelIntermediateDesc": "Can communicate in familiar situations and understand main ideas.",
+  "levelAdvanced": "Advanced",
+  "levelAdvancedDesc": "Can express ideas fluently and understand complex texts.",
+  "continue_": "Continue"
 } 

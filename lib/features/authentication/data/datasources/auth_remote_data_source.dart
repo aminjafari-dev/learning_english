@@ -26,14 +26,23 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final fb_auth.FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
 
+  /// IMPORTANT: The serverClientId (Web client ID) is required for Google Sign-In on Android.
+  /// If you change your Google Cloud project, update the serverClientId below.
+  /// See: https://console.cloud.google.com/apis/credentials
+  static const String _serverClientId =
+      '155679880321-bjnh1f85ut01o13crs2556b87erd0jnu.apps.googleusercontent.com';
+
   AuthRemoteDataSourceImpl({
     fb_auth.FirebaseAuth? firebaseAuth,
     GoogleSignIn? googleSignIn,
   }) : firebaseAuth = firebaseAuth ?? fb_auth.FirebaseAuth.instance,
+       // Use GoogleSignIn.instance because the constructor is not public in this version.
+       // The serverClientId is set via google-services.json.
        googleSignIn = googleSignIn ?? GoogleSignIn.instance;
 
   @override
   Future<UserModel> signInWithGoogle() async {
+    await googleSignIn.initialize(clientId: _serverClientId);
     final googleUser = await googleSignIn.authenticate();
     final googleAuth = googleUser.authentication;
     final credential = fb_auth.GoogleAuthProvider.credential(

@@ -3,5 +3,15 @@
   "signInWithGoogle": "ورود با گوگل",
   "learnEnglishTitle": "یادگیری زبان انگلیسی",
   "loginWithGoogle": "ورود با گوگل",
-  "termsAndConditions": "با ورود، شما با شرایط و ضوابط ما موافقت می‌کنید"
+  "termsAndConditions": "با ورود، شما با شرایط و ضوابط ما موافقت می‌کنید",
+  "levelSelectionTitle": "سطح زبان انگلیسی خود را انتخاب کنید",
+  "levelBeginner": "مبتدی",
+  "levelBeginnerDesc": "برای افرادی با دانش کم یا بدون دانش زبان انگلیسی.",
+  "levelElementary": "ابتدایی",
+  "levelElementaryDesc": "قادر به درک عبارات ساده و جملات کوتاه.",
+  "levelIntermediate": "متوسط",
+  "levelIntermediateDesc": "قادر به برقراری ارتباط در موقعیت‌های آشنا و درک ایده‌های اصلی.",
+  "levelAdvanced": "پیشرفته",
+  "levelAdvancedDesc": "قادر به بیان روان ایده‌ها و درک متون پیچیده.",
+  "continue_": "ادامه"
 } 

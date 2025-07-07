@@ -11,6 +11,8 @@ import 'package:learning_english/features/authentication/presentation/pages/auth
 import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:learning_english/core/router/page_name.dart';
+import 'package:learning_english/core/router/page_router.dart';
 
 void main() async {
   // Ensure Flutter bindings are initialized before any async work
@@ -42,11 +44,11 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: const [Locale('en'), Locale('fa')],
       locale: const Locale('en'), // or use a cubit for dynamic switching
-      theme: AppTheme.lightTheme, // Use your custom theme class here if you have one
-      routes: {
-        '/': (_) => const AuthenticationPage(),
-        '/level_selection': (_) => const LevelSelectionPage(),
-      },
+      theme:
+          AppTheme
+              .lightTheme, // Use your custom theme class here if you have one
+      initialRoute: PageName.authentication,
+      onGenerateRoute: PageRouter.onGenerateRoute,
     );
   }
 }

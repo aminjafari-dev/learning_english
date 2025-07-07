@@ -7,6 +7,7 @@ import 'package:learning_english/features/authentication/data/repositories/auth_
 import 'package:learning_english/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:learning_english/features/authentication/domain/usecases/sign_in_with_google_usecase.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:learning_english/features/level_selection/level_selection_di.dart';
 
 final getIt = GetIt.instance;
 
@@ -22,10 +23,15 @@ void initDependencies() {
   );
 
   // Use case
-  getIt.registerLazySingleton<SignInWithGoogleUseCase>(() => SignInWithGoogleUseCase(getIt<AuthRepository>()));
+  getIt.registerLazySingleton<SignInWithGoogleUseCase>(
+    () => SignInWithGoogleUseCase(getIt<AuthRepository>()),
+  );
 
   // Bloc
   getIt.registerFactory<AuthenticationBloc>(
     () => AuthenticationBloc(signInWithGoogleUseCase: getIt()),
   );
+
+  // Level Selection Feature
+  setupLevelSelectionDI(getIt);
 }

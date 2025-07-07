@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_english/core/locator.dart';
+import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_event.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_state.dart';
@@ -37,7 +38,11 @@ class AuthenticationPage extends StatelessWidget {
           state.whenOrNull(
             authenticated: (user) {
               // Navigate to Level Selection page on success
-              Navigator.pushReplacementNamed(context, '/level_selection');
+              Navigator.pushReplacementNamed(
+                context,
+                PageName.levelSelection,
+                arguments: {'userId': user.id},
+              );
             },
             error: (msg) {
               ScaffoldMessenger.of(

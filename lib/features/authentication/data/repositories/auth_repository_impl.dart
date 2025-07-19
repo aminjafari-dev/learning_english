@@ -12,11 +12,17 @@ import 'package:learning_english/core/error/failure.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_data_source.dart';
+import '../datasources/user_local_data_source.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
+  final UserLocalDataSource localDataSource;
 
-  AuthRepositoryImpl({required this.remoteDataSource});
+  /// Inject both remote and local data sources
+  AuthRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
 
   @override
   Future<Either<Failure, User>> signInWithGoogle() async {
@@ -38,5 +44,23 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> signOut() async {
     await remoteDataSource.signOut();
+  }
+
+  /// Saves the userId locally (for global access)
+  @override
+  Future<void> saveUserId(String userId) async {
+    await localDataSource.saveUserId(userId);
+  }
+
+  /// Retrieves the userId from local storage
+  @override
+  Future<String?> getUserId() async {
+    return await localDataSource.getUserId();
+  }
+
+  /// Removes the userId from local storage (e.g., on logout)
+  @override
+  Future<void> removeUserId() async {
+    await localDataSource.removeUserId();
   }
 }

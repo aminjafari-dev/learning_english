@@ -14,5 +14,5 @@ class LevelEvent with _$LevelEvent {
   const factory LevelEvent.levelSelected(Level level) = LevelSelected;
 
   /// Event when the user submits their selection
-  const factory LevelEvent.levelSubmitted(String userId) = LevelSubmitted;
+  const factory LevelEvent.levelSubmitted() = LevelSubmitted;
 }

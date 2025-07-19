@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/core/widgets/g_scaffold.dart';
 import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/core/widgets/g_button.dart';
@@ -15,13 +16,15 @@ import 'package:learning_english/features/level_selection/presentation/blocs/lev
 import 'package:learning_english/features/level_selection/presentation/blocs/level_event.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:learning_english/core/locator.dart';
+import 'package:learning_english/core/dependency%20injection/locator.dart';
+import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
+import 'package:learning_english/core/usecase/usecase.dart';
 // import 'package:learning_english/core/constants/page_name.dart'; // Uncomment and use your actual PageName class
 
+/// LevelSelectionPage allows users to select their English proficiency level.
+/// Now retrieves userId from local storage using GetUserIdUseCase (DI), not via constructor.
 class LevelSelectionPage extends StatelessWidget {
-  /// The user's Firebase UID. Pass this from the previous page after sign-in.
-  final String userId;
-  const LevelSelectionPage({super.key, required this.userId});
+  const LevelSelectionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class LevelSelectionPage extends StatelessWidget {
         listener: (context, state) {
           if (state is LevelSuccess) {
             // TODO: Replace with your actual subject selection route
-            Navigator.of(context).pushReplacementNamed('/subjectSelection');
+            Navigator.of(context).pushReplacementNamed(PageName.levelSelection);
           } else if (state is LevelError) {
             ScaffoldMessenger.of(
               context,
@@ -110,7 +113,7 @@ class LevelSelectionPage extends StatelessWidget {
                           selectedLevel == null
                               ? null
                               : () => context.read<LevelBloc>().add(
-                                LevelEvent.levelSubmitted(userId),
+                                const LevelEvent.levelSubmitted(),
                               ),
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(48),

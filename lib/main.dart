@@ -5,10 +5,8 @@
 // Shared code will be placed in lib/core.
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:learning_english/core/locator.dart';
+import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
-import 'package:learning_english/features/authentication/presentation/pages/authentication_page.dart';
-import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:learning_english/core/router/page_name.dart';
@@ -48,7 +46,7 @@ class MyApp extends StatelessWidget {
           AppTheme
               .lightTheme, // Use your custom theme class here if you have one
       initialRoute: PageName.authentication,
-      onGenerateRoute: PageRouter.onGenerateRoute,
+      routes: PageRouter.routes,
     );
   }
 }

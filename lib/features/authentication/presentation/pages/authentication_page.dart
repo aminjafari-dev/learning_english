@@ -8,7 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learning_english/core/locator.dart';
+import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_event.dart';

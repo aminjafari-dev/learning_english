@@ -122,11 +122,11 @@ return levelSubmitted(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Level level)?  levelSelected,TResult Function( String userId)?  levelSubmitted,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Level level)?  levelSelected,TResult Function()?  levelSubmitted,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LevelSelected() when levelSelected != null:
 return levelSelected(_that.level);case LevelSubmitted() when levelSubmitted != null:
-return levelSubmitted(_that.userId);case _:
+return levelSubmitted();case _:
   return orElse();
 
 }
@@ -144,11 +144,11 @@ return levelSubmitted(_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Level level)  levelSelected,required TResult Function( String userId)  levelSubmitted,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Level level)  levelSelected,required TResult Function()  levelSubmitted,}) {final _that = this;
 switch (_that) {
 case LevelSelected():
 return levelSelected(_that.level);case LevelSubmitted():
-return levelSubmitted(_that.userId);case _:
+return levelSubmitted();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +165,11 @@ return levelSubmitted(_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Level level)?  levelSelected,TResult? Function( String userId)?  levelSubmitted,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Level level)?  levelSelected,TResult? Function()?  levelSubmitted,}) {final _that = this;
 switch (_that) {
 case LevelSelected() when levelSelected != null:
 return levelSelected(_that.level);case LevelSubmitted() when levelSubmitted != null:
-return levelSubmitted(_that.userId);case _:
+return levelSubmitted();case _:
   return null;
 
 }
@@ -247,66 +247,32 @@ as Level,
 
 
 class LevelSubmitted implements LevelEvent {
-  const LevelSubmitted(this.userId);
+  const LevelSubmitted();
   
 
- final  String userId;
 
-/// Create a copy of LevelEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$LevelSubmittedCopyWith<LevelSubmitted> get copyWith => _$LevelSubmittedCopyWithImpl<LevelSubmitted>(this, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LevelSubmitted&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LevelSubmitted);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,userId);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'LevelEvent.levelSubmitted(userId: $userId)';
+  return 'LevelEvent.levelSubmitted()';
 }
 
 
 }
 
-/// @nodoc
-abstract mixin class $LevelSubmittedCopyWith<$Res> implements $LevelEventCopyWith<$Res> {
-  factory $LevelSubmittedCopyWith(LevelSubmitted value, $Res Function(LevelSubmitted) _then) = _$LevelSubmittedCopyWithImpl;
-@useResult
-$Res call({
- String userId
-});
 
 
-
-
-}
-/// @nodoc
-class _$LevelSubmittedCopyWithImpl<$Res>
-    implements $LevelSubmittedCopyWith<$Res> {
-  _$LevelSubmittedCopyWithImpl(this._self, this._then);
-
-  final LevelSubmitted _self;
-  final $Res Function(LevelSubmitted) _then;
-
-/// Create a copy of LevelEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? userId = null,}) {
-  return _then(LevelSubmitted(
-null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
 
 // dart format on

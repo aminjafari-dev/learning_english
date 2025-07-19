@@ -11,15 +11,19 @@ import 'package:learning_english/features/level_selection/domain/entities/user_p
 import 'package:learning_english/features/level_selection/domain/usecases/save_user_level_usecase.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_event.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_state.dart';
-
+import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
+import 'package:learning_english/core/usecase/usecase.dart';
 
 /// Bloc for managing level selection and submission
 class LevelBloc extends Bloc<LevelEvent, LevelState> {
   final SaveUserLevelUseCase saveUserLevelUseCase;
+  final GetUserIdUseCase getUserIdUseCase;
   Level? _selectedLevel;
 
-  LevelBloc({required this.saveUserLevelUseCase})
-    : super(const LevelState.initial()) {
+  LevelBloc({
+    required this.saveUserLevelUseCase,
+    required this.getUserIdUseCase,
+  }) : super(const LevelState.initial()) {
     on<LevelSelected>(_onLevelSelected);
     on<LevelSubmitted>(_onLevelSubmitted);
   }
@@ -38,7 +42,14 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
       return;
     }
     emit(const LevelState.loading());
-    final result = await saveUserLevelUseCase(event.userId, _selectedLevel!);
+    // Retrieve userId from local storage using the use case
+    final userIdResult = await getUserIdUseCase(NoParams());
+    final userId = userIdResult.fold((failure) => null, (id) => id);
+    if (userId == null) {
+      emit(const LevelState.error('User ID not found. Please log in again.'));
+      return;
+    }
+    final result = await saveUserLevelUseCase(userId, _selectedLevel!);
     result.fold(
       (failure) => emit(LevelState.error(failure.message)),
       (_) => emit(const LevelState.success()),

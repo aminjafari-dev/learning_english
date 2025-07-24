@@ -97,6 +97,7 @@ lib/
 - Add comments for clarity in each file.
 - Use placeholder names for all entities, operations, and use cases (e.g., `EntityModel` for data models).
 - Output three separate code blocks for `entity_bloc.dart`, `entity_event.dart`, and `entity_state.dart`, with no explanations outside the code blocks.
+- When implementing or modifying BLoC event handlers (methods like _onEventName), always wrap the entire method body in a try-catch block for comprehensive error handling. This prevents unknown errors from crashing the app and ensures graceful error state emission.
 
 ### Example Output
 Here’s an example of how the files should look, using placeholder names:

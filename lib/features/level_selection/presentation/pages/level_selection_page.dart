@@ -20,9 +20,11 @@ import 'package:learning_english/core/dependency%20injection/locator.dart';
 // import 'package:learning_english/core/constants/page_name.dart'; // Uncomment and use your actual PageName class
 
 /// LevelSelectionPage allows users to select their English proficiency level.
-/// Now retrieves userId from local storage using GetUserIdUseCase (DI), not via constructor.
+/// Takes userId as a parameter to pass to the next screen.
 class LevelSelectionPage extends StatelessWidget {
-  const LevelSelectionPage({super.key});
+  final String userId;
+
+  const LevelSelectionPage({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +34,11 @@ class LevelSelectionPage extends StatelessWidget {
       child: BlocConsumer<LevelBloc, LevelState>(
         listener: (context, state) {
           if (state is LevelSuccess) {
-            // TODO: Replace with your actual subject selection route
-            Navigator.of(context).pushReplacementNamed(PageName.levelSelection);
+            // Navigate to learning focus selection
+            Navigator.of(context).pushReplacementNamed(
+              PageName.learningFocus,
+              arguments: {'userId': userId},
+            );
           } else if (state is LevelError) {
             ScaffoldMessenger.of(
               context,

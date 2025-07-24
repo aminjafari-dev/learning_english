@@ -40,6 +40,9 @@ void signInDi(GetIt locator) {
 
   // Bloc
   getIt.registerFactory<AuthenticationBloc>(
-    () => AuthenticationBloc(signInWithGoogleUseCase: getIt()),
+    () => AuthenticationBloc(
+      signInWithGoogleUseCase: getIt(),
+      saveUserIdUseCase: getIt(),
+    ),
   );
 }

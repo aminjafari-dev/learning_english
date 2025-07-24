@@ -11,6 +11,7 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:learning_english/features/authentication/domain/usecases/sign_in_with_google_usecase.dart';
+import 'package:learning_english/features/authentication/domain/usecases/save_user_id_usecase.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_event.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_state.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
@@ -18,9 +19,12 @@ import 'package:learning_english/core/usecase/usecase.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final SignInWithGoogleUseCase signInWithGoogleUseCase;
+  final SaveUserIdUseCase saveUserIdUseCase;
 
-  AuthenticationBloc({required this.signInWithGoogleUseCase})
-    : super(const AuthenticationState.initial()) {
+  AuthenticationBloc({
+    required this.signInWithGoogleUseCase,
+    required this.saveUserIdUseCase,
+  }) : super(const AuthenticationState.initial()) {
     on<AuthenticationEvent>((event, emit) async {
       await event.when(
         googleSignIn: () => _onGoogleSignIn(emit),
@@ -30,16 +34,44 @@ class AuthenticationBloc
   }
 
   Future<void> _onGoogleSignIn(Emitter<AuthenticationState> emit) async {
-    emit(const AuthenticationState.loading());
-    final result = await signInWithGoogleUseCase(NoParams());
-    result.fold(
-      (failure) => emit(AuthenticationState.error(failure.message)),
-      (user) => emit(AuthenticationState.authenticated(user)),
-    );
+    try {
+      emit(const AuthenticationState.loading());
+      final result = await signInWithGoogleUseCase(NoParams());
+
+      await result.fold(
+        (failure) async => emit(AuthenticationState.error(failure.message)),
+        (user) async {
+          try {
+            // Save user ID locally after successful authentication
+            final saveResult = await saveUserIdUseCase(user.id);
+            saveResult.fold(
+              (failure) => emit(AuthenticationState.error(failure.message)),
+              (_) => emit(AuthenticationState.authenticated(user)),
+            );
+          } catch (e) {
+            emit(
+              AuthenticationState.error(
+                'Failed to save user data: ${e.toString()}',
+              ),
+            );
+          }
+        },
+      );
+    } catch (e) {
+      emit(AuthenticationState.error('Authentication failed: ${e.toString()}'));
+    }
   }
 
   Future<void> _onCheckLoginStatus(Emitter<AuthenticationState> emit) async {
-    // TODO: Implement check for current user (call use case or repository)
-    emit(const AuthenticationState.unauthenticated());
+    try {
+      // TODO: Implement check for current user (call use case or repository)
+      emit(const AuthenticationState.unauthenticated());
+    } catch (e) {
+      emit(
+        AuthenticationState.error(
+          'Failed to check login status: ${e.toString()}',
+        ),
+      );
+    }
   }
 }

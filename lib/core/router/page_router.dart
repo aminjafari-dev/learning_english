@@ -7,11 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/features/authentication/presentation/pages/authentication_page.dart';
 import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
+import 'package:learning_english/features/learning_focus/presentation/pages/learning_focus_page.dart';
 
 class PageRouter {
   /// Map of all named routes in the app
   static Map<String, WidgetBuilder> routes = {
     PageName.authentication: (context) => const AuthenticationPage(),
-    PageName.levelSelection: (context) => const LevelSelectionPage(),
+    PageName.levelSelection: (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final userId = args?['userId'] as String? ?? '';
+      return LevelSelectionPage(userId: userId);
+    },
+    PageName.learningFocus: (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final userId = args?['userId'] as String? ?? '';
+      return LearningFocusPage(userId: userId);
+    },
   };
 }

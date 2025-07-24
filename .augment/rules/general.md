@@ -1,0 +1,501 @@
+---
+type: "manual"
+---
+
+You are an expert Flutter developer specializing in Clean Architecture with Feature-first organization and flutter_bloc for state management.
+
+## Core Principles
+*** If you are in the agent mode, write the code and change the code everywhere you want in the code base ***
+
+** WRITE COMMENTS ALL OVER THE APPLICATION SPECIALLY BEFOR DEFINE A CLASS OR FUNCTION AND SAY HOW SHOULD WE USE IT AND MAKE AN EXAMPLE FOR CLARIFYING AND EXPLAIN BEFOR EACH CONDITION, AND SAY HOW IT CAN BE USEFUL IN THIS SNIPET CODE. **
+
+* Use Flutter localization for each strings.
+* Use Gap package for space between the widgets and define all of them in the seprate class and call it GGap
+* Define GScaffold,GText,GButton, and use it instead of use Scaffold widget directly in the code.
+* Create a class and call it ImagePath and write all image path befor use it and use the path from this class.
+* Define theme class and use from them class instead of using color directly in the code.
+* Don't use any custom color, before using color first add it in the app_theme or update and after use it.
+* Write and Modify README.md file for each feature module(Go through the README file and see the structure).
+
+### Clean Architecture
+- Strictly adhere to the Clean Architecture layers: Presentation, Domain, and Data
+- Follow the dependency rule: dependencies always point inward
+- Domain layer contains entities, repositories (interfaces), and use cases
+- Data layer implements repositories and contains data sources and models
+- Presentation layer contains UI components, blocs, and view models
+- Use proper abstractions with interfaces/abstract classes for each component
+- Every feature should follow this layered architecture pattern
+
+### page rout:
+- Use this structure to register all route mappings in the PageRouter class inside a global page_router.dart file.
+- Create a folder in the core and called router in this folder create page_name and page_rout file.
+🔁 Routing Convention
+All routes must be defined using named routes.
+Pages must be registered in the PageRouter.routes map using PageName.<route> constants.
+🔤 Naming Convention
+Every page must have a route name constant defined in the PageName class.
+Use lowerCamelCase for variable names and UPPER_SNAKE_CASE for constants.
+🛑 Do Not
+❌ Do not use anonymous route navigation like MaterialPageRoute(...)
+❌ Do not hardcode string routes like "/login"
+✅ Example Usage
+Define Page Name
+class PageName {
+  static const String login = "/login";
+}
+Add to PageRouter
+class PageRouter {
+  static Map<String, WidgetBuilder> routes = {
+    PageName.login: (context) => const LoginPage(),
+  };
+}
+Navigate
+Navigator.of(context).pushNamed(PageName.login);
+
+### Feature-First Organization
+- Organize code by features instead of technical layers
+- Each feature is a self-contained module with its own implementation of all layers
+- Core or shared functionality goes in a separate 'core' directory
+- Features should have minimal dependencies on other features
+- Common directory structure for each feature:
+  
+```
+lib/
+├── core/                          # Shared/common code
+│   ├── error/                     # Error handling, failures
+│   ├── network/                   # Network utilities, interceptors
+│   ├── utils/                     # Utility functions and extensions
+│   └── widgets/                   # Reusable widgets
+├── features/                      # All app features
+│   ├── feature_a/                 # Single feature
+│   │   ├── data/                  # Data layer
+│   │   │   ├── datasources/       # Remote and local data sources
+│   │   │   ├── models/            # DTOs and data models
+│   │   │   └── repositories/      # Repository implementations
+│   │   ├── domain/                # Domain layer
+│   │   │   ├── entities/          # Business objects
+│   │   │   ├── repositories/      # Repository interfaces
+│   │   │   └── usecases/          # Business logic use cases
+│   │   └── presentation/          # Presentation layer
+│   │       ├── bloc/              # Bloc/Cubit state management
+│   │       ├── pages/             # Screen widgets
+│   │       └── widgets/           # Feature-specific widgets
+│   └── feature_b/                 # Another feature with same structure
+└── main.dart                      # Entry point
+```
+
+
+
+## Coding Standards
+
+### State Management
+- Use `Bloc` for complex event-driven logic to manage the two operations.
+- Use `freezed` to define immutable sealed classes for events in `entity_event.dart` and states in `entity_state.dart`.
+- Define all events in `entity_event.dart` as a single sealed class (e.g., `EntityEvent`) with events for each operation (e.g., `OperationA`, `OperationB`).
+- Define states in `entity_state.dart`, with individual sealed state classes for each operation (e.g., `OperationAState`, `OperationBState`) containing explicit `Initial`, `Loading`, `Completed`, and `Error` states, and a main state class (e.g., `EntityState`) combining them.
+- Implement the BLoC logic in `entity_bloc.dart`, processing events and emitting states using `copyWith` to update only the relevant operation’s state.
+- Inject use cases (use placeholder names like `OperationAUseCase`, `OperationBUseCase`) into the BLoC constructor, assuming they return `DataSuccess` or `DataFailed`.
+- Ensure type safety, immutability, and modern Dart syntax, avoiding UI-related logic (e.g., `BuildContext`) in the BLoC.
+- Use `BlocProvider` for dependency injection of the BLoC.
+- Implement `BlocObserver` for logging and debugging (assume a basic implementation exists elsewhere).
+- Add comments for clarity in each file.
+- Use placeholder names for all entities, operations, and use cases (e.g., `EntityModel` for data models).
+- Output three separate code blocks for `entity_bloc.dart`, `entity_event.dart`, and `entity_state.dart`, with no explanations outside the code blocks.
+
+### Example Output
+Here’s an example of how the files should look, using placeholder names:
+
+```dart
+// entity_event.dart
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'entity_event.freezed.dart';
+
+/// Sealed class for entity-related events
+@freezed
+class EntityEvent with _$EntityEvent {
+  /// Event to trigger Operation A
+  const factory EntityEvent.operationA({required String param}) = OperationA;
+  /// Event to trigger Operation B
+  const factory EntityEvent.operationB({required String param}) = OperationB;
+}
+```
+
+```dart
+// entity_state.dart
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:project/core/models/entity_model.dart';
+
+part 'entity_state.freezed.dart';
+
+/// State for Operation A
+@freezed
+class OperationAState with _$OperationAState {
+  const factory OperationAState.initial() = OperationAInitial;
+  const factory OperationAState.loading() = OperationALoading;
+  const factory OperationAState.completed(EntityModel data) = OperationACompleted;
+  const factory OperationAState.error(String message) = OperationAError;
+}
+
+/// Main state combining all operation states
+@freezed
+class EntityState with _$EntityState {
+  const factory EntityState({
+    required OperationAState operationA,
+  }) = _EntityState;
+}
+```
+
+```dart
+// entity_bloc.dart
+import 'package:bloc/bloc.dart';
+import 'package:project/core/data_status.dart';
+import 'package:project/features/domain/usecases/operation_a_usecase.dart';
+import 'package:project/features/bloc/entity_event.dart';
+import 'package:project/features/bloc/entity_state.dart';
+
+/// BLoC for managing entity-related operations
+class EntityBloc extends Bloc<EntityEvent, EntityState> {
+  final OperationAUseCase operationAUseCase;
+
+  EntityBloc({
+    required this.operationAUseCase,
+    required this.operationBUseCase,
+  }) : super(EntityState(
+          operationA: const OperationAState.initial(),
+        )) {
+    on<EntityEvent>((event, emit) async {
+      await event.when(
+        operationA: (param) => _onOperationA(param, emit),
+      );
+    });
+  }
+
+  Future<void> _onOperationA(String param, Emitter<EntityState> emit) async {
+    emit(state.copyWith(operationA: const OperationAState.loading()));
+    try {
+      final result = await operationAUseCase.call(params: param);
+      if (result is DataSuccess) {
+        emit(state.copyWith(operationA: OperationAState.completed(result.data!)));
+      } else {
+        emit(state.copyWith(operationA: OperationAState.error(result.error ?? 'Failed Operation A')));
+      }
+    } catch (e) {
+      emit(state.copyWith(operationA: OperationAState.error(e.toString())));
+    }
+  }
+}
+```
+
+#### Dartz Error Handling
+- Use Either for better error control without exceptions
+- Left represents failure case, Right represents success case
+- Create a base Failure class and extend it for specific error types
+- Leverage pattern matching with fold() method to handle both success and error cases in one call
+- Use flatMap/bind for sequential operations that could fail
+- Create extension functions to simplify working with Either
+- Example implementation for handling errors with Dartz following functional programming:
+
+```
+```
+### Dependency Injection:
+
+General Rules
+Modularize by Feature:
+
+Organize dependencies by project features (e.g., login, dashboard, notifications) in separate DI files (e.g., login_di.dart).
+Each feature must have its own DI file to register its dependencies.
+The main locator.dart file should only orchestrate the inclusion of feature-specific DI files.
+Clear and Meaningful Naming:
+
+
+Use precise, descriptive names for files and classes (e.g., DashboardBloc instead of Bloc1).
+DI file names should reflect the feature they belong to (e.g., login_di.dart).
+Group Dependencies:
+
+
+If separating into feature-specific files is not feasible, group dependencies in the locator.dart file by type (e.g., services, repositories, use cases, BLoCs).
+Clearly label each group with comments (e.g., // Services).
+Use Singleton for Services and Repositories:
+
+
+Register services and repositories  with registerLazySingleton to ensure a single instance is maintained in memory.
+Register Blocs with registerSingleton.
+Register use cases with either registerFactory (for new instances per call) or registerSingleton (for a single instance), depending on the use case.
+Register Every New Component:
+
+
+Include a brief description above each DI file or section to explain its purpose.
+For complex classes, document their role and usage in comments.
+Memory Management:
+
+
+Ensure dependency registration does not cause memory leaks.
+Use unregister for dependencies (e.g., tokens) that are no longer needed.
+Fictional Examples
+1. Main locator.dart File
+This file only orchestrates the inclusion of feature-specific DI files.
+import 'package:get_it/get_it.dart'; import 'login_di.dart'; import 'dashboard_di.dart'; import 'notifications_di.dart';
+final GetIt locator = GetIt.instance;
+Future setupLocator() async {
+ // Call DI setup for each feature
+ await setupLoginLocator(locator);
+ await setupDashboardLocator(locator);
+ await setupNotificationsLocator(locator);
+}
+
+### Repository Pattern
+- Repositories act as a single source of truth for data
+- Implement caching strategies when appropriate
+- Handle network connectivity issues gracefully
+- Map data models to domain entities
+- Create proper abstractions with well-defined method signatures
+- Handle pagination and data fetching logic
+
+### Testing Strategy
+- Write unit tests for domain logic, repositories, and Blocs
+- Implement integration tests for features
+- Create widget tests for UI components
+- Use mocks for dependencies with mockito or mocktail
+- Follow Given-When-Then pattern for test structure
+- Aim for high test coverage of domain and data layers
+
+### Performance Considerations
+- Use const constructors for immutable widgets
+- Implement efficient list rendering with ListView.builder
+- Minimize widget rebuilds with proper state management
+- Use computation isolation for expensive operations with compute()
+- Implement pagination for large data sets
+- Cache network resources appropriately
+- Profile and optimize render performance
+
+### Code Quality
+- Use lint rules with flutter_lints package
+- Keep functions small and focused (under 30 lines)
+- Apply SOLID principles throughout the codebase
+- Use meaningful naming for classes, methods, and variables
+- Document public APIs and complex logic
+- Implement proper null safety
+- Use value objects for domain-specific types
+
+## Implementation Examples
+
+### Use Case Implementation
+```
+abstract class UseCase<Type, Params> {
+  Future<Either<Failure, Type>> call(Params params);
+}
+
+class GetUser implements UseCase<User, String> {
+  final UserRepository repository;
+
+  GetUser(this.repository);
+
+  @override
+  Future<Either<Failure, User>> call(String userId) async {
+    return await repository.getUser(userId);
+  }
+}
+```
+
+### Repository Implementation
+```
+abstract class UserRepository {
+  Future<Either<Failure, User>> getUser(String id);
+  Future<Either<Failure, List<User>>> getUsers();
+  Future<Either<Failure, Unit>> saveUser(User user);
+}
+
+class UserRepositoryImpl implements UserRepository {
+  final UserRemoteDataSource remoteDataSource;
+  final UserLocalDataSource localDataSource;
+  final NetworkInfo networkInfo;
+
+  UserRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+    required this.networkInfo,
+  });
+
+  @override
+  Future<Either<Failure, User>> getUser(String id) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteUser = await remoteDataSource.getUser(id);
+        await localDataSource.cacheUser(remoteUser);
+        return Right(remoteUser.toDomain());
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localUser = await localDataSource.getLastUser();
+        return Right(localUser.toDomain());
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
+  }
+  
+  // Other implementations...
+}
+```
+### Flutter localization
+General Rules
+Use flutter_localizations and intl Packages:
+Use the official flutter_localizations package for core localization support in Flutter.
+Use the intl package for formatting strings, dates, numbers, and currencies based on the user’s locale.
+Add dependencies to pubspec.yaml:
+yaml
+
+
+
+dependencies:
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
+Modularize Localization by Feature:
+Organize localization files by feature (e.g., lib/features/login/l10n/login_l10n.dart, lib/features/dashboard/l10n/dashboard_l10n.dart).
+Each feature should have its own localization class (e.g., LoginLocalizations) to manage its specific strings.
+Use ARB Files for String Management:
+Store translatable strings in .arb files (Application Resource Bundle) under a l10n directory (e.g., lib/l10n/app_en.arb, lib/l10n/app_fa.arb).
+Name files with the format app_[locale].arb (e.g., app_en.arb for English, app_fa.arb for Persian).
+Use clear, descriptive keys for strings (e.g., login_button instead of button1).
+Generate Localization Classes Automatically:
+Use the flutter gen-l10n command to generate localization classes from .arb files.
+Configure the l10n.yaml file in the project root to specify input/output paths and supported locales:
+yaml
+
+
+
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false
+Ensure the generated AppLocalizations class is imported in the app’s entry point.
+Support Multiple Locales:
+Define supported locales in the MaterialApp or CupertinoApp using supportedLocales (e.g., [Locale('en'), Locale('fa')]).
+Provide a fallback locale (e.g., Locale('en')) for unsupported locales.
+Use Localizations.of(context, AppLocalizations) to access localized strings in widgets.
+Centralize Locale Management:
+Manage the current locale using a Cubit or Bloc (e.g., LocaleCubit) to handle locale changes dynamically.
+Register the LocaleCubit in the DI system (e.g., getIt<LocaleCubit>()) using registerFactory for per-session instances.
+Persist the user’s selected locale in local storage (e.g., using shared_preferences).
+Handle Dynamic Locale Changes:
+Allow users to change the locale at runtime (e.g., via a settings screen).
+Update the app’s UI by emitting a new locale state from LocaleCubit and rebuilding the MaterialApp with the new locale.
+Format Dates, Numbers, and Currencies:
+Use intl package methods (e.g., DateFormat, NumberFormat) for locale-specific formatting.
+Access locale-specific formatters via AppLocalizations or directly from intl based on the current locale.
+Avoid Hardcoded Strings:
+Never use hardcoded strings in UI components. All translatable text must come from .arb files.
+For non-translatable strings (e.g., API keys, debug logs), use constants in a separate file (e.g., lib/core/constants.dart).
+Test Localization:
+Write widget tests to verify that UI renders correctly for all supported locales.
+Test locale switching to ensure dynamic updates work without crashes.
+Validate formatting (dates, numbers, currencies) for each locale.
+Accessibility and RTL Support:
+Support right-to-left (RTL) languages (e.g., Persian, Arabic) using Directionality.of(context) and TextDirection.rtl.
+Ensure widgets adapt to RTL layouts (e.g., using Flexible or Row with mainAxisAlignment).
+Test UI for RTL languages to avoid layout issues.
+Documentation and Comments:
+Document the purpose of each .arb file and its keys in a comment at the top.
+Add comments in localization classes or UI code to explain complex string interpolations or formatting.
+
+### UI Implementation
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nui/core/locator.dart';
+import 'package:nui/features/login/bloc/login_bloc.dart';
+import 'package:nui/features/login/ui/widgets/login_form.dart';
+import 'package:nui/features/login/ui/widgets/error_widget.dart';
+
+/// The main login page for the login feature.
+class LoginPage extends StatelessWidget {
+  final String userId;
+
+  const LoginPage({super.key, required this.userId});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<LoginBloc>()..add(LoginEvent.login(userId: userId)),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Login'),
+          actions: [
+            BlocBuilder<LoginBloc, LoginState>(
+              builder: (context, state) => IconButton(
+                icon: const Icon(Icons.refresh),
+                onPressed: () {
+                  context.read<LoginBloc>().add(const LoginEvent.login(userId: 'retry'));
+                },
+              ),
+            ),
+          ],
+        ),
+        body: BlocListener<LoginBloc, LoginState>(
+          listener: (context, state) {
+            state.login.when(
+              initial: () {},
+              loading: () {},
+              completed: (_) => ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Login successful!')),
+              ),
+              error: (message) => ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Error: $message')),
+              ),
+            );
+          },
+          child: BlocBuilder<LoginBloc, LoginState>(
+            builder: (context, state) => state.login.when(
+              initial: () => const SizedBox(),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              completed: (user) => LoginForm(user: user),
+              error: (message) => ErrorWidget(message: message),
+              orElse: () => const SizedBox(),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+### README.md File
+Your task is to generate a detailed README.md file for a specific feature module within a Flutter application. This document should serve as a complete guide, enabling any developer or AI to understand the feature's architecture, purpose, and usage without having to read every line of code.
+
+Instructions:
+
+Analyze all the Dart files located within the specified feature directory (e.g., lib/features/<feature_name>/). Based on this analysis, create a README.md file with the exact following structure and content:
+
+Feature Name:
+
+A top-level heading with the feature's name (e.g., # <FeatureName> Feature).
+Description:
+
+Write a concise, high-level paragraph explaining what the feature does and its primary purpose within the application. Mention the architectural pattern being used (e.g., Clean Architecture).
+Architecture:
+
+Create a bulleted list detailing the file structure, organized by the Clean Architecture layers: Domain Layer, Data Layer, and Presentation Layer.
+Under each layer, create nested bullets for the sub-directories (e.g., entities, repositories, usecases, models, datasources, bloc, pages, widgets).
+List the specific Dart files within each directory and provide a one-line description of their role.
+Use Cases:
+
+Identify the primary business logic operations by analyzing the classes in the domain/usecases/ directory.
+For each use case, create a numbered list item with the following details:
+Use Case: The name of the UseCase class.
+Description: A clear, one-sentence explanation of what it accomplishes.
+Data Flow: A visual trace of the component interaction flow, for example: Page -> Bloc -> UseCase -> Repository -> DataSource.
+Data Flow:
+
+Provide a numbered, step-by-step narrative of the most critical user journey or data flow within the feature. This should explain how the different components (UI, BLoC, UseCase, etc.) interact sequentially to produce a result.
+Key Components:
+
+Create a bulleted list of the main technologies, packages, or patterns that are central to this feature's implementation (e.g., Firebase, BLoC, shared_preferences, Clean Architecture).
+
+```
+
+Refer to official Flutter and flutter_bloc documentation for more detailed implementation guidelines.
+

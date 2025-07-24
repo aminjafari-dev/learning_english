@@ -19,7 +19,7 @@ class GScaffold extends StatelessWidget {
   final bool resizeToAvoidBottomInset;
 
   const GScaffold({
-    Key? key,
+    super.key,
     this.appBar,
     this.body,
     this.floatingActionButton,
@@ -27,7 +27,7 @@ class GScaffold extends StatelessWidget {
     this.drawer,
     this.backgroundColor,
     this.resizeToAvoidBottomInset = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

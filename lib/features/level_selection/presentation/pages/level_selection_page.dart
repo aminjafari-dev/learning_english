@@ -17,8 +17,6 @@ import 'package:learning_english/features/level_selection/presentation/blocs/lev
 import 'package:learning_english/features/level_selection/presentation/blocs/level_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
-import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
-import 'package:learning_english/core/usecase/usecase.dart';
 // import 'package:learning_english/core/constants/page_name.dart'; // Uncomment and use your actual PageName class
 
 /// LevelSelectionPage allows users to select their English proficiency level.

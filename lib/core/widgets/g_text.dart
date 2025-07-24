@@ -15,12 +15,12 @@ class GText extends StatelessWidget {
 
   const GText(
     this.data, {
-    Key? key,
+    super.key,
     this.style,
     this.textAlign,
     this.maxLines,
     this.overflow,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

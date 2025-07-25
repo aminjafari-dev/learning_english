@@ -1,0 +1,27 @@
+---
+alwaysApply: false
+---
+### Overview of Your Application
+Your app is a "Learn English" platform designed specifically for the Iranian market, where users are eager to improve their English skills with the help of AI. The app guides users through a personalized learning journey with a user-friendly interface and a dark theme accented with golden tones, creating an inviting and modern feel. The focus is on leveraging AI, particularly Open AI, to automatically generate vocabularies and phrases along with their translations, catering to individual learning needs.
+
+### Page Breakdown
+1. **Login Page**
+   - This is the welcoming entry point where users see an inspiring image of an open book with a glowing star, symbolizing the start of their learning adventure. A "Login with Google" button allows easy access, and a terms & conditions note ensures legal clarity. It’s all about making the first step simple and engaging for Iranian users.
+
+2. **English Level Selection Page**
+   - Here, users pick their current English proficiency—Beginner, Elementary, Intermediate, or Advanced—each with a short description to help them choose accurately. This step personalizes the experience, ensuring the content matches their skill level, which is key for learners in Iran who may start from different baselines.
+
+3. **Learning Focus Selection Page**
+   - Users select a specific area to focus on, like Business English, Travel English, or even Movie English, with options tailored to everyday life and interests relevant to the Iranian context (e.g., Social English for community interactions). This customization helps users apply their skills practically.
+
+4. **Daily Lessons Screen**
+   - The heart of the app, this page offers a daily plan with sections for Vocabularies, Languages, Translation, Lessons, Exercises, and Exams. A standout feature is the "Phrases" section, where AI (using Open AI) automatically generates English phrases and their Persian translations tailored to the user’s selected focus and level. For example, a user might see "Day by day it gets better" with its Persian equivalent, refreshed daily to keep learning dynamic. A "Refresh Lessons" button lets users update content, making it interactive and fresh.
+
+### Focus on the Iranian Market
+Your app targets Iranian users who want to learn English with AI support, a growing need given the demand for language skills in education, business, and global communication. By integrating Open AI to generate personalized vocabularies and phrases with Persian translations, you’re addressing a key requirement—bridging English learning with local language support. This approach not only makes the app accessible but also culturally relevant, enhancing its appeal in Iran.
+
+### Unique AI Feature
+The use of Open AI to auto-generate content is a game-changer. On the Daily Lessons screen, the AI will create vocabularies and phrases based on the user’s level and focus, ensuring the material feels fresh and tailored. The inclusion of Persian translations alongside English phrases supports learners who are more comfortable starting with their native language, a critical factor for the Iranian audience.
+
+### Vision and Potential
+This app has the potential to become a go-to tool for English learners in Iran, combining a structured learning path with AI-driven personalization. The focus on daily engagement through refreshed lessons and the cultural relevance of Persian translations could set it apart, making learning both effective and enjoyable.

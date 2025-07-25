@@ -5,6 +5,7 @@
 // Shared code will be placed in lib/core.
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,6 +16,9 @@ import 'package:learning_english/core/router/page_router.dart';
 void main() async {
   // Ensure Flutter bindings are initialized before any async work
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Load environment variables from .env file
+  await dotenv.load(fileName: ".env");
 
   // Initialize Firebase before using any Firebase service or dependency injection
   await Firebase.initializeApp();

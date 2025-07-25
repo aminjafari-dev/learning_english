@@ -32,8 +32,10 @@ class LevelSelectionPage extends StatelessWidget {
       child: BlocConsumer<LevelBloc, LevelState>(
         listener: (context, state) {
           if (state is LevelSuccess) {
-            // TODO: Replace with your actual subject selection route
-            Navigator.of(context).pushReplacementNamed(PageName.levelSelection);
+            // Navigate to the learning focus selection page after level selection
+            Navigator.of(
+              context,
+            ).pushReplacementNamed(PageName.learningFocusSelection);
           } else if (state is LevelError) {
             ScaffoldMessenger.of(
               context,

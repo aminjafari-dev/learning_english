@@ -13,5 +13,20 @@
   "levelIntermediateDesc": "Can communicate in familiar situations and understand main ideas.",
   "levelAdvanced": "Advanced",
   "levelAdvancedDesc": "Can express ideas fluently and understand complex texts.",
-  "continue_": "Continue"
+  "continue_": "Continue",
+  "learningFocusTitle": "Choose Your Learning Focus",
+  "learningFocusBack": "Back",
+  "learningFocusBusiness": "Business English",
+  "learningFocusTravel": "Travel English",
+  "learningFocusSocial": "Social English",
+  "learningFocusHome": "Home English",
+  "learningFocusAcademic": "Academic English",
+  "learningFocusMovie": "Movie English",
+  "learningFocusMusic": "Music English",
+  "learningFocusTV": "TV English",
+  "learningFocusShopping": "Shopping English",
+  "learningFocusRestaurant": "Restaurant English",
+  "learningFocusHealth": "Health English",
+  "learningFocusEveryday": "Everyday English",
+  "learningFocusSavedSnack": "Selection saved! Navigating..."
 } 

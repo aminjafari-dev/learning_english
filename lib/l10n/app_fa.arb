@@ -13,5 +13,20 @@
   "levelIntermediateDesc": "قادر به برقراری ارتباط در موقعیت‌های آشنا و درک ایده‌های اصلی.",
   "levelAdvanced": "پیشرفته",
   "levelAdvancedDesc": "قادر به بیان روان ایده‌ها و درک متون پیچیده.",
-  "continue_": "ادامه"
+  "continue_": "ادامه",
+  "learningFocusTitle": "تمرکز یادگیری خود را انتخاب کنید",
+  "learningFocusBack": "برگشت",
+  "learningFocusBusiness": "انگلیسی تجاری",
+  "learningFocusTravel": "انگلیسی سفر",
+  "learningFocusSocial": "انگلیسی اجتماعی",
+  "learningFocusHome": "انگلیسی خانگی",
+  "learningFocusAcademic": "انگلیسی آکادمیک",
+  "learningFocusMovie": "انگلیسی فیلم",
+  "learningFocusMusic": "انگلیسی موسیقی",
+  "learningFocusTV": "انگلیسی تلویزیون",
+  "learningFocusShopping": "انگلیسی خرید",
+  "learningFocusRestaurant": "انگلیسی رستوران",
+  "learningFocusHealth": "انگلیسی سلامت",
+  "learningFocusEveryday": "انگلیسی روزمره",
+  "learningFocusSavedSnack": "انتخاب ذخیره شد! در حال انتقال..."
 } 

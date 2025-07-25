@@ -9,4 +9,7 @@ class PageName {
 
   /// Route for the level selection page
   static const String levelSelection = '/level_selection';
+
+  /// Route for the learning focus selection page
+  static const String learningFocusSelection = '/learning_focus_selection';
 }

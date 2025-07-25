@@ -28,5 +28,21 @@
   "learningFocusRestaurant": "Restaurant English",
   "learningFocusHealth": "Health English",
   "learningFocusEveryday": "Everyday English",
-  "learningFocusSavedSnack": "Selection saved! Navigating..."
+  "learningFocusSavedSnack": "Selection saved! Navigating...",
+  "yourDailyLessons": "Your Daily Lessons",
+  "@yourDailyLessons": {
+    "description": "Title for the daily lessons page."
+  },
+  "vocabularies": "Vocabularies",
+  "@vocabularies": {
+    "description": "Section header for vocabularies."
+  },
+  "phrases": "Phrases",
+  "@phrases": {
+    "description": "Section header for phrases."
+  },
+  "refreshLessons": "Refresh Lessons",
+  "@refreshLessons": {
+    "description": "Button text for refreshing daily lessons."
+  }
 } 

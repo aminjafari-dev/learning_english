@@ -39,126 +39,119 @@ class LearningFocusSelectionPage extends StatelessWidget {
       _LearningFocusOption(Icons.emoji_emotions, l10n.learningFocusEveryday),
     ];
 
-
-    return  GScaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Top section: Title and Back Button
-              Row(
-                children: [
-                  // Back button with localized text
-                  IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(Icons.arrow_back_ios_new_rounded, size: 24),
-                  ),
-                  // Title
-                  GText(
-                    l10n.learningFocusTitle,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-
-              GGap.g16,
-              // Grid of learning focus options with selection logic
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: BlocBuilder<
-                    LearningFocusSelectionCubit,
-                    LearningFocusSelectionState
-                  >(
-                    bloc: getIt<LearningFocusSelectionCubit>(),
-                    builder: (context, state) {
-                      return GridView.builder(
-                        itemCount: options.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 12,
-                              crossAxisSpacing: 12,
-                              childAspectRatio:
-                                  2, // Reduced for more vertical space
-                            ),
-                        itemBuilder: (context, index) {
-                          final option = options[index];
-                          final selected = state.selectedIndices.contains(
-                            index,
-                          );
-                          // Only one line of text per card, so pass the same string for both title and subtitle
-                          return LearningFocusOptionCard(
-                            icon: option.icon,
-                            title: option.title,
-                            subtitle: '',
-                            selected: selected,
-                            onTap: () {
-                              getIt<LearningFocusSelectionCubit>()
-                                  .toggleSelection(index);
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
+    return GScaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Top section: Title and Back Button
+            Row(
+              children: [
+                // Back button with localized text
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: Icon(Icons.arrow_back_ios_new_rounded, size: 24),
                 ),
-              ),
-              // Continue button at the bottom, enabled only if at least one option is selected
-              SafeArea(
-                minimum: const EdgeInsets.all(16),
-                child: BlocConsumer<
+                // Title
+                GText(
+                  l10n.learningFocusTitle,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+
+            GGap.g16,
+            // Grid of learning focus options with selection logic
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: BlocBuilder<
                   LearningFocusSelectionCubit,
                   LearningFocusSelectionState
                 >(
                   bloc: getIt<LearningFocusSelectionCubit>(),
-                  listenWhen:
-                      (prev, curr) => curr.saveSuccess && !prev.saveSuccess,
-                  listener: (context, state) {
-                    // Show localized SnackBar after save
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(l10n.learningFocusSavedSnack)),
-                    );
-                    // Navigate to Daily Lessons page after successful save
-                    Navigator.of(
-                      context,
-                    ).pushNamed(PageName.dailyLessons);
-                  },
                   builder: (context, state) {
-                    final isEnabled = state.selectedIndices.isNotEmpty;
-                    return GButton(
-                      text: l10n.continue_,
-                      onPressed:
-                          isEnabled
-                              ? () {
-                                getIt<LearningFocusSelectionCubit>()
-                                    .saveSelection();
-                              }
-                              : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor:
-                            Theme.of(context).colorScheme.onPrimary,
-                        textStyle: Theme.of(
-                          context,
-                        ).textTheme.bodyLarge?.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        minimumSize: const Size.fromHeight(56),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
+                    return GridView.builder(
+                      itemCount: options.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12,
+                            childAspectRatio:
+                                2, // Reduced for more vertical space
+                          ),
+                      itemBuilder: (context, index) {
+                        final option = options[index];
+                        final selected = state.selectedIndices.contains(index);
+                        // Only one line of text per card, so pass the same string for both title and subtitle
+                        return LearningFocusOptionCard(
+                          icon: option.icon,
+                          title: option.title,
+                          subtitle: '',
+                          selected: selected,
+                          onTap: () {
+                            getIt<LearningFocusSelectionCubit>()
+                                .toggleSelection(index);
+                          },
+                        );
+                      },
                     );
                   },
                 ),
               ),
-            ],
-          
+            ),
+            // Continue button at the bottom, enabled only if at least one option is selected
+            SafeArea(
+              minimum: const EdgeInsets.all(16),
+              child: BlocConsumer<
+                LearningFocusSelectionCubit,
+                LearningFocusSelectionState
+              >(
+                bloc: getIt<LearningFocusSelectionCubit>(),
+                listenWhen:
+                    (prev, curr) => curr.saveSuccess && !prev.saveSuccess,
+                listener: (context, state) {
+                  // Show localized SnackBar after save
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l10n.learningFocusSavedSnack)),
+                  );
+                  // Navigate to Daily Lessons page after successful save
+                  Navigator.of(context).pushNamed(PageName.dailyLessons);
+                },
+                builder: (context, state) {
+                  final isEnabled = state.selectedIndices.isNotEmpty;
+                  return GButton(
+                    text: l10n.continue_,
+                    onPressed:
+                        isEnabled
+                            ? () {
+                              getIt<LearningFocusSelectionCubit>()
+                                  .saveSelection();
+                            }
+                            : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                      textStyle: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      minimumSize: const Size.fromHeight(56),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

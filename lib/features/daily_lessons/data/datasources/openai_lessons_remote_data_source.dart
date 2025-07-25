@@ -1,0 +1,107 @@
+// openai_lessons_remote_data_source.dart
+// Implementation of AiLessonsRemoteDataSource for OpenAI (ChatGPT)
+// Usage:
+// final dataSource = OpenAiLessonsRemoteDataSource(apiKey: 'YOUR_API_KEY');
+// final vocabResult = await dataSource.fetchDailyVocabularies();
+// final phraseResult = await dataSource.fetchDailyPhrases();
+
+import 'package:dartz/dartz.dart';
+import '../../domain/entities/vocabulary.dart';
+import '../../domain/entities/phrase.dart';
+import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'package:learning_english/core/error/failure.dart';
+import 'ai_lessons_remote_data_source.dart';
+
+class OpenAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
+  final Dio dio;
+  final String apiKey;
+  static const String _openAiEndpoint =
+      'https://api.openai.com/v1/chat/completions';
+
+  OpenAiLessonsRemoteDataSource({Dio? dio, required this.apiKey})
+    : dio = dio ?? Dio();
+
+  @override
+  Future<Either<Failure, List<Vocabulary>>> fetchDailyVocabularies() async {
+    try {
+      final response = await dio.post(
+        _openAiEndpoint,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $apiKey',
+            'Content-Type': 'application/json',
+          },
+        ),
+        data: {
+          'model': 'gpt-3.5-turbo',
+          'messages': [
+            {
+              'role': 'system',
+              'content':
+                  'You are an English teacher. Provide a list of 4 useful English vocabulary words for daily learning, each with its Persian translation. Respond in JSON: [{"english": "...", "persian": "..."}, ...]',
+            },
+            {
+              'role': 'user',
+              'content':
+                  'Give me 4 English vocabulary words with Persian translations.',
+            },
+          ],
+          'max_tokens': 256,
+        },
+      );
+      final content = response.data['choices'][0]['message']['content'];
+      final List<dynamic> vocabList = jsonDecode(content);
+      final vocabularies =
+          vocabList
+              .map(
+                (e) => Vocabulary(english: e['english'], persian: e['persian']),
+              )
+              .toList();
+      return right(vocabularies);
+    } catch (e) {
+      return left(
+        ServerFailure('Failed to fetch vocabularies: ${e.toString()}'),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Phrase>>> fetchDailyPhrases() async {
+    try {
+      final response = await dio.post(
+        _openAiEndpoint,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $apiKey',
+            'Content-Type': 'application/json',
+          },
+        ),
+        data: {
+          'model': 'gpt-3.5-turbo',
+          'messages': [
+            {
+              'role': 'system',
+              'content':
+                  'You are an English teacher. Provide a list of 2 useful English phrases for daily learning, each with its Persian translation. Respond in JSON: [{"english": "...", "persian": "..."}, ...]',
+            },
+            {
+              'role': 'user',
+              'content': 'Give me 2 English phrases with Persian translations.',
+            },
+          ],
+          'max_tokens': 256,
+        },
+      );
+      final content = response.data['choices'][0]['message']['content'];
+      final List<dynamic> phraseList = jsonDecode(content);
+      final phrases =
+          phraseList
+              .map((e) => Phrase(english: e['english'], persian: e['persian']))
+              .toList();
+      return right(phrases);
+    } catch (e) {
+      return left(ServerFailure('Failed to fetch phrases: ${e.toString()}'));
+    }
+  }
+}

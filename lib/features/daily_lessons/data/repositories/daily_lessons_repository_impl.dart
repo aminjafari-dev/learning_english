@@ -1,19 +1,34 @@
 // daily_lessons_repository_impl.dart
 // Implementation of the DailyLessonsRepository interface.
 // This class connects the data sources to the domain layer and handles mapping and error handling.
+//
+// Now uses the real OpenAI API via DailyLessonsRemoteDataSourceImpl.
+// Make sure to inject your OpenAI API key in the remote data source.
+//
+// This repository is AI-provider agnostic. It uses MultiModelLessonsRemoteDataSource to select the AI provider (OpenAI, Gemini, DeepSeek, etc.).
+// Example usage:
+// final dataSource = MultiModelLessonsRemoteDataSource(
+//   providerType: AiProviderType.openai,
+//   openAi: OpenAiLessonsRemoteDataSource(apiKey: 'YOUR_API_KEY'),
+//   gemini: GeminiLessonsRemoteDataSource(),
+//   deepSeek: DeepSeekLessonsRemoteDataSource(),
+// );
+// final repo = DailyLessonsRepositoryImpl(remoteDataSource: dataSource);
+// final vocabResult = await repo.getDailyVocabularies();
+// final phraseResult = await repo.getDailyPhrases();
 
 import 'package:dartz/dartz.dart';
 import '../../domain/entities/vocabulary.dart';
 import '../../domain/entities/phrase.dart';
 import '../../domain/repositories/daily_lessons_repository.dart';
-import '../datasources/daily_lessons_remote_data_source.dart';
+import '../datasources/ai_lessons_remote_data_source.dart';
 import 'package:learning_english/core/error/failure.dart';
 
 /// Implementation of DailyLessonsRepository
 class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
-  final DailyLessonsRemoteDataSource remoteDataSource;
+  final AiLessonsRemoteDataSource remoteDataSource;
 
-  /// Inject the remote data source via constructor
+  /// Inject the AI-based remote data source via constructor
   DailyLessonsRepositoryImpl({required this.remoteDataSource});
 
   @override

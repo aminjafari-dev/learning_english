@@ -2,8 +2,6 @@
 // Main page for the Daily Lessons feature.
 // This page displays vocabularies, phrases, and lesson sections, using Bloc for state management.
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
@@ -23,8 +21,7 @@ class DailyLessonsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Use getIt for dependency injection instead of BlocProvider in the UI
     final bloc =
-        getIt<DailyLessonsBloc>()
-          ..add(const DailyLessonsEvent.fetchLessons());
+        getIt<DailyLessonsBloc>()..add(const DailyLessonsEvent.fetchLessons());
 
     return GScaffold(
       appBar: AppBar(

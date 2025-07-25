@@ -34,8 +34,9 @@ The Daily Lessons feature is the heart of the application, providing users with 
 3. Use cases are invoked to retrieve data from repositories.
 4. Repositories coordinate with data sources (remote/local, AI) to fetch/generate data.
 5. Data is mapped to domain entities and emitted as Bloc states.
-6. UI widgets display the data, updating reactively.
-7. User can tap "Refresh Lessons" to trigger a refresh event, repeating the flow.
+6. UI widgets display the data in a unified scrollable view, updating reactively.
+7. User can scroll through vocabularies and phrases together using a single scroll controller.
+8. User can tap "Refresh Lessons" to trigger a refresh event, repeating the flow.
 
 ## Key Components
 - Clean Architecture (feature-first organization)
@@ -46,3 +47,4 @@ The Daily Lessons feature is the heart of the application, providing users with 
 - Custom widgets: GScaffold, GText, GButton, GGap
 - Theming via app_theme.dart
 - Dependency injection (GetIt)
+- Single scroll view for unified content scrolling

@@ -1,6 +1,7 @@
 // daily_lessons_content.dart
 // Main content widget for the Daily Lessons page.
 // Combines vocabularies section, phrases section, and refresh button.
+// Uses a single scroll view for the entire content.
 
 import 'package:flutter/material.dart';
 import 'package:learning_english/core/widgets/g_gap.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Main content widget for the Daily Lessons page
 /// Combines vocabularies section, phrases section, and refresh button
+/// Uses a single scroll view for unified scrolling experience
 class DailyLessonsContent extends StatelessWidget {
   final DailyLessonsState state;
 
@@ -20,20 +22,24 @@ class DailyLessonsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GGap.g16,
-        SectionHeader(title: AppLocalizations.of(context)!.vocabularies),
-        GGap.g4,
-        VocabularySection(state: state.vocabularies),
-        GGap.g24,
-        SectionHeader(title: AppLocalizations.of(context)!.phrases),
-        GGap.g8,
-        PhrasesListSection(phrasesState: state.phrases),
-        GGap.g16,
-        RefreshButton(isRefreshing: state.isRefreshing),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GGap.g16,
+          SectionHeader(title: AppLocalizations.of(context)!.vocabularies),
+          GGap.g4,
+          VocabularySection(state: state.vocabularies),
+          GGap.g24,
+          SectionHeader(title: AppLocalizations.of(context)!.phrases),
+          GGap.g8,
+          PhrasesListSection(phrasesState: state.phrases),
+          GGap.g16,
+          RefreshButton(isRefreshing: state.isRefreshing),
+          // Add bottom padding to ensure content is not cut off
+          GGap.g32,
+        ],
+      ),
     );
   }
 }

@@ -9,12 +9,13 @@ import '../../domain/entities/phrase.dart';
 
 class PhraseCard extends StatelessWidget {
   final Phrase phrase;
-  const PhraseCard({Key? key, required this.phrase}) : super(key: key);
+  const PhraseCard({super.key, required this.phrase});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(12),
+      width: double.infinity,
       decoration: BoxDecoration(
         color: AppTheme.surface,
         borderRadius: BorderRadius.circular(8),

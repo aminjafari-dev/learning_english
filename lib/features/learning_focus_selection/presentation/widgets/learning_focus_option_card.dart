@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learning_english/core/widgets/g_gap.dart';
 import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 
@@ -49,7 +50,7 @@ class LearningFocusOptionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 16,),
           decoration: BoxDecoration(
             border: Border.all(color: borderColor, width: 2),
             borderRadius: BorderRadius.circular(16),
@@ -58,20 +59,32 @@ class LearningFocusOptionCard extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                size: 32,
+                size: 24,
                 color: AppTheme.accentColor,
                 semanticLabel: title,
               ),
-              const SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GText(title, style: Theme.of(context).textTheme.bodyLarge),
-                  GText(
-                    subtitle,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
+              GGap.g8,
+              // Make the text column flexible to avoid overflow
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    GText(
+                      title,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (subtitle.isNotEmpty)
+                      GText(
+                        subtitle,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  ],
+                ),
               ),
             ],
           ),

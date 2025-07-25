@@ -12,23 +12,16 @@
 ///   }
 ///
 /// This helps maintain consistent spacing and improves readability.
-import 'package:flutter/widgets.dart';
+import 'package:gap/gap.dart';
 
 class GGap {
- const GGap();
+  const GGap();
   // Vertical gaps
-  static const v4 = SizedBox(height: 4);
-  static const v8 = SizedBox(height: 8);
-  static const v12 = SizedBox(height: 12);
-  static const v16 = SizedBox(height: 16);
-  static const v24 = SizedBox(height: 24);
-  static const v32 = SizedBox(height: 32);
+  static const g4 = Gap(4);
+  static const g8 = Gap(8);
+  static const g12 = Gap(12);
+  static const g16 = Gap(16);
+  static const g24 = Gap(24);
+  static const g32 = Gap(32);
 
-  // Horizontal gaps
-  static const h4 = SizedBox(width: 4);
-  static const h8 = SizedBox(width: 8);
-  static const h12 = SizedBox(width: 12);
-  static const h16 = SizedBox(width: 16);
-  static const h24 = SizedBox(width: 24);
-  static const h32 = SizedBox(width: 32);
 }

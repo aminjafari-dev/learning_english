@@ -33,9 +33,7 @@ class LevelSelectionPage extends StatelessWidget {
         listener: (context, state) {
           if (state is LevelSuccess) {
             // Navigate to the learning focus selection page after level selection
-            Navigator.of(
-              context,
-            ).pushReplacementNamed(PageName.learningFocusSelection);
+            Navigator.of(context).pushNamed(PageName.learningFocusSelection);
           } else if (state is LevelError) {
             ScaffoldMessenger.of(
               context,
@@ -62,7 +60,7 @@ class LevelSelectionPage extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  GGap.v24,
+                  GGap.g24,
                   // Beginner
                   LevelOptionCard(
                     title: l10n.levelBeginner,

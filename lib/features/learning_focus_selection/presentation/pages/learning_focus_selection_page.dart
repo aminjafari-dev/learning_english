@@ -52,14 +52,16 @@ class LearningFocusSelectionPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Top section: Title and Back Button
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24.0,
-                  vertical: 16.0,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            
+                 Row(
+                  
                   children: [
+
+                    // Back button with localized text
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: Icon(Icons.arrow_back_ios_new_rounded, size: 24,),
+                    ),
                     // Title
                     GText(
                       l10n.learningFocusTitle,
@@ -67,18 +69,10 @@ class LearningFocusSelectionPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    // Back button with localized text
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: GText(
-                        l10n.learningFocusBack,
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
                   ],
                 ),
-              ),
-              GGap.v16,
+              
+              GGap.g16,
               // Grid of learning focus options with selection logic
               Expanded(
                 child: Padding(
@@ -93,9 +87,10 @@ class LearningFocusSelectionPage extends StatelessWidget {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              mainAxisSpacing: 16,
-                              crossAxisSpacing: 16,
-                              childAspectRatio: 2.6,
+                              mainAxisSpacing: 12,
+                              crossAxisSpacing: 12,
+                              childAspectRatio:
+                                  2, // Reduced for more vertical space
                             ),
                         itemBuilder: (context, index) {
                           final option = options[index];

@@ -58,8 +58,8 @@ class AuthenticationPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GGap.v24,
-                  GGap.v24,
+                  GGap.g24,
+                  GGap.g24,
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: Image.asset(
@@ -67,7 +67,7 @@ class AuthenticationPage extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  GGap.v24,
+                  GGap.g24,
                   // Title
                   GText(
                     AppLocalizations.of(context)!.learnEnglishTitle,
@@ -77,7 +77,7 @@ class AuthenticationPage extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  GGap.v24,
+                  GGap.g24,
                   // Google login button or loading
                   if (state is Loading)
                     const CircularProgressIndicator()
@@ -88,7 +88,7 @@ class AuthenticationPage extends StatelessWidget {
                             const AuthenticationEvent.googleSignIn(),
                           ),
                     ),
-                  GGap.v24,
+                  GGap.g24,
                   // Terms & Conditions text
                   Spacer(),
                   GText(
@@ -96,7 +96,7 @@ class AuthenticationPage extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                     textAlign: TextAlign.center,
                   ),
-                  GGap.v24,
+                  GGap.g24,
                 ],
               ),
             ),

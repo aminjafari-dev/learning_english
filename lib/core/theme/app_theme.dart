@@ -28,6 +28,18 @@ class AppTheme {
   // White for text/icons on dark backgrounds
   static const Color white = Color(0xFFFFFFFF);
 
+  /// Gold color for highlights and buttons
+  static Color get gold => primaryColor;
+
+  /// Main background color
+  static Color get background => backgroundColor;
+
+  /// Surface/card color
+  static Color get surface => surfaceColor;
+
+  /// Hint/secondary text color
+  static Color get hint => accentColor;
+
   /// Light theme for the app using the defined color palette.
   static ThemeData get lightTheme => ThemeData(
     primaryColor: primaryColor,

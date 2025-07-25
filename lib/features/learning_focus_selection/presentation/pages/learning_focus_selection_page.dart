@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/core/widgets/g_scaffold.dart';
 import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/core/widgets/g_gap.dart';
@@ -7,8 +8,7 @@ import 'package:learning_english/core/widgets/g_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../widgets/learning_focus_option_card.dart';
 import '../bloc/learning_focus_selection_cubit.dart';
-import '../../domain/usecases/save_learning_focus_selection_usecase.dart';
-import '../../data/repositories/learning_focus_selection_repository_impl.dart';
+import 'package:learning_english/core/router/page_name.dart';
 
 /// The main page for selecting learning focus options.
 ///
@@ -18,7 +18,7 @@ import '../../data/repositories/learning_focus_selection_repository_impl.dart';
 /// ```
 /// This page displays a title, a back button, a grid of selectable options, and a continue button.
 class LearningFocusSelectionPage extends StatelessWidget {
-  const LearningFocusSelectionPage({Key? key}) : super(key: key);
+  const LearningFocusSelectionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,39 +39,31 @@ class LearningFocusSelectionPage extends StatelessWidget {
       _LearningFocusOption(Icons.emoji_emotions, l10n.learningFocusEveryday),
     ];
 
-    // Set up repository and use case for DI (in real app, use getIt or similar)
-    final repository = LearningFocusSelectionRepositoryImpl();
-    final saveUseCase = SaveLearningFocusSelectionUseCase(repository);
 
-    return BlocProvider(
-      create: (_) => LearningFocusSelectionCubit(saveUseCase),
-      child: GScaffold(
+    return  GScaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Top section: Title and Back Button
-            
-                 Row(
-                  
-                  children: [
+              Row(
+                children: [
+                  // Back button with localized text
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: Icon(Icons.arrow_back_ios_new_rounded, size: 24),
+                  ),
+                  // Title
+                  GText(
+                    l10n.learningFocusTitle,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
 
-                    // Back button with localized text
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(Icons.arrow_back_ios_new_rounded, size: 24,),
-                    ),
-                    // Title
-                    GText(
-                      l10n.learningFocusTitle,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              
               GGap.g16,
               // Grid of learning focus options with selection logic
               Expanded(
@@ -81,6 +73,7 @@ class LearningFocusSelectionPage extends StatelessWidget {
                     LearningFocusSelectionCubit,
                     LearningFocusSelectionState
                   >(
+                    bloc: getIt<LearningFocusSelectionCubit>(),
                     builder: (context, state) {
                       return GridView.builder(
                         itemCount: options.length,
@@ -104,8 +97,7 @@ class LearningFocusSelectionPage extends StatelessWidget {
                             subtitle: '',
                             selected: selected,
                             onTap: () {
-                              context
-                                  .read<LearningFocusSelectionCubit>()
+                              getIt<LearningFocusSelectionCubit>()
                                   .toggleSelection(index);
                             },
                           );
@@ -122,6 +114,7 @@ class LearningFocusSelectionPage extends StatelessWidget {
                   LearningFocusSelectionCubit,
                   LearningFocusSelectionState
                 >(
+                  bloc: getIt<LearningFocusSelectionCubit>(),
                   listenWhen:
                       (prev, curr) => curr.saveSuccess && !prev.saveSuccess,
                   listener: (context, state) {
@@ -129,7 +122,10 @@ class LearningFocusSelectionPage extends StatelessWidget {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(l10n.learningFocusSavedSnack)),
                     );
-                    // TODO: Replace with actual navigation
+                    // Navigate to Daily Lessons page after successful save
+                    Navigator.of(
+                      context,
+                    ).pushNamed(PageName.dailyLessons);
                   },
                   builder: (context, state) {
                     final isEnabled = state.selectedIndices.isNotEmpty;
@@ -138,8 +134,7 @@ class LearningFocusSelectionPage extends StatelessWidget {
                       onPressed:
                           isEnabled
                               ? () {
-                                context
-                                    .read<LearningFocusSelectionCubit>()
+                                getIt<LearningFocusSelectionCubit>()
                                     .saveSelection();
                               }
                               : null,
@@ -163,7 +158,7 @@ class LearningFocusSelectionPage extends StatelessWidget {
                 ),
               ),
             ],
-          ),
+          
         ),
       ),
     );

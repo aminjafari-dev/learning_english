@@ -39,7 +39,7 @@ void signInDi(GetIt locator) {
   );
 
   // Bloc
-  getIt.registerFactory<AuthenticationBloc>(
-    () => AuthenticationBloc(signInWithGoogleUseCase: getIt()),
+  getIt.registerSingleton(
+    AuthenticationBloc(signInWithGoogleUseCase: getIt()),
   );
 }

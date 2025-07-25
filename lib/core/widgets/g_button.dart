@@ -15,6 +15,7 @@ class GButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final ButtonStyle? style;
   final Widget? icon;
+  final Color? color;
 
   const GButton({
     super.key,
@@ -22,13 +23,14 @@ class GButton extends StatelessWidget {
     this.onPressed,
     this.style,
     this.icon,
+    this.color,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: style,
+      style: style ?? ElevatedButton.styleFrom(backgroundColor: color),
       child:
           icon == null
               ? GText(text)

@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import '../../domain/usecases/save_learning_focus_selection_usecase.dart';
@@ -5,7 +6,7 @@ import '../../domain/usecases/save_learning_focus_selection_usecase.dart';
 /// State class for LearningFocusSelectionCubit.
 /// Holds a set of selected option indices and a flag for save success.
 @immutable
-class LearningFocusSelectionState {
+class LearningFocusSelectionState extends Equatable {
   final Set<int> selectedIndices;
   final bool saveSuccess;
   const LearningFocusSelectionState({
@@ -22,6 +23,9 @@ class LearningFocusSelectionState {
       saveSuccess: saveSuccess ?? this.saveSuccess,
     );
   }
+
+  @override
+  List<Object?> get props => [selectedIndices, saveSuccess];
 }
 
 /// Cubit for managing the selection state of learning focus options.

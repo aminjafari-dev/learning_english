@@ -31,9 +31,8 @@ class AuthenticationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<AuthenticationBloc>(),
-      child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+    return BlocConsumer<AuthenticationBloc, AuthenticationState>(
+        bloc: getIt<AuthenticationBloc>(),
         listener: (context, state) {
           state.whenOrNull(
             authenticated: (user) {
@@ -84,7 +83,7 @@ class AuthenticationPage extends StatelessWidget {
                   else
                     GoogleSignInButton(
                       onPressed:
-                          () => context.read<AuthenticationBloc>().add(
+                          () => getIt<AuthenticationBloc>().add(
                             const AuthenticationEvent.googleSignIn(),
                           ),
                     ),
@@ -102,7 +101,7 @@ class AuthenticationPage extends StatelessWidget {
             ),
           );
         },
-      ),
+      
     );
   }
 }

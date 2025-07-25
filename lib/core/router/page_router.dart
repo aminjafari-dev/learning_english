@@ -8,6 +8,7 @@ import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/features/authentication/presentation/pages/authentication_page.dart';
 import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
 import 'package:learning_english/features/learning_focus_selection/presentation/pages/learning_focus_selection_page.dart';
+import 'package:learning_english/features/daily_lessons/presentation/pages/daily_lessons_page.dart';
 
 class PageRouter {
   /// Map of all named routes in the app
@@ -16,5 +17,7 @@ class PageRouter {
     PageName.levelSelection: (context) => const LevelSelectionPage(),
     PageName.learningFocusSelection:
         (context) => const LearningFocusSelectionPage(),
+    // Daily Lessons page
+    PageName.dailyLessons: (context) => const DailyLessonsPage(),
   };
 }

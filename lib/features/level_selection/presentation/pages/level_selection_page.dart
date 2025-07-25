@@ -27,9 +27,8 @@ class LevelSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return BlocProvider<LevelBloc>(
-      create: (_) => getIt<LevelBloc>(),
-      child: BlocConsumer<LevelBloc, LevelState>(
+    return BlocConsumer<LevelBloc, LevelState>(
+      bloc: getIt<LevelBloc>(),
         listener: (context, state) {
           if (state is LevelSuccess) {
             // Navigate to the learning focus selection page after level selection
@@ -67,7 +66,7 @@ class LevelSelectionPage extends StatelessWidget {
                     subtitle: l10n.levelBeginnerDesc,
                     selected: selectedLevel == Level.beginner,
                     onTap:
-                        () => context.read<LevelBloc>().add(
+                        () => getIt<LevelBloc>().add(
                           const LevelEvent.levelSelected(Level.beginner),
                         ),
                   ),
@@ -77,7 +76,7 @@ class LevelSelectionPage extends StatelessWidget {
                     subtitle: l10n.levelElementaryDesc,
                     selected: selectedLevel == Level.elementary,
                     onTap:
-                        () => context.read<LevelBloc>().add(
+                        () => getIt<LevelBloc>().add(
                           const LevelEvent.levelSelected(Level.elementary),
                         ),
                   ),
@@ -87,7 +86,7 @@ class LevelSelectionPage extends StatelessWidget {
                     subtitle: l10n.levelIntermediateDesc,
                     selected: selectedLevel == Level.intermediate,
                     onTap:
-                        () => context.read<LevelBloc>().add(
+                        () => getIt<LevelBloc>().add(
                           const LevelEvent.levelSelected(Level.intermediate),
                         ),
                   ),
@@ -97,7 +96,7 @@ class LevelSelectionPage extends StatelessWidget {
                     subtitle: l10n.levelAdvancedDesc,
                     selected: selectedLevel == Level.advanced,
                     onTap:
-                        () => context.read<LevelBloc>().add(
+                        () => getIt<LevelBloc>().add(
                           const LevelEvent.levelSelected(Level.advanced),
                         ),
                   ),
@@ -110,7 +109,7 @@ class LevelSelectionPage extends StatelessWidget {
                       onPressed:
                           selectedLevel == null
                               ? null
-                              : () => context.read<LevelBloc>().add(
+                              : () => getIt<LevelBloc>().add(
                                 const LevelEvent.levelSubmitted(),
                               ),
                       style: ElevatedButton.styleFrom(
@@ -128,10 +127,9 @@ class LevelSelectionPage extends StatelessWidget {
                     ),
                 ],
               ),
-            ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

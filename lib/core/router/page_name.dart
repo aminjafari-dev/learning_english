@@ -12,4 +12,7 @@ class PageName {
 
   /// Route for the learning focus selection page
   static const String learningFocusSelection = '/learning_focus_selection';
+
+  /// Route for the Daily Lessons page
+  static const String dailyLessons = '/dailyLessons';
 }

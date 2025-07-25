@@ -30,13 +30,13 @@ class LearningFocusOptionCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const LearningFocusOptionCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
     required this.selected,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

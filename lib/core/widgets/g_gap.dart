@@ -5,7 +5,7 @@
 ///     return Column(
 ///       children: [
 ///         Text('Above'),
-///         GGap.v16, // 16px vertical gap
+///         GGap.g16, // 16px gap
 ///         Text('Below'),
 ///       ],
 ///     );

@@ -45,8 +45,8 @@ void setupLevelSelectionDI(GetIt getIt) {
   }
 
   // Bloc
-  getIt.registerFactory<LevelBloc>(
-    () => LevelBloc(
+  getIt.registerSingleton<LevelBloc>(
+     LevelBloc(
       saveUserLevelUseCase: getIt<SaveUserLevelUseCase>(),
       getUserIdUseCase: getIt<GetUserIdUseCase>(),
     ),

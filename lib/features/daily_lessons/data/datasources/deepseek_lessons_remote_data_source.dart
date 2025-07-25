@@ -4,6 +4,7 @@
 // final dataSource = DeepSeekLessonsRemoteDataSource(apiKey: 'YOUR_DEEPSEEK_API_KEY');
 // final vocabResult = await dataSource.fetchDailyVocabularies();
 // final phraseResult = await dataSource.fetchDailyPhrases();
+// final lessonsResult = await dataSource.fetchDailyLessons(); // More cost-effective
 
 import 'package:dartz/dartz.dart';
 import '../../domain/entities/vocabulary.dart';
@@ -17,8 +18,7 @@ class DeepSeekLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
   final Dio dio;
   final String apiKey;
   static const String _deepSeekEndpoint =
-      'https://api.deepseek.com/chat/completions';
-  static const String _model = 'deepseek-chat';
+      'https://api.deepseek.com/v1/chat/completions';
 
   DeepSeekLessonsRemoteDataSource({Dio? dio, required this.apiKey})
     : dio = dio ?? Dio();
@@ -35,7 +35,7 @@ class DeepSeekLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
           },
         ),
         data: {
-          'model': _model,
+          'model': 'deepseek-chat',
           'messages': [
             {
               'role': 'system',
@@ -49,7 +49,6 @@ class DeepSeekLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
             },
           ],
           'max_tokens': 256,
-          'response_format': {'type': 'json_object'},
         },
       );
       final content = response.data['choices'][0]['message']['content'];
@@ -80,7 +79,7 @@ class DeepSeekLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
           },
         ),
         data: {
-          'model': _model,
+          'model': 'deepseek-chat',
           'messages': [
             {
               'role': 'system',
@@ -93,7 +92,6 @@ class DeepSeekLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
             },
           ],
           'max_tokens': 256,
-          'response_format': {'type': 'json_object'},
         },
       );
       final content = response.data['choices'][0]['message']['content'];
@@ -105,6 +103,63 @@ class DeepSeekLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
       return right(phrases);
     } catch (e) {
       return left(ServerFailure('Failed to fetch phrases: ${e.toString()}'));
+    }
+  }
+
+  @override
+  Future<
+    Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>
+  >
+  fetchDailyLessons() async {
+    try {
+      final response = await dio.post(
+        _deepSeekEndpoint,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $apiKey',
+            'Content-Type': 'application/json',
+          },
+        ),
+        data: {
+          'model': 'deepseek-chat',
+          'messages': [
+            {
+              'role': 'system',
+              'content':
+                  'You are an English teacher. Provide both vocabulary words and phrases for daily learning. Respond in JSON format with two arrays: vocabularies and phrases. Each vocabulary should have English and Persian translations, and each phrase should have English and Persian translations.',
+            },
+            {
+              'role': 'user',
+              'content':
+                  'Give me 4 English vocabulary words and 2 English phrases, all with Persian translations.',
+            },
+          ],
+          'max_tokens': 512,
+        },
+      );
+      final content = response.data['choices'][0]['message']['content'];
+      final Map<String, dynamic> lessonsData = jsonDecode(content);
+
+      final List<dynamic> vocabList = lessonsData['vocabularies'] ?? [];
+      final List<dynamic> phraseList = lessonsData['phrases'] ?? [];
+
+      final vocabularies =
+          vocabList
+              .map(
+                (e) => Vocabulary(english: e['english'], persian: e['persian']),
+              )
+              .toList();
+
+      final phrases =
+          phraseList
+              .map((e) => Phrase(english: e['english'], persian: e['persian']))
+              .toList();
+
+      return right((vocabularies: vocabularies, phrases: phrases));
+    } catch (e) {
+      return left(
+        ServerFailure('Failed to fetch daily lessons: ${e.toString()}'),
+      );
     }
   }
 }

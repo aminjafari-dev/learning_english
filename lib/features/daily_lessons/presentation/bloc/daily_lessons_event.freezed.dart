@@ -55,12 +55,13 @@ extension DailyLessonsEventPatterns on DailyLessonsEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( FetchVocabularies value)?  fetchVocabularies,TResult Function( FetchPhrases value)?  fetchPhrases,TResult Function( RefreshLessons value)?  refreshLessons,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( FetchVocabularies value)?  fetchVocabularies,TResult Function( FetchPhrases value)?  fetchPhrases,TResult Function( FetchLessons value)?  fetchLessons,TResult Function( RefreshLessons value)?  refreshLessons,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case FetchVocabularies() when fetchVocabularies != null:
 return fetchVocabularies(_that);case FetchPhrases() when fetchPhrases != null:
-return fetchPhrases(_that);case RefreshLessons() when refreshLessons != null:
+return fetchPhrases(_that);case FetchLessons() when fetchLessons != null:
+return fetchLessons(_that);case RefreshLessons() when refreshLessons != null:
 return refreshLessons(_that);case _:
   return orElse();
 
@@ -79,12 +80,13 @@ return refreshLessons(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( FetchVocabularies value)  fetchVocabularies,required TResult Function( FetchPhrases value)  fetchPhrases,required TResult Function( RefreshLessons value)  refreshLessons,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( FetchVocabularies value)  fetchVocabularies,required TResult Function( FetchPhrases value)  fetchPhrases,required TResult Function( FetchLessons value)  fetchLessons,required TResult Function( RefreshLessons value)  refreshLessons,}){
 final _that = this;
 switch (_that) {
 case FetchVocabularies():
 return fetchVocabularies(_that);case FetchPhrases():
-return fetchPhrases(_that);case RefreshLessons():
+return fetchPhrases(_that);case FetchLessons():
+return fetchLessons(_that);case RefreshLessons():
 return refreshLessons(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -102,12 +104,13 @@ return refreshLessons(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( FetchVocabularies value)?  fetchVocabularies,TResult? Function( FetchPhrases value)?  fetchPhrases,TResult? Function( RefreshLessons value)?  refreshLessons,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( FetchVocabularies value)?  fetchVocabularies,TResult? Function( FetchPhrases value)?  fetchPhrases,TResult? Function( FetchLessons value)?  fetchLessons,TResult? Function( RefreshLessons value)?  refreshLessons,}){
 final _that = this;
 switch (_that) {
 case FetchVocabularies() when fetchVocabularies != null:
 return fetchVocabularies(_that);case FetchPhrases() when fetchPhrases != null:
-return fetchPhrases(_that);case RefreshLessons() when refreshLessons != null:
+return fetchPhrases(_that);case FetchLessons() when fetchLessons != null:
+return fetchLessons(_that);case RefreshLessons() when refreshLessons != null:
 return refreshLessons(_that);case _:
   return null;
 
@@ -125,11 +128,12 @@ return refreshLessons(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchVocabularies,TResult Function()?  fetchPhrases,TResult Function()?  refreshLessons,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchVocabularies,TResult Function()?  fetchPhrases,TResult Function()?  fetchLessons,TResult Function()?  refreshLessons,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case FetchVocabularies() when fetchVocabularies != null:
 return fetchVocabularies();case FetchPhrases() when fetchPhrases != null:
-return fetchPhrases();case RefreshLessons() when refreshLessons != null:
+return fetchPhrases();case FetchLessons() when fetchLessons != null:
+return fetchLessons();case RefreshLessons() when refreshLessons != null:
 return refreshLessons();case _:
   return orElse();
 
@@ -148,11 +152,12 @@ return refreshLessons();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchVocabularies,required TResult Function()  fetchPhrases,required TResult Function()  refreshLessons,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchVocabularies,required TResult Function()  fetchPhrases,required TResult Function()  fetchLessons,required TResult Function()  refreshLessons,}) {final _that = this;
 switch (_that) {
 case FetchVocabularies():
 return fetchVocabularies();case FetchPhrases():
-return fetchPhrases();case RefreshLessons():
+return fetchPhrases();case FetchLessons():
+return fetchLessons();case RefreshLessons():
 return refreshLessons();case _:
   throw StateError('Unexpected subclass');
 
@@ -170,11 +175,12 @@ return refreshLessons();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchVocabularies,TResult? Function()?  fetchPhrases,TResult? Function()?  refreshLessons,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchVocabularies,TResult? Function()?  fetchPhrases,TResult? Function()?  fetchLessons,TResult? Function()?  refreshLessons,}) {final _that = this;
 switch (_that) {
 case FetchVocabularies() when fetchVocabularies != null:
 return fetchVocabularies();case FetchPhrases() when fetchPhrases != null:
-return fetchPhrases();case RefreshLessons() when refreshLessons != null:
+return fetchPhrases();case FetchLessons() when fetchLessons != null:
+return fetchLessons();case RefreshLessons() when refreshLessons != null:
 return refreshLessons();case _:
   return null;
 
@@ -239,6 +245,38 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'DailyLessonsEvent.fetchPhrases()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class FetchLessons implements DailyLessonsEvent {
+  const FetchLessons();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FetchLessons);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'DailyLessonsEvent.fetchLessons()';
 }
 
 

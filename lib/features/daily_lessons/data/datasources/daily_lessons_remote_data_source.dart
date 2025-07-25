@@ -55,4 +55,10 @@ class MultiModelLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
   Future<Either<Failure, List<Phrase>>> fetchDailyPhrases() {
     return _delegate.fetchDailyPhrases();
   }
+
+  @override
+  Future<Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>>
+  fetchDailyLessons() {
+    return _delegate.fetchDailyLessons();
+  }
 }

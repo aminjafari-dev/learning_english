@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/core/widgets/g_gap.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
-import '../bloc/daily_lessons_state.dart';
+import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';
 
 class VocabularySection extends StatelessWidget {
   final VocabulariesState state;
-  const VocabularySection({Key? key, required this.state}) : super(key: key);
+  const VocabularySection({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {

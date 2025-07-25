@@ -115,10 +115,6 @@ class LearningFocusSelectionPage extends StatelessWidget {
                 listenWhen:
                     (prev, curr) => curr.saveSuccess && !prev.saveSuccess,
                 listener: (context, state) {
-                  // Show localized SnackBar after save
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(l10n.learningFocusSavedSnack)),
-                  );
                   // Navigate to Daily Lessons page after successful save
                   Navigator.of(context).pushNamed(PageName.dailyLessons);
                 },

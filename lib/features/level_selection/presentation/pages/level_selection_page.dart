@@ -29,104 +29,166 @@ class LevelSelectionPage extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return BlocConsumer<LevelBloc, LevelState>(
       bloc: getIt<LevelBloc>(),
-        listener: (context, state) {
-          if (state is LevelSuccess) {
+      listener: (context, state) {
+        state.when(
+          initial: () {},
+          selectionMade: (_) {},
+          loading: (_) {},
+          success: (_) {
             // Navigate to the learning focus selection page after level selection
             Navigator.of(context).pushNamed(PageName.learningFocusSelection);
-          } else if (state is LevelError) {
+          },
+          error: (message, _) {
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: GText(state.message)));
-          }
-        },
-        builder: (context, state) {
-          Level? selectedLevel;
-          if (state is LevelSelectionMade) {
-            selectedLevel = state.level;
-          } else if (state is LevelInitial) {
-            selectedLevel = null;
-          }
-          return GScaffold(
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: GText(
-                      l10n.levelSelectionTitle,
-                      style: Theme.of(context).textTheme.titleLarge,
-                      textAlign: TextAlign.center,
-                    ),
+            ).showSnackBar(SnackBar(content: GText(message)));
+          },
+        );
+      },
+      builder: (context, state) {
+        // Extract selected level from any state that has it
+        Level? selectedLevel = state.when(
+          initial: () => null,
+          selectionMade: (level) => level,
+          loading: (level) => level,
+          success: (level) => level,
+          error: (message, level) => level,
+        );
+
+        return GScaffold(
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: GText(
+                    l10n.levelSelectionTitle,
+                    style: Theme.of(context).textTheme.titleLarge,
+                    textAlign: TextAlign.center,
                   ),
-                  GGap.g24,
-                  // Beginner
-                  LevelOptionCard(
-                    title: l10n.levelBeginner,
-                    subtitle: l10n.levelBeginnerDesc,
-                    selected: selectedLevel == Level.beginner,
-                    onTap:
-                        () => getIt<LevelBloc>().add(
-                          const LevelEvent.levelSelected(Level.beginner),
-                        ),
-                  ),
-                  // Elementary
-                  LevelOptionCard(
-                    title: l10n.levelElementary,
-                    subtitle: l10n.levelElementaryDesc,
-                    selected: selectedLevel == Level.elementary,
-                    onTap:
-                        () => getIt<LevelBloc>().add(
-                          const LevelEvent.levelSelected(Level.elementary),
-                        ),
-                  ),
-                  // Intermediate
-                  LevelOptionCard(
-                    title: l10n.levelIntermediate,
-                    subtitle: l10n.levelIntermediateDesc,
-                    selected: selectedLevel == Level.intermediate,
-                    onTap:
-                        () => getIt<LevelBloc>().add(
-                          const LevelEvent.levelSelected(Level.intermediate),
-                        ),
-                  ),
-                  // Advanced
-                  LevelOptionCard(
-                    title: l10n.levelAdvanced,
-                    subtitle: l10n.levelAdvancedDesc,
-                    selected: selectedLevel == Level.advanced,
-                    onTap:
-                        () => getIt<LevelBloc>().add(
-                          const LevelEvent.levelSelected(Level.advanced),
-                        ),
-                  ),
-                  const Spacer(),
-                  if (state is LevelLoading)
-                    const Center(child: CircularProgressIndicator())
-                  else
-                    GButton(
-                      text: l10n.continue_,
-                      onPressed:
-                          selectedLevel == null
-                              ? null
-                              : () => getIt<LevelBloc>().add(
-                                const LevelEvent.levelSubmitted(),
-                              ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(48),
-                        backgroundColor:
-                            selectedLevel == null
-                                ? Theme.of(context).disabledColor
-                                : Theme.of(context).colorScheme.primary,
-                        foregroundColor:
-                            Theme.of(context).colorScheme.onPrimary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                ),
+                GGap.g24,
+                // Beginner
+                LevelOptionCard(
+                  title: l10n.levelBeginner,
+                  subtitle: l10n.levelBeginnerDesc,
+                  selected: selectedLevel == Level.beginner,
+                  onTap:
+                      () => getIt<LevelBloc>().add(
+                        const LevelEvent.levelSelected(Level.beginner),
+                      ),
+                ),
+                // Elementary
+                LevelOptionCard(
+                  title: l10n.levelElementary,
+                  subtitle: l10n.levelElementaryDesc,
+                  selected: selectedLevel == Level.elementary,
+                  onTap:
+                      () => getIt<LevelBloc>().add(
+                        const LevelEvent.levelSelected(Level.elementary),
+                      ),
+                ),
+                // Intermediate
+                LevelOptionCard(
+                  title: l10n.levelIntermediate,
+                  subtitle: l10n.levelIntermediateDesc,
+                  selected: selectedLevel == Level.intermediate,
+                  onTap:
+                      () => getIt<LevelBloc>().add(
+                        const LevelEvent.levelSelected(Level.intermediate),
+                      ),
+                ),
+                // Advanced
+                LevelOptionCard(
+                  title: l10n.levelAdvanced,
+                  subtitle: l10n.levelAdvancedDesc,
+                  selected: selectedLevel == Level.advanced,
+                  onTap:
+                      () => getIt<LevelBloc>().add(
+                        const LevelEvent.levelSelected(Level.advanced),
+                      ),
+                ),
+                const Spacer(),
+                state.when(
+                  initial:
+                      () => GButton(
+                        text: l10n.continue_,
+                        onPressed: null,
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(48),
+                          backgroundColor: Theme.of(context).disabledColor,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                       ),
-                    ),
-                ],
-              ),
+                  selectionMade:
+                      (level) => GButton(
+                        text: l10n.continue_,
+                        onPressed:
+                            () => getIt<LevelBloc>().add(
+                              const LevelEvent.levelSubmitted(),
+                            ),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(48),
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                  loading:
+                      (level) =>
+                          const Center(child: CircularProgressIndicator()),
+                  success:
+                      (level) => GButton(
+                        text: l10n.continue_,
+                        onPressed:
+                            () => getIt<LevelBloc>().add(
+                              const LevelEvent.levelSubmitted(),
+                            ),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(48),
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                  error:
+                      (message, level) => GButton(
+                        text: l10n.continue_,
+                        onPressed:
+                            level == null
+                                ? null
+                                : () => getIt<LevelBloc>().add(
+                                  const LevelEvent.levelSubmitted(),
+                                ),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(48),
+                          backgroundColor:
+                              level == null
+                                  ? Theme.of(context).disabledColor
+                                  : Theme.of(context).colorScheme.primary,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                ),
+              ],
+            ),
           ),
         );
       },

@@ -38,21 +38,26 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     Emitter<LevelState> emit,
   ) async {
     if (_selectedLevel == null) {
-      emit(const LevelState.error('No level selected'));
+      emit(const LevelState.error('No level selected', null));
       return;
     }
-    emit(const LevelState.loading());
+    emit(LevelState.loading(_selectedLevel!));
     // Retrieve userId from local storage using the use case
     final userIdResult = await getUserIdUseCase(NoParams());
     final userId = userIdResult.fold((failure) => null, (id) => id);
     if (userId == null) {
-      emit(const LevelState.error('User ID not found. Please log in again.'));
+      emit(
+        LevelState.error(
+          'User ID not found. Please log in again.',
+          _selectedLevel,
+        ),
+      );
       return;
     }
     final result = await saveUserLevelUseCase(userId, _selectedLevel!);
     result.fold(
-      (failure) => emit(LevelState.error(failure.message)),
-      (_) => emit(const LevelState.success()),
+      (failure) => emit(LevelState.error(failure.message, _selectedLevel)),
+      (_) => emit(LevelState.success(_selectedLevel!)),
     );
   }
 }

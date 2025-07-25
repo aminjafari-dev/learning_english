@@ -16,12 +16,12 @@ class LevelState with _$LevelState {
   /// State when a level is selected
   const factory LevelState.selectionMade(Level level) = LevelSelectionMade;
 
-  /// State when loading
-  const factory LevelState.loading() = LevelLoading;
+  /// State when loading (with selected level maintained)
+  const factory LevelState.loading(Level level) = LevelLoading;
 
-  /// State when submission is successful
-  const factory LevelState.success() = LevelSuccess;
+  /// State when submission is successful (with selected level maintained)
+  const factory LevelState.success(Level level) = LevelSuccess;
 
-  /// State when an error occurs
-  const factory LevelState.error(String message) = LevelError;
+  /// State when an error occurs (with selected level maintained)
+  const factory LevelState.error(String message, Level? level) = LevelError;
 }

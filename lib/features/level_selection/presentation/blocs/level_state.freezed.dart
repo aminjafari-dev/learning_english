@@ -131,14 +131,14 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( Level level)?  selectionMade,TResult Function()?  loading,TResult Function()?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( Level level)?  selectionMade,TResult Function( Level level)?  loading,TResult Function( Level level)?  success,TResult Function( String message,  Level? level)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LevelInitial() when initial != null:
 return initial();case LevelSelectionMade() when selectionMade != null:
 return selectionMade(_that.level);case LevelLoading() when loading != null:
-return loading();case LevelSuccess() when success != null:
-return success();case LevelError() when error != null:
-return error(_that.message);case _:
+return loading(_that.level);case LevelSuccess() when success != null:
+return success(_that.level);case LevelError() when error != null:
+return error(_that.message,_that.level);case _:
   return orElse();
 
 }
@@ -156,14 +156,14 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( Level level)  selectionMade,required TResult Function()  loading,required TResult Function()  success,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( Level level)  selectionMade,required TResult Function( Level level)  loading,required TResult Function( Level level)  success,required TResult Function( String message,  Level? level)  error,}) {final _that = this;
 switch (_that) {
 case LevelInitial():
 return initial();case LevelSelectionMade():
 return selectionMade(_that.level);case LevelLoading():
-return loading();case LevelSuccess():
-return success();case LevelError():
-return error(_that.message);case _:
+return loading(_that.level);case LevelSuccess():
+return success(_that.level);case LevelError():
+return error(_that.message,_that.level);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -180,14 +180,14 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( Level level)?  selectionMade,TResult? Function()?  loading,TResult? Function()?  success,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( Level level)?  selectionMade,TResult? Function( Level level)?  loading,TResult? Function( Level level)?  success,TResult? Function( String message,  Level? level)?  error,}) {final _that = this;
 switch (_that) {
 case LevelInitial() when initial != null:
 return initial();case LevelSelectionMade() when selectionMade != null:
 return selectionMade(_that.level);case LevelLoading() when loading != null:
-return loading();case LevelSuccess() when success != null:
-return success();case LevelError() when error != null:
-return error(_that.message);case _:
+return loading(_that.level);case LevelSuccess() when success != null:
+return success(_that.level);case LevelError() when error != null:
+return error(_that.message,_that.level);case _:
   return null;
 
 }
@@ -297,74 +297,143 @@ as Level,
 
 
 class LevelLoading implements LevelState {
-  const LevelLoading();
+  const LevelLoading(this.level);
   
 
+ final  Level level;
 
-
+/// Create a copy of LevelState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LevelLoadingCopyWith<LevelLoading> get copyWith => _$LevelLoadingCopyWithImpl<LevelLoading>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LevelLoading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LevelLoading&&(identical(other.level, level) || other.level == level));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,level);
 
 @override
 String toString() {
-  return 'LevelState.loading()';
+  return 'LevelState.loading(level: $level)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class $LevelLoadingCopyWith<$Res> implements $LevelStateCopyWith<$Res> {
+  factory $LevelLoadingCopyWith(LevelLoading value, $Res Function(LevelLoading) _then) = _$LevelLoadingCopyWithImpl;
+@useResult
+$Res call({
+ Level level
+});
 
 
+
+
+}
+/// @nodoc
+class _$LevelLoadingCopyWithImpl<$Res>
+    implements $LevelLoadingCopyWith<$Res> {
+  _$LevelLoadingCopyWithImpl(this._self, this._then);
+
+  final LevelLoading _self;
+  final $Res Function(LevelLoading) _then;
+
+/// Create a copy of LevelState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? level = null,}) {
+  return _then(LevelLoading(
+null == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
+as Level,
+  ));
+}
+
+
+}
 
 /// @nodoc
 
 
 class LevelSuccess implements LevelState {
-  const LevelSuccess();
+  const LevelSuccess(this.level);
   
 
+ final  Level level;
 
-
+/// Create a copy of LevelState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LevelSuccessCopyWith<LevelSuccess> get copyWith => _$LevelSuccessCopyWithImpl<LevelSuccess>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LevelSuccess);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LevelSuccess&&(identical(other.level, level) || other.level == level));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,level);
 
 @override
 String toString() {
-  return 'LevelState.success()';
+  return 'LevelState.success(level: $level)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class $LevelSuccessCopyWith<$Res> implements $LevelStateCopyWith<$Res> {
+  factory $LevelSuccessCopyWith(LevelSuccess value, $Res Function(LevelSuccess) _then) = _$LevelSuccessCopyWithImpl;
+@useResult
+$Res call({
+ Level level
+});
 
 
+
+
+}
+/// @nodoc
+class _$LevelSuccessCopyWithImpl<$Res>
+    implements $LevelSuccessCopyWith<$Res> {
+  _$LevelSuccessCopyWithImpl(this._self, this._then);
+
+  final LevelSuccess _self;
+  final $Res Function(LevelSuccess) _then;
+
+/// Create a copy of LevelState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? level = null,}) {
+  return _then(LevelSuccess(
+null == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
+as Level,
+  ));
+}
+
+
+}
 
 /// @nodoc
 
 
 class LevelError implements LevelState {
-  const LevelError(this.message);
+  const LevelError(this.message, this.level);
   
 
  final  String message;
+ final  Level? level;
 
 /// Create a copy of LevelState
 /// with the given fields replaced by the non-null parameter values.
@@ -376,16 +445,16 @@ $LevelErrorCopyWith<LevelError> get copyWith => _$LevelErrorCopyWithImpl<LevelEr
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LevelError&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LevelError&&(identical(other.message, message) || other.message == message)&&(identical(other.level, level) || other.level == level));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,message);
+int get hashCode => Object.hash(runtimeType,message,level);
 
 @override
 String toString() {
-  return 'LevelState.error(message: $message)';
+  return 'LevelState.error(message: $message, level: $level)';
 }
 
 
@@ -396,7 +465,7 @@ abstract mixin class $LevelErrorCopyWith<$Res> implements $LevelStateCopyWith<$R
   factory $LevelErrorCopyWith(LevelError value, $Res Function(LevelError) _then) = _$LevelErrorCopyWithImpl;
 @useResult
 $Res call({
- String message
+ String message, Level? level
 });
 
 
@@ -413,10 +482,11 @@ class _$LevelErrorCopyWithImpl<$Res>
 
 /// Create a copy of LevelState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? message = null,Object? level = freezed,}) {
   return _then(LevelError(
 null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,
+as String,freezed == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
+as Level?,
   ));
 }
 

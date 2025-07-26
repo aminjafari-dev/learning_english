@@ -12,14 +12,14 @@
 // final phraseResult = await dataSource.fetchDailyPhrases();
 
 import 'package:dartz/dartz.dart';
-import '../../domain/entities/vocabulary.dart';
-import '../../domain/entities/phrase.dart';
+import '../../../domain/entities/vocabulary.dart';
+import '../../../domain/entities/phrase.dart';
 import 'package:learning_english/core/error/failure.dart';
 import 'ai_lessons_remote_data_source.dart';
 import 'openai_lessons_remote_data_source.dart';
 import 'gemini_lessons_remote_data_source.dart';
 import 'deepseek_lessons_remote_data_source.dart';
-import 'ai_provider_type.dart';
+import '../ai_provider_type.dart';
 
 /// Delegator for AI-based lessons data sources
 class MultiModelLessonsRemoteDataSource implements AiLessonsRemoteDataSource {

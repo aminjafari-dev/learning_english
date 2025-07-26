@@ -1,26 +1,39 @@
 // daily_lessons_di.dart
 // Dependency injection setup for the Daily Lessons feature.
 // Registers data sources, repository, use cases, and Bloc for Daily Lessons.
+// Now includes user-specific data storage and analytics functionality.
 
 import 'package:get_it/get_it.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/ai_provider_type.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/ai_lessons_remote_data_source.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/daily_lessons_remote_data_source.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/openai_lessons_remote_data_source.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/gemini_lessons_remote_data_source.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/deepseek_lessons_remote_data_source.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/remote/ai_lessons_remote_data_source.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/remote/daily_lessons_remote_data_source.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/local/daily_lessons_local_data_source.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/remote/openai_lessons_remote_data_source.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/remote/gemini_lessons_remote_data_source.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/remote/deepseek_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/repositories/daily_lessons_repository_impl.dart';
 import 'package:learning_english/features/daily_lessons/domain/repositories/daily_lessons_repository.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_daily_vocabularies_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_daily_phrases_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_daily_lessons_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/refresh_daily_lessons_usecase.dart';
+import 'package:learning_english/features/daily_lessons/domain/usecases/mark_vocabulary_as_used_usecase.dart';
+import 'package:learning_english/features/daily_lessons/domain/usecases/mark_phrase_as_used_usecase.dart';
+import 'package:learning_english/features/daily_lessons/domain/usecases/get_user_analytics_usecase.dart';
+import 'package:learning_english/features/daily_lessons/domain/usecases/clear_user_data_usecase.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_bloc.dart';
 
 /// Call this function to register all dependencies for Daily Lessons
+/// @param getIt The GetIt instance for dependency injection
 void setupDailyLessonsDI(GetIt getIt) {
-  // Data Source
+  // Local Data Source
+  getIt.registerLazySingleton<DailyLessonsLocalDataSource>(
+    () => DailyLessonsLocalDataSource(getIt<SharedPreferences>()),
+  );
+
+  // Remote Data Source
   // SECURITY: API keys should be stored securely (e.g., environment variables, secure storage, remote config)
   // For development, use placeholder values. In production, load from secure sources.
   getIt.registerLazySingleton<AiLessonsRemoteDataSource>(
@@ -39,10 +52,11 @@ void setupDailyLessonsDI(GetIt getIt) {
   );
 
   // Repository
-  // Now uses the AI-provider agnostic data source
+  // Now includes both remote and local data sources with user-specific functionality
   getIt.registerLazySingleton<DailyLessonsRepository>(
     () => DailyLessonsRepositoryImpl(
       remoteDataSource: getIt<AiLessonsRemoteDataSource>(),
+      localDataSource: getIt<DailyLessonsLocalDataSource>(),
     ),
   );
 
@@ -54,6 +68,12 @@ void setupDailyLessonsDI(GetIt getIt) {
   ); // New cost-effective use case
   getIt.registerFactory(() => RefreshDailyLessonsUseCase(getIt()));
 
+  // New user-specific use cases
+  getIt.registerFactory(() => MarkVocabularyAsUsedUseCase(getIt()));
+  getIt.registerFactory(() => MarkPhraseAsUsedUseCase(getIt()));
+  getIt.registerFactory(() => GetUserAnalyticsUseCase(getIt()));
+  getIt.registerFactory(() => ClearUserDataUseCase(getIt()));
+
   // Bloc
   getIt.registerSingleton(
     DailyLessonsBloc(
@@ -61,6 +81,10 @@ void setupDailyLessonsDI(GetIt getIt) {
       getDailyPhrasesUseCase: getIt(),
       getDailyLessonsUseCase: getIt(), // New cost-effective use case
       refreshDailyLessonsUseCase: getIt(),
+      markVocabularyAsUsedUseCase: getIt(), // New user-specific use case
+      markPhraseAsUsedUseCase: getIt(), // New user-specific use case
+      getUserAnalyticsUseCase: getIt(), // New analytics use case
+      clearUserDataUseCase: getIt(), // New user data management use case
     ),
   );
 }
@@ -84,5 +108,5 @@ String _getDeepSeekApiKey() {
 }
 
 // Example usage:
-// setupDailyLessonsDI();
+// setupDailyLessonsDI(getIt);
 // final bloc = getIt<DailyLessonsBloc>();

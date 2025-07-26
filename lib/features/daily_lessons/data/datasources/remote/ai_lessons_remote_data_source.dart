@@ -3,8 +3,8 @@
 // Implement this interface for each provider.
 
 import 'package:dartz/dartz.dart';
-import '../../domain/entities/vocabulary.dart';
-import '../../domain/entities/phrase.dart';
+import '../../../domain/entities/vocabulary.dart';
+import '../../../domain/entities/phrase.dart';
 import 'package:learning_english/core/error/failure.dart';
 
 /// Abstract interface for AI-based lessons data sources

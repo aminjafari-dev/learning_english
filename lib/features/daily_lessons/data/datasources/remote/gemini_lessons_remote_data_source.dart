@@ -9,8 +9,8 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
-import '../../domain/entities/vocabulary.dart';
-import '../../domain/entities/phrase.dart';
+import '../../../domain/entities/vocabulary.dart';
+import '../../../domain/entities/phrase.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:learning_english/core/error/failure.dart';

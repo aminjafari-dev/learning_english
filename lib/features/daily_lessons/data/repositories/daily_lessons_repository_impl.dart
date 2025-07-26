@@ -1,83 +1,152 @@
 // daily_lessons_repository_impl.dart
-// Implementation of the DailyLessonsRepository interface.
+// Enhanced implementation of the DailyLessonsRepository interface.
 // This class connects the data sources to the domain layer and handles mapping and error handling.
-//
-// Now uses the real OpenAI API via DailyLessonsRemoteDataSourceImpl.
-// Make sure to inject your OpenAI API key in the remote data source.
-//
-// This repository is AI-provider agnostic. It uses MultiModelLessonsRemoteDataSource to select the AI provider (OpenAI, Gemini, DeepSeek, etc.).
-// Example usage:
-// final dataSource = MultiModelLessonsRemoteDataSource(
-//   providerType: AiProviderType.openai,
-//   openAi: OpenAiLessonsRemoteDataSource(apiKey: 'YOUR_API_KEY'),
-//   gemini: GeminiLessonsRemoteDataSource(),
-//   deepSeek: DeepSeekLessonsRemoteDataSource(),
-// );
-// final repo = DailyLessonsRepositoryImpl(remoteDataSource: dataSource);
-// final vocabResult = await repo.getDailyVocabularies();
-// final phraseResult = await repo.getDailyPhrases();
-// final lessonsResult = await repo.getDailyLessons(); // More cost-effective
+// Now includes user-specific data storage and retrieval with metadata tracking.
 
 import 'package:dartz/dartz.dart';
 import '../../domain/entities/vocabulary.dart';
 import '../../domain/entities/phrase.dart';
 import '../../domain/repositories/daily_lessons_repository.dart';
-import '../datasources/ai_lessons_remote_data_source.dart';
+import '../datasources/remote/ai_lessons_remote_data_source.dart';
+import '../datasources/local/daily_lessons_local_data_source.dart';
+import '../datasources/ai_provider_type.dart';
+import '../models/vocabulary_model.dart';
+import '../models/phrase_model.dart';
 import 'package:learning_english/core/error/failure.dart';
 
-/// Implementation of DailyLessonsRepository
+/// Enhanced implementation of DailyLessonsRepository with user-specific storage
 class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
   final AiLessonsRemoteDataSource remoteDataSource;
+  final DailyLessonsLocalDataSource localDataSource;
 
-  /// Inject the AI-based remote data source via constructor
-  DailyLessonsRepositoryImpl({required this.remoteDataSource});
+  /// Inject the AI-based remote data source and local data source via constructor
+  DailyLessonsRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
 
   @override
   Future<Either<Failure, List<Vocabulary>>> getDailyVocabularies() async {
+    // First, try to get unused vocabularies from local storage
+    final unusedVocabs = await localDataSource.getUnusedVocabularies();
+
+    // If we have enough unused vocabularies, return them
+    if (unusedVocabs.length >= 4) {
+      return right(
+        unusedVocabs.take(4).map((model) => model.toEntity()).toList(),
+      );
+    }
+
+    // Otherwise, fetch new vocabularies from AI
     final result = await remoteDataSource.fetchDailyVocabularies();
-    return result.fold(
-      (failure) => left(failure),
-      (models) => right(
-        models
-            .map((e) => Vocabulary(english: e.english, persian: e.persian))
-            .toList(),
-      ),
-    );
+    return result.fold((failure) => left(failure), (vocabularies) async {
+      // Save new vocabularies to local storage with metadata
+      final requestId = _generateRequestId();
+      final providerType = _getCurrentProviderType();
+
+      for (final vocabulary in vocabularies) {
+        final model = VocabularyModel.fromEntity(
+          vocabulary,
+          'current_user', // Placeholder since we don't need userId for local storage
+          providerType,
+          _estimateTokens(vocabulary.english, vocabulary.persian),
+          requestId,
+        );
+        await localDataSource.saveUserVocabulary(model);
+      }
+
+      return right(vocabularies);
+    });
   }
 
   @override
   Future<Either<Failure, List<Phrase>>> getDailyPhrases() async {
+    // First, try to get unused phrases from local storage
+    final unusedPhrases = await localDataSource.getUnusedPhrases();
+
+    // If we have enough unused phrases, return them
+    if (unusedPhrases.length >= 2) {
+      return right(
+        unusedPhrases.take(2).map((model) => model.toEntity()).toList(),
+      );
+    }
+
+    // Otherwise, fetch new phrases from AI
     final result = await remoteDataSource.fetchDailyPhrases();
-    return result.fold(
-      (failure) => left(failure),
-      (models) => right(
-        models
-            .map((e) => Phrase(english: e.english, persian: e.persian))
-            .toList(),
-      ),
-    );
+    return result.fold((failure) => left(failure), (phrases) async {
+      // Save new phrases to local storage with metadata
+      final requestId = _generateRequestId();
+      final providerType = _getCurrentProviderType();
+
+      for (final phrase in phrases) {
+        final model = PhraseModel.fromEntity(
+          phrase,
+          'current_user', // Placeholder since we don't need userId for local storage
+          providerType,
+          _estimateTokens(phrase.english, phrase.persian),
+          requestId,
+        );
+        await localDataSource.saveUserPhrase(model);
+      }
+
+      return right(phrases);
+    });
   }
 
   /// Get both vocabularies and phrases in a single request (cost-effective)
   /// This method reduces API costs by ~25-40% compared to separate requests
+  /// Also includes user-specific storage and retrieval
   Future<
     Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>
   >
   getDailyLessons() async {
-    final result = await remoteDataSource.fetchDailyLessons();
-    return result.fold(
-      (failure) => left(failure),
-      (data) => right((
+    // First, try to get unused content from local storage
+    final unusedVocabs = await localDataSource.getUnusedVocabularies();
+    final unusedPhrases = await localDataSource.getUnusedPhrases();
+
+    // If we have enough unused content, return it
+    if (unusedVocabs.length >= 4 && unusedPhrases.length >= 2) {
+      return right((
         vocabularies:
-            data.vocabularies
-                .map((e) => Vocabulary(english: e.english, persian: e.persian))
-                .toList(),
+            unusedVocabs.take(4).map((model) => model.toEntity()).toList(),
         phrases:
-            data.phrases
-                .map((e) => Phrase(english: e.english, persian: e.persian))
-                .toList(),
-      )),
-    );
+            unusedPhrases.take(2).map((model) => model.toEntity()).toList(),
+      ));
+    }
+
+    // Otherwise, fetch new content from AI
+    final result = await remoteDataSource.fetchDailyLessons();
+    return result.fold((failure) => left(failure), (data) async {
+      // Save new content to local storage with metadata
+      final requestId = _generateRequestId();
+      final providerType = _getCurrentProviderType();
+
+      // Save vocabularies
+      for (final vocabulary in data.vocabularies) {
+        final model = VocabularyModel.fromEntity(
+          vocabulary,
+          'current_user', // Placeholder since we don't need userId for local storage
+          providerType,
+          _estimateTokens(vocabulary.english, vocabulary.persian),
+          requestId,
+        );
+        await localDataSource.saveUserVocabulary(model);
+      }
+
+      // Save phrases
+      for (final phrase in data.phrases) {
+        final model = PhraseModel.fromEntity(
+          phrase,
+          'current_user', // Placeholder since we don't need userId for local storage
+          providerType,
+          _estimateTokens(phrase.english, phrase.persian),
+          requestId,
+        );
+        await localDataSource.saveUserPhrase(model);
+      }
+
+      return right((vocabularies: data.vocabularies, phrases: data.phrases));
+    });
   }
 
   @override
@@ -86,10 +155,109 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
     final lessonsResult = await getDailyLessons();
     return lessonsResult.fold((failure) => left(failure), (_) => right(true));
   }
+
+  /// Marks vocabulary as used for the current user
+  /// Updates the usage status in local storage
+  Future<Either<Failure, bool>> markVocabularyAsUsed(String english) async {
+    try {
+      await localDataSource.markVocabularyAsUsed(english);
+      return right(true);
+    } catch (e) {
+      return left(CacheFailure('Failed to mark vocabulary as used: $e'));
+    }
+  }
+
+  /// Marks phrase as used for the current user
+  /// Updates the usage status in local storage
+  Future<Either<Failure, bool>> markPhraseAsUsed(String english) async {
+    try {
+      await localDataSource.markPhraseAsUsed(english);
+      return right(true);
+    } catch (e) {
+      return left(CacheFailure('Failed to mark phrase as used: $e'));
+    }
+  }
+
+  /// Gets analytics data for the current user
+  /// Returns usage statistics and cost analysis
+  Future<Either<Failure, Map<String, dynamic>>> getUserAnalytics() async {
+    try {
+      final analytics = await localDataSource.getUserAnalytics();
+      return right(analytics);
+    } catch (e) {
+      return left(CacheFailure('Failed to get user analytics: $e'));
+    }
+  }
+
+  /// Gets vocabulary data by AI provider for the current user
+  /// Used for analyzing performance and cost by provider
+  Future<Either<Failure, List<Vocabulary>>> getVocabulariesByProvider(
+    AiProviderType provider,
+  ) async {
+    try {
+      final vocabModels = await localDataSource.getVocabulariesByProvider(
+        provider,
+      );
+      return right(vocabModels.map((model) => model.toEntity()).toList());
+    } catch (e) {
+      return left(CacheFailure('Failed to get vocabularies by provider: $e'));
+    }
+  }
+
+  /// Gets phrase data by AI provider for the current user
+  /// Used for analyzing performance and cost by provider
+  Future<Either<Failure, List<Phrase>>> getPhrasesByProvider(
+    AiProviderType provider,
+  ) async {
+    try {
+      final phraseModels = await localDataSource.getPhrasesByProvider(provider);
+      return right(phraseModels.map((model) => model.toEntity()).toList());
+    } catch (e) {
+      return left(CacheFailure('Failed to get phrases by provider: $e'));
+    }
+  }
+
+  /// Clears all data for the current user
+  /// Used when user wants to reset their learning progress
+  Future<Either<Failure, bool>> clearUserData() async {
+    try {
+      await localDataSource.clearUserData();
+      return right(true);
+    } catch (e) {
+      return left(CacheFailure('Failed to clear user data: $e'));
+    }
+  }
+
+  /// Generates a unique request ID for tracking
+  /// Used to group related vocabulary and phrases from the same AI request
+  String _generateRequestId() {
+    return 'req_${DateTime.now().millisecondsSinceEpoch}';
+  }
+
+  /// Gets the current AI provider type
+  /// This should be extracted from the remote data source configuration
+  AiProviderType _getCurrentProviderType() {
+    // This is a placeholder - you'll need to implement this based on your DI setup
+    // For now, defaulting to OpenAI
+    return AiProviderType.openai;
+  }
+
+  /// Estimates token usage for English and Persian text
+  /// This is a rough estimation - actual token usage may vary by AI provider
+  int _estimateTokens(String english, String persian) {
+    // Rough estimation: 1 token ≈ 4 characters for English, 2 characters for Persian
+    final englishTokens = (english.length / 4).ceil();
+    final persianTokens = (persian.length / 2).ceil();
+    return englishTokens + persianTokens;
+  }
 }
 
 // Example usage:
-// final repo = DailyLessonsRepositoryImpl(remoteDataSource: ...);
+// final repo = DailyLessonsRepositoryImpl(
+//   remoteDataSource: remoteDataSource,
+//   localDataSource: localDataSource,
+// );
 // final vocabResult = await repo.getDailyVocabularies();
 // final phraseResult = await repo.getDailyPhrases();
 // final lessonsResult = await repo.getDailyLessons(); // More cost-effective
+// final analytics = await repo.getUserAnalytics();

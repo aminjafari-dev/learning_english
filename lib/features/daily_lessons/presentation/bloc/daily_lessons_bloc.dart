@@ -1,5 +1,6 @@
 // daily_lessons_bloc.dart
 // Bloc for managing daily lessons operations.
+// Now includes user-specific data management and analytics functionality.
 
 import 'package:bloc/bloc.dart';
 import 'daily_lessons_event.dart';
@@ -8,25 +9,40 @@ import '../../domain/usecases/get_daily_vocabularies_usecase.dart';
 import '../../domain/usecases/get_daily_phrases_usecase.dart';
 import '../../domain/usecases/get_daily_lessons_usecase.dart';
 import '../../domain/usecases/refresh_daily_lessons_usecase.dart';
+import '../../domain/usecases/mark_vocabulary_as_used_usecase.dart';
+import '../../domain/usecases/mark_phrase_as_used_usecase.dart';
+import '../../domain/usecases/get_user_analytics_usecase.dart';
+import '../../domain/usecases/clear_user_data_usecase.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
 
 /// Bloc for managing daily lessons (vocabularies and phrases)
 /// Now uses cost-effective combined requests to reduce API costs
+/// Includes user-specific data management and analytics functionality
 class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
   final GetDailyVocabulariesUseCase getDailyVocabulariesUseCase;
   final GetDailyPhrasesUseCase getDailyPhrasesUseCase;
   final GetDailyLessonsUseCase getDailyLessonsUseCase;
   final RefreshDailyLessonsUseCase refreshDailyLessonsUseCase;
+  final MarkVocabularyAsUsedUseCase markVocabularyAsUsedUseCase;
+  final MarkPhraseAsUsedUseCase markPhraseAsUsedUseCase;
+  final GetUserAnalyticsUseCase getUserAnalyticsUseCase;
+  final ClearUserDataUseCase clearUserDataUseCase;
 
   DailyLessonsBloc({
     required this.getDailyVocabulariesUseCase,
     required this.getDailyPhrasesUseCase,
     required this.getDailyLessonsUseCase,
     required this.refreshDailyLessonsUseCase,
+    required this.markVocabularyAsUsedUseCase,
+    required this.markPhraseAsUsedUseCase,
+    required this.getUserAnalyticsUseCase,
+    required this.clearUserDataUseCase,
   }) : super(
          const DailyLessonsState(
            vocabularies: VocabulariesState.initial(),
            phrases: PhrasesState.initial(),
+           analytics: UserAnalyticsState.initial(),
+           dataManagement: UserDataManagementState.initial(),
            isRefreshing: false,
          ),
        ) {
@@ -36,6 +52,11 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
         fetchPhrases: () => _onFetchPhrases(emit),
         fetchLessons: () => _onFetchLessons(emit), // New cost-effective method
         refreshLessons: () => _onRefreshLessons(emit),
+        markVocabularyAsUsed:
+            (english) => _onMarkVocabularyAsUsed(english, emit),
+        markPhraseAsUsed: (english) => _onMarkPhraseAsUsed(english, emit),
+        getUserAnalytics: () => _onGetUserAnalytics(emit),
+        clearUserData: () => _onClearUserData(emit),
       );
     });
   }
@@ -141,6 +162,130 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
     } catch (e) {
       // Ensure isRefreshing is set to false even if an error occurs
       emit(state.copyWith(isRefreshing: false));
+    }
+  }
+
+  /// Marks vocabulary as used by the current user
+  /// Updates the usage status in local storage to prevent duplicate suggestions
+  Future<void> _onMarkVocabularyAsUsed(
+    String english,
+    Emitter<DailyLessonsState> emit,
+  ) async {
+    try {
+      emit(
+        state.copyWith(dataManagement: const UserDataManagementState.loading()),
+      );
+      final result = await markVocabularyAsUsedUseCase(english);
+      result.fold(
+        (failure) => emit(
+          state.copyWith(
+            dataManagement: UserDataManagementState.error(failure.message),
+          ),
+        ),
+        (success) => emit(
+          state.copyWith(
+            dataManagement: const UserDataManagementState.success(),
+          ),
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          dataManagement: UserDataManagementState.error(
+            'Failed to mark vocabulary as used: ${e.toString()}',
+          ),
+        ),
+      );
+    }
+  }
+
+  /// Marks phrase as used by the current user
+  /// Updates the usage status in local storage to prevent duplicate suggestions
+  Future<void> _onMarkPhraseAsUsed(
+    String english,
+    Emitter<DailyLessonsState> emit,
+  ) async {
+    try {
+      emit(
+        state.copyWith(dataManagement: const UserDataManagementState.loading()),
+      );
+      final result = await markPhraseAsUsedUseCase(english);
+      result.fold(
+        (failure) => emit(
+          state.copyWith(
+            dataManagement: UserDataManagementState.error(failure.message),
+          ),
+        ),
+        (success) => emit(
+          state.copyWith(
+            dataManagement: const UserDataManagementState.success(),
+          ),
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          dataManagement: UserDataManagementState.error(
+            'Failed to mark phrase as used: ${e.toString()}',
+          ),
+        ),
+      );
+    }
+  }
+
+  /// Gets analytics data for the current user
+  /// Provides insights into learning progress and AI usage costs
+  Future<void> _onGetUserAnalytics(Emitter<DailyLessonsState> emit) async {
+    try {
+      emit(state.copyWith(analytics: const UserAnalyticsState.loading()));
+      final result = await getUserAnalyticsUseCase(null);
+      result.fold(
+        (failure) => emit(
+          state.copyWith(analytics: UserAnalyticsState.error(failure.message)),
+        ),
+        (analytics) => emit(
+          state.copyWith(analytics: UserAnalyticsState.loaded(analytics)),
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          analytics: UserAnalyticsState.error(
+            'Failed to get user analytics: ${e.toString()}',
+          ),
+        ),
+      );
+    }
+  }
+
+  /// Clears all data for the current user
+  /// Used when user wants to reset their learning progress
+  Future<void> _onClearUserData(Emitter<DailyLessonsState> emit) async {
+    try {
+      emit(
+        state.copyWith(dataManagement: const UserDataManagementState.loading()),
+      );
+      final result = await clearUserDataUseCase(null);
+      result.fold(
+        (failure) => emit(
+          state.copyWith(
+            dataManagement: UserDataManagementState.error(failure.message),
+          ),
+        ),
+        (success) => emit(
+          state.copyWith(
+            dataManagement: const UserDataManagementState.success(),
+          ),
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          dataManagement: UserDataManagementState.error(
+            'Failed to clear user data: ${e.toString()}',
+          ),
+        ),
+      );
     }
   }
 }

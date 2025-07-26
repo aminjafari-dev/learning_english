@@ -1,5 +1,6 @@
 // daily_lessons_state.dart
 // Bloc states for the Daily Lessons feature, using freezed.
+// Now includes user-specific data management and analytics states.
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../domain/entities/vocabulary.dart';
@@ -25,10 +26,30 @@ class PhrasesState with _$PhrasesState {
 }
 
 @freezed
+class UserAnalyticsState with _$UserAnalyticsState {
+  const factory UserAnalyticsState.initial() = UserAnalyticsInitial;
+  const factory UserAnalyticsState.loading() = UserAnalyticsLoading;
+  const factory UserAnalyticsState.loaded(Map<String, dynamic> analytics) =
+      UserAnalyticsLoaded;
+  const factory UserAnalyticsState.error(String message) = UserAnalyticsError;
+}
+
+@freezed
+class UserDataManagementState with _$UserDataManagementState {
+  const factory UserDataManagementState.initial() = UserDataManagementInitial;
+  const factory UserDataManagementState.loading() = UserDataManagementLoading;
+  const factory UserDataManagementState.success() = UserDataManagementSuccess;
+  const factory UserDataManagementState.error(String message) =
+      UserDataManagementError;
+}
+
+@freezed
 abstract class DailyLessonsState with _$DailyLessonsState {
   const factory DailyLessonsState({
     required VocabulariesState vocabularies,
     required PhrasesState phrases,
+    required UserAnalyticsState analytics,
+    required UserDataManagementState dataManagement,
     @Default(false) bool isRefreshing,
   }) = _DailyLessonsState;
 }

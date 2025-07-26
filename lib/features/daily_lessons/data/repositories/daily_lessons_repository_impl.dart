@@ -42,9 +42,9 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
     // Otherwise, fetch new vocabularies from AI
     final result = await remoteDataSource.fetchDailyVocabularies();
     return result.fold((failure) => left(failure), (vocabularies) async {
-      // Save new vocabularies to local storage with metadata
-      final requestId = _generateRequestId();
-      final providerType = _getCurrentProviderType();
+      // Save new vocabularies to local storage with default metadata
+      final requestId = 'req_${DateTime.now().millisecondsSinceEpoch}';
+      final providerType = AiProviderType.openai; // Default provider
 
       for (final vocabulary in vocabularies) {
         final model = VocabularyModel.fromEntity(
@@ -78,9 +78,9 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
     // Otherwise, fetch new phrases from AI
     final result = await remoteDataSource.fetchDailyPhrases();
     return result.fold((failure) => left(failure), (phrases) async {
-      // Save new phrases to local storage with metadata
-      final requestId = _generateRequestId();
-      final providerType = _getCurrentProviderType();
+      // Save new phrases to local storage with default metadata
+      final requestId = 'req_${DateTime.now().millisecondsSinceEpoch}';
+      final providerType = AiProviderType.openai; // Default provider
 
       for (final phrase in phrases) {
         final model = PhraseModel.fromEntity(
@@ -140,11 +140,11 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
     // Otherwise, fetch new content from AI
     final result = await remoteDataSource.fetchDailyLessons();
     return result.fold((failure) => left(failure), (data) async {
-      // Save new content to local storage with metadata
-      final requestId = _generateRequestId();
-      final providerType = _getCurrentProviderType();
+      // Extract provider type and request ID from metadata
+      final providerType = _extractProviderTypeFromMetadata(data.metadata);
+      final requestId = data.metadata.responseId;
 
-      // Save vocabularies
+      // Save vocabularies with exact metadata
       for (final vocabulary in data.vocabularies) {
         final model = VocabularyModel.fromEntity(
           vocabulary,
@@ -158,7 +158,7 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
         await localDataSource.saveUserVocabulary(model);
       }
 
-      // Save phrases
+      // Save phrases with exact metadata
       for (final phrase in data.phrases) {
         final model = PhraseModel.fromEntity(
           phrase,
@@ -265,20 +265,6 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
     }
   }
 
-  /// Generates a unique request ID for tracking
-  /// Used to group related vocabulary and phrases from the same AI request
-  String _generateRequestId() {
-    return 'req_${DateTime.now().millisecondsSinceEpoch}';
-  }
-
-  /// Gets the current AI provider type
-  /// This should be extracted from the remote data source configuration
-  AiProviderType _getCurrentProviderType() {
-    // This is a placeholder - you'll need to implement this based on your DI setup
-    // For now, defaulting to OpenAI
-    return AiProviderType.openai;
-  }
-
   /// Estimates token usage for English and Persian text
   /// This is a rough estimation - actual token usage may vary by AI provider
   int _estimateTokens(String english, String persian) {
@@ -286,6 +272,38 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
     final englishTokens = (english.length / 4).ceil();
     final persianTokens = (persian.length / 2).ceil();
     return englishTokens + persianTokens;
+  }
+
+  /// Extracts the AI provider type from the metadata.
+  /// Determines the provider based on the model version in the metadata
+  AiProviderType _extractProviderTypeFromMetadata(AiUsageMetadata metadata) {
+    final modelVersion = metadata.modelVersion.toLowerCase();
+
+    // Check for OpenAI models
+    if (modelVersion.contains('gpt') ||
+        modelVersion.contains('openai') ||
+        modelVersion.contains('chatgpt')) {
+      return AiProviderType.openai;
+    }
+
+    // Check for Gemini models
+    if (modelVersion.contains('gemini') ||
+        modelVersion.contains('google') ||
+        modelVersion.contains('palm')) {
+      return AiProviderType.gemini;
+    }
+
+    // Check for DeepSeek models
+    if (modelVersion.contains('deepseek') ||
+        modelVersion.contains('deep-seek')) {
+      return AiProviderType.deepseek;
+    }
+
+    // Default fallback - log a warning and return OpenAI
+    print(
+      'Warning: Unknown model version "$modelVersion", defaulting to OpenAI',
+    );
+    return AiProviderType.openai;
   }
 }
 

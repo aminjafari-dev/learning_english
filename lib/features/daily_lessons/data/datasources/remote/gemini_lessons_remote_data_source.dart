@@ -11,6 +11,7 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import '../../../domain/entities/vocabulary.dart';
 import '../../../domain/entities/phrase.dart';
+import '../../../domain/entities/ai_usage_metadata.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:learning_english/core/error/failure.dart';
@@ -131,7 +132,14 @@ class GeminiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
 
   @override
   Future<
-    Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>
+    Either<
+      Failure,
+      ({
+        List<Vocabulary> vocabularies,
+        List<Phrase> phrases,
+        AiUsageMetadata metadata,
+      })
+    >
   >
   fetchDailyLessons() async {
     try {
@@ -156,9 +164,11 @@ class GeminiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
           ],
         },
       );
-      final text =
-          response.data['candidates'][0]['content']['parts'][0]['text'];
-      log(response.data.toString());
+
+      // Extract the full response data for metadata
+      final responseData = response.data as Map<String, dynamic>;
+      final text = responseData['candidates'][0]['content']['parts'][0]['text'];
+      log(responseData.toString());
 
       // Extract JSON from markdown code blocks if present
       final cleanText = _extractJsonFromMarkdown(text);
@@ -179,7 +189,14 @@ class GeminiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
               .map((e) => Phrase(english: e['english'], persian: e['persian']))
               .toList();
 
-      return right((vocabularies: vocabularies, phrases: phrases));
+      // Extract usage metadata from the response
+      final metadata = AiUsageMetadata.fromJson(responseData);
+
+      return right((
+        vocabularies: vocabularies,
+        phrases: phrases,
+        metadata: metadata,
+      ));
     } catch (e) {
       log(e.toString());
       return left(

@@ -20,6 +20,7 @@ import 'package:learning_english/features/daily_lessons/domain/usecases/get_user
 import 'package:learning_english/features/daily_lessons/domain/usecases/clear_user_data_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/entities/vocabulary.dart';
 import 'package:learning_english/features/daily_lessons/domain/entities/phrase.dart';
+import 'package:learning_english/features/daily_lessons/domain/entities/ai_usage_metadata.dart';
 import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
 import 'package:learning_english/features/daily_lessons/data/models/phrase_model.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/ai_provider_type.dart';
@@ -49,7 +50,7 @@ class DailyLessonsTestHelpers {
     String persian = 'پشتکار',
     String userId = 'current_user',
     AiProviderType aiProvider = AiProviderType.openai,
-    DateTime? generatedAt,
+    DateTime? createdAt,
     int tokensUsed = 30,
     String requestId = 'req_1',
     bool isUsed = false,
@@ -59,7 +60,7 @@ class DailyLessonsTestHelpers {
       persian: persian,
       userId: userId,
       aiProvider: aiProvider,
-      generatedAt: generatedAt ?? DateTime.now(),
+      createdAt: createdAt ?? DateTime.now(),
       tokensUsed: tokensUsed,
       requestId: requestId,
       isUsed: isUsed,
@@ -72,7 +73,7 @@ class DailyLessonsTestHelpers {
     String persian = 'به خودم مدیونم',
     String userId = 'current_user',
     AiProviderType aiProvider = AiProviderType.openai,
-    DateTime? generatedAt,
+    DateTime? createdAt,
     int tokensUsed = 35,
     String requestId = 'req_1',
     bool isUsed = false,
@@ -82,7 +83,7 @@ class DailyLessonsTestHelpers {
       persian: persian,
       userId: userId,
       aiProvider: aiProvider,
-      generatedAt: generatedAt ?? DateTime.now(),
+      createdAt: createdAt ?? DateTime.now(),
       tokensUsed: tokensUsed,
       requestId: requestId,
       isUsed: isUsed,
@@ -213,7 +214,7 @@ class DailyLessonsTestHelpers {
     );
   }
 
-  /// Sets up test dependencies
+  /// Sets up test dependencies for daily lessons tests
   static Future<
     ({
       SharedPreferences prefs,
@@ -223,7 +224,7 @@ class DailyLessonsTestHelpers {
     })
   >
   setupTestDependencies() async {
-    SharedPreferences.setMockInitialValues({});
+    SharedPreferences.setMockInitialValues(<String, Object>{});
     final prefs = await SharedPreferences.getInstance();
 
     final localDataSource = DailyLessonsLocalDataSource(prefs);
@@ -289,7 +290,14 @@ class MockAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
 
   @override
   Future<
-    Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>
+    Either<
+      Failure,
+      ({
+        List<Vocabulary> vocabularies,
+        List<Phrase> phrases,
+        AiUsageMetadata metadata,
+      })
+    >
   >
   fetchDailyLessons() async {
     // Default implementation - override in tests as needed

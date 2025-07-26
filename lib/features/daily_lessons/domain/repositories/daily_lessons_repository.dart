@@ -7,6 +7,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/failure.dart';
 import '../entities/vocabulary.dart';
 import '../entities/phrase.dart';
+import '../entities/ai_usage_metadata.dart';
 import '../../data/datasources/ai_provider_type.dart';
 
 /// Abstract repository for daily lessons with user-specific storage
@@ -21,10 +22,17 @@ abstract class DailyLessonsRepository {
 
   /// Fetches both daily vocabularies and phrases in a single request
   /// This method is more cost-effective than making separate requests
-  /// Returns a tuple containing vocabularies and phrases
+  /// Returns a tuple containing vocabularies, phrases, and AI usage metadata
   /// Includes user-specific storage and retrieval logic
   Future<
-    Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>
+    Either<
+      Failure,
+      ({
+        List<Vocabulary> vocabularies,
+        List<Phrase> phrases,
+        AiUsageMetadata metadata,
+      })
+    >
   >
   getDailyLessons();
 

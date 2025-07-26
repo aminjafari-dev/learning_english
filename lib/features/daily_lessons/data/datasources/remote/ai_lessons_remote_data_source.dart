@@ -5,6 +5,7 @@
 import 'package:dartz/dartz.dart';
 import '../../../domain/entities/vocabulary.dart';
 import '../../../domain/entities/phrase.dart';
+import '../../../domain/entities/ai_usage_metadata.dart';
 import 'package:learning_english/core/error/failure.dart';
 
 /// Abstract interface for AI-based lessons data sources
@@ -19,9 +20,16 @@ abstract class AiLessonsRemoteDataSource {
 
   /// Fetches both daily vocabularies and phrases in a single request
   /// This method is more cost-effective than making separate requests
-  /// Returns a tuple containing vocabularies and phrases
+  /// Returns a tuple containing vocabularies, phrases, and AI usage metadata
   Future<
-    Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>
+    Either<
+      Failure,
+      ({
+        List<Vocabulary> vocabularies,
+        List<Phrase> phrases,
+        AiUsageMetadata metadata,
+      })
+    >
   >
   fetchDailyLessons();
 }

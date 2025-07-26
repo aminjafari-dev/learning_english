@@ -14,6 +14,7 @@
 import 'package:dartz/dartz.dart';
 import '../../../domain/entities/vocabulary.dart';
 import '../../../domain/entities/phrase.dart';
+import '../../../domain/entities/ai_usage_metadata.dart';
 import 'package:learning_english/core/error/failure.dart';
 import 'ai_lessons_remote_data_source.dart';
 import 'openai_lessons_remote_data_source.dart';
@@ -57,7 +58,16 @@ class MultiModelLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>>
+  Future<
+    Either<
+      Failure,
+      ({
+        List<Vocabulary> vocabularies,
+        List<Phrase> phrases,
+        AiUsageMetadata metadata,
+      })
+    >
+  >
   fetchDailyLessons() {
     return _delegate.fetchDailyLessons();
   }

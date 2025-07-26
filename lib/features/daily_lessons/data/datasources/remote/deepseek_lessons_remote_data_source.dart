@@ -9,6 +9,7 @@
 import 'package:dartz/dartz.dart';
 import '../../../domain/entities/vocabulary.dart';
 import '../../../domain/entities/phrase.dart';
+import '../../../domain/entities/ai_usage_metadata.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:learning_english/core/error/failure.dart';
@@ -108,7 +109,14 @@ class DeepSeekLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
 
   @override
   Future<
-    Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>
+    Either<
+      Failure,
+      ({
+        List<Vocabulary> vocabularies,
+        List<Phrase> phrases,
+        AiUsageMetadata metadata,
+      })
+    >
   >
   fetchDailyLessons() async {
     try {
@@ -137,7 +145,10 @@ class DeepSeekLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
           'max_tokens': 512,
         },
       );
-      final content = response.data['choices'][0]['message']['content'];
+
+      // Extract the full response data for metadata
+      final responseData = response.data as Map<String, dynamic>;
+      final content = responseData['choices'][0]['message']['content'];
       final Map<String, dynamic> lessonsData = jsonDecode(content);
 
       final List<dynamic> vocabList = lessonsData['vocabularies'] ?? [];
@@ -155,7 +166,14 @@ class DeepSeekLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
               .map((e) => Phrase(english: e['english'], persian: e['persian']))
               .toList();
 
-      return right((vocabularies: vocabularies, phrases: phrases));
+      // Extract usage metadata from the response
+      final metadata = AiUsageMetadata.fromJson(responseData);
+
+      return right((
+        vocabularies: vocabularies,
+        phrases: phrases,
+        metadata: metadata,
+      ));
     } catch (e) {
       return left(
         ServerFailure('Failed to fetch daily lessons: ${e.toString()}'),

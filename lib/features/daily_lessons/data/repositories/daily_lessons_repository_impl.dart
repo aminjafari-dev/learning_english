@@ -6,6 +6,7 @@
 import 'package:dartz/dartz.dart';
 import '../../domain/entities/vocabulary.dart';
 import '../../domain/entities/phrase.dart';
+import '../../domain/entities/ai_usage_metadata.dart';
 import '../../domain/repositories/daily_lessons_repository.dart';
 import '../datasources/remote/ai_lessons_remote_data_source.dart';
 import '../datasources/local/daily_lessons_local_data_source.dart';
@@ -103,20 +104,36 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
   /// Also includes user-specific storage and retrieval
   @override
   Future<
-    Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>
+    Either<
+      Failure,
+      ({
+        List<Vocabulary> vocabularies,
+        List<Phrase> phrases,
+        AiUsageMetadata metadata,
+      })
+    >
   >
   getDailyLessons() async {
     // First, try to get unused content from local storage
     final unusedVocabs = await localDataSource.getUnusedVocabularies();
     final unusedPhrases = await localDataSource.getUnusedPhrases();
 
-    // If we have enough unused content, return it
+    // If we have enough unused content, return it with empty metadata
     if (unusedVocabs.length >= 4 && unusedPhrases.length >= 2) {
       return right((
         vocabularies:
             unusedVocabs.take(4).map((model) => model.toEntity()).toList(),
         phrases:
             unusedPhrases.take(2).map((model) => model.toEntity()).toList(),
+        metadata: const AiUsageMetadata(
+          promptTokenCount: 0,
+          candidatesTokenCount: 0,
+          totalTokenCount: 0,
+          thoughtsTokenCount: 0,
+          modelVersion: 'local_cache',
+          responseId: 'local_cache',
+          finishReason: 'STOP',
+        ),
       ));
     }
 
@@ -155,7 +172,11 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
         await localDataSource.saveUserPhrase(model);
       }
 
-      return right((vocabularies: data.vocabularies, phrases: data.phrases));
+      return right((
+        vocabularies: data.vocabularies,
+        phrases: data.phrases,
+        metadata: data.metadata,
+      ));
     });
   }
 

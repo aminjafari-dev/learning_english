@@ -25,25 +25,28 @@ abstract class UserLocalDataSource {
 /// Implementation using shared_preferences
 class UserLocalDataSourceImpl implements UserLocalDataSource {
   static const String _userIdKey = 'user_id';
+  
+  final SharedPreferences _prefs;
+  
+  /// Constructor that accepts SharedPreferences instance
+  /// This allows for dependency injection and better testability
+  UserLocalDataSourceImpl(this._prefs);
 
   /// Saves the userId to shared preferences
   @override
   Future<void> saveUserId(String userId) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_userIdKey, userId);
+    await _prefs.setString(_userIdKey, userId);
   }
 
   /// Retrieves the userId from shared preferences
   @override
   Future<String?> getUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_userIdKey);
+    return _prefs.getString(_userIdKey);
   }
 
   /// Removes the userId from shared preferences
   @override
   Future<void> removeUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_userIdKey);
+    await _prefs.remove(_userIdKey);
   }
 }

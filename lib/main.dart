@@ -24,7 +24,7 @@ void main() async {
   await Firebase.initializeApp();
 
   // Register all dependencies after Firebase is ready
-  initDependencies();
+  await initDependencies();
 
   // Run the app
   runApp(const MyApp());

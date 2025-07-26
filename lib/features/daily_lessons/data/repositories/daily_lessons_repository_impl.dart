@@ -15,6 +15,7 @@ import '../models/phrase_model.dart';
 import 'package:learning_english/core/error/failure.dart';
 
 /// Enhanced implementation of DailyLessonsRepository with user-specific storage
+/// All AI-fetched content is automatically marked as used since the user will definitely read it
 class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
   final AiLessonsRemoteDataSource remoteDataSource;
   final DailyLessonsLocalDataSource localDataSource;
@@ -51,7 +52,9 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
           providerType,
           _estimateTokens(vocabulary.english, vocabulary.persian),
           requestId,
-        );
+        ).copyWith(
+          isUsed: true,
+        ); // Mark as used since user will definitely read it
         await localDataSource.saveUserVocabulary(model);
       }
 
@@ -85,7 +88,9 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
           providerType,
           _estimateTokens(phrase.english, phrase.persian),
           requestId,
-        );
+        ).copyWith(
+          isUsed: true,
+        ); // Mark as used since user will definitely read it
         await localDataSource.saveUserPhrase(model);
       }
 
@@ -129,7 +134,9 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
           providerType,
           _estimateTokens(vocabulary.english, vocabulary.persian),
           requestId,
-        );
+        ).copyWith(
+          isUsed: true,
+        ); // Mark as used since user will definitely read it
         await localDataSource.saveUserVocabulary(model);
       }
 
@@ -141,7 +148,9 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
           providerType,
           _estimateTokens(phrase.english, phrase.persian),
           requestId,
-        );
+        ).copyWith(
+          isUsed: true,
+        ); // Mark as used since user will definitely read it
         await localDataSource.saveUserPhrase(model);
       }
 
@@ -261,3 +270,4 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
 // final phraseResult = await repo.getDailyPhrases();
 // final lessonsResult = await repo.getDailyLessons(); // More cost-effective
 // final analytics = await repo.getUserAnalytics();
+// Note: All AI-fetched content is automatically marked as used (isUsed: true)

@@ -29,13 +29,16 @@ class PhraseCard extends StatelessWidget {
               context,
             ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
-           GGap.g4,
-          GText(
-            phrase.persian,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: AppTheme.hint),
-            textAlign: TextAlign.start,
+          GGap.g4,
+          Directionality(
+            textDirection: TextDirection.rtl,
+            child: GText(
+              phrase.persian,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: AppTheme.hint),
+              textAlign: TextAlign.start,
+            ),
           ),
         ],
       ),

@@ -24,4 +24,10 @@ class AuthenticationEvent with _$AuthenticationEvent {
   /// Example:
   ///   context.read<AuthenticationBloc>().add(const AuthenticationEvent.checkLoginStatus());
   const factory AuthenticationEvent.checkLoginStatus() = CheckLoginStatus;
+
+  /// Event to sign out the user and clear local data
+  /// Useful for logout functionality.
+  /// Example:
+  ///   context.read<AuthenticationBloc>().add(const AuthenticationEvent.signOut());
+  const factory AuthenticationEvent.signOut() = SignOut;
 }

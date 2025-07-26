@@ -7,6 +7,7 @@ import 'package:learning_english/features/authentication/domain/repositories/aut
 import 'package:learning_english/features/authentication/domain/usecases/sign_in_with_google_usecase.dart';
 import 'package:learning_english/features/authentication/domain/usecases/save_user_id_usecase.dart';
 import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
+import 'package:learning_english/features/authentication/domain/usecases/remove_user_id_usecase.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_bloc.dart';
 
 void signInDi(GetIt locator) {
@@ -37,9 +38,17 @@ void signInDi(GetIt locator) {
   getIt.registerLazySingleton<GetUserIdUseCase>(
     () => GetUserIdUseCase(getIt<AuthRepository>()),
   );
+  getIt.registerLazySingleton<RemoveUserIdUseCase>(
+    () => RemoveUserIdUseCase(getIt<AuthRepository>()),
+  );
 
   // Bloc
   getIt.registerSingleton(
-    AuthenticationBloc(signInWithGoogleUseCase: getIt()),
+    AuthenticationBloc(
+      signInWithGoogleUseCase: getIt<SignInWithGoogleUseCase>(),
+      saveUserIdUseCase: getIt<SaveUserIdUseCase>(),
+      getUserIdUseCase: getIt<GetUserIdUseCase>(),
+      removeUserIdUseCase: getIt<RemoveUserIdUseCase>(),
+    ),
   );
 }

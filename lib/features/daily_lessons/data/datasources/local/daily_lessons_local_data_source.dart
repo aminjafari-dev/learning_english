@@ -1,111 +1,86 @@
 // daily_lessons_local_data_source.dart
-// Local data source for storing and retrieving vocabulary and phrase data.
+// Local data source for storing and retrieving vocabulary and phrase data using Hive.
 // This handles persistence of AI-generated content with metadata for the current user.
 
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../../models/vocabulary_model.dart';
 import '../../models/phrase_model.dart';
 import '../ai_provider_type.dart';
 
-/// Local data source for daily lessons storage
+/// Local data source for daily lessons storage using Hive
 /// Handles persistence of AI-generated content with metadata for the current user
 class DailyLessonsLocalDataSource {
-  static const String _vocabulariesKey = 'user_vocabularies';
-  static const String _phrasesKey = 'user_phrases';
+  static const String _vocabulariesBoxName = 'user_vocabularies';
+  static const String _phrasesBoxName = 'user_phrases';
 
-  final SharedPreferences _prefs;
+  late Box<VocabularyModel> _vocabulariesBox;
+  late Box<PhraseModel> _phrasesBox;
 
-  DailyLessonsLocalDataSource(this._prefs);
+  /// Initialize Hive boxes for vocabulary and phrase storage
+  /// This method should be called before using any other methods
+  Future<void> initialize() async {
+    _vocabulariesBox = await Hive.openBox<VocabularyModel>(
+      _vocabulariesBoxName,
+    );
+    _phrasesBox = await Hive.openBox<PhraseModel>(_phrasesBoxName);
+  }
 
   /// Saves vocabulary data for the current user
   /// Stores metadata including AI provider, tokens used, and usage status
   Future<void> saveUserVocabulary(VocabularyModel vocabulary) async {
-    final existingData = _prefs.getStringList(_vocabulariesKey) ?? [];
-
-    // Add new vocabulary to existing list
-    existingData.add(jsonEncode(vocabulary.toJson()));
-
-    await _prefs.setStringList(_vocabulariesKey, existingData);
+    // Use English text as the key for easy retrieval and updates
+    await _vocabulariesBox.put(vocabulary.english, vocabulary);
   }
 
   /// Saves phrase data for the current user
   /// Stores metadata including AI provider, tokens used, and usage status
   Future<void> saveUserPhrase(PhraseModel phrase) async {
-    final existingData = _prefs.getStringList(_phrasesKey) ?? [];
-
-    // Add new phrase to existing list
-    existingData.add(jsonEncode(phrase.toJson()));
-
-    await _prefs.setStringList(_phrasesKey, existingData);
+    // Use English text as the key for easy retrieval and updates
+    await _phrasesBox.put(phrase.english, phrase);
   }
 
   /// Retrieves all vocabulary data for the current user
   /// Returns list of VocabularyModel with metadata
   Future<List<VocabularyModel>> getUserVocabularies() async {
-    final data = _prefs.getStringList(_vocabulariesKey) ?? [];
-
-    return data
-        .map((jsonString) => VocabularyModel.fromJson(jsonDecode(jsonString)))
-        .toList();
+    return _vocabulariesBox.values.toList();
   }
 
   /// Retrieves all phrase data for the current user
   /// Returns list of PhraseModel with metadata
   Future<List<PhraseModel>> getUserPhrases() async {
-    final data = _prefs.getStringList(_phrasesKey) ?? [];
-
-    return data
-        .map((jsonString) => PhraseModel.fromJson(jsonDecode(jsonString)))
-        .toList();
+    return _phrasesBox.values.toList();
   }
 
   /// Retrieves unused vocabulary for the current user
   /// Used to avoid suggesting previously used content
   Future<List<VocabularyModel>> getUnusedVocabularies() async {
-    final allVocabularies = await getUserVocabularies();
-    return allVocabularies.where((vocab) => !vocab.isUsed).toList();
+    return _vocabulariesBox.values.where((vocab) => !vocab.isUsed).toList();
   }
 
   /// Retrieves unused phrases for the current user
   /// Used to avoid suggesting previously used content
   Future<List<PhraseModel>> getUnusedPhrases() async {
-    final allPhrases = await getUserPhrases();
-    return allPhrases.where((phrase) => !phrase.isUsed).toList();
+    return _phrasesBox.values.where((phrase) => !phrase.isUsed).toList();
   }
 
   /// Marks vocabulary as used for the current user
   /// Updates the usage status in local storage
   Future<void> markVocabularyAsUsed(String english) async {
-    final data = _prefs.getStringList(_vocabulariesKey) ?? [];
-
-    final updatedData =
-        data.map((jsonString) {
-          final vocab = VocabularyModel.fromJson(jsonDecode(jsonString));
-          if (vocab.english == english) {
-            return jsonEncode(vocab.copyWith(isUsed: true).toJson());
-          }
-          return jsonString;
-        }).toList();
-
-    await _prefs.setStringList(_vocabulariesKey, updatedData);
+    final vocabulary = _vocabulariesBox.get(english);
+    if (vocabulary != null) {
+      final updatedVocabulary = vocabulary.copyWith(isUsed: true);
+      await _vocabulariesBox.put(english, updatedVocabulary);
+    }
   }
 
   /// Marks phrase as used for the current user
   /// Updates the usage status in local storage
   Future<void> markPhraseAsUsed(String english) async {
-    final data = _prefs.getStringList(_phrasesKey) ?? [];
-
-    final updatedData =
-        data.map((jsonString) {
-          final phrase = PhraseModel.fromJson(jsonDecode(jsonString));
-          if (phrase.english == english) {
-            return jsonEncode(phrase.copyWith(isUsed: true).toJson());
-          }
-          return jsonString;
-        }).toList();
-
-    await _prefs.setStringList(_phrasesKey, updatedData);
+    final phrase = _phrasesBox.get(english);
+    if (phrase != null) {
+      final updatedPhrase = phrase.copyWith(isUsed: true);
+      await _phrasesBox.put(english, updatedPhrase);
+    }
   }
 
   /// Retrieves vocabulary data by AI provider for analytics
@@ -113,8 +88,7 @@ class DailyLessonsLocalDataSource {
   Future<List<VocabularyModel>> getVocabulariesByProvider(
     AiProviderType provider,
   ) async {
-    final allVocabularies = await getUserVocabularies();
-    return allVocabularies
+    return _vocabulariesBox.values
         .where((vocab) => vocab.aiProvider == provider)
         .toList();
   }
@@ -124,22 +98,23 @@ class DailyLessonsLocalDataSource {
   Future<List<PhraseModel>> getPhrasesByProvider(
     AiProviderType provider,
   ) async {
-    final allPhrases = await getUserPhrases();
-    return allPhrases.where((phrase) => phrase.aiProvider == provider).toList();
+    return _phrasesBox.values
+        .where((phrase) => phrase.aiProvider == provider)
+        .toList();
   }
 
   /// Clears all data for the current user
   /// Used when user wants to reset their learning progress
   Future<void> clearUserData() async {
-    await _prefs.remove(_vocabulariesKey);
-    await _prefs.remove(_phrasesKey);
+    await _vocabulariesBox.clear();
+    await _phrasesBox.clear();
   }
 
   /// Gets analytics data for the current user
   /// Returns usage statistics and cost analysis
   Future<Map<String, dynamic>> getUserAnalytics() async {
-    final vocabularies = await getUserVocabularies();
-    final phrases = await getUserPhrases();
+    final vocabularies = _vocabulariesBox.values.toList();
+    final phrases = _phrasesBox.values.toList();
 
     final totalTokens =
         vocabularies.fold<int>(0, (sum, vocab) => sum + vocab.tokensUsed) +
@@ -178,10 +153,19 @@ class DailyLessonsLocalDataSource {
       'providerStats': providerStats,
     };
   }
+
+  /// Closes the Hive boxes to free up resources
+  /// Should be called when the data source is no longer needed
+  Future<void> dispose() async {
+    await _vocabulariesBox.close();
+    await _phrasesBox.close();
+  }
 }
 
 // Example usage:
-// final localDataSource = DailyLessonsLocalDataSource(prefs);
+// final localDataSource = DailyLessonsLocalDataSource();
+// await localDataSource.initialize();
 // await localDataSource.saveUserVocabulary(vocabularyModel);
 // final userVocabs = await localDataSource.getUserVocabularies();
 // final analytics = await localDataSource.getUserAnalytics();
+// await localDataSource.dispose();

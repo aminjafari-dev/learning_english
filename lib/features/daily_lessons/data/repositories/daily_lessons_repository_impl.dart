@@ -101,6 +101,7 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
   /// Get both vocabularies and phrases in a single request (cost-effective)
   /// This method reduces API costs by ~25-40% compared to separate requests
   /// Also includes user-specific storage and retrieval
+  @override
   Future<
     Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>
   >
@@ -167,6 +168,7 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
 
   /// Marks vocabulary as used for the current user
   /// Updates the usage status in local storage
+  @override
   Future<Either<Failure, bool>> markVocabularyAsUsed(String english) async {
     try {
       await localDataSource.markVocabularyAsUsed(english);
@@ -178,6 +180,7 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
 
   /// Marks phrase as used for the current user
   /// Updates the usage status in local storage
+  @override
   Future<Either<Failure, bool>> markPhraseAsUsed(String english) async {
     try {
       await localDataSource.markPhraseAsUsed(english);
@@ -189,6 +192,7 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
 
   /// Gets analytics data for the current user
   /// Returns usage statistics and cost analysis
+  @override
   Future<Either<Failure, Map<String, dynamic>>> getUserAnalytics() async {
     try {
       final analytics = await localDataSource.getUserAnalytics();
@@ -200,6 +204,7 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
 
   /// Gets vocabulary data by AI provider for the current user
   /// Used for analyzing performance and cost by provider
+  @override
   Future<Either<Failure, List<Vocabulary>>> getVocabulariesByProvider(
     AiProviderType provider,
   ) async {
@@ -215,6 +220,7 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
 
   /// Gets phrase data by AI provider for the current user
   /// Used for analyzing performance and cost by provider
+  @override
   Future<Either<Failure, List<Phrase>>> getPhrasesByProvider(
     AiProviderType provider,
   ) async {
@@ -228,6 +234,7 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
 
   /// Clears all data for the current user
   /// Used when user wants to reset their learning progress
+  @override
   Future<Either<Failure, bool>> clearUserData() async {
     try {
       await localDataSource.clearUserData();

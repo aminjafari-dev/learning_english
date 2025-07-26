@@ -1,11 +1,13 @@
 // daily_lessons_di.dart
 // Dependency injection setup for the Daily Lessons feature.
 // Registers data sources, repository, use cases, and Bloc for Daily Lessons.
-// Now includes user-specific data storage and analytics functionality.
+// Now includes user-specific data storage and analytics functionality using Hive.
 
 import 'package:get_it/get_it.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
+import 'package:learning_english/features/daily_lessons/data/models/phrase_model.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/ai_provider_type.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/ai_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/daily_lessons_remote_data_source.dart';
@@ -27,11 +29,25 @@ import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_
 
 /// Call this function to register all dependencies for Daily Lessons
 /// @param getIt The GetIt instance for dependency injection
-void setupDailyLessonsDI(GetIt getIt) {
+Future<void> setupDailyLessonsDI(GetIt getIt) async {
+  // Register Hive adapters for the models
+  if (!Hive.isAdapterRegistered(0)) {
+    Hive.registerAdapter(VocabularyModelAdapter());
+  }
+  if (!Hive.isAdapterRegistered(1)) {
+    Hive.registerAdapter(PhraseModelAdapter());
+  }
+  if (!Hive.isAdapterRegistered(2)) {
+    Hive.registerAdapter(AiProviderTypeAdapter());
+  }
+
   // Local Data Source
   getIt.registerLazySingleton<DailyLessonsLocalDataSource>(
-    () => DailyLessonsLocalDataSource(getIt<SharedPreferences>()),
+    () => DailyLessonsLocalDataSource(),
   );
+
+  // Initialize the local data source
+  await getIt<DailyLessonsLocalDataSource>().initialize();
 
   // Remote Data Source
   // SECURITY: API keys should be stored securely (e.g., environment variables, secure storage, remote config)

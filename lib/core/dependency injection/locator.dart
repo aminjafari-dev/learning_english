@@ -3,6 +3,7 @@
 
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learning_english/core/dependency%20injection/sign_in_di.dart';
 import 'package:learning_english/core/dependency%20injection/level_selection_di.dart';
 import 'package:learning_english/core/dependency%20injection/daily_lessons_di.dart';
@@ -13,6 +14,9 @@ final getIt = GetIt.instance;
 /// Initialize all dependencies for the application
 /// This function should be called before the app starts
 Future<void> initDependencies() async {
+  // Initialize Hive for local storage
+  await Hive.initFlutter();
+
   // Register SharedPreferences as a singleton
   // This is used by local data sources for persistent storage
   final prefs = await SharedPreferences.getInstance();
@@ -23,8 +27,8 @@ Future<void> initDependencies() async {
   // Level Selection Feature
   setupLevelSelectionDI(getIt);
 
-  // Daily Lessons Feature
-  setupDailyLessonsDI(getIt);
+  // Daily Lessons Feature (now async due to Hive initialization)
+  await setupDailyLessonsDI(getIt);
 
   // Learning Focus Selection Feature
   setupLearningFocusSelectionDI(getIt);

@@ -6,6 +6,8 @@ import 'package:hive/hive.dart';
 import '../../domain/entities/vocabulary.dart';
 import '../datasources/ai_provider_type.dart';
 
+part 'vocabulary_model.g.dart';
+
 /// Hive type adapter for VocabularyModel
 /// This allows VocabularyModel to be stored and retrieved from Hive boxes
 @HiveType(typeId: 0)

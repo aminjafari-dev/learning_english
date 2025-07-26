@@ -2,18 +2,38 @@
 // Enhanced data model for phrase items with user tracking and AI metadata.
 // This model supports saving phrase data per user and per AI provider.
 
+import 'package:hive/hive.dart';
 import '../../domain/entities/phrase.dart';
 import '../datasources/ai_provider_type.dart';
 
+part 'phrase_model.g.dart';
+
 /// Enhanced phrase model with user tracking and AI metadata
+/// Hive type adapter for PhraseModel - allows storage in Hive boxes
+@HiveType(typeId: 1)
 class PhraseModel {
+  @HiveField(0)
   final String english;
+
+  @HiveField(1)
   final String persian;
+
+  @HiveField(2)
   final String userId;
+
+  @HiveField(3)
   final AiProviderType aiProvider;
-  final DateTime generatedAt;
+
+  @HiveField(4)
+  final DateTime createdAt;
+
+  @HiveField(5)
   final int tokensUsed;
+
+  @HiveField(6)
   final String requestId;
+
+  @HiveField(7)
   final bool isUsed;
 
   PhraseModel({
@@ -21,7 +41,7 @@ class PhraseModel {
     required this.persian,
     required this.userId,
     required this.aiProvider,
-    required this.generatedAt,
+    required this.createdAt,
     required this.tokensUsed,
     required this.requestId,
     this.isUsed = false,
@@ -36,7 +56,7 @@ class PhraseModel {
     aiProvider: AiProviderType.values.firstWhere(
       (e) => e.toString() == json['aiProvider'],
     ),
-    generatedAt: DateTime.parse(json['generatedAt'] as String),
+    createdAt: DateTime.parse(json['createdAt'] as String),
     tokensUsed: json['tokensUsed'] as int,
     requestId: json['requestId'] as String,
     isUsed: json['isUsed'] as bool? ?? false,
@@ -49,7 +69,7 @@ class PhraseModel {
     'persian': persian,
     'userId': userId,
     'aiProvider': aiProvider.toString(),
-    'generatedAt': generatedAt.toIso8601String(),
+    'createdAt': createdAt.toIso8601String(),
     'tokensUsed': tokensUsed,
     'requestId': requestId,
     'isUsed': isUsed,
@@ -62,7 +82,7 @@ class PhraseModel {
     persian: persian,
     userId: userId,
     aiProvider: aiProvider,
-    generatedAt: generatedAt,
+    createdAt: createdAt,
     tokensUsed: tokensUsed,
     requestId: requestId,
     isUsed: isUsed ?? this.isUsed,
@@ -85,7 +105,7 @@ class PhraseModel {
     persian: phrase.persian,
     userId: userId,
     aiProvider: aiProvider,
-    generatedAt: DateTime.now(),
+    createdAt: DateTime.now(),
     tokensUsed: tokensUsed,
     requestId: requestId,
   );
@@ -97,7 +117,7 @@ class PhraseModel {
 //   'persian': 'به اون امیدوارم',
 //   'userId': 'user123',
 //   'aiProvider': 'AiProviderType.openai',
-//   'generatedAt': '2024-01-15T10:30:00Z',
+//   'createdAt': '2024-01-15T10:30:00Z',
 //   'tokensUsed': 35,
 //   'requestId': 'req_abc123',
 //   'isUsed': false

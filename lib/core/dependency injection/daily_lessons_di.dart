@@ -26,6 +26,9 @@ import 'package:learning_english/features/daily_lessons/domain/usecases/mark_phr
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_user_analytics_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/clear_user_data_usecase.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_bloc.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/remote/firebase_lessons_remote_data_source.dart';
+import 'package:learning_english/features/daily_lessons/data/services/content_sync_service_factory.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Call this function to register all dependencies for Daily Lessons
 /// @param getIt The GetIt instance for dependency injection
@@ -67,14 +70,47 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     ),
   );
 
-  // Repository
-  // Now includes both remote and local data sources with user-specific functionality
-  getIt.registerLazySingleton<DailyLessonsRepository>(
-    () => DailyLessonsRepositoryImpl(
-      remoteDataSource: getIt<AiLessonsRemoteDataSource>(),
-      localDataSource: getIt<DailyLessonsLocalDataSource>(),
+  // Firebase Remote Data Source for background content sync
+  getIt.registerLazySingleton<FirebaseLessonsRemoteDataSource>(
+    () =>
+        FirebaseLessonsRemoteDataSource(firestore: FirebaseFirestore.instance),
+  );
+
+  // Content Sync Service Factory
+  getIt.registerLazySingleton<ContentSyncServiceFactory>(
+    () => ContentSyncServiceFactory(
+      firebaseDataSource: getIt<FirebaseLessonsRemoteDataSource>(),
     ),
   );
+
+  // Initialize content sync services
+  final contentSyncFactory = getIt<ContentSyncServiceFactory>();
+  contentSyncFactory.initialize();
+
+  // Get the content sync manager
+  final contentSyncManager = contentSyncFactory.getContentSyncManager();
+
+  // Repository with injected content sync manager
+  getIt.registerLazySingleton<DailyLessonsRepository>(() {
+    final repository = DailyLessonsRepositoryImpl(
+      remoteDataSource: getIt<AiLessonsRemoteDataSource>(),
+      localDataSource: getIt<DailyLessonsLocalDataSource>(),
+    );
+
+    // Inject the content sync manager if available
+    if (contentSyncManager != null) {
+      repository.setContentSyncManager(contentSyncManager);
+      print(
+        '✅ [DI] Content sync manager injected into repository successfully',
+      );
+    } else {
+      print(
+        '⚠️ [DI] Content sync manager not available for repository injection',
+      );
+    }
+
+    return repository;
+  });
 
   // Use Cases
   getIt.registerFactory(() => GetDailyVocabulariesUseCase(getIt()));

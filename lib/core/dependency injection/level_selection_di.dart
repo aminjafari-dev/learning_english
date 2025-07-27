@@ -16,39 +16,41 @@ import 'package:learning_english/features/authentication/domain/usecases/get_use
 /// Registers all dependencies for the level selection feature.
 /// Call this in your main locator file.
 void setupLevelSelectionDI(GetIt getIt) {
-  // Register FirebaseFirestore if not already registered
-  if (!getIt.isRegistered<FirebaseFirestore>()) {
-    getIt.registerLazySingleton<FirebaseFirestore>(
-      () => FirebaseFirestore.instance,
+  try {
+    // Register FirebaseFirestore if not already registered
+    if (!getIt.isRegistered<FirebaseFirestore>()) {
+      getIt.registerLazySingleton<FirebaseFirestore>(
+        () => FirebaseFirestore.instance,
+      );
+    }
+
+    // Data source
+    getIt.registerLazySingleton<UserRemoteDataSource>(
+      () => UserRemoteDataSource(getIt<FirebaseFirestore>()),
     );
-  }
 
-  // Data source
-  getIt.registerLazySingleton<UserRemoteDataSource>(
-    () => UserRemoteDataSource(getIt<FirebaseFirestore>()),
-  );
-
-  // Repository
-  getIt.registerLazySingleton<UserRepository>(
-    () => UserRepositoryImpl(remoteDataSource: getIt<UserRemoteDataSource>()),
-  );
-
-  // Use case
-  getIt.registerLazySingleton<SaveUserLevelUseCase>(
-    () => SaveUserLevelUseCase(getIt<UserRepository>()),
-  );
-  // GetUserIdUseCase from authentication feature
-  if (!getIt.isRegistered<GetUserIdUseCase>()) {
-    getIt.registerLazySingleton<GetUserIdUseCase>(
-      () => GetUserIdUseCase(getIt()),
+    // Repository
+    getIt.registerLazySingleton<UserRepository>(
+      () => UserRepositoryImpl(remoteDataSource: getIt<UserRemoteDataSource>()),
     );
-  }
 
-  // Bloc
-  getIt.registerSingleton<LevelBloc>(
-     LevelBloc(
-      saveUserLevelUseCase: getIt<SaveUserLevelUseCase>(),
-      getUserIdUseCase: getIt<GetUserIdUseCase>(),
-    ),
-  );
+    // Use case
+    getIt.registerLazySingleton<SaveUserLevelUseCase>(
+      () => SaveUserLevelUseCase(getIt<UserRepository>()),
+    );
+
+    // Bloc
+    getIt.registerSingleton<LevelBloc>(
+      LevelBloc(
+        saveUserLevelUseCase: getIt<SaveUserLevelUseCase>(),
+        // This is already registered in sign_in_di.dart
+        getUserIdUseCase: getIt<GetUserIdUseCase>(),
+      ),
+    );
+
+    print('✅ [DI] Level Selection dependencies registered successfully');
+  } catch (e) {
+    print('❌ [DI] Error setting up Level Selection dependencies: $e');
+    rethrow; // Re-throw to let the caller handle the error
+  }
 }

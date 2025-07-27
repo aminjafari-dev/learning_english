@@ -19,7 +19,13 @@ class MarkPhraseAsUsedUseCase implements UseCase<bool, String> {
   /// @return Either a Failure or true if successful
   @override
   Future<Either<Failure, bool>> call(String english) async {
-    return await repository.markPhraseAsUsed(english);
+    try {
+      return await repository.markPhraseAsUsed(english);
+    } catch (e) {
+      return Left(
+        ServerFailure('Failed to mark phrase as used: ${e.toString()}'),
+      );
+    }
   }
 }
 

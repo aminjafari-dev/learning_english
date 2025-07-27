@@ -13,8 +13,12 @@ class UserRemoteDataSource {
 
   /// Saves the user's selected English level to Firestore
   Future<void> saveUserLevel(String userId, Level level) async {
-    await firestore.collection('users').doc(userId).set({
-      'level': level.name,
-    }, SetOptions(merge: true));
+    try {
+      await firestore.collection('users').doc(userId).set({
+        'level': level.name,
+      }, SetOptions(merge: true));
+    } catch (e) {
+      throw Exception('Failed to save user level: ${e.toString()}');
+    }
   }
 }

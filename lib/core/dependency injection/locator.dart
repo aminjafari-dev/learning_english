@@ -14,22 +14,31 @@ final getIt = GetIt.instance;
 /// Initialize all dependencies for the application
 /// This function should be called before the app starts
 Future<void> initDependencies() async {
-  // Initialize Hive for local storage
-  await Hive.initFlutter();
+  try {
+    // Initialize Hive for local storage
+    await Hive.initFlutter();
 
-  // Register SharedPreferences as a singleton
-  // This is used by local data sources for persistent storage
-  final prefs = await SharedPreferences.getInstance();
-  getIt.registerSingleton<SharedPreferences>(prefs);
+    // Register SharedPreferences as a singleton
+    // This is used by local data sources for persistent storage
+    final prefs = await SharedPreferences.getInstance();
+    getIt.registerSingleton<SharedPreferences>(prefs);
 
-  // Sign in Dependencies
-  signInDi(getIt);
-  // Level Selection Feature
-  setupLevelSelectionDI(getIt);
+    // Sign in Dependencies
+    signInDi(getIt);
 
-  // Daily Lessons Feature (now async due to Hive initialization)
-  await setupDailyLessonsDI(getIt);
+    // Level Selection Feature
+    setupLevelSelectionDI(getIt);
 
-  // Learning Focus Selection Feature
-  setupLearningFocusSelectionDI(getIt);
+    // Learning Focus Selection Feature (must be before daily lessons)
+    setupLearningFocusSelectionDI(getIt);
+
+    // Daily Lessons Feature (now async due to Hive initialization)
+    // This depends on LearningFocusSelectionRepository, so it must come after
+    await setupDailyLessonsDI(getIt);
+
+    print('✅ [DI] All dependencies initialized successfully');
+  } catch (e) {
+    print('❌ [DI] Error initializing dependencies: $e');
+    rethrow; // Re-throw to let the caller handle the error
+  }
 }

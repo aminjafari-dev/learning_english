@@ -21,11 +21,13 @@ mixin _$DailyLessonsEvent {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
+    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
+    required TResult Function() getUserPreferences,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -33,11 +35,13 @@ mixin _$DailyLessonsEvent {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
+    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
+    TResult? Function()? getUserPreferences,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -45,11 +49,13 @@ mixin _$DailyLessonsEvent {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
+    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
+    TResult Function()? getUserPreferences,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -58,11 +64,14 @@ mixin _$DailyLessonsEvent {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchPersonalizedLessons value)
+        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
     required TResult Function(GetUserAnalytics value) getUserAnalytics,
     required TResult Function(ClearUserData value) clearUserData,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -70,11 +79,13 @@ mixin _$DailyLessonsEvent {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult? Function(GetUserAnalytics value)? getUserAnalytics,
     TResult? Function(ClearUserData value)? clearUserData,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -82,11 +93,13 @@ mixin _$DailyLessonsEvent {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult Function(GetUserAnalytics value)? getUserAnalytics,
     TResult Function(ClearUserData value)? clearUserData,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -157,11 +170,13 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
+    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
+    required TResult Function() getUserPreferences,
   }) {
     return fetchVocabularies();
   }
@@ -172,11 +187,13 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
+    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
+    TResult? Function()? getUserPreferences,
   }) {
     return fetchVocabularies?.call();
   }
@@ -187,11 +204,13 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
+    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
+    TResult Function()? getUserPreferences,
     required TResult orElse(),
   }) {
     if (fetchVocabularies != null) {
@@ -206,11 +225,14 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchPersonalizedLessons value)
+        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
     required TResult Function(GetUserAnalytics value) getUserAnalytics,
     required TResult Function(ClearUserData value) clearUserData,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
   }) {
     return fetchVocabularies(this);
   }
@@ -221,11 +243,13 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult? Function(GetUserAnalytics value)? getUserAnalytics,
     TResult? Function(ClearUserData value)? clearUserData,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) {
     return fetchVocabularies?.call(this);
   }
@@ -236,11 +260,13 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult Function(GetUserAnalytics value)? getUserAnalytics,
     TResult Function(ClearUserData value)? clearUserData,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
   }) {
     if (fetchVocabularies != null) {
@@ -298,11 +324,13 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
+    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
+    required TResult Function() getUserPreferences,
   }) {
     return fetchPhrases();
   }
@@ -313,11 +341,13 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
+    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
+    TResult? Function()? getUserPreferences,
   }) {
     return fetchPhrases?.call();
   }
@@ -328,11 +358,13 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
+    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
+    TResult Function()? getUserPreferences,
     required TResult orElse(),
   }) {
     if (fetchPhrases != null) {
@@ -347,11 +379,14 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchPersonalizedLessons value)
+        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
     required TResult Function(GetUserAnalytics value) getUserAnalytics,
     required TResult Function(ClearUserData value) clearUserData,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
   }) {
     return fetchPhrases(this);
   }
@@ -362,11 +397,13 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult? Function(GetUserAnalytics value)? getUserAnalytics,
     TResult? Function(ClearUserData value)? clearUserData,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) {
     return fetchPhrases?.call(this);
   }
@@ -377,11 +414,13 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult Function(GetUserAnalytics value)? getUserAnalytics,
     TResult Function(ClearUserData value)? clearUserData,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
   }) {
     if (fetchPhrases != null) {
@@ -439,11 +478,13 @@ class _$FetchLessonsImpl implements FetchLessons {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
+    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
+    required TResult Function() getUserPreferences,
   }) {
     return fetchLessons();
   }
@@ -454,11 +495,13 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
+    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
+    TResult? Function()? getUserPreferences,
   }) {
     return fetchLessons?.call();
   }
@@ -469,11 +512,13 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
+    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
+    TResult Function()? getUserPreferences,
     required TResult orElse(),
   }) {
     if (fetchLessons != null) {
@@ -488,11 +533,14 @@ class _$FetchLessonsImpl implements FetchLessons {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchPersonalizedLessons value)
+        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
     required TResult Function(GetUserAnalytics value) getUserAnalytics,
     required TResult Function(ClearUserData value) clearUserData,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
   }) {
     return fetchLessons(this);
   }
@@ -503,11 +551,13 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult? Function(GetUserAnalytics value)? getUserAnalytics,
     TResult? Function(ClearUserData value)? clearUserData,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) {
     return fetchLessons?.call(this);
   }
@@ -518,11 +568,13 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult Function(GetUserAnalytics value)? getUserAnalytics,
     TResult Function(ClearUserData value)? clearUserData,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
   }) {
     if (fetchLessons != null) {
@@ -534,6 +586,164 @@ class _$FetchLessonsImpl implements FetchLessons {
 
 abstract class FetchLessons implements DailyLessonsEvent {
   const factory FetchLessons() = _$FetchLessonsImpl;
+}
+
+/// @nodoc
+abstract class _$$FetchPersonalizedLessonsImplCopyWith<$Res> {
+  factory _$$FetchPersonalizedLessonsImplCopyWith(
+          _$FetchPersonalizedLessonsImpl value,
+          $Res Function(_$FetchPersonalizedLessonsImpl) then) =
+      __$$FetchPersonalizedLessonsImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$FetchPersonalizedLessonsImplCopyWithImpl<$Res>
+    extends _$DailyLessonsEventCopyWithImpl<$Res,
+        _$FetchPersonalizedLessonsImpl>
+    implements _$$FetchPersonalizedLessonsImplCopyWith<$Res> {
+  __$$FetchPersonalizedLessonsImplCopyWithImpl(
+      _$FetchPersonalizedLessonsImpl _value,
+      $Res Function(_$FetchPersonalizedLessonsImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of DailyLessonsEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$FetchPersonalizedLessonsImpl implements FetchPersonalizedLessons {
+  const _$FetchPersonalizedLessonsImpl();
+
+  @override
+  String toString() {
+    return 'DailyLessonsEvent.fetchPersonalizedLessons()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FetchPersonalizedLessonsImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetchVocabularies,
+    required TResult Function() fetchPhrases,
+    required TResult Function() fetchLessons,
+    required TResult Function() fetchPersonalizedLessons,
+    required TResult Function() refreshLessons,
+    required TResult Function(String english) markVocabularyAsUsed,
+    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function() getUserAnalytics,
+    required TResult Function() clearUserData,
+    required TResult Function() getUserPreferences,
+  }) {
+    return fetchPersonalizedLessons();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetchVocabularies,
+    TResult? Function()? fetchPhrases,
+    TResult? Function()? fetchLessons,
+    TResult? Function()? fetchPersonalizedLessons,
+    TResult? Function()? refreshLessons,
+    TResult? Function(String english)? markVocabularyAsUsed,
+    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function()? getUserAnalytics,
+    TResult? Function()? clearUserData,
+    TResult? Function()? getUserPreferences,
+  }) {
+    return fetchPersonalizedLessons?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetchVocabularies,
+    TResult Function()? fetchPhrases,
+    TResult Function()? fetchLessons,
+    TResult Function()? fetchPersonalizedLessons,
+    TResult Function()? refreshLessons,
+    TResult Function(String english)? markVocabularyAsUsed,
+    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function()? getUserAnalytics,
+    TResult Function()? clearUserData,
+    TResult Function()? getUserPreferences,
+    required TResult orElse(),
+  }) {
+    if (fetchPersonalizedLessons != null) {
+      return fetchPersonalizedLessons();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(FetchVocabularies value) fetchVocabularies,
+    required TResult Function(FetchPhrases value) fetchPhrases,
+    required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchPersonalizedLessons value)
+        fetchPersonalizedLessons,
+    required TResult Function(RefreshLessons value) refreshLessons,
+    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
+    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
+    required TResult Function(GetUserAnalytics value) getUserAnalytics,
+    required TResult Function(ClearUserData value) clearUserData,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
+  }) {
+    return fetchPersonalizedLessons(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(FetchVocabularies value)? fetchVocabularies,
+    TResult? Function(FetchPhrases value)? fetchPhrases,
+    TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
+    TResult? Function(RefreshLessons value)? refreshLessons,
+    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
+    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
+    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
+    TResult? Function(ClearUserData value)? clearUserData,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
+  }) {
+    return fetchPersonalizedLessons?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(FetchVocabularies value)? fetchVocabularies,
+    TResult Function(FetchPhrases value)? fetchPhrases,
+    TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
+    TResult Function(RefreshLessons value)? refreshLessons,
+    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
+    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
+    TResult Function(GetUserAnalytics value)? getUserAnalytics,
+    TResult Function(ClearUserData value)? clearUserData,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
+    required TResult orElse(),
+  }) {
+    if (fetchPersonalizedLessons != null) {
+      return fetchPersonalizedLessons(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class FetchPersonalizedLessons implements DailyLessonsEvent {
+  const factory FetchPersonalizedLessons() = _$FetchPersonalizedLessonsImpl;
 }
 
 /// @nodoc
@@ -580,11 +790,13 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
+    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
+    required TResult Function() getUserPreferences,
   }) {
     return refreshLessons();
   }
@@ -595,11 +807,13 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
+    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
+    TResult? Function()? getUserPreferences,
   }) {
     return refreshLessons?.call();
   }
@@ -610,11 +824,13 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
+    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
+    TResult Function()? getUserPreferences,
     required TResult orElse(),
   }) {
     if (refreshLessons != null) {
@@ -629,11 +845,14 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchPersonalizedLessons value)
+        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
     required TResult Function(GetUserAnalytics value) getUserAnalytics,
     required TResult Function(ClearUserData value) clearUserData,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
   }) {
     return refreshLessons(this);
   }
@@ -644,11 +863,13 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult? Function(GetUserAnalytics value)? getUserAnalytics,
     TResult? Function(ClearUserData value)? clearUserData,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) {
     return refreshLessons?.call(this);
   }
@@ -659,11 +880,13 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult Function(GetUserAnalytics value)? getUserAnalytics,
     TResult Function(ClearUserData value)? clearUserData,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
   }) {
     if (refreshLessons != null) {
@@ -750,11 +973,13 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
+    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
+    required TResult Function() getUserPreferences,
   }) {
     return markVocabularyAsUsed(english);
   }
@@ -765,11 +990,13 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
+    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
+    TResult? Function()? getUserPreferences,
   }) {
     return markVocabularyAsUsed?.call(english);
   }
@@ -780,11 +1007,13 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
+    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
+    TResult Function()? getUserPreferences,
     required TResult orElse(),
   }) {
     if (markVocabularyAsUsed != null) {
@@ -799,11 +1028,14 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchPersonalizedLessons value)
+        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
     required TResult Function(GetUserAnalytics value) getUserAnalytics,
     required TResult Function(ClearUserData value) clearUserData,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
   }) {
     return markVocabularyAsUsed(this);
   }
@@ -814,11 +1046,13 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult? Function(GetUserAnalytics value)? getUserAnalytics,
     TResult? Function(ClearUserData value)? clearUserData,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) {
     return markVocabularyAsUsed?.call(this);
   }
@@ -829,11 +1063,13 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult Function(GetUserAnalytics value)? getUserAnalytics,
     TResult Function(ClearUserData value)? clearUserData,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
   }) {
     if (markVocabularyAsUsed != null) {
@@ -928,11 +1164,13 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
+    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
+    required TResult Function() getUserPreferences,
   }) {
     return markPhraseAsUsed(english);
   }
@@ -943,11 +1181,13 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
+    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
+    TResult? Function()? getUserPreferences,
   }) {
     return markPhraseAsUsed?.call(english);
   }
@@ -958,11 +1198,13 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
+    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
+    TResult Function()? getUserPreferences,
     required TResult orElse(),
   }) {
     if (markPhraseAsUsed != null) {
@@ -977,11 +1219,14 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchPersonalizedLessons value)
+        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
     required TResult Function(GetUserAnalytics value) getUserAnalytics,
     required TResult Function(ClearUserData value) clearUserData,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
   }) {
     return markPhraseAsUsed(this);
   }
@@ -992,11 +1237,13 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult? Function(GetUserAnalytics value)? getUserAnalytics,
     TResult? Function(ClearUserData value)? clearUserData,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) {
     return markPhraseAsUsed?.call(this);
   }
@@ -1007,11 +1254,13 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult Function(GetUserAnalytics value)? getUserAnalytics,
     TResult Function(ClearUserData value)? clearUserData,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
   }) {
     if (markPhraseAsUsed != null) {
@@ -1078,11 +1327,13 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
+    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
+    required TResult Function() getUserPreferences,
   }) {
     return getUserAnalytics();
   }
@@ -1093,11 +1344,13 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
+    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
+    TResult? Function()? getUserPreferences,
   }) {
     return getUserAnalytics?.call();
   }
@@ -1108,11 +1361,13 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
+    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
+    TResult Function()? getUserPreferences,
     required TResult orElse(),
   }) {
     if (getUserAnalytics != null) {
@@ -1127,11 +1382,14 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchPersonalizedLessons value)
+        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
     required TResult Function(GetUserAnalytics value) getUserAnalytics,
     required TResult Function(ClearUserData value) clearUserData,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
   }) {
     return getUserAnalytics(this);
   }
@@ -1142,11 +1400,13 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult? Function(GetUserAnalytics value)? getUserAnalytics,
     TResult? Function(ClearUserData value)? clearUserData,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) {
     return getUserAnalytics?.call(this);
   }
@@ -1157,11 +1417,13 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult Function(GetUserAnalytics value)? getUserAnalytics,
     TResult Function(ClearUserData value)? clearUserData,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
   }) {
     if (getUserAnalytics != null) {
@@ -1219,11 +1481,13 @@ class _$ClearUserDataImpl implements ClearUserData {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
+    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
+    required TResult Function() getUserPreferences,
   }) {
     return clearUserData();
   }
@@ -1234,11 +1498,13 @@ class _$ClearUserDataImpl implements ClearUserData {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
+    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
+    TResult? Function()? getUserPreferences,
   }) {
     return clearUserData?.call();
   }
@@ -1249,11 +1515,13 @@ class _$ClearUserDataImpl implements ClearUserData {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
+    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
+    TResult Function()? getUserPreferences,
     required TResult orElse(),
   }) {
     if (clearUserData != null) {
@@ -1268,11 +1536,14 @@ class _$ClearUserDataImpl implements ClearUserData {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchPersonalizedLessons value)
+        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
     required TResult Function(GetUserAnalytics value) getUserAnalytics,
     required TResult Function(ClearUserData value) clearUserData,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
   }) {
     return clearUserData(this);
   }
@@ -1283,11 +1554,13 @@ class _$ClearUserDataImpl implements ClearUserData {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult? Function(GetUserAnalytics value)? getUserAnalytics,
     TResult? Function(ClearUserData value)? clearUserData,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) {
     return clearUserData?.call(this);
   }
@@ -1298,11 +1571,13 @@ class _$ClearUserDataImpl implements ClearUserData {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
     TResult Function(GetUserAnalytics value)? getUserAnalytics,
     TResult Function(ClearUserData value)? clearUserData,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
   }) {
     if (clearUserData != null) {
@@ -1314,4 +1589,158 @@ class _$ClearUserDataImpl implements ClearUserData {
 
 abstract class ClearUserData implements DailyLessonsEvent {
   const factory ClearUserData() = _$ClearUserDataImpl;
+}
+
+/// @nodoc
+abstract class _$$GetUserPreferencesImplCopyWith<$Res> {
+  factory _$$GetUserPreferencesImplCopyWith(_$GetUserPreferencesImpl value,
+          $Res Function(_$GetUserPreferencesImpl) then) =
+      __$$GetUserPreferencesImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GetUserPreferencesImplCopyWithImpl<$Res>
+    extends _$DailyLessonsEventCopyWithImpl<$Res, _$GetUserPreferencesImpl>
+    implements _$$GetUserPreferencesImplCopyWith<$Res> {
+  __$$GetUserPreferencesImplCopyWithImpl(_$GetUserPreferencesImpl _value,
+      $Res Function(_$GetUserPreferencesImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of DailyLessonsEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$GetUserPreferencesImpl implements GetUserPreferences {
+  const _$GetUserPreferencesImpl();
+
+  @override
+  String toString() {
+    return 'DailyLessonsEvent.getUserPreferences()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$GetUserPreferencesImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetchVocabularies,
+    required TResult Function() fetchPhrases,
+    required TResult Function() fetchLessons,
+    required TResult Function() fetchPersonalizedLessons,
+    required TResult Function() refreshLessons,
+    required TResult Function(String english) markVocabularyAsUsed,
+    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function() getUserAnalytics,
+    required TResult Function() clearUserData,
+    required TResult Function() getUserPreferences,
+  }) {
+    return getUserPreferences();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetchVocabularies,
+    TResult? Function()? fetchPhrases,
+    TResult? Function()? fetchLessons,
+    TResult? Function()? fetchPersonalizedLessons,
+    TResult? Function()? refreshLessons,
+    TResult? Function(String english)? markVocabularyAsUsed,
+    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function()? getUserAnalytics,
+    TResult? Function()? clearUserData,
+    TResult? Function()? getUserPreferences,
+  }) {
+    return getUserPreferences?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetchVocabularies,
+    TResult Function()? fetchPhrases,
+    TResult Function()? fetchLessons,
+    TResult Function()? fetchPersonalizedLessons,
+    TResult Function()? refreshLessons,
+    TResult Function(String english)? markVocabularyAsUsed,
+    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function()? getUserAnalytics,
+    TResult Function()? clearUserData,
+    TResult Function()? getUserPreferences,
+    required TResult orElse(),
+  }) {
+    if (getUserPreferences != null) {
+      return getUserPreferences();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(FetchVocabularies value) fetchVocabularies,
+    required TResult Function(FetchPhrases value) fetchPhrases,
+    required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchPersonalizedLessons value)
+        fetchPersonalizedLessons,
+    required TResult Function(RefreshLessons value) refreshLessons,
+    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
+    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
+    required TResult Function(GetUserAnalytics value) getUserAnalytics,
+    required TResult Function(ClearUserData value) clearUserData,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
+  }) {
+    return getUserPreferences(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(FetchVocabularies value)? fetchVocabularies,
+    TResult? Function(FetchPhrases value)? fetchPhrases,
+    TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
+    TResult? Function(RefreshLessons value)? refreshLessons,
+    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
+    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
+    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
+    TResult? Function(ClearUserData value)? clearUserData,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
+  }) {
+    return getUserPreferences?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(FetchVocabularies value)? fetchVocabularies,
+    TResult Function(FetchPhrases value)? fetchPhrases,
+    TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
+    TResult Function(RefreshLessons value)? refreshLessons,
+    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
+    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
+    TResult Function(GetUserAnalytics value)? getUserAnalytics,
+    TResult Function(ClearUserData value)? clearUserData,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
+    required TResult orElse(),
+  }) {
+    if (getUserPreferences != null) {
+      return getUserPreferences(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GetUserPreferences implements DailyLessonsEvent {
+  const factory GetUserPreferences() = _$GetUserPreferencesImpl;
 }

@@ -1,19 +1,21 @@
 // openai_lessons_remote_data_source.dart
 // Implementation of AiLessonsRemoteDataSource for OpenAI (ChatGPT)
+// All methods are personalized based on user preferences.
 // Usage:
 // final dataSource = OpenAiLessonsRemoteDataSource(apiKey: 'YOUR_API_KEY');
-// final vocabResult = await dataSource.fetchDailyVocabularies();
-// final phraseResult = await dataSource.fetchDailyPhrases();
-// final lessonsResult = await dataSource.fetchDailyLessons(); // More cost-effective
+// final preferences = UserPreferences(level: Level.intermediate, focusAreas: ['business', 'travel']);
+// final personalizedResult = await dataSource.fetchPersonalizedDailyLessons(preferences);
 
 import 'package:dartz/dartz.dart';
 import '../../../domain/entities/vocabulary.dart';
 import '../../../domain/entities/phrase.dart';
 import '../../../domain/entities/ai_usage_metadata.dart';
+import '../../../domain/entities/user_preferences.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:learning_english/core/error/failure.dart';
 import 'ai_lessons_remote_data_source.dart';
+import 'ai_prompts.dart';
 
 class OpenAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
   final Dio dio;
@@ -25,7 +27,9 @@ class OpenAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
     : dio = dio ?? Dio();
 
   @override
-  Future<Either<Failure, List<Vocabulary>>> fetchDailyVocabularies() async {
+  Future<Either<Failure, List<Vocabulary>>> fetchPersonalizedDailyVocabularies(
+    UserPreferences preferences,
+  ) async {
     try {
       final response = await dio.post(
         _openAiEndpoint,
@@ -40,13 +44,15 @@ class OpenAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
           'messages': [
             {
               'role': 'system',
-              'content':
-                  'You are an English teacher. Provide a list of 4 useful English vocabulary words for daily learning, each with its Persian translation. Respond in JSON: [{"english": "...", "persian": "..."}, ...]',
+              'content': AiPrompts.getPersonalizedVocabularySystemPrompt(
+                preferences,
+              ),
             },
             {
               'role': 'user',
-              'content':
-                  'Give me 4 English vocabulary words with Persian translations.',
+              'content': AiPrompts.getPersonalizedVocabularyUserPrompt(
+                preferences,
+              ),
             },
           ],
           'max_tokens': 256,
@@ -63,13 +69,17 @@ class OpenAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
       return right(vocabularies);
     } catch (e) {
       return left(
-        ServerFailure('Failed to fetch vocabularies: ${e.toString()}'),
+        ServerFailure(
+          'Failed to fetch personalized vocabularies: ${e.toString()}',
+        ),
       );
     }
   }
 
   @override
-  Future<Either<Failure, List<Phrase>>> fetchDailyPhrases() async {
+  Future<Either<Failure, List<Phrase>>> fetchPersonalizedDailyPhrases(
+    UserPreferences preferences,
+  ) async {
     try {
       final response = await dio.post(
         _openAiEndpoint,
@@ -84,12 +94,13 @@ class OpenAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
           'messages': [
             {
               'role': 'system',
-              'content':
-                  'You are an English teacher. Provide a list of 2 useful English phrases for daily learning, each with its Persian translation. Respond in JSON: [{"english": "...", "persian": "..."}, ...]',
+              'content': AiPrompts.getPersonalizedPhraseSystemPrompt(
+                preferences,
+              ),
             },
             {
               'role': 'user',
-              'content': 'Give me 2 English phrases with Persian translations.',
+              'content': AiPrompts.getPersonalizedPhraseUserPrompt(preferences),
             },
           ],
           'max_tokens': 256,
@@ -103,19 +114,24 @@ class OpenAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
               .toList();
       return right(phrases);
     } catch (e) {
-      return left(ServerFailure('Failed to fetch phrases: ${e.toString()}'));
+      return left(
+        ServerFailure('Failed to fetch personalized phrases: ${e.toString()}'),
+      );
     }
   }
 
   @override
   Future<
-    Either<Failure, ({
-      List<Vocabulary> vocabularies, 
-      List<Phrase> phrases,
-      AiUsageMetadata metadata
-    })>
+    Either<
+      Failure,
+      ({
+        List<Vocabulary> vocabularies,
+        List<Phrase> phrases,
+        AiUsageMetadata metadata,
+      })
+    >
   >
-  fetchDailyLessons() async {
+  fetchPersonalizedDailyLessons(UserPreferences preferences) async {
     try {
       final response = await dio.post(
         _openAiEndpoint,
@@ -130,19 +146,21 @@ class OpenAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
           'messages': [
             {
               'role': 'system',
-              'content':
-                  'You are an English teacher. Provide both vocabulary words and phrases for daily learning. Respond in JSON format with two arrays: vocabularies and phrases. Each vocabulary should have English and Persian translations, and each phrase should have English and Persian translations.',
+              'content': AiPrompts.getPersonalizedLessonsSystemPrompt(
+                preferences,
+              ),
             },
             {
               'role': 'user',
-              'content':
-                  'Give me 4 English vocabulary words and 2 English phrases, all with Persian translations.',
+              'content': AiPrompts.getPersonalizedLessonsUserPrompt(
+                preferences,
+              ),
             },
           ],
           'max_tokens': 512,
         },
       );
-      
+
       // Extract the full response data for metadata
       final responseData = response.data as Map<String, dynamic>;
       final content = responseData['choices'][0]['message']['content'];
@@ -167,13 +185,15 @@ class OpenAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
       final metadata = AiUsageMetadata.fromJson(responseData);
 
       return right((
-        vocabularies: vocabularies, 
+        vocabularies: vocabularies,
         phrases: phrases,
-        metadata: metadata
+        metadata: metadata,
       ));
     } catch (e) {
       return left(
-        ServerFailure('Failed to fetch daily lessons: ${e.toString()}'),
+        ServerFailure(
+          'Failed to fetch personalized daily lessons: ${e.toString()}',
+        ),
       );
     }
   }

@@ -60,7 +60,13 @@ class LearningFocusSelectionCubit extends Cubit<LearningFocusSelectionState> {
 
   /// Save the selected options using the use case.
   Future<void> saveSelection() async {
-    await saveUseCase(state.selectedIndices.toList());
-    emit(state.copyWith(saveSuccess: true));
+    try {
+      await saveUseCase(state.selectedIndices.toList());
+      emit(state.copyWith(saveSuccess: true));
+    } catch (e) {
+      print('❌ [CUBIT] Error saving learning focus selection: $e');
+      // You could emit an error state here if needed
+      // For now, we'll just log the error
+    }
   }
 }

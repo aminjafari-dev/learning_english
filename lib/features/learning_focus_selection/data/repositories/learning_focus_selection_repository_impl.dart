@@ -8,13 +8,21 @@ class LearningFocusSelectionRepositoryImpl
 
   @override
   Future<void> saveSelectedOptions(List<int> selectedOptionIds) async {
-    // TODO: Replace with shared_preferences or persistent storage
-    _selectedOptionIds = List<int>.from(selectedOptionIds);
+    try {
+      // TODO: Replace with shared_preferences or persistent storage
+      _selectedOptionIds = List<int>.from(selectedOptionIds);
+    } catch (e) {
+      throw Exception('Failed to save selected options: ${e.toString()}');
+    }
   }
 
   @override
   Future<List<int>> getSelectedOptions() async {
-    // TODO: Replace with shared_preferences or persistent storage
-    return _selectedOptionIds;
+    try {
+      // TODO: Replace with shared_preferences or persistent storage
+      return _selectedOptionIds;
+    } catch (e) {
+      throw Exception('Failed to get selected options: ${e.toString()}');
+    }
   }
 }

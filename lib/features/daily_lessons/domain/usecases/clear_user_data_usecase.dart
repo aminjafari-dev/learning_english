@@ -19,7 +19,11 @@ class ClearUserDataUseCase implements UseCase<bool, void> {
   /// @return Either a Failure or true if successful
   @override
   Future<Either<Failure, bool>> call(void params) async {
-    return await repository.clearUserData();
+    try {
+      return await repository.clearUserData();
+    } catch (e) {
+      return Left(ServerFailure('Failed to clear user data: ${e.toString()}'));
+    }
   }
 }
 

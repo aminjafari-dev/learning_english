@@ -9,6 +9,12 @@ class SaveLearningFocusSelectionUseCase {
   SaveLearningFocusSelectionUseCase(this.repository);
 
   Future<void> call(List<int> selectedOptionIds) async {
-    await repository.saveSelectedOptions(selectedOptionIds);
+    try {
+      await repository.saveSelectedOptions(selectedOptionIds);
+    } catch (e) {
+      throw Exception(
+        'Failed to save learning focus selection: ${e.toString()}',
+      );
+    }
   }
 }

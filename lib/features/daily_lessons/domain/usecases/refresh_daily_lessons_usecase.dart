@@ -15,7 +15,13 @@ class RefreshDailyLessonsUseCase extends UseCase<bool, NoParams> {
 
   @override
   Future<Either<Failure, bool>> call(NoParams params) async {
-    return await repository.refreshDailyLessons();
+    try {
+      return await repository.refreshDailyLessons();
+    } catch (e) {
+      return Left(
+        ServerFailure('Failed to refresh daily lessons: ${e.toString()}'),
+      );
+    }
   }
 }
 

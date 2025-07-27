@@ -1,6 +1,7 @@
 // daily_lessons_event.dart
 // Bloc events for the Daily Lessons feature, using freezed.
 // Now includes user-specific data management and analytics events.
+// Now supports personalized content generation based on user preferences.
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -21,6 +22,12 @@ class DailyLessonsEvent with _$DailyLessonsEvent {
   /// This event reduces API costs by ~25-40% compared to separate requests
   /// Includes user-specific storage and retrieval logic
   const factory DailyLessonsEvent.fetchLessons() = FetchLessons;
+
+  /// Event to fetch personalized lessons based on user preferences
+  /// Creates level-appropriate and focus-specific content
+  /// Uses user's English level and selected learning focus areas
+  const factory DailyLessonsEvent.fetchPersonalizedLessons() =
+      FetchPersonalizedLessons;
 
   /// Event to refresh all daily lessons
   const factory DailyLessonsEvent.refreshLessons() = RefreshLessons;
@@ -43,10 +50,16 @@ class DailyLessonsEvent with _$DailyLessonsEvent {
   /// Event to clear all data for the current user
   /// Used when user wants to reset their learning progress
   const factory DailyLessonsEvent.clearUserData() = ClearUserData;
+
+  /// Event to get user preferences for personalized content
+  /// Returns user's level and selected learning focus areas
+  const factory DailyLessonsEvent.getUserPreferences() = GetUserPreferences;
 }
 
 // Example usage:
 // context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchVocabularies());
 // context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchLessons()); // More cost-effective
+// context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchPersonalizedLessons()); // Personalized content
 // context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.markVocabularyAsUsed(english: 'Perseverance'));
 // context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.getUserAnalytics());
+// context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.getUserPreferences());

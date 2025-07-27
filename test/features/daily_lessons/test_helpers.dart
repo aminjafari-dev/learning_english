@@ -21,10 +21,16 @@ import 'package:learning_english/features/daily_lessons/domain/usecases/clear_us
 import 'package:learning_english/features/daily_lessons/domain/entities/vocabulary.dart';
 import 'package:learning_english/features/daily_lessons/domain/entities/phrase.dart';
 import 'package:learning_english/features/daily_lessons/domain/entities/ai_usage_metadata.dart';
+import 'package:learning_english/features/daily_lessons/domain/entities/user_preferences.dart';
 import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
 import 'package:learning_english/features/daily_lessons/data/models/phrase_model.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/ai_provider_type.dart';
 import 'package:learning_english/core/error/failure.dart';
+import 'package:learning_english/features/level_selection/domain/repositories/user_repository.dart';
+import 'package:learning_english/features/learning_focus_selection/domain/repositories/learning_focus_selection_repository.dart';
+import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
+import 'package:learning_english/core/usecase/usecase.dart';
+import 'package:learning_english/features/level_selection/domain/entities/user_profile.dart';
 
 /// Test helper class for creating mock data and test scenarios
 class DailyLessonsTestHelpers {
@@ -234,6 +240,9 @@ class DailyLessonsTestHelpers {
     final repository = DailyLessonsRepositoryImpl(
       remoteDataSource: MockAiLessonsRemoteDataSource(),
       localDataSource: localDataSource,
+      userRepository: MockUserRepository(),
+      learningFocusRepository: MockLearningFocusRepository(),
+      getUserIdUseCase: MockGetUserIdUseCase(),
     );
 
     final getDailyVocabulariesUseCase = GetDailyVocabulariesUseCase(repository);
@@ -277,13 +286,17 @@ class DailyLessonsTestHelpers {
 /// Mock remote data source for testing
 class MockAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
   @override
-  Future<Either<Failure, List<Vocabulary>>> fetchDailyVocabularies() async {
+  Future<Either<Failure, List<Vocabulary>>> fetchPersonalizedDailyVocabularies(
+    UserPreferences preferences,
+  ) async {
     // Default implementation - override in tests as needed
     throw UnimplementedError('Override this method in tests');
   }
 
   @override
-  Future<Either<Failure, List<Phrase>>> fetchDailyPhrases() async {
+  Future<Either<Failure, List<Phrase>>> fetchPersonalizedDailyPhrases(
+    UserPreferences preferences,
+  ) async {
     // Default implementation - override in tests as needed
     throw UnimplementedError('Override this method in tests');
   }
@@ -299,7 +312,7 @@ class MockAiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
       })
     >
   >
-  fetchDailyLessons() async {
+  fetchPersonalizedDailyLessons(UserPreferences preferences) async {
     // Default implementation - override in tests as needed
     throw UnimplementedError('Override this method in tests');
   }
@@ -340,5 +353,55 @@ class DailyLessonsMatchers {
       }
       return false;
     }, 'contains error: $message');
+  }
+}
+
+/// Mock user repository for testing
+class MockUserRepository implements UserRepository {
+  @override
+  Future<Either<Failure, void>> saveUserLevel(String userId, Level level) async {
+    return right(null);
+  }
+}
+
+/// Mock learning focus repository for testing
+class MockLearningFocusRepository implements LearningFocusSelectionRepository {
+  @override
+  Future<void> saveSelectedOptions(List<int> selectedOptionIds) async {
+    // Mock implementation
+  }
+
+  @override
+  Future<List<int>> getSelectedOptions() async {
+    return [];
+  }
+}
+
+/// Mock get user ID use case for testing
+class MockGetUserIdUseCase implements GetUserIdUseCase {
+  @override
+  AuthRepository get repository => MockAuthRepository();
+
+  @override
+  Future<Either<Failure, String?>> call(NoParams params) async {
+    return right('test_user_id');
+  }
+}
+
+/// Mock auth repository for testing
+class MockAuthRepository implements AuthRepository {
+  @override
+  Future<String?> getUserId() async {
+    return 'test_user_id';
+  }
+
+  @override
+  Future<void> saveUserId(String userId) async {
+    // Mock implementation
+  }
+
+  @override
+  Future<void> removeUserId() async {
+    // Mock implementation
   }
 }

@@ -11,18 +11,25 @@ import 'package:learning_english/features/learning_focus_selection/presentation/
 /// Usage Example:
 ///   await setupLearningFocusSelectionLocator(GetIt.I);
 Future<void> setupLearningFocusSelectionDI(GetIt getIt) async {
-  // Register repository implementation as the interface
-  getIt.registerLazySingleton<LearningFocusSelectionRepository>(
-    () => LearningFocusSelectionRepositoryImpl(),
-  );
+  try {
+    // Register repository implementation as the interface
+    getIt.registerLazySingleton<LearningFocusSelectionRepository>(
+      () => LearningFocusSelectionRepositoryImpl(),
+    );
 
-  // Register use case for saving learning focus selection
-  getIt.registerFactory<SaveLearningFocusSelectionUseCase>(
-    () => SaveLearningFocusSelectionUseCase(getIt()),
-  );
+    // Register use case for saving learning focus selection
+    getIt.registerFactory<SaveLearningFocusSelectionUseCase>(
+      () => SaveLearningFocusSelectionUseCase(getIt()),
+    );
 
-  // Register Cubit for managing selection state
-  getIt.registerSingleton(
-    LearningFocusSelectionCubit(getIt()),
-  );
+    // Register Cubit for managing selection state
+    getIt.registerSingleton(LearningFocusSelectionCubit(getIt()));
+
+    print(
+      '✅ [DI] Learning Focus Selection dependencies registered successfully',
+    );
+  } catch (e) {
+    print('❌ [DI] Error setting up Learning Focus Selection dependencies: $e');
+    rethrow; // Re-throw to let the caller handle the error
+  }
 }

@@ -19,7 +19,13 @@ class GetUserAnalyticsUseCase implements UseCase<Map<String, dynamic>, void> {
   /// @return Either a Failure or analytics data map
   @override
   Future<Either<Failure, Map<String, dynamic>>> call(void params) async {
-    return await repository.getUserAnalytics();
+    try {
+      return await repository.getUserAnalytics();
+    } catch (e) {
+      return Left(
+        ServerFailure('Failed to get user analytics: ${e.toString()}'),
+      );
+    }
   }
 }
 
@@ -33,4 +39,4 @@ class GetUserAnalyticsUseCase implements UseCase<Map<String, dynamic>, void> {
 //     print('Total phrases: ${analytics['totalPhrases']}');
 //     print('Total tokens used: ${analytics['totalTokens']}');
 //   },
-// ); 
+// );

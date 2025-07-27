@@ -8,13 +8,14 @@
 //   gemini: GeminiLessonsRemoteDataSource(),
 //   deepSeek: DeepSeekLessonsRemoteDataSource(),
 // );
-// final vocabResult = await dataSource.fetchDailyVocabularies();
-// final phraseResult = await dataSource.fetchDailyPhrases();
+// final preferences = UserPreferences(level: Level.intermediate, focusAreas: ['business']);
+// final personalizedResult = await dataSource.fetchPersonalizedDailyLessons(preferences);
 
 import 'package:dartz/dartz.dart';
 import '../../../domain/entities/vocabulary.dart';
 import '../../../domain/entities/phrase.dart';
 import '../../../domain/entities/ai_usage_metadata.dart';
+import '../../../domain/entities/user_preferences.dart';
 import 'package:learning_english/core/error/failure.dart';
 import 'ai_lessons_remote_data_source.dart';
 import 'openai_lessons_remote_data_source.dart';
@@ -23,6 +24,7 @@ import 'deepseek_lessons_remote_data_source.dart';
 import '../ai_provider_type.dart';
 
 /// Delegator for AI-based lessons data sources
+/// All methods are personalized based on user preferences
 class MultiModelLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
   final AiProviderType providerType;
   final OpenAiLessonsRemoteDataSource openAi;
@@ -48,13 +50,17 @@ class MultiModelLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, List<Vocabulary>>> fetchDailyVocabularies() {
-    return _delegate.fetchDailyVocabularies();
+  Future<Either<Failure, List<Vocabulary>>> fetchPersonalizedDailyVocabularies(
+    UserPreferences preferences,
+  ) {
+    return _delegate.fetchPersonalizedDailyVocabularies(preferences);
   }
 
   @override
-  Future<Either<Failure, List<Phrase>>> fetchDailyPhrases() {
-    return _delegate.fetchDailyPhrases();
+  Future<Either<Failure, List<Phrase>>> fetchPersonalizedDailyPhrases(
+    UserPreferences preferences,
+  ) {
+    return _delegate.fetchPersonalizedDailyPhrases(preferences);
   }
 
   @override
@@ -68,7 +74,7 @@ class MultiModelLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
       })
     >
   >
-  fetchDailyLessons() {
-    return _delegate.fetchDailyLessons();
+  fetchPersonalizedDailyLessons(UserPreferences preferences) {
+    return _delegate.fetchPersonalizedDailyLessons(preferences);
   }
 }

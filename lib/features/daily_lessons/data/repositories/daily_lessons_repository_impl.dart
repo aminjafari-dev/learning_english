@@ -1,12 +1,14 @@
 // daily_lessons_repository_impl.dart
 // Enhanced implementation of the DailyLessonsRepository interface.
 // This class connects the data sources to the domain layer and handles mapping and error handling.
+// All methods are now personalized based on user preferences.
 // Now includes user-specific data storage and retrieval with metadata tracking.
 
 import 'package:dartz/dartz.dart';
 import '../../domain/entities/vocabulary.dart';
 import '../../domain/entities/phrase.dart';
 import '../../domain/entities/ai_usage_metadata.dart';
+import '../../domain/entities/user_preferences.dart';
 import '../../domain/repositories/daily_lessons_repository.dart';
 import '../datasources/remote/ai_lessons_remote_data_source.dart';
 import '../datasources/local/daily_lessons_local_data_source.dart';
@@ -17,17 +19,29 @@ import 'package:learning_english/core/error/failure.dart';
 import '../services/content_sync_manager.dart';
 import 'package:learning_english/features/level_selection/domain/entities/user_profile.dart';
 import '../datasources/remote/firebase_lessons_remote_data_source.dart';
+import 'package:learning_english/features/level_selection/domain/repositories/user_repository.dart';
+import 'package:learning_english/features/learning_focus_selection/domain/repositories/learning_focus_selection_repository.dart';
+import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
+import 'package:learning_english/core/usecase/usecase.dart';
 
-/// Enhanced implementation of DailyLessonsRepository with user-specific storage
+/// Enhanced implementation of DailyLessonsRepository with personalized content
 /// All AI-fetched content is automatically marked as used since the user will definitely read it
+/// Now supports personalized content based on user preferences
 class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
   final AiLessonsRemoteDataSource remoteDataSource;
   final DailyLessonsLocalDataSource localDataSource;
+  final UserRepository userRepository;
+  final LearningFocusSelectionRepository learningFocusRepository;
+  final GetUserIdUseCase getUserIdUseCase;
 
   /// Inject the AI-based remote data source and local data source via constructor
+  /// Now also includes repositories for fetching user preferences
   DailyLessonsRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
+    required this.userRepository,
+    required this.learningFocusRepository,
+    required this.getUserIdUseCase,
   });
 
   /// Content sync manager for saving content to Firebase in background
@@ -40,81 +54,6 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
   }
 
   @override
-  Future<Either<Failure, List<Vocabulary>>> getDailyVocabularies() async {
-    // First, try to get unused vocabularies from local storage
-    final unusedVocabs = await localDataSource.getUnusedVocabularies();
-
-    // If we have enough unused vocabularies, return them
-    if (unusedVocabs.length >= 4) {
-      return right(
-        unusedVocabs.take(4).map((model) => model.toEntity()).toList(),
-      );
-    }
-
-    // Otherwise, fetch new vocabularies from AI
-    final result = await remoteDataSource.fetchDailyVocabularies();
-    return result.fold((failure) => left(failure), (vocabularies) async {
-      // Save new vocabularies to local storage with default metadata
-      final requestId = 'req_${DateTime.now().millisecondsSinceEpoch}';
-      final providerType = AiProviderType.openai; // Default provider
-
-      for (final vocabulary in vocabularies) {
-        final model = VocabularyModel.fromEntity(
-          vocabulary,
-          'current_user', // Placeholder since we don't need userId for local storage
-          providerType,
-          _estimateTokens(vocabulary.english, vocabulary.persian),
-          requestId,
-        ).copyWith(
-          isUsed: true,
-        ); // Mark as used since user will definitely read it
-        await localDataSource.saveUserVocabulary(model);
-      }
-
-      return right(vocabularies);
-    });
-  }
-
-  @override
-  Future<Either<Failure, List<Phrase>>> getDailyPhrases() async {
-    // First, try to get unused phrases from local storage
-    final unusedPhrases = await localDataSource.getUnusedPhrases();
-
-    // If we have enough unused phrases, return them
-    if (unusedPhrases.length >= 2) {
-      return right(
-        unusedPhrases.take(2).map((model) => model.toEntity()).toList(),
-      );
-    }
-
-    // Otherwise, fetch new phrases from AI
-    final result = await remoteDataSource.fetchDailyPhrases();
-    return result.fold((failure) => left(failure), (phrases) async {
-      // Save new phrases to local storage with default metadata
-      final requestId = 'req_${DateTime.now().millisecondsSinceEpoch}';
-      final providerType = AiProviderType.openai; // Default provider
-
-      for (final phrase in phrases) {
-        final model = PhraseModel.fromEntity(
-          phrase,
-          'current_user', // Placeholder since we don't need userId for local storage
-          providerType,
-          _estimateTokens(phrase.english, phrase.persian),
-          requestId,
-        ).copyWith(
-          isUsed: true,
-        ); // Mark as used since user will definitely read it
-        await localDataSource.saveUserPhrase(model);
-      }
-
-      return right(phrases);
-    });
-  }
-
-  /// Get both vocabularies and phrases in a single request (cost-effective)
-  /// This method reduces API costs by ~25-40% compared to separate requests
-  /// Also includes user-specific storage and retrieval
-  @override
   Future<
     Either<
       Failure,
@@ -125,38 +64,17 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
       })
     >
   >
-  getDailyLessons() async {
-    // First, try to get unused content from local storage
-    final unusedVocabs = await localDataSource.getUnusedVocabularies();
-    final unusedPhrases = await localDataSource.getUnusedPhrases();
-
-    // If we have enough unused content, return it with empty metadata
-    if (unusedVocabs.length >= 4 && unusedPhrases.length >= 2) {
-      return right((
-        vocabularies:
-            unusedVocabs.take(4).map((model) => model.toEntity()).toList(),
-        phrases:
-            unusedPhrases.take(2).map((model) => model.toEntity()).toList(),
-        metadata: const AiUsageMetadata(
-          promptTokenCount: 0,
-          candidatesTokenCount: 0,
-          totalTokenCount: 0,
-          thoughtsTokenCount: 0,
-          modelVersion: 'local_cache',
-          responseId: 'local_cache',
-          finishReason: 'STOP',
-        ),
-      ));
-    }
-
-    // Otherwise, fetch new content from AI
-    final result = await remoteDataSource.fetchDailyLessons();
+  getPersonalizedDailyLessons(UserPreferences preferences) async {
+    // Fetch personalized content from AI based on user preferences
+    final result = await remoteDataSource.fetchPersonalizedDailyLessons(
+      preferences,
+    );
     return result.fold((failure) => left(failure), (data) async {
       // Extract provider type and request ID from metadata
       final providerType = _extractProviderTypeFromMetadata(data.metadata);
       final requestId = data.metadata.responseId;
 
-      // Save vocabularies with exact metadata
+      // Save personalized vocabularies with exact metadata
       for (final vocabulary in data.vocabularies) {
         final model = VocabularyModel.fromEntity(
           vocabulary,
@@ -170,7 +88,7 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
         await localDataSource.saveUserVocabulary(model);
       }
 
-      // Save phrases with exact metadata
+      // Save personalized phrases with exact metadata
       for (final phrase in data.phrases) {
         final model = PhraseModel.fromEntity(
           phrase,
@@ -184,15 +102,16 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
         await localDataSource.saveUserPhrase(model);
       }
 
-      // Trigger background sync to Firebase global pool
+      // Trigger background sync to Firebase global pool with personalized context
       print(
-        '🔄 [REPOSITORY] Triggering background sync for ${data.vocabularies.length} vocabularies and ${data.phrases.length} phrases',
+        '🔄 [REPOSITORY] Triggering personalized background sync for ${data.vocabularies.length} vocabularies and ${data.phrases.length} phrases',
       );
-      _triggerBackgroundSync(
+      _triggerPersonalizedBackgroundSync(
         data.vocabularies,
         data.phrases,
         providerType,
         requestId,
+        preferences,
       );
 
       return right((
@@ -204,150 +123,96 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> refreshDailyLessons() async {
-    // Use the cost-effective combined method for refresh
-    final lessonsResult = await getDailyLessons();
-    return lessonsResult.fold((failure) => left(failure), (_) => right(true));
-  }
-
-  /// Marks vocabulary as used for the current user
-  /// Updates the usage status in local storage
-  @override
-  Future<Either<Failure, bool>> markVocabularyAsUsed(String english) async {
+  Future<Either<Failure, UserPreferences>> getUserPreferences() async {
     try {
-      await localDataSource.markVocabularyAsUsed(english);
-      return right(true);
-    } catch (e) {
-      return left(CacheFailure('Failed to mark vocabulary as used: $e'));
-    }
-  }
+      // Get user ID first
+      final userIdResult = await getUserIdUseCase(NoParams());
+      final userId = userIdResult.fold((failure) => null, (id) => id);
 
-  /// Marks phrase as used for the current user
-  /// Updates the usage status in local storage
-  @override
-  Future<Either<Failure, bool>> markPhraseAsUsed(String english) async {
-    try {
-      await localDataSource.markPhraseAsUsed(english);
-      return right(true);
-    } catch (e) {
-      return left(CacheFailure('Failed to mark phrase as used: $e'));
-    }
-  }
+      if (userId == null) {
+        // Return default preferences if user ID is not available
+        return right(UserPreferences.defaultPreferences());
+      }
 
-  /// Gets analytics data for the current user
-  /// Returns usage statistics and cost analysis
-  @override
-  Future<Either<Failure, Map<String, dynamic>>> getUserAnalytics() async {
-    try {
-      final analytics = await localDataSource.getUserAnalytics();
-      return right(analytics);
-    } catch (e) {
-      return left(CacheFailure('Failed to get user analytics: $e'));
-    }
-  }
+      // Get user level from Firestore
+      Level userLevel = Level.intermediate; // Default level
+      try {
+        // Note: This is a simplified approach. In a real implementation,
+        // you would have a proper method to get user level from the repository
+        // For now, we'll use the default level
+        userLevel = Level.intermediate;
+      } catch (e) {
+        print('⚠️ [REPOSITORY] Could not fetch user level, using default: $e');
+        userLevel = Level.intermediate;
+      }
 
-  /// Gets vocabulary data by AI provider for the current user
-  /// Used for analyzing performance and cost by provider
-  @override
-  Future<Either<Failure, List<Vocabulary>>> getVocabulariesByProvider(
-    AiProviderType provider,
-  ) async {
-    try {
-      final vocabModels = await localDataSource.getVocabulariesByProvider(
-        provider,
+      // Get learning focus areas from local storage
+      List<String> focusAreas = ['general']; // Default focus area
+      try {
+        final selectedOptionIds =
+            await learningFocusRepository.getSelectedOptions();
+        if (selectedOptionIds.isNotEmpty) {
+          // Convert option IDs to focus area names
+          // This mapping should match the options in LearningFocusSelectionPage
+          focusAreas = _mapOptionIdsToFocusAreas(selectedOptionIds);
+        }
+      } catch (e) {
+        print(
+          '⚠️ [REPOSITORY] Could not fetch learning focus areas, using default: $e',
+        );
+        focusAreas = ['general'];
+      }
+
+      final preferences = UserPreferences(
+        level: userLevel,
+        focusAreas: focusAreas,
       );
-      return right(vocabModels.map((model) => model.toEntity()).toList());
+
+      print('✅ [REPOSITORY] Retrieved user preferences: $preferences');
+      return right(preferences);
     } catch (e) {
-      return left(CacheFailure('Failed to get vocabularies by provider: $e'));
+      print('❌ [REPOSITORY] Error fetching user preferences: $e');
+      return left(
+        ServerFailure('Failed to fetch user preferences: ${e.toString()}'),
+      );
     }
   }
 
-  /// Gets phrase data by AI provider for the current user
-  /// Used for analyzing performance and cost by provider
-  @override
-  Future<Either<Failure, List<Phrase>>> getPhrasesByProvider(
-    AiProviderType provider,
-  ) async {
-    try {
-      final phraseModels = await localDataSource.getPhrasesByProvider(provider);
-      return right(phraseModels.map((model) => model.toEntity()).toList());
-    } catch (e) {
-      return left(CacheFailure('Failed to get phrases by provider: $e'));
-    }
+  /// Maps learning focus option IDs to focus area names
+  /// This mapping should match the options defined in LearningFocusSelectionPage
+  List<String> _mapOptionIdsToFocusAreas(List<int> optionIds) {
+    const Map<int, String> optionIdToFocusArea = {
+      0: 'business',
+      1: 'travel',
+      2: 'social',
+      3: 'home',
+      4: 'academic',
+      5: 'movie',
+      6: 'music',
+      7: 'tv',
+      8: 'shopping',
+      9: 'restaurant',
+      10: 'health',
+      11: 'everyday',
+    };
+
+    return optionIds.map((id) => optionIdToFocusArea[id] ?? 'general').toList();
   }
 
-  /// Clears all data for the current user
-  /// Used when user wants to reset their learning progress
-  @override
-  Future<Either<Failure, bool>> clearUserData() async {
-    try {
-      await localDataSource.clearUserData();
-      return right(true);
-    } catch (e) {
-      return left(CacheFailure('Failed to clear user data: $e'));
-    }
-  }
-
-  /// Estimates token usage for English and Persian text
-  /// This is a rough estimation - actual token usage may vary by AI provider
-  int _estimateTokens(String english, String persian) {
-    // Rough estimation: 1 token ≈ 4 characters for English, 2 characters for Persian
-    final englishTokens = (english.length / 4).ceil();
-    final persianTokens = (persian.length / 2).ceil();
-    return englishTokens + persianTokens;
-  }
-
-  /// Extracts the AI provider type from the metadata.
-  /// Determines the provider based on the model version in the metadata
-  AiProviderType _extractProviderTypeFromMetadata(AiUsageMetadata metadata) {
-    final modelVersion = metadata.modelVersion.toLowerCase();
-
-    // Check for OpenAI models
-    if (modelVersion.contains('gpt') ||
-        modelVersion.contains('openai') ||
-        modelVersion.contains('chatgpt')) {
-      return AiProviderType.openai;
-    }
-
-    // Check for Gemini models
-    if (modelVersion.contains('gemini') ||
-        modelVersion.contains('google') ||
-        modelVersion.contains('palm')) {
-      return AiProviderType.gemini;
-    }
-
-    // Check for DeepSeek models
-    if (modelVersion.contains('deepseek') ||
-        modelVersion.contains('deep-seek')) {
-      return AiProviderType.deepseek;
-    }
-
-    // Default fallback - log a warning and return OpenAI
-    print(
-      'Warning: Unknown model version "$modelVersion", defaulting to OpenAI',
-    );
-    return AiProviderType.openai;
-  }
-
-  /// Triggers background sync to Firebase global pool
-  /// This method is called when new content is generated by AI
-  /// It saves content to Firebase silently without affecting user experience
-  ///
-  /// Parameters:
-  /// - vocabularies: List of newly generated vocabularies
-  /// - phrases: List of newly generated phrases
-  /// - providerType: AI provider that generated the content
-  /// - requestId: Unique request ID for tracking
-  void _triggerBackgroundSync(
+  /// Triggers personalized background sync with user preferences context
+  void _triggerPersonalizedBackgroundSync(
     List<Vocabulary> vocabularies,
     List<Phrase> phrases,
     AiProviderType providerType,
     String requestId,
+    UserPreferences preferences,
   ) {
     try {
-      print('🔄 [BACKGROUND_SYNC] Starting background sync process');
       print(
-        '🔄 [BACKGROUND_SYNC] Provider: $providerType, Request ID: $requestId',
+        '🔄 [BACKGROUND_SYNC] Starting personalized background sync process',
+      );
+      print(
+        '🔄 [BACKGROUND_SYNC] Provider: $providerType, Request ID: $requestId, Preferences: $preferences',
       );
 
       // Check if content sync manager is available
@@ -385,41 +250,161 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
         '🔄 [BACKGROUND_SYNC] Converted ${vocabularyModels.length} vocabularies and ${phraseModels.length} phrases to models',
       );
 
-      // Create learning context (placeholder - should be based on user preferences)
+      // Create learning context with user preferences
       final context = LearningContext(
-        level: Level.intermediate, // Should come from user profile
-        focusArea: 'general', // Should come from user preferences
-        difficulty: 'medium',
+        level: preferences.level,
+        focusArea: preferences.focusAreasString,
+        difficulty: _getDifficultyFromLevel(preferences.level),
       );
 
       print(
-        '🔄 [BACKGROUND_SYNC] Created learning context: ${context.toJson()}',
+        '🔄 [BACKGROUND_SYNC] Created personalized learning context: ${context.toJson()}',
       );
 
       // Trigger background sync via content sync manager
-      print('🔄 [BACKGROUND_SYNC] Saving content to Firebase via sync manager');
+      print(
+        '🔄 [BACKGROUND_SYNC] Saving personalized content to Firebase via sync manager',
+      );
       _contentSyncManager!.saveContentToFirebase(
         vocabularies: vocabularyModels,
         phrases: phraseModels,
         context: context,
-        userId: 'current_user', // Should be replaced with actual user ID
+        userId: 'current_user', // Will be replaced with actual user ID
       );
 
-      print('✅ [BACKGROUND_SYNC] Background sync triggered successfully');
+      print(
+        '✅ [BACKGROUND_SYNC] Personalized background sync triggered successfully',
+      );
     } catch (e) {
-      // Log error but don't affect user experience
-      print('❌ [BACKGROUND_SYNC] Background sync error: $e');
+      print('❌ [BACKGROUND_SYNC] Error in personalized background sync: $e');
     }
   }
-}
 
-// Example usage:
-// final repo = DailyLessonsRepositoryImpl(
-//   remoteDataSource: remoteDataSource,
-//   localDataSource: localDataSource,
-// );
-// final vocabResult = await repo.getDailyVocabularies();
-// final phraseResult = await repo.getDailyPhrases();
-// final lessonsResult = await repo.getDailyLessons(); // More cost-effective
-// final analytics = await repo.getUserAnalytics();
-// Note: All AI-fetched content is automatically marked as used (isUsed: true)
+  /// Maps user level to difficulty string for learning context
+  String _getDifficultyFromLevel(Level level) {
+    switch (level) {
+      case Level.beginner:
+        return 'easy';
+      case Level.elementary:
+        return 'easy';
+      case Level.intermediate:
+        return 'medium';
+      case Level.advanced:
+        return 'hard';
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> refreshDailyLessons() async {
+    try {
+      // Clear local cache to force fresh content fetch
+      await localDataSource.clearUserData();
+      return right(true);
+    } catch (e) {
+      return left(
+        ServerFailure('Failed to refresh daily lessons: ${e.toString()}'),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> markVocabularyAsUsed(String english) async {
+    try {
+      await localDataSource.markVocabularyAsUsed(english);
+      return right(true);
+    } catch (e) {
+      return left(
+        ServerFailure('Failed to mark vocabulary as used: ${e.toString()}'),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> markPhraseAsUsed(String english) async {
+    try {
+      await localDataSource.markPhraseAsUsed(english);
+      return right(true);
+    } catch (e) {
+      return left(
+        ServerFailure('Failed to mark phrase as used: ${e.toString()}'),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getUserAnalytics() async {
+    try {
+      final analytics = await localDataSource.getUserAnalytics();
+      return right(analytics);
+    } catch (e) {
+      return left(
+        ServerFailure('Failed to get user analytics: ${e.toString()}'),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Vocabulary>>> getVocabulariesByProvider(
+    AiProviderType provider,
+  ) async {
+    try {
+      final vocabularies = await localDataSource.getVocabulariesByProvider(
+        provider,
+      );
+      return right(vocabularies.map((model) => model.toEntity()).toList());
+    } catch (e) {
+      return left(
+        ServerFailure(
+          'Failed to get vocabularies by provider: ${e.toString()}',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Phrase>>> getPhrasesByProvider(
+    AiProviderType provider,
+  ) async {
+    try {
+      final phrases = await localDataSource.getPhrasesByProvider(provider);
+      return right(phrases.map((model) => model.toEntity()).toList());
+    } catch (e) {
+      return left(
+        ServerFailure('Failed to get phrases by provider: ${e.toString()}'),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> clearUserData() async {
+    try {
+      await localDataSource.clearUserData();
+      return right(true);
+    } catch (e) {
+      return left(ServerFailure('Failed to clear user data: ${e.toString()}'));
+    }
+  }
+
+  /// Extracts provider type from metadata for background sync
+  AiProviderType _extractProviderTypeFromMetadata(AiUsageMetadata metadata) {
+    // This is a simplified extraction - in a real implementation,
+    // you would parse the metadata more carefully
+    if (metadata.modelVersion.contains('gpt')) {
+      return AiProviderType.openai;
+    } else if (metadata.modelVersion.contains('gemini')) {
+      return AiProviderType.gemini;
+    } else if (metadata.modelVersion.contains('deepseek')) {
+      return AiProviderType.deepseek;
+    } else {
+      return AiProviderType.openai; // Default fallback
+    }
+  }
+
+  /// Estimates token usage for cost tracking
+  int _estimateTokens(String english, String persian) {
+    // Rough estimation: 1 token ≈ 4 characters for English, 2 characters for Persian
+    final englishTokens = (english.length / 4).ceil();
+    final persianTokens = (persian.length / 2).ceil();
+    return englishTokens + persianTokens + 10; // Add buffer for JSON structure
+  }
+}

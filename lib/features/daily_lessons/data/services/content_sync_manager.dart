@@ -9,7 +9,6 @@
 import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
 import 'package:learning_english/features/daily_lessons/data/models/phrase_model.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/firebase_lessons_remote_data_source.dart';
-import 'package:learning_english/features/level_selection/domain/entities/user_profile.dart';
 
 /// Simplified manager for saving content to Firebase in the background
 /// This class provides a clean interface for the main repository to save content

@@ -19,67 +19,103 @@ class DailyLessonsLocalDataSource {
   /// Initialize Hive boxes for vocabulary and phrase storage
   /// This method should be called before using any other methods
   Future<void> initialize() async {
-    _vocabulariesBox = await Hive.openBox<VocabularyModel>(
-      _vocabulariesBoxName,
-    );
-    _phrasesBox = await Hive.openBox<PhraseModel>(_phrasesBoxName);
+    try {
+      _vocabulariesBox = await Hive.openBox<VocabularyModel>(
+        _vocabulariesBoxName,
+      );
+      _phrasesBox = await Hive.openBox<PhraseModel>(_phrasesBoxName);
+    } catch (e) {
+      throw Exception('Failed to initialize Hive boxes: ${e.toString()}');
+    }
   }
 
   /// Saves vocabulary data for the current user
   /// Stores metadata including AI provider, tokens used, and usage status
   Future<void> saveUserVocabulary(VocabularyModel vocabulary) async {
-    // Use English text as the key for easy retrieval and updates
-    await _vocabulariesBox.put(vocabulary.english, vocabulary);
+    try {
+      // Use English text as the key for easy retrieval and updates
+      await _vocabulariesBox.put(vocabulary.english, vocabulary);
+    } catch (e) {
+      throw Exception('Failed to save vocabulary: ${e.toString()}');
+    }
   }
 
   /// Saves phrase data for the current user
   /// Stores metadata including AI provider, tokens used, and usage status
   Future<void> saveUserPhrase(PhraseModel phrase) async {
-    // Use English text as the key for easy retrieval and updates
-    await _phrasesBox.put(phrase.english, phrase);
+    try {
+      // Use English text as the key for easy retrieval and updates
+      await _phrasesBox.put(phrase.english, phrase);
+    } catch (e) {
+      throw Exception('Failed to save phrase: ${e.toString()}');
+    }
   }
 
   /// Retrieves all vocabulary data for the current user
   /// Returns list of VocabularyModel with metadata
   Future<List<VocabularyModel>> getUserVocabularies() async {
-    return _vocabulariesBox.values.toList();
+    try {
+      return _vocabulariesBox.values.toList();
+    } catch (e) {
+      throw Exception('Failed to get user vocabularies: ${e.toString()}');
+    }
   }
 
   /// Retrieves all phrase data for the current user
   /// Returns list of PhraseModel with metadata
   Future<List<PhraseModel>> getUserPhrases() async {
-    return _phrasesBox.values.toList();
+    try {
+      return _phrasesBox.values.toList();
+    } catch (e) {
+      throw Exception('Failed to get user phrases: ${e.toString()}');
+    }
   }
 
   /// Retrieves unused vocabulary for the current user
   /// Used to avoid suggesting previously used content
   Future<List<VocabularyModel>> getUnusedVocabularies() async {
-    return _vocabulariesBox.values.where((vocab) => !vocab.isUsed).toList();
+    try {
+      return _vocabulariesBox.values.where((vocab) => !vocab.isUsed).toList();
+    } catch (e) {
+      throw Exception('Failed to get unused vocabularies: ${e.toString()}');
+    }
   }
 
   /// Retrieves unused phrases for the current user
   /// Used to avoid suggesting previously used content
   Future<List<PhraseModel>> getUnusedPhrases() async {
-    return _phrasesBox.values.where((phrase) => !phrase.isUsed).toList();
+    try {
+      return _phrasesBox.values.where((phrase) => !phrase.isUsed).toList();
+    } catch (e) {
+      throw Exception('Failed to get unused phrases: ${e.toString()}');
+    }
   }
 
   /// Marks vocabulary as used for the current user
   /// Updates the usage status in local storage
   Future<void> markVocabularyAsUsed(String english) async {
-    final vocabulary = _vocabulariesBox.get(english);
-    if (vocabulary != null) {
-      final updatedVocabulary = vocabulary.copyWith(isUsed: true);
-      await _vocabulariesBox.put(english, updatedVocabulary);
+    try {
+      final vocabulary = _vocabulariesBox.get(english);
+      if (vocabulary != null) {
+        final updatedVocabulary = vocabulary.copyWith(isUsed: true);
+        await _vocabulariesBox.put(english, updatedVocabulary);
+      }
+    } catch (e) {
+      throw Exception('Failed to mark vocabulary as used: ${e.toString()}');
     }
   }
 
   /// Marks phrase as used for the current user
   /// Updates the usage status in local storage
   Future<void> markPhraseAsUsed(String english) async {
-    final phrase = _phrasesBox.get(english);
-    if (phrase != null) {
-      final updatedPhrase = phrase.copyWith(isUsed: true);
-      await _phrasesBox.put(english, updatedPhrase);
+    try {
+      final phrase = _phrasesBox.get(english);
+      if (phrase != null) {
+        final updatedPhrase = phrase.copyWith(isUsed: true);
+        await _phrasesBox.put(english, updatedPhrase);
+      }
+    } catch (e) {
+      throw Exception('Failed to mark phrase as used: ${e.toString()}');
     }
   }
 
@@ -88,9 +124,15 @@ class DailyLessonsLocalDataSource {
   Future<List<VocabularyModel>> getVocabulariesByProvider(
     AiProviderType provider,
   ) async {
-    return _vocabulariesBox.values
-        .where((vocab) => vocab.aiProvider == provider)
-        .toList();
+    try {
+      return _vocabulariesBox.values
+          .where((vocab) => vocab.aiProvider == provider)
+          .toList();
+    } catch (e) {
+      throw Exception(
+        'Failed to get vocabularies by provider: ${e.toString()}',
+      );
+    }
   }
 
   /// Retrieves phrase data by AI provider for analytics
@@ -98,67 +140,88 @@ class DailyLessonsLocalDataSource {
   Future<List<PhraseModel>> getPhrasesByProvider(
     AiProviderType provider,
   ) async {
-    return _phrasesBox.values
-        .where((phrase) => phrase.aiProvider == provider)
-        .toList();
+    try {
+      return _phrasesBox.values
+          .where((phrase) => phrase.aiProvider == provider)
+          .toList();
+    } catch (e) {
+      throw Exception('Failed to get phrases by provider: ${e.toString()}');
+    }
   }
 
   /// Clears all data for the current user
   /// Used when user wants to reset their learning progress
   Future<void> clearUserData() async {
-    await _vocabulariesBox.clear();
-    await _phrasesBox.clear();
+    try {
+      await _vocabulariesBox.clear();
+      await _phrasesBox.clear();
+    } catch (e) {
+      throw Exception('Failed to clear user data: ${e.toString()}');
+    }
   }
 
   /// Gets analytics data for the current user
   /// Returns usage statistics and cost analysis
   Future<Map<String, dynamic>> getUserAnalytics() async {
-    final vocabularies = _vocabulariesBox.values.toList();
-    final phrases = _phrasesBox.values.toList();
+    try {
+      final vocabularies = _vocabulariesBox.values.toList();
+      final phrases = _phrasesBox.values.toList();
 
-    final totalTokens =
-        vocabularies.fold<int>(0, (sum, vocab) => sum + vocab.tokensUsed) +
-        phrases.fold<int>(0, (sum, phrase) => sum + phrase.tokensUsed);
+      final totalTokens =
+          vocabularies.fold<int>(0, (sum, vocab) => sum + vocab.tokensUsed) +
+          phrases.fold<int>(0, (sum, phrase) => sum + phrase.tokensUsed);
 
-    final providerStats = <String, Map<String, dynamic>>{};
+      final providerStats = <String, Map<String, dynamic>>{};
 
-    for (final provider in AiProviderType.values) {
-      final providerVocabs =
-          vocabularies.where((vocab) => vocab.aiProvider == provider).toList();
-      final providerPhrases =
-          phrases.where((phrase) => phrase.aiProvider == provider).toList();
+      for (final provider in AiProviderType.values) {
+        final providerVocabs =
+            vocabularies
+                .where((vocab) => vocab.aiProvider == provider)
+                .toList();
+        final providerPhrases =
+            phrases.where((phrase) => phrase.aiProvider == provider).toList();
 
-      final providerTokens =
-          providerVocabs.fold<int>(0, (sum, vocab) => sum + vocab.tokensUsed) +
-          providerPhrases.fold<int>(
-            0,
-            (sum, phrase) => sum + phrase.tokensUsed,
-          );
+        final providerTokens =
+            providerVocabs.fold<int>(
+              0,
+              (sum, vocab) => sum + vocab.tokensUsed,
+            ) +
+            providerPhrases.fold<int>(
+              0,
+              (sum, phrase) => sum + phrase.tokensUsed,
+            );
 
-      providerStats[provider.toString()] = {
-        'vocabularies': providerVocabs.length,
-        'phrases': providerPhrases.length,
-        'tokensUsed': providerTokens,
-        'usedVocabularies': providerVocabs.where((v) => v.isUsed).length,
-        'usedPhrases': providerPhrases.where((p) => p.isUsed).length,
+        providerStats[provider.toString()] = {
+          'vocabularies': providerVocabs.length,
+          'phrases': providerPhrases.length,
+          'tokensUsed': providerTokens,
+          'usedVocabularies': providerVocabs.where((v) => v.isUsed).length,
+          'usedPhrases': providerPhrases.where((p) => p.isUsed).length,
+        };
+      }
+
+      return {
+        'totalVocabularies': vocabularies.length,
+        'totalPhrases': phrases.length,
+        'totalTokens': totalTokens,
+        'usedVocabularies': vocabularies.where((v) => v.isUsed).length,
+        'usedPhrases': phrases.where((p) => p.isUsed).length,
+        'providerStats': providerStats,
       };
+    } catch (e) {
+      throw Exception('Failed to get user analytics: ${e.toString()}');
     }
-
-    return {
-      'totalVocabularies': vocabularies.length,
-      'totalPhrases': phrases.length,
-      'totalTokens': totalTokens,
-      'usedVocabularies': vocabularies.where((v) => v.isUsed).length,
-      'usedPhrases': phrases.where((p) => p.isUsed).length,
-      'providerStats': providerStats,
-    };
   }
 
   /// Closes the Hive boxes to free up resources
   /// Should be called when the data source is no longer needed
   Future<void> dispose() async {
-    await _vocabulariesBox.close();
-    await _phrasesBox.close();
+    try {
+      await _vocabulariesBox.close();
+      await _phrasesBox.close();
+    } catch (e) {
+      throw Exception('Failed to dispose local data source: ${e.toString()}');
+    }
   }
 }
 

@@ -28,6 +28,8 @@
   "learningFocusRestaurant": "Restaurant English",
   "learningFocusHealth": "Health English",
   "learningFocusEveryday": "Everyday English",
+  "learningFocusCustomHint": "Or write your own learning focus...",
+  "learningFocusCustomLabel": "Custom Learning Focus",
   "learningFocusSavedSnack": "Selection saved! Navigating...",
   "yourDailyLessons": "Your Daily Lessons",
   "@yourDailyLessons": {

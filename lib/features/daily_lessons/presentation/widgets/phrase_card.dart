@@ -96,6 +96,9 @@ class PhraseCard extends StatelessWidget {
           ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         GGap.g4,
+        Align(
+          alignment: Alignment.centerRight,
+          child: 
         Directionality(
           textDirection: TextDirection.rtl,
           child: GText(
@@ -105,6 +108,7 @@ class PhraseCard extends StatelessWidget {
             ).textTheme.bodyMedium?.copyWith(color: AppTheme.hint),
             textAlign: TextAlign.start,
           ),
+        ),
         ),
       ],
     );

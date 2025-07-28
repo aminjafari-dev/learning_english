@@ -50,7 +50,7 @@ class LearningFocusOptionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16,),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
             border: Border.all(color: borderColor, width: 2),
             borderRadius: BorderRadius.circular(16),

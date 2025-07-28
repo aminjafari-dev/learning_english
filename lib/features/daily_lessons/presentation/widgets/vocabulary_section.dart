@@ -1,12 +1,17 @@
 // vocabulary_section.dart
 // Widget for displaying the vocabularies section.
+// Now uses shimmer loading animation for better user experience during loading states.
 
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/core/widgets/g_gap.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';
 
+/// Widget for displaying the vocabularies section
+/// Handles different states: initial, loading, loaded, and error
+/// Now uses shimmer loading animation for better user experience
 class VocabularySection extends StatelessWidget {
   final VocabulariesState state;
   const VocabularySection({super.key, required this.state});
@@ -15,36 +20,93 @@ class VocabularySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return state.when(
       initial: () => const SizedBox(),
-      loading: () => const Center(child: CircularProgressIndicator()),
-      loaded:
-          (vocabularies) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children:
-                vocabularies
-                    .map(
-                      (vocab) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2.0),
-                        child: Row(
-                          children: [
-                            GText(
-                              vocab.english,
-                              style: Theme.of(context).textTheme.bodyLarge
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ),
-                            GGap.g8,
-                            GText(
-                              vocab.persian,
-                              style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(color: AppTheme.hint),
-                            ),
-                          ],
+      loading: () => _buildShimmerLoading(context),
+      loaded: (vocabularies) => _buildVocabulariesList(context, vocabularies),
+      error: (msg) => _buildErrorWidget(msg),
+    );
+  }
+
+  /// Builds shimmer loading animation for vocabularies
+  /// Creates multiple shimmer vocabulary rows to mimic the actual content
+  /// Provides better user experience compared to circular progress indicator
+  Widget _buildShimmerLoading(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: AppTheme.surface,
+      highlightColor: AppTheme.hint.withOpacity(0.3),
+      child: Column(
+        children: List.generate(
+          5, // Show 5 shimmer vocabulary rows during loading
+          (index) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2.0),
+            child: Row(
+              children: [
+                // English word shimmer
+                Container(
+                  height: 20,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                GGap.g8,
+                // Persian translation shimmer
+                Container(
+                  height: 20,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Builds the vocabularies list when data is loaded
+  /// Displays English words with their Persian translations in a row layout
+  Widget _buildVocabulariesList(
+    BuildContext context,
+    List<dynamic> vocabularies,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children:
+          vocabularies
+              .map(
+                (vocab) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                  child: Row(
+                    children: [
+                      GText(
+                        vocab.english,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    )
-                    .toList(),
-          ),
-      error: (msg) => GText(msg, style: const TextStyle(color: Colors.red)),
+                      GGap.g8,
+                      const Spacer(),
+                      GText(
+                        vocab.persian,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium?.copyWith(color: AppTheme.hint),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+              .toList(),
     );
+  }
+
+  /// Builds error widget when vocabularies fail to load
+  Widget _buildErrorWidget(String message) {
+    return GText(message, style: const TextStyle(color: Colors.red));
   }
 }
 

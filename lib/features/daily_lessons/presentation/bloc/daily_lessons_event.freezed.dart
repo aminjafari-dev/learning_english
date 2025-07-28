@@ -21,7 +21,6 @@ mixin _$DailyLessonsEvent {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
-    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
@@ -35,7 +34,6 @@ mixin _$DailyLessonsEvent {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
-    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
@@ -49,7 +47,6 @@ mixin _$DailyLessonsEvent {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
-    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
@@ -64,8 +61,6 @@ mixin _$DailyLessonsEvent {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(FetchPersonalizedLessons value)
-        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
@@ -79,7 +74,6 @@ mixin _$DailyLessonsEvent {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -93,7 +87,6 @@ mixin _$DailyLessonsEvent {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -170,7 +163,6 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
-    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
@@ -187,7 +179,6 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
-    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
@@ -204,7 +195,6 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
-    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
@@ -225,8 +215,6 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(FetchPersonalizedLessons value)
-        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
@@ -243,7 +231,6 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -260,7 +247,6 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -324,7 +310,6 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
-    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
@@ -341,7 +326,6 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
-    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
@@ -358,7 +342,6 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
-    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
@@ -379,8 +362,6 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(FetchPersonalizedLessons value)
-        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
@@ -397,7 +378,6 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -414,7 +394,6 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -478,7 +457,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
-    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
@@ -495,7 +473,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
-    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
@@ -512,7 +489,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
-    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
@@ -533,8 +509,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(FetchPersonalizedLessons value)
-        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
@@ -551,7 +525,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -568,7 +541,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -586,164 +558,6 @@ class _$FetchLessonsImpl implements FetchLessons {
 
 abstract class FetchLessons implements DailyLessonsEvent {
   const factory FetchLessons() = _$FetchLessonsImpl;
-}
-
-/// @nodoc
-abstract class _$$FetchPersonalizedLessonsImplCopyWith<$Res> {
-  factory _$$FetchPersonalizedLessonsImplCopyWith(
-          _$FetchPersonalizedLessonsImpl value,
-          $Res Function(_$FetchPersonalizedLessonsImpl) then) =
-      __$$FetchPersonalizedLessonsImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$FetchPersonalizedLessonsImplCopyWithImpl<$Res>
-    extends _$DailyLessonsEventCopyWithImpl<$Res,
-        _$FetchPersonalizedLessonsImpl>
-    implements _$$FetchPersonalizedLessonsImplCopyWith<$Res> {
-  __$$FetchPersonalizedLessonsImplCopyWithImpl(
-      _$FetchPersonalizedLessonsImpl _value,
-      $Res Function(_$FetchPersonalizedLessonsImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$FetchPersonalizedLessonsImpl implements FetchPersonalizedLessons {
-  const _$FetchPersonalizedLessonsImpl();
-
-  @override
-  String toString() {
-    return 'DailyLessonsEvent.fetchPersonalizedLessons()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$FetchPersonalizedLessonsImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() fetchVocabularies,
-    required TResult Function() fetchPhrases,
-    required TResult Function() fetchLessons,
-    required TResult Function() fetchPersonalizedLessons,
-    required TResult Function() refreshLessons,
-    required TResult Function(String english) markVocabularyAsUsed,
-    required TResult Function(String english) markPhraseAsUsed,
-    required TResult Function() getUserAnalytics,
-    required TResult Function() clearUserData,
-    required TResult Function() getUserPreferences,
-  }) {
-    return fetchPersonalizedLessons();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVocabularies,
-    TResult? Function()? fetchPhrases,
-    TResult? Function()? fetchLessons,
-    TResult? Function()? fetchPersonalizedLessons,
-    TResult? Function()? refreshLessons,
-    TResult? Function(String english)? markVocabularyAsUsed,
-    TResult? Function(String english)? markPhraseAsUsed,
-    TResult? Function()? getUserAnalytics,
-    TResult? Function()? clearUserData,
-    TResult? Function()? getUserPreferences,
-  }) {
-    return fetchPersonalizedLessons?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVocabularies,
-    TResult Function()? fetchPhrases,
-    TResult Function()? fetchLessons,
-    TResult Function()? fetchPersonalizedLessons,
-    TResult Function()? refreshLessons,
-    TResult Function(String english)? markVocabularyAsUsed,
-    TResult Function(String english)? markPhraseAsUsed,
-    TResult Function()? getUserAnalytics,
-    TResult Function()? clearUserData,
-    TResult Function()? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (fetchPersonalizedLessons != null) {
-      return fetchPersonalizedLessons();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FetchVocabularies value) fetchVocabularies,
-    required TResult Function(FetchPhrases value) fetchPhrases,
-    required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(FetchPersonalizedLessons value)
-        fetchPersonalizedLessons,
-    required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
-    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
-    required TResult Function(GetUserAnalytics value) getUserAnalytics,
-    required TResult Function(ClearUserData value) clearUserData,
-    required TResult Function(GetUserPreferences value) getUserPreferences,
-  }) {
-    return fetchPersonalizedLessons(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchVocabularies value)? fetchVocabularies,
-    TResult? Function(FetchPhrases value)? fetchPhrases,
-    TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
-    TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult? Function(ClearUserData value)? clearUserData,
-    TResult? Function(GetUserPreferences value)? getUserPreferences,
-  }) {
-    return fetchPersonalizedLessons?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchVocabularies value)? fetchVocabularies,
-    TResult Function(FetchPhrases value)? fetchPhrases,
-    TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
-    TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult Function(ClearUserData value)? clearUserData,
-    TResult Function(GetUserPreferences value)? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (fetchPersonalizedLessons != null) {
-      return fetchPersonalizedLessons(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class FetchPersonalizedLessons implements DailyLessonsEvent {
-  const factory FetchPersonalizedLessons() = _$FetchPersonalizedLessonsImpl;
 }
 
 /// @nodoc
@@ -790,7 +604,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
-    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
@@ -807,7 +620,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
-    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
@@ -824,7 +636,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
-    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
@@ -845,8 +656,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(FetchPersonalizedLessons value)
-        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
@@ -863,7 +672,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -880,7 +688,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -973,7 +780,6 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
-    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
@@ -990,7 +796,6 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
-    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
@@ -1007,7 +812,6 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
-    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
@@ -1028,8 +832,6 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(FetchPersonalizedLessons value)
-        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
@@ -1046,7 +848,6 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -1063,7 +864,6 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -1164,7 +964,6 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
-    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
@@ -1181,7 +980,6 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
-    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
@@ -1198,7 +996,6 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
-    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
@@ -1219,8 +1016,6 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(FetchPersonalizedLessons value)
-        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
@@ -1237,7 +1032,6 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -1254,7 +1048,6 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -1327,7 +1120,6 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
-    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
@@ -1344,7 +1136,6 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
-    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
@@ -1361,7 +1152,6 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
-    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
@@ -1382,8 +1172,6 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(FetchPersonalizedLessons value)
-        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
@@ -1400,7 +1188,6 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -1417,7 +1204,6 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -1481,7 +1267,6 @@ class _$ClearUserDataImpl implements ClearUserData {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
-    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
@@ -1498,7 +1283,6 @@ class _$ClearUserDataImpl implements ClearUserData {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
-    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
@@ -1515,7 +1299,6 @@ class _$ClearUserDataImpl implements ClearUserData {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
-    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
@@ -1536,8 +1319,6 @@ class _$ClearUserDataImpl implements ClearUserData {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(FetchPersonalizedLessons value)
-        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
@@ -1554,7 +1335,6 @@ class _$ClearUserDataImpl implements ClearUserData {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -1571,7 +1351,6 @@ class _$ClearUserDataImpl implements ClearUserData {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -1635,7 +1414,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     required TResult Function() fetchVocabularies,
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
-    required TResult Function() fetchPersonalizedLessons,
     required TResult Function() refreshLessons,
     required TResult Function(String english) markVocabularyAsUsed,
     required TResult Function(String english) markPhraseAsUsed,
@@ -1652,7 +1430,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     TResult? Function()? fetchVocabularies,
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
-    TResult? Function()? fetchPersonalizedLessons,
     TResult? Function()? refreshLessons,
     TResult? Function(String english)? markVocabularyAsUsed,
     TResult? Function(String english)? markPhraseAsUsed,
@@ -1669,7 +1446,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     TResult Function()? fetchVocabularies,
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
-    TResult Function()? fetchPersonalizedLessons,
     TResult Function()? refreshLessons,
     TResult Function(String english)? markVocabularyAsUsed,
     TResult Function(String english)? markPhraseAsUsed,
@@ -1690,8 +1466,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     required TResult Function(FetchVocabularies value) fetchVocabularies,
     required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(FetchPersonalizedLessons value)
-        fetchPersonalizedLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
     required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
@@ -1708,7 +1482,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     TResult? Function(FetchVocabularies value)? fetchVocabularies,
     TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
@@ -1725,7 +1498,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     TResult Function(FetchVocabularies value)? fetchVocabularies,
     TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(FetchPersonalizedLessons value)? fetchPersonalizedLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
     TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,

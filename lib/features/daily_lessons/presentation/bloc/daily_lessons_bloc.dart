@@ -9,7 +9,6 @@ import 'daily_lessons_state.dart';
 import '../../domain/usecases/get_daily_vocabularies_usecase.dart';
 import '../../domain/usecases/get_daily_phrases_usecase.dart';
 import '../../domain/usecases/get_daily_lessons_usecase.dart';
-import '../../domain/usecases/refresh_daily_lessons_usecase.dart';
 import '../../domain/usecases/mark_vocabulary_as_used_usecase.dart';
 import '../../domain/usecases/mark_phrase_as_used_usecase.dart';
 import '../../domain/usecases/get_user_analytics_usecase.dart';
@@ -25,7 +24,6 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
   final GetDailyVocabulariesUseCase getDailyVocabulariesUseCase;
   final GetDailyPhrasesUseCase getDailyPhrasesUseCase;
   final GetDailyLessonsUseCase getDailyLessonsUseCase;
-  final RefreshDailyLessonsUseCase refreshDailyLessonsUseCase;
   final MarkVocabularyAsUsedUseCase markVocabularyAsUsedUseCase;
   final MarkPhraseAsUsedUseCase markPhraseAsUsedUseCase;
   final GetUserAnalyticsUseCase getUserAnalyticsUseCase;
@@ -36,7 +34,6 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
     required this.getDailyVocabulariesUseCase,
     required this.getDailyPhrasesUseCase,
     required this.getDailyLessonsUseCase,
-    required this.refreshDailyLessonsUseCase,
     required this.markVocabularyAsUsedUseCase,
     required this.markPhraseAsUsedUseCase,
     required this.getUserAnalyticsUseCase,
@@ -56,8 +53,6 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
         fetchVocabularies: () => _onFetchVocabularies(emit),
         fetchPhrases: () => _onFetchPhrases(emit),
         fetchLessons: () => _onFetchLessons(emit), // New cost-effective method
-        fetchPersonalizedLessons:
-            () => _onFetchPersonalizedLessons(emit), // New personalized method
         refreshLessons: () => _onRefreshLessons(emit),
         markVocabularyAsUsed:
             (english) => _onMarkVocabularyAsUsed(english, emit),
@@ -177,13 +172,15 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
   /// This method reduces API costs by ~25-40% compared to separate requests
   Future<void> _onFetchLessons(Emitter<DailyLessonsState> emit) async {
     try {
-      emit(
-        state.copyWith(
-          vocabularies: const VocabulariesState.loading(),
-          phrases: const PhrasesState.loading(),
-        ),
-      );
-
+      if (!emit.isDone) {
+        emit(
+          state.copyWith(
+            vocabularies: const VocabulariesState.loading(),
+            phrases: const PhrasesState.loading(),
+            isRefreshing: true,
+          ),
+        );
+      }
       // First get user preferences
       final preferencesResult = await getUserPreferencesUseCase(NoParams());
       final preferences = preferencesResult.fold((failure) {
@@ -196,6 +193,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
               phrases: PhrasesState.error(
                 'Failed to get user preferences: ${failure.message}',
               ),
+              isRefreshing: false,
             ),
           );
         }
@@ -213,6 +211,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
               state.copyWith(
                 vocabularies: VocabulariesState.error(failure.message),
                 phrases: PhrasesState.error(failure.message),
+                isRefreshing: false,
               ),
             );
           }
@@ -223,6 +222,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
               state.copyWith(
                 vocabularies: VocabulariesState.loaded(data.vocabularies),
                 phrases: PhrasesState.loaded(data.phrases),
+                isRefreshing: false,
               ),
             );
           }
@@ -238,80 +238,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
             phrases: PhrasesState.error(
               'Failed to fetch lessons: ${e.toString()}',
             ),
-          ),
-        );
-      }
-    }
-  }
-
-  /// Fetches personalized lessons based on user preferences
-  /// Creates level-appropriate and focus-specific content
-  Future<void> _onFetchPersonalizedLessons(
-    Emitter<DailyLessonsState> emit,
-  ) async {
-    try {
-      emit(
-        state.copyWith(
-          vocabularies: const VocabulariesState.loading(),
-          phrases: const PhrasesState.loading(),
-        ),
-      );
-
-      // First, get user preferences
-      final preferencesResult = await getUserPreferencesUseCase(NoParams());
-      final preferences = preferencesResult.fold((failure) {
-        if (!emit.isDone) {
-          emit(
-            state.copyWith(
-              vocabularies: VocabulariesState.error(
-                'Failed to get user preferences: ${failure.message}',
-              ),
-              phrases: PhrasesState.error(
-                'Failed to get user preferences: ${failure.message}',
-              ),
-            ),
-          );
-        }
-        return null;
-      }, (preferences) => preferences);
-
-      if (preferences == null) return;
-
-      // Then fetch personalized content using the preferences
-      final result = await getDailyLessonsUseCase(preferences);
-
-      result.fold(
-        (failure) {
-          if (!emit.isDone) {
-            emit(
-              state.copyWith(
-                vocabularies: VocabulariesState.error(failure.message),
-                phrases: PhrasesState.error(failure.message),
-              ),
-            );
-          }
-        },
-        (data) {
-          if (!emit.isDone) {
-            emit(
-              state.copyWith(
-                vocabularies: VocabulariesState.loaded(data.vocabularies),
-                phrases: PhrasesState.loaded(data.phrases),
-              ),
-            );
-          }
-        },
-      );
-    } catch (e) {
-      if (!emit.isDone) {
-        emit(
-          state.copyWith(
-            vocabularies: VocabulariesState.error(
-              'Failed to fetch personalized lessons: ${e.toString()}',
-            ),
-            phrases: PhrasesState.error(
-              'Failed to fetch personalized lessons: ${e.toString()}',
-            ),
+            isRefreshing: false,
           ),
         );
       }
@@ -342,44 +269,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
   /// Refreshes all daily lesson content
   /// Clears local cache and fetches fresh content from AI
   Future<void> _onRefreshLessons(Emitter<DailyLessonsState> emit) async {
-    try {
-      emit(state.copyWith(isRefreshing: true));
-      final result = await refreshDailyLessonsUseCase(NoParams());
-      result.fold(
-        (failure) {
-          if (!emit.isDone) {
-            emit(
-              state.copyWith(
-                vocabularies: VocabulariesState.error(failure.message),
-                phrases: PhrasesState.error(failure.message),
-                isRefreshing: false,
-              ),
-            );
-          }
-        },
-        (success) async {
-          // After successful refresh, fetch fresh content
-          await _onFetchLessons(emit);
-          if (!emit.isDone) {
-            emit(state.copyWith(isRefreshing: false));
-          }
-        },
-      );
-    } catch (e) {
-      if (!emit.isDone) {
-        emit(
-          state.copyWith(
-            vocabularies: VocabulariesState.error(
-              'Failed to refresh lessons: ${e.toString()}',
-            ),
-            phrases: PhrasesState.error(
-              'Failed to refresh lessons: ${e.toString()}',
-            ),
-            isRefreshing: false,
-          ),
-        );
-      }
-    }
+    add(const DailyLessonsEvent.fetchLessons());
   }
 
   /// Marks vocabulary as used by the current user

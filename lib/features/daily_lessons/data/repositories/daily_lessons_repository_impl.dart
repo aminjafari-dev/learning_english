@@ -294,18 +294,6 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, bool>> refreshDailyLessons() async {
-    try {
-      // Clear local cache to force fresh content fetch
-      await localDataSource.clearUserData();
-      return right(true);
-    } catch (e) {
-      return left(
-        ServerFailure('Failed to refresh daily lessons: ${e.toString()}'),
-      );
-    }
-  }
 
   @override
   Future<Either<Failure, bool>> markVocabularyAsUsed(String english) async {

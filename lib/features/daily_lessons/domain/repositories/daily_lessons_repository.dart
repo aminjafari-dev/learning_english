@@ -40,9 +40,6 @@ abstract class DailyLessonsRepository {
   /// Returns: Either Failure or UserPreferences
   Future<Either<Failure, UserPreferences>> getUserPreferences();
 
-  /// Refreshes all daily lesson content
-  Future<Either<Failure, bool>> refreshDailyLessons();
-
   /// Marks vocabulary as used for the current user
   /// Updates the usage status in local storage to avoid suggesting the same content again
   Future<Either<Failure, bool>> markVocabularyAsUsed(String english);

@@ -23,12 +23,6 @@ class DailyLessonsEvent with _$DailyLessonsEvent {
   /// Includes user-specific storage and retrieval logic
   const factory DailyLessonsEvent.fetchLessons() = FetchLessons;
 
-  /// Event to fetch personalized lessons based on user preferences
-  /// Creates level-appropriate and focus-specific content
-  /// Uses user's English level and selected learning focus areas
-  const factory DailyLessonsEvent.fetchPersonalizedLessons() =
-      FetchPersonalizedLessons;
-
   /// Event to refresh all daily lessons
   const factory DailyLessonsEvent.refreshLessons() = RefreshLessons;
 

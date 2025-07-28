@@ -20,7 +20,7 @@ class RefreshButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isRefreshing) {
-      return Center(child: CircularProgressIndicator(color: AppTheme.gold));
+      return const Center(child: SizedBox.shrink());
     }
 
     return GButton(

@@ -21,7 +21,6 @@ import 'package:learning_english/features/daily_lessons/domain/repositories/dail
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_daily_vocabularies_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_daily_phrases_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_daily_lessons_usecase.dart';
-import 'package:learning_english/features/daily_lessons/domain/usecases/refresh_daily_lessons_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/mark_vocabulary_as_used_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/mark_phrase_as_used_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_user_analytics_usecase.dart';
@@ -129,7 +128,6 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     getIt.registerFactory(
       () => GetDailyLessonsUseCase(getIt()),
     ); // New cost-effective use case
-    getIt.registerFactory(() => RefreshDailyLessonsUseCase(getIt()));
 
     // New user-specific use cases
     getIt.registerFactory(() => MarkVocabularyAsUsedUseCase(getIt()));
@@ -144,7 +142,6 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
         getDailyVocabulariesUseCase: getIt<GetDailyVocabulariesUseCase>(),
         getDailyPhrasesUseCase: getIt<GetDailyPhrasesUseCase>(),
         getDailyLessonsUseCase: getIt<GetDailyLessonsUseCase>(),
-        refreshDailyLessonsUseCase: getIt<RefreshDailyLessonsUseCase>(),
         markVocabularyAsUsedUseCase: getIt<MarkVocabularyAsUsedUseCase>(),
         markPhraseAsUsedUseCase: getIt<MarkPhraseAsUsedUseCase>(),
         getUserAnalyticsUseCase: getIt<GetUserAnalyticsUseCase>(),

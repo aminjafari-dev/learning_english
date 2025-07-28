@@ -2,6 +2,7 @@
 // Widget that displays the phrases list section.
 // Handles different states: initial, loading, loaded, and error.
 // Now works within a single scroll view instead of having its own scroll controller.
+// Now uses shimmer loading animation for better user experience during loading states.
 
 import 'package:flutter/material.dart';
 import 'package:learning_english/core/widgets/g_text.dart';
@@ -13,6 +14,7 @@ import 'package:learning_english/features/daily_lessons/domain/entities/phrase.d
 /// Widget that displays the phrases list section
 /// Handles different states: initial, loading, loaded, and error
 /// Works within a single scroll view for unified scrolling experience
+/// Now uses shimmer loading animation for better user experience
 class PhrasesListSection extends StatelessWidget {
   final PhrasesState phrasesState;
 
@@ -22,9 +24,27 @@ class PhrasesListSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return phrasesState.when(
       initial: () => const SizedBox(),
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => _buildShimmerLoading(),
       loaded: (phrases) => _buildPhrasesList(phrases),
       error: (msg) => _buildErrorWidget(msg),
+    );
+  }
+
+  /// Builds shimmer loading animation for phrases
+  /// Creates multiple shimmer phrase cards to mimic the actual content
+  /// Provides better user experience compared to circular progress indicator
+  Widget _buildShimmerLoading() {
+    return Column(
+      children: List.generate(
+        3, // Show 3 shimmer cards during loading
+        (index) => Column(
+          children: [
+            const PhraseCard(isLoading: true),
+            // Add gap between shimmer cards, but not after the last one
+            if (index < 2) GGap.g8,
+          ],
+        ),
+      ),
     );
   }
 

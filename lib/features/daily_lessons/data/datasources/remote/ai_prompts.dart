@@ -30,8 +30,13 @@ class AiPrompts {
     final focusAreas = preferences.focusAreasString;
 
     return '''You are an English teacher specializing in $levelDesc level English. 
-Provide a list of 4 useful English vocabulary words suitable for $levelDesc level learners, 
+Provide exactly 5 useful English vocabulary words suitable for $levelDesc level learners, 
 focused on these areas: $focusAreas. Each word should be practical and commonly used in these contexts.
+
+IMPORTANT RULES:
+- Provide exactly 5 vocabulary words, no more, no less
+- For Persian translations, use ONLY pure Persian words, NEVER include English transliterations (Finglish)
+
 Respond in JSON format: [{"english": "...", "persian": "..."}, ...]''';
   }
 
@@ -48,7 +53,7 @@ Respond in JSON format: [{"english": "...", "persian": "..."}, ...]''';
     final levelDesc = preferences.levelDescription;
     final focusAreas = preferences.focusAreasString;
 
-    return 'Give me 4 $levelDesc level English vocabulary words focused on $focusAreas, with Persian translations.';
+    return 'Give me exactly 5 $levelDesc level English vocabulary words focused on $focusAreas, with Persian translations. Do not include English transliterations in Persian translations.';
   }
 
   /// Gets personalized phrase system prompt based on user preferences
@@ -63,8 +68,13 @@ Respond in JSON format: [{"english": "...", "persian": "..."}, ...]''';
     final focusAreas = preferences.focusAreasString;
 
     return '''You are an English teacher specializing in $levelDesc level English. 
-Provide a list of 2 useful English phrases suitable for $levelDesc level learners, 
+Provide exactly 3 useful English phrases suitable for $levelDesc level learners, 
 focused on these areas: $focusAreas. Each phrase should be practical and commonly used in these contexts.
+
+IMPORTANT RULES:
+- Provide exactly 3 phrases, no more, no less
+- For Persian translations, use ONLY pure Persian words, NEVER include English transliterations (Finglish)
+
 Respond in JSON format: [{"english": "...", "persian": "..."}, ...]''';
   }
 
@@ -79,7 +89,7 @@ Respond in JSON format: [{"english": "...", "persian": "..."}, ...]''';
     final levelDesc = preferences.levelDescription;
     final focusAreas = preferences.focusAreasString;
 
-    return 'Give me 2 $levelDesc level English phrases focused on $focusAreas, with Persian translations.';
+    return 'Give me exactly 3 $levelDesc level English phrases focused on $focusAreas, with Persian translations. Do not include English transliterations in Persian translations.';
   }
 
   /// Gets personalized lessons system prompt based on user preferences
@@ -96,8 +106,14 @@ Respond in JSON format: [{"english": "...", "persian": "..."}, ...]''';
     final focusAreas = preferences.focusAreasString;
 
     return '''You are an English teacher specializing in $levelDesc level English. 
-Provide both vocabulary words and phrases suitable for $levelDesc level learners, 
+Provide exactly 5 vocabulary words and exactly 3 phrases suitable for $levelDesc level learners, 
 focused on these areas: $focusAreas. Each item should be practical and commonly used in these contexts.
+
+IMPORTANT RULES:
+- Provide exactly 5 vocabulary words, no more, no less
+- Provide exactly 3 phrases, no more, no less
+- For Persian translations, use ONLY pure Persian words, NEVER include English transliterations (Finglish)
+
 Respond in JSON format with two arrays: vocabularies and phrases. 
 Format: {"vocabularies": [{"english": "...", "persian": "..."}], "phrases": [{"english": "...", "persian": "..."}]}''';
   }
@@ -113,7 +129,7 @@ Format: {"vocabularies": [{"english": "...", "persian": "..."}], "phrases": [{"e
     final levelDesc = preferences.levelDescription;
     final focusAreas = preferences.focusAreasString;
 
-    return 'Give me 4 $levelDesc level English vocabulary words and 2 $levelDesc level English phrases, all focused on $focusAreas, with Persian translations.';
+    return 'Give me exactly 5 $levelDesc level English vocabulary words and exactly 3 $levelDesc level English phrases, all focused on $focusAreas, with Persian translations. Do not include English transliterations in Persian translations.';
   }
 
   /// Gets all personalized prompts for a given user preference

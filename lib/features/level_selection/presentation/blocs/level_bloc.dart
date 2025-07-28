@@ -13,6 +13,7 @@ import 'package:learning_english/features/level_selection/presentation/blocs/lev
 import 'package:learning_english/features/level_selection/presentation/blocs/level_state.dart';
 import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
+import 'package:learning_english/core/error/firebase_failure.dart';
 
 /// Bloc for managing level selection and submission
 class LevelBloc extends Bloc<LevelEvent, LevelState> {
@@ -55,9 +56,32 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
       return;
     }
     final result = await saveUserLevelUseCase(userId, _selectedLevel!);
-    result.fold(
-      (failure) => emit(LevelState.error(failure.message, _selectedLevel)),
-      (_) => emit(LevelState.success(_selectedLevel!)),
-    );
+    result.fold((failure) {
+      // Handle different types of Firebase failures with user-friendly messages
+      String errorMessage;
+
+      // Check if this is a Firebase-related error by examining the message
+      if (failure.message.contains('regional') ||
+          failure.message.contains('restricted') ||
+          failure.message.contains('VPN')) {
+        errorMessage =
+            'Firebase services are restricted in your region. Please try using a VPN or contact support.';
+      } else if (failure.message.contains('network') ||
+          failure.message.contains('connection')) {
+        errorMessage =
+            'Network connection failed. Please check your internet connection and try again.';
+      } else if (failure.message.contains('permission') ||
+          failure.message.contains('denied')) {
+        errorMessage =
+            'Access denied. You don\'t have permission to perform this action.';
+      } else if (failure.message.contains('timeout') ||
+          failure.message.contains('deadline')) {
+        errorMessage = 'Operation timed out. Please try again.';
+      } else {
+        errorMessage = failure.message;
+      }
+
+      emit(LevelState.error(errorMessage, _selectedLevel));
+    }, (_) => emit(LevelState.success(_selectedLevel!)));
   }
 }

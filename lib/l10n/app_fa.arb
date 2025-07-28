@@ -46,5 +46,37 @@
   "refreshLessons": "تازه‌سازی درس‌ها",
   "@refreshLessons": {
     "description": "متن دکمه برای تازه‌سازی درس‌های روزانه."
+  },
+  "errorFirebaseAuth": "احراز هویت ناموفق بود. لطفاً دوباره تلاش کنید.",
+  "@errorFirebaseAuth": {
+    "description": "پیام خطای عمومی احراز هویت Firebase."
+  },
+  "errorFirebaseFirestore": "عملیات پایگاه داده ناموفق بود. لطفاً دوباره تلاش کنید.",
+  "@errorFirebaseFirestore": {
+    "description": "پیام خطای عمومی Firebase Firestore."
+  },
+  "errorFirebaseNetwork": "اتصال شبکه ناموفق بود. لطفاً اتصال اینترنت خود را بررسی کرده و دوباره تلاش کنید.",
+  "@errorFirebaseNetwork": {
+    "description": "پیام خطای شبکه Firebase."
+  },
+  "errorFirebaseRegional": "سرویس‌های Firebase در منطقه شما محدود شده‌اند. لطفاً از VPN استفاده کنید یا با پشتیبانی تماس بگیرید.",
+  "@errorFirebaseRegional": {
+    "description": "پیام خطای محدودیت منطقه‌ای Firebase."
+  },
+  "errorFirebaseGeneric": "خطای غیرمنتظره‌ای رخ داد. لطفاً دوباره تلاش کنید.",
+  "@errorFirebaseGeneric": {
+    "description": "پیام خطای عمومی Firebase."
+  },
+  "errorRetry": "تلاش مجدد",
+  "@errorRetry": {
+    "description": "متن دکمه برای تلاش مجدد عملیات ناموفق."
+  },
+  "errorClose": "بستن",
+  "@errorClose": {
+    "description": "متن دکمه برای بستن دیالوگ‌های خطا."
+  },
+  "errorContactSupport": "تماس با پشتیبانی",
+  "@errorContactSupport": {
+    "description": "متن دکمه برای تماس با پشتیبانی."
   }
 } 

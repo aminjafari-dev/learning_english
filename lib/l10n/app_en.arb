@@ -46,5 +46,37 @@
   "refreshLessons": "Refresh Lessons",
   "@refreshLessons": {
     "description": "Button text for refreshing daily lessons."
+  },
+  "errorFirebaseAuth": "Authentication failed. Please try again.",
+  "@errorFirebaseAuth": {
+    "description": "Generic Firebase authentication error message."
+  },
+  "errorFirebaseFirestore": "Database operation failed. Please try again.",
+  "@errorFirebaseFirestore": {
+    "description": "Generic Firebase Firestore error message."
+  },
+  "errorFirebaseNetwork": "Network connection failed. Please check your internet connection and try again.",
+  "@errorFirebaseNetwork": {
+    "description": "Firebase network error message."
+  },
+  "errorFirebaseRegional": "Firebase services are restricted in your region. Please try using a VPN or contact support.",
+  "@errorFirebaseRegional": {
+    "description": "Firebase regional restriction error message."
+  },
+  "errorFirebaseGeneric": "An unexpected error occurred. Please try again.",
+  "@errorFirebaseGeneric": {
+    "description": "Generic Firebase error message."
+  },
+  "errorRetry": "Retry",
+  "@errorRetry": {
+    "description": "Button text for retrying failed operations."
+  },
+  "errorClose": "Close",
+  "@errorClose": {
+    "description": "Button text for closing error dialogs."
+  },
+  "errorContactSupport": "Contact Support",
+  "@errorContactSupport": {
+    "description": "Button text for contacting support."
   }
 } 

@@ -9,6 +9,8 @@ import '../../domain/entities/user_profile.dart';
 import '../../domain/repositories/user_repository.dart';
 import '../datasources/user_remote_data_source.dart';
 import 'package:learning_english/core/error/failure.dart';
+import 'package:learning_english/core/error/firebase_failure.dart';
+import 'package:learning_english/core/error/firebase_error_handler.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final UserRemoteDataSource remoteDataSource;
@@ -23,8 +25,16 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.saveUserLevel(userId, level);
       return const Right(null);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
+    } catch (exception) {
+      // Convert the exception to appropriate FirebaseFailure
+      final failure = FirebaseErrorHandler.handleException(
+        exception,
+        context: 'user_repository_save_level',
+      );
+      
+      // Return the FirebaseFailure as a generic Failure
+      // You can also create a custom failure type if needed
+      return Left(ServerFailure(failure.userFriendlyMessage));
     }
   }
 }

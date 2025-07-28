@@ -6,16 +6,18 @@ import '../../domain/usecases/get_learning_focus_selection_usecase.dart';
 import '../../domain/usecases/save_learning_focus_selection_usecase.dart';
 
 /// State class for LearningFocusSelectionCubit.
-/// Holds a list of selected texts and a flag for save success.
+/// Holds a list of selected texts, custom text input, and a flag for save success.
 @immutable
 class LearningFocusSelectionState extends Equatable {
   final List<String> selectedTexts;
+  final String customText;
   final bool saveSuccess;
   final bool isLoading;
   final String? errorMessage;
 
   const LearningFocusSelectionState({
     this.selectedTexts = const [],
+    this.customText = '',
     this.saveSuccess = false,
     this.isLoading = false,
     this.errorMessage,
@@ -23,12 +25,14 @@ class LearningFocusSelectionState extends Equatable {
 
   LearningFocusSelectionState copyWith({
     List<String>? selectedTexts,
+    String? customText,
     bool? saveSuccess,
     bool? isLoading,
     String? errorMessage,
   }) {
     return LearningFocusSelectionState(
       selectedTexts: selectedTexts ?? this.selectedTexts,
+      customText: customText ?? this.customText,
       saveSuccess: saveSuccess ?? this.saveSuccess,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
@@ -38,6 +42,7 @@ class LearningFocusSelectionState extends Equatable {
   @override
   List<Object?> get props => [
     selectedTexts,
+    customText,
     saveSuccess,
     isLoading,
     errorMessage,
@@ -88,6 +93,12 @@ class LearningFocusSelectionCubit extends Cubit<LearningFocusSelectionState> {
     }
   }
 
+  /// Update the custom text input without adding it to selections yet.
+  void updateCustomText(String text) {
+    emit(state.copyWith(customText: text, errorMessage: null));
+    print('✏️ [CUBIT] Updated custom text: "$text"');
+  }
+
   /// Add a text to the selection (from predefined options or custom text).
   void addText(String text) {
     if (text.trim().isNotEmpty && !state.selectedTexts.contains(text.trim())) {
@@ -128,20 +139,33 @@ class LearningFocusSelectionCubit extends Cubit<LearningFocusSelectionState> {
   /// Clear all selections.
   void clearSelection() {
     emit(
-      state.copyWith(selectedTexts: [], saveSuccess: false, errorMessage: null),
+      state.copyWith(
+        selectedTexts: [],
+        customText: '',
+        saveSuccess: false,
+        errorMessage: null,
+      ),
     );
     print('🗑️ [CUBIT] Cleared all selections');
   }
 
   /// Save the selected texts using the use case.
+  /// This method will also add any custom text to the selection before saving.
   Future<void> saveSelection() async {
     try {
       emit(state.copyWith(isLoading: true, errorMessage: null));
 
+      // Create a list that includes both selected texts and custom text (if any)
+      List<String> allTexts = [...state.selectedTexts];
+
+      // Add custom text if it's not empty and not already in selections
+      if (state.customText.trim().isNotEmpty &&
+          !state.selectedTexts.contains(state.customText.trim())) {
+        allTexts.add(state.customText.trim());
+      }
+
       // Create the learning focus selection
-      final selection = LearningFocusSelection(
-        selectedTexts: state.selectedTexts,
-      );
+      final selection = LearningFocusSelection(selectedTexts: allTexts);
 
       print('💾 [CUBIT] Saving selection: $selection');
       await saveUseCase(selection);
@@ -166,7 +190,8 @@ class LearningFocusSelectionCubit extends Cubit<LearningFocusSelectionState> {
   }
 
   /// Check if the current selection is empty.
-  bool get isEmpty => state.selectedTexts.isEmpty;
+  bool get isEmpty =>
+      state.selectedTexts.isEmpty && state.customText.trim().isEmpty;
 
   /// Check if the current selection has any content.
   bool get isNotEmpty => !isEmpty;

@@ -16,8 +16,30 @@ import '../bloc/learning_focus_selection_cubit.dart';
 /// Navigator.of(context).pushNamed(PageName.learningFocusSelection);
 /// ```
 /// This page displays a title, a back button, a grid of selectable options, and a continue button.
-class LearningFocusSelectionPage extends StatelessWidget {
+/// Custom text input is tracked separately and only added to selections when the continue button is pressed.
+class LearningFocusSelectionPage extends StatefulWidget {
   const LearningFocusSelectionPage({super.key});
+
+  @override
+  State<LearningFocusSelectionPage> createState() =>
+      _LearningFocusSelectionPageState();
+}
+
+class _LearningFocusSelectionPageState
+    extends State<LearningFocusSelectionPage> {
+  late TextEditingController _customTextController;
+
+  @override
+  void initState() {
+    super.initState();
+    _customTextController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _customTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +73,12 @@ class LearningFocusSelectionPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: GTextFormField(
+                controller: _customTextController,
                 hintText: l10n.learningFocusCustomHint,
                 labelText: l10n.learningFocusCustomLabel,
                 onChanged: (value) {
-                  // Only add text if it's not empty and not already selected
-                  if (value.trim().isNotEmpty) {
-                    getIt<LearningFocusSelectionCubit>().addText(value.trim());
-                  }
+                  // Only update the custom text in the cubit state, don't add to selections yet
+                  getIt<LearningFocusSelectionCubit>().updateCustomText(value);
                 },
               ),
             ),
@@ -69,7 +90,7 @@ class LearningFocusSelectionPage extends StatelessWidget {
                 child: LearningFocusOptionsGrid(),
               ),
             ),
-            // Continue button at the bottom, enabled only if at least one option is selected
+            // Continue button at the bottom, enabled only if at least one option is selected or custom text is entered
             SafeArea(
               minimum: const EdgeInsets.all(16),
               child: ContinueButton(),

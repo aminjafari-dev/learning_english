@@ -6,6 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_english/core/widgets/g_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Continue button widget that enables navigation to the next page.
+///
+/// This button is enabled when there are selected texts or custom text input.
+/// When pressed, it saves the selection (including custom text) and navigates to the daily lessons page.
 class ContinueButton extends StatelessWidget {
   const ContinueButton({super.key});
 
@@ -23,8 +27,10 @@ class ContinueButton extends StatelessWidget {
         Navigator.of(context).pushNamed(PageName.dailyLessons);
       },
       builder: (context, state) {
-        // Enable button if there are any selected texts
-        final isEnabled = state.selectedTexts.isNotEmpty;
+        // Enable button if there are any selected texts or custom text
+        final isEnabled =
+            state.selectedTexts.isNotEmpty ||
+            state.customText.trim().isNotEmpty;
         return GButton(
           text: l10n.continue_,
           onPressed:

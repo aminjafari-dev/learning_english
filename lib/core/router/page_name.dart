@@ -4,8 +4,11 @@
 // Example usage: Navigator.of(context).pushNamed(PageName.login);
 
 class PageName {
+  /// Route for the splash page
+  static const String splash = '/';
+
   /// Route for the authentication page
-  static const String authentication = '/';
+  static const String authentication = '/authentication';
 
   /// Route for the level selection page
   static const String levelSelection = '/level_selection';

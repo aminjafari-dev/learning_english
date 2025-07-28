@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
       theme:
           AppTheme
               .lightTheme, // Use your custom theme class here if you have one
-      initialRoute: PageName.authentication,
+      initialRoute: PageName.splash,
       routes: PageRouter.routes,
     );
   }

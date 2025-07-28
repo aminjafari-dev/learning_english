@@ -8,6 +8,7 @@ import 'package:learning_english/core/dependency%20injection/sign_in_di.dart';
 import 'package:learning_english/core/dependency%20injection/level_selection_di.dart';
 import 'package:learning_english/core/dependency%20injection/daily_lessons_di.dart';
 import 'package:learning_english/core/dependency%20injection/learning_focus_selection_di.dart';
+import 'package:learning_english/core/dependency%20injection/splash_di.dart';
 
 final getIt = GetIt.instance;
 
@@ -22,6 +23,9 @@ Future<void> initDependencies() async {
     // This is used by local data sources for persistent storage
     final prefs = await SharedPreferences.getInstance();
     getIt.registerSingleton<SharedPreferences>(prefs);
+
+    // Splash Feature
+    await setupSplashLocator(getIt);
 
     // Sign in Dependencies
     signInDi(getIt);

@@ -8,7 +8,6 @@
 ///
 /// This helps maintain consistent text form field styling and allows for future customization.
 import 'package:flutter/material.dart';
-import 'g_text.dart';
 
 class GTextFormField extends StatelessWidget {
   final String? hintText;
@@ -77,14 +76,14 @@ class GTextFormField extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
             width: 1.5,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
             width: 1.5,
           ),
         ),
@@ -98,7 +97,7 @@ class GTextFormField extends StatelessWidget {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.error.withOpacity(0.7),
+            color: Theme.of(context).colorScheme.error.withValues(alpha: 0.7),
             width: 1.5,
           ),
         ),

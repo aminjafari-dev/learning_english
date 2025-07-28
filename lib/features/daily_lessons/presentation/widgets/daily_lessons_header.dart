@@ -24,12 +24,6 @@ class DailyLessonsHeader extends StatelessWidget {
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
-        IconButton(
-          icon: const Icon(Icons.settings, color: Colors.white),
-          onPressed: () {
-            // TODO: Navigate to settings page
-          },
-        ),
       ],
     );
   }

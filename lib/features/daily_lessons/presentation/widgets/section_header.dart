@@ -7,7 +7,7 @@ import 'package:learning_english/core/theme/app_theme.dart';
 
 class SectionHeader extends StatelessWidget {
   final String title;
-  const SectionHeader({Key? key, required this.title}) : super(key: key);
+  const SectionHeader({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

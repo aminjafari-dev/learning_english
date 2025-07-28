@@ -89,12 +89,18 @@ class VocabularySection extends StatelessWidget {
                         ),
                       ),
                       GGap.g8,
-                      const Spacer(),
-                      GText(
-                        vocab.persian,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodyMedium?.copyWith(color: AppTheme.hint),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: GText(
+                              vocab.persian,
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: AppTheme.hint),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),

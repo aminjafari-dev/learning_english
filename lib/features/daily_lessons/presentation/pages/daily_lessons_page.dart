@@ -28,6 +28,12 @@ class DailyLessonsPage extends StatelessWidget {
         backgroundColor: AppTheme.background,
         elevation: 0,
         title: const DailyLessonsHeader(),
+        leading:
+        // Back button with localized text
+        IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, size: 24),
+        ),
         centerTitle: true,
       ),
       backgroundColor: AppTheme.background,

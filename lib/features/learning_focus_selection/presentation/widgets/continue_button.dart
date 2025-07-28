@@ -23,7 +23,8 @@ class ContinueButton extends StatelessWidget {
         Navigator.of(context).pushNamed(PageName.dailyLessons);
       },
       builder: (context, state) {
-        final isEnabled = state.selectedIndices.isNotEmpty;
+        // Enable button if there are any selected texts
+        final isEnabled = state.selectedTexts.isNotEmpty;
         return GButton(
           text: l10n.continue_,
           onPressed:

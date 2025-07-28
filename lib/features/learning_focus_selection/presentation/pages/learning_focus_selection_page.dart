@@ -54,7 +54,10 @@ class LearningFocusSelectionPage extends StatelessWidget {
                 hintText: l10n.learningFocusCustomHint,
                 labelText: l10n.learningFocusCustomLabel,
                 onChanged: (value) {
-                  getIt<LearningFocusSelectionCubit>().updateCustomText(value);
+                  // Only add text if it's not empty and not already selected
+                  if (value.trim().isNotEmpty) {
+                    getIt<LearningFocusSelectionCubit>().addText(value.trim());
+                  }
                 },
               ),
             ),

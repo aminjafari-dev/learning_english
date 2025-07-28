@@ -150,11 +150,11 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
       List<String> focusAreas = ['general']; // Default focus area
       try {
         final selectedOptionIds =
-            await learningFocusRepository.getSelectedOptions();
+            await learningFocusRepository.getLearningFocusSelection();
         if (selectedOptionIds.isNotEmpty) {
           // Convert option IDs to focus area names
           // This mapping should match the options in LearningFocusSelectionPage
-          focusAreas = _mapOptionIdsToFocusAreas(selectedOptionIds);
+          focusAreas = selectedOptionIds.selectedTexts;
         }
       } catch (e) {
         print(
@@ -178,26 +178,6 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
     }
   }
 
-  /// Maps learning focus option IDs to focus area names
-  /// This mapping should match the options defined in LearningFocusSelectionPage
-  List<String> _mapOptionIdsToFocusAreas(List<int> optionIds) {
-    const Map<int, String> optionIdToFocusArea = {
-      0: 'business',
-      1: 'travel',
-      2: 'social',
-      3: 'home',
-      4: 'academic',
-      5: 'movie',
-      6: 'music',
-      7: 'tv',
-      8: 'shopping',
-      9: 'restaurant',
-      10: 'health',
-      11: 'everyday',
-    };
-
-    return optionIds.map((id) => optionIdToFocusArea[id] ?? 'general').toList();
-  }
 
   /// Triggers personalized background sync with user preferences context
   void _triggerPersonalizedBackgroundSync(

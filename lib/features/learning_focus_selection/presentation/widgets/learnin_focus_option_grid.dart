@@ -10,7 +10,6 @@ class LearningFocusOptionsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final l10n = AppLocalizations.of(context)!;
     // List of static learning focus options with icons and localized labels
     final options = [
@@ -43,7 +42,8 @@ class LearningFocusOptionsGrid extends StatelessWidget {
           ),
           itemBuilder: (context, index) {
             final option = options[index];
-            final selected = state.selectedIndices.contains(index);
+            // Check if this option's text is selected in the state
+            final selected = state.selectedTexts.contains(option.title);
             // Only one line of text per card, so pass the same string for both title and subtitle
             return LearningFocusOptionCard(
               icon: option.icon,
@@ -51,7 +51,8 @@ class LearningFocusOptionsGrid extends StatelessWidget {
               subtitle: '',
               selected: selected,
               onTap: () {
-                getIt<LearningFocusSelectionCubit>().toggleSelection(index);
+                // Toggle the selection of this option's text
+                getIt<LearningFocusSelectionCubit>().toggleText(option.title);
               },
             );
           },

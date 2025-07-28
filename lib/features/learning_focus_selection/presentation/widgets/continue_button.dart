@@ -16,16 +16,11 @@ class ContinueButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return BlocConsumer<
+    return BlocBuilder<
       LearningFocusSelectionCubit,
       LearningFocusSelectionState
     >(
       bloc: getIt<LearningFocusSelectionCubit>(),
-      listenWhen: (prev, curr) => curr.saveSuccess && !prev.saveSuccess,
-      listener: (context, state) {
-        // Navigate to Daily Lessons page after successful save
-        Navigator.of(context).pushNamed(PageName.dailyLessons);
-      },
       builder: (context, state) {
         // Enable button if there are any selected texts or custom text
         final isEnabled =
@@ -37,6 +32,7 @@ class ContinueButton extends StatelessWidget {
               isEnabled
                   ? () {
                     getIt<LearningFocusSelectionCubit>().saveSelection();
+                    Navigator.of(context).pushNamed(PageName.dailyLessons);
                   }
                   : null,
           style: ElevatedButton.styleFrom(

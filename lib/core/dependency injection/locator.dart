@@ -9,6 +9,8 @@ import 'package:learning_english/core/dependency%20injection/level_selection_di.
 import 'package:learning_english/core/dependency%20injection/daily_lessons_di.dart';
 import 'package:learning_english/core/dependency%20injection/learning_focus_selection_di.dart';
 import 'package:learning_english/core/dependency%20injection/splash_di.dart';
+import 'package:learning_english/core/dependency%20injection/profile_di.dart';
+import 'package:learning_english/core/dependency%20injection/navigation_di.dart';
 
 final getIt = GetIt.instance;
 
@@ -39,6 +41,12 @@ Future<void> initDependencies() async {
     // Daily Lessons Feature (now async due to Hive initialization)
     // This depends on LearningFocusSelectionRepository, so it must come after
     await setupDailyLessonsDI(getIt);
+
+    // Profile Feature
+    await setupProfileDI(getIt);
+    
+    // Navigation Feature
+    await setupNavigationDI(getIt);
 
     print('✅ [DI] All dependencies initialized successfully');
   } catch (e) {

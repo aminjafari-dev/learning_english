@@ -78,5 +78,85 @@
   "errorContactSupport": "تماس با پشتیبانی",
   "@errorContactSupport": {
     "description": "متن دکمه برای تماس با پشتیبانی."
+  },
+  "levelSelection": "سطح",
+  "@levelSelection": {
+    "description": "برچسب انتخاب سطح در ناوبری."
+  },
+  "profileTitle": "پروفایل",
+  "@profileTitle": {
+    "description": "عنوان صفحه پروفایل."
+  },
+  "profileImage": "تصویر پروفایل",
+  "@profileImage": {
+    "description": "برچسب بخش تصویر پروفایل."
+  },
+  "changePhoto": "تغییر عکس",
+  "@changePhoto": {
+    "description": "متن دکمه برای تغییر عکس پروفایل."
+  },
+  "takePhoto": "گرفتن عکس",
+  "@takePhoto": {
+    "description": "گزینه گرفتن عکس جدید."
+  },
+  "chooseFromGallery": "انتخاب از گالری",
+  "@chooseFromGallery": {
+    "description": "گزینه انتخاب عکس از گالری."
+  },
+  "cancel": "لغو",
+  "@cancel": {
+    "description": "متن دکمه برای لغو عملیات."
+  },
+  "personalInformation": "اطلاعات شخصی",
+  "@personalInformation": {
+    "description": "سربرگ بخش اطلاعات شخصی."
+  },
+  "fullName": "نام کامل",
+  "@fullName": {
+    "description": "برچسب فیلد نام کامل."
+  },
+  "email": "ایمیل",
+  "@email": {
+    "description": "برچسب فیلد ایمیل."
+  },
+  "phoneNumber": "شماره تلفن",
+  "@phoneNumber": {
+    "description": "برچسب فیلد شماره تلفن."
+  },
+  "dateOfBirth": "تاریخ تولد",
+  "@dateOfBirth": {
+    "description": "برچسب فیلد تاریخ تولد."
+  },
+  "appSettings": "تنظیمات برنامه",
+  "@appSettings": {
+    "description": "سربرگ بخش تنظیمات برنامه."
+  },
+  "language": "زبان",
+  "@language": {
+    "description": "برچسب تنظیم زبان."
+  },
+  "english": "انگلیسی",
+  "@english": {
+    "description": "گزینه زبان انگلیسی."
+  },
+  "persian": "فارسی",
+  "@persian": {
+    "description": "گزینه زبان فارسی."
+  },
+  "saveChanges": "ذخیره تغییرات",
+  "@saveChanges": {
+    "description": "متن دکمه برای ذخیره تغییرات پروفایل."
+  },
+  "changesSaved": "تغییرات با موفقیت ذخیره شد!",
+  "@changesSaved": {
+    "description": "پیام موفقیت هنگام ذخیره تغییرات."
+  },
+  "errorSavingChanges": "خطا در ذخیره تغییرات. لطفاً دوباره تلاش کنید.",
+  "@errorSavingChanges": {
+    "description": "پیام خطا هنگام عدم موفقیت در ذخیره تغییرات."
+  },
+  "loadingProfile": "در حال بارگذاری پروفایل...",
+  "@loadingProfile": {
+    "description": "پیام بارگذاری هنگام دریافت اطلاعات پروفایل."
   }
 } 

@@ -109,7 +109,7 @@ class _SplashPageState extends State<SplashPage> {
 
   /// Navigates to the level selection page
   void _navigateToLevelSelection() {
-    Navigator.of(context).pushReplacementNamed(PageName.levelSelection);
+    Navigator.of(context).pushReplacementNamed(PageName.mainNavigation);
   }
 
   /// Navigates to the authentication page

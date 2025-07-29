@@ -10,6 +10,8 @@ import 'package:learning_english/features/authentication/presentation/pages/auth
 import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
 import 'package:learning_english/features/learning_focus_selection/presentation/pages/learning_focus_selection_page.dart';
 import 'package:learning_english/features/daily_lessons/presentation/pages/daily_lessons_page.dart';
+import 'package:learning_english/features/profile/presentation/pages/profile_page.dart';
+import 'package:learning_english/features/navigation/presentation/pages/main_navigation_page.dart';
 
 class PageRouter {
   /// Map of all named routes in the app
@@ -21,5 +23,9 @@ class PageRouter {
         (context) => const LearningFocusSelectionPage(),
     // Daily Lessons page
     PageName.dailyLessons: (context) => const DailyLessonsPage(),
+    // Profile page
+    PageName.profile: (context) => const ProfilePage(),
+    // Main navigation page
+    PageName.mainNavigation: (context) => const MainNavigationPage(),
   };
 }

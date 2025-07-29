@@ -18,4 +18,10 @@ class PageName {
 
   /// Route for the Daily Lessons page
   static const String dailyLessons = '/dailyLessons';
+
+  /// Route for the profile page
+  static const String profile = '/profile';
+
+  /// Route for the main navigation page
+  static const String mainNavigation = '/mainNavigation';
 }

@@ -78,5 +78,85 @@
   "errorContactSupport": "Contact Support",
   "@errorContactSupport": {
     "description": "Button text for contacting support."
+  },
+  "levelSelection": "Level",
+  "@levelSelection": {
+    "description": "Label for level selection in navigation."
+  },
+  "profileTitle": "Profile",
+  "@profileTitle": {
+    "description": "Title for the profile page."
+  },
+  "profileImage": "Profile Image",
+  "@profileImage": {
+    "description": "Label for profile image section."
+  },
+  "changePhoto": "Change Photo",
+  "@changePhoto": {
+    "description": "Button text for changing profile photo."
+  },
+  "takePhoto": "Take Photo",
+  "@takePhoto": {
+    "description": "Option to take a new photo."
+  },
+  "chooseFromGallery": "Choose from Gallery",
+  "@chooseFromGallery": {
+    "description": "Option to choose photo from gallery."
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Button text for canceling an action."
+  },
+  "personalInformation": "Personal Information",
+  "@personalInformation": {
+    "description": "Section header for personal information."
+  },
+  "fullName": "Full Name",
+  "@fullName": {
+    "description": "Label for full name input field."
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Label for email input field."
+  },
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": {
+    "description": "Label for phone number input field."
+  },
+  "dateOfBirth": "Date of Birth",
+  "@dateOfBirth": {
+    "description": "Label for date of birth field."
+  },
+  "appSettings": "App Settings",
+  "@appSettings": {
+    "description": "Section header for app settings."
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Label for language setting."
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language option."
+  },
+  "persian": "Persian",
+  "@persian": {
+    "description": "Persian language option."
+  },
+  "saveChanges": "Save Changes",
+  "@saveChanges": {
+    "description": "Button text for saving profile changes."
+  },
+  "changesSaved": "Changes saved successfully!",
+  "@changesSaved": {
+    "description": "Success message when changes are saved."
+  },
+  "errorSavingChanges": "Error saving changes. Please try again.",
+  "@errorSavingChanges": {
+    "description": "Error message when saving changes fails."
+  },
+  "loadingProfile": "Loading profile...",
+  "@loadingProfile": {
+    "description": "Loading message when fetching profile data."
   }
 } 

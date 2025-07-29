@@ -1,49 +1,45 @@
 # Navigation Feature
 
 ## Description
-The Navigation feature provides a centralized navigation system for the Learning English application. It includes a bottom navigation bar that allows users to easily switch between the main app sections: Level Selection and Profile. This feature maintains design harmony with the existing application while providing a smooth user experience.
+The Navigation feature provides a centralized navigation system for the Learning English application. It includes a bottom navigation bar that allows users to easily switch between the main app sections: Level Selection, Vocabulary History, and Profile. This feature maintains design harmony with the existing application while providing a smooth user experience using a simple StatefulWidget approach.
 
 ## Architecture
 
-### Domain Layer
-- **entities/**: Core business objects for navigation state
-- **repositories/**: Abstract repository interfaces for navigation data
-- **usecases/**: Business logic for navigation operations
-
-### Data Layer
-- **datasources/**: Remote and local data sources for navigation preferences
-- **models/**: Data transfer objects for navigation state
-- **repositories/**: Repository implementations for navigation data
-
 ### Presentation Layer
-- **bloc/**: State management for navigation using BLoC pattern
 - **pages/**: Main navigation page with bottom navigation bar
+  - `main_navigation_page.dart`: Container page that manages tab switching using IndexedStack
 - **widgets/**: Reusable navigation components
+  - `bottom_nav_bar.dart`: Custom bottom navigation bar widget with three tabs
 
-## Use Cases
+## Features
 
-1. **GetNavigationStateUseCase**
-   - Description: Retrieves the current navigation state and user preferences
-   - Data Flow: Page -> Bloc -> UseCase -> Repository -> DataSource
+1. **Three-Tab Navigation**
+   - Level Selection: For choosing English learning level
+   - Vocabulary History: For viewing learning history
+   - Profile: For accessing user profile settings
 
-2. **UpdateNavigationStateUseCase**
-   - Description: Updates the current navigation state and saves user preferences
-   - Data Flow: Page -> Bloc -> UseCase -> Repository -> DataSource
+2. **State Management**
+   - Uses StatefulWidget for simple state management
+   - Maintains current tab index locally
+   - Uses IndexedStack for efficient tab switching
+
+3. **Design System Integration**
+   - Uses AppTheme colors for consistent styling
+   - Implements GScaffold and GText widgets
+   - Supports localization for tab labels
 
 ## Data Flow
 1. User taps on a navigation item in the bottom navigation bar
-2. The navigation page updates its state and calls the BLoC
-3. BLoC processes the navigation event and updates the current index
-4. The page rebuilds with the new content based on the selected tab
-5. Navigation state is optionally saved to local storage for persistence
+2. The MainNavigationPage updates its state and changes the current index
+3. The IndexedStack rebuilds with the new content based on the selected tab
+4. The bottom navigation bar updates its visual state to reflect the selection
 
 ## Key Components
-- **BottomNavBar**: Main navigation widget with two tabs (Level Selection, Profile)
-- **MainNavigationPage**: Container page that manages tab switching
-- **NavigationBloc**: State management for navigation operations
-- **Local Storage**: Persistence for navigation preferences
-- **Clean Architecture**: Proper separation of concerns
-- **Design Harmony**: Uses AppTheme colors and GWidgets
+- **MainNavigationPage**: Container page that manages tab switching using IndexedStack
+- **BottomNavBar**: Custom navigation widget with three tabs (Level Selection, History, Profile)
+- **IndexedStack**: Efficient widget for switching between pages without rebuilding
+- **Localization**: Uses AppLocalizations for tab labels (levelSelection, history, profileTitle)
+- **Design Harmony**: Uses AppTheme colors and GWidgets for consistent styling
 
 ## Usage
 ```dart
@@ -55,4 +51,21 @@ BottomNavBar(
   currentIndex: _currentIndex,
   onTap: (index) => setState(() => _currentIndex = index),
 )
-``` 
+
+// Use navigation extensions
+context.navigateToLevelSelection();
+context.navigateToVocabularyHistory();
+context.navigateToProfile();
+```
+
+## Localization
+The navigation feature supports multiple languages through the following localized strings:
+- `levelSelection`: Tab label for level selection
+- `history`: Tab label for vocabulary history
+- `profileTitle`: Tab label for profile
+
+## Design Features
+- **Custom Styling**: Each tab has a custom design with borders and background colors
+- **Selection State**: Selected tabs have different styling with primary color background
+- **Responsive Layout**: Uses SafeArea and proper padding for different screen sizes
+- **Accessibility**: Proper touch targets and clear visual feedback 

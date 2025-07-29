@@ -14,7 +14,7 @@ import 'package:learning_english/core/widgets/g_scaffold.dart';
 import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
 import 'package:learning_english/features/profile/presentation/pages/profile_page.dart';
-import 'package:learning_english/features/vocabulary_history/presentation/pages/vocabulary_history_page.dart';
+import 'package:learning_english/features/history/presentation/pages/vocabulary_history_page.dart';
 import 'package:learning_english/features/navigation/presentation/widgets/bottom_nav_bar.dart';
 
 /// Main navigation page with bottom navigation bar

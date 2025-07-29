@@ -10,7 +10,6 @@ import 'package:learning_english/core/dependency%20injection/daily_lessons_di.da
 import 'package:learning_english/core/dependency%20injection/learning_focus_selection_di.dart';
 import 'package:learning_english/core/dependency%20injection/splash_di.dart';
 import 'package:learning_english/core/dependency%20injection/profile_di.dart';
-import 'package:learning_english/core/dependency%20injection/navigation_di.dart';
 import 'package:learning_english/core/dependency%20injection/vocabulary_history_di.dart';
 
 final getIt = GetIt.instance;
@@ -46,9 +45,6 @@ Future<void> initDependencies() async {
     // Profile Feature
     await setupProfileDI(getIt);
     
-    // Navigation Feature
-    await setupNavigationDI(getIt);
-
     // Vocabulary History Feature
     await setupVocabularyHistoryLocator(getIt);
 

@@ -14,6 +14,7 @@ import 'package:learning_english/core/widgets/g_scaffold.dart';
 import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
 import 'package:learning_english/features/profile/presentation/pages/profile_page.dart';
+import 'package:learning_english/features/vocabulary_history/presentation/pages/vocabulary_history_page.dart';
 import 'package:learning_english/features/navigation/presentation/widgets/bottom_nav_bar.dart';
 
 /// Main navigation page with bottom navigation bar
@@ -30,10 +31,12 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   int _currentIndex = 0;
 
   /// List of pages to display
-  final List<Widget> _pages = [const LevelSelectionPage(), const ProfilePage()];
+  final List<Widget> _pages = [
+    const LevelSelectionPage(),
+    const VocabularyHistoryPage(),
+    const ProfilePage(),
+  ];
 
-  /// List of page titles
-  final List<String> _pageTitles = ['Level Selection', 'Profile'];
 
   @override
   Widget build(BuildContext context) {

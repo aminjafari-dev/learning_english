@@ -11,6 +11,7 @@ import 'package:learning_english/core/dependency%20injection/learning_focus_sele
 import 'package:learning_english/core/dependency%20injection/splash_di.dart';
 import 'package:learning_english/core/dependency%20injection/profile_di.dart';
 import 'package:learning_english/core/dependency%20injection/navigation_di.dart';
+import 'package:learning_english/core/dependency%20injection/vocabulary_history_di.dart';
 
 final getIt = GetIt.instance;
 
@@ -47,6 +48,9 @@ Future<void> initDependencies() async {
     
     // Navigation Feature
     await setupNavigationDI(getIt);
+
+    // Vocabulary History Feature
+    await setupVocabularyHistoryLocator(getIt);
 
     print('✅ [DI] All dependencies initialized successfully');
   } catch (e) {

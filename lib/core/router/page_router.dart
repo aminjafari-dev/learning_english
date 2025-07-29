@@ -12,6 +12,8 @@ import 'package:learning_english/features/learning_focus_selection/presentation/
 import 'package:learning_english/features/daily_lessons/presentation/pages/daily_lessons_page.dart';
 import 'package:learning_english/features/profile/presentation/pages/profile_page.dart';
 import 'package:learning_english/features/navigation/presentation/pages/main_navigation_page.dart';
+import 'package:learning_english/features/vocabulary_history/presentation/pages/vocabulary_history_page.dart';
+import 'package:learning_english/features/vocabulary_history/presentation/pages/request_detail_page.dart';
 
 class PageRouter {
   /// Map of all named routes in the app
@@ -27,5 +29,12 @@ class PageRouter {
     PageName.profile: (context) => const ProfilePage(),
     // Main navigation page
     PageName.mainNavigation: (context) => const MainNavigationPage(),
+    // Vocabulary history page
+    PageName.vocabularyHistory: (context) => const VocabularyHistoryPage(),
+    // Request details page
+    PageName.requestDetails: (context) {
+      final requestId = ModalRoute.of(context)!.settings.arguments as String;
+      return RequestDetailPage(requestId: requestId);
+    },
   };
 }

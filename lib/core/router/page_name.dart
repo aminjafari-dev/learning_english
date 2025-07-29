@@ -24,4 +24,10 @@ class PageName {
 
   /// Route for the main navigation page
   static const String mainNavigation = '/mainNavigation';
+
+  /// Route for the vocabulary history page
+  static const String vocabularyHistory = '/vocabularyHistory';
+
+  /// Route for the request details page
+  static const String requestDetails = '/requestDetails';
 }

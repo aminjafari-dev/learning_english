@@ -58,10 +58,17 @@ class BottomNavBar extends StatelessWidget {
               ),
               _buildNavItem(
                 context,
-                icon: Icons.person,
-                label: l10n.profileTitle,
+                icon: Icons.history,
+                label: l10n.history,
                 isSelected: currentIndex == 1,
                 onTap: () => onTap(1),
+              ),
+              _buildNavItem(
+                context,
+                icon: Icons.person,
+                label: l10n.profileTitle,
+                isSelected: currentIndex == 2,
+                onTap: () => onTap(2),
               ),
             ],
           ),
@@ -120,6 +127,11 @@ extension BottomNavBarNavigation on BuildContext {
   /// Navigate to level selection page
   void navigateToLevelSelection() {
     Navigator.of(this).pushNamed(PageName.levelSelection);
+  }
+
+  /// Navigate to vocabulary history page
+  void navigateToVocabularyHistory() {
+    Navigator.of(this).pushNamed(PageName.vocabularyHistory);
   }
 
   /// Navigate to profile page

@@ -158,5 +158,45 @@
   "loadingProfile": "Loading profile...",
   "@loadingProfile": {
     "description": "Loading message when fetching profile data."
+  },
+  "history": "History",
+  "@history": {
+    "description": "Title for the vocabulary history page."
+  },
+  "historyRequests": "History Requests",
+  "@historyRequests": {
+    "description": "Section header for history requests."
+  },
+  "requestDetails": "Request Details",
+  "@requestDetails": {
+    "description": "Title for the request details page."
+  },
+  "noHistoryFound": "No history found",
+  "@noHistoryFound": {
+    "description": "Message shown when no history data is available."
+  },
+  "itemsGenerated": "items generated",
+  "@itemsGenerated": {
+    "description": "Text showing number of items generated in a request."
+  },
+  "vocabularyItems": "Vocabulary Items",
+  "@vocabularyItems": {
+    "description": "Section header for vocabulary items."
+  },
+  "phraseItems": "Phrase Items",
+  "@phraseItems": {
+    "description": "Section header for phrase items."
+  },
+  "clearHistory": "Clear History",
+  "@clearHistory": {
+    "description": "Button text for clearing history."
+  },
+  "historyCleared": "History cleared successfully",
+  "@historyCleared": {
+    "description": "Success message when history is cleared."
+  },
+  "errorLoadingHistory": "Error loading history",
+  "@errorLoadingHistory": {
+    "description": "Error message when loading history fails."
   }
 } 

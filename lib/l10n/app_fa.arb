@@ -158,5 +158,9 @@
   "loadingProfile": "در حال بارگذاری پروفایل...",
   "@loadingProfile": {
     "description": "پیام بارگذاری هنگام دریافت اطلاعات پروفایل."
+  },
+  "history": "تاریخچه",
+  "@history": {
+    "description": "عنوان صفحه تاریخچه واژگان."
   }
 } 

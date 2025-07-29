@@ -20,7 +20,6 @@ mixin _$VocabularyHistoryEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() loadHistoryRequests,
     required TResult Function(String requestId) loadRequestDetails,
-    required TResult Function() clearHistory,
     required TResult Function() refreshHistory,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +27,6 @@ mixin _$VocabularyHistoryEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadHistoryRequests,
     TResult? Function(String requestId)? loadRequestDetails,
-    TResult? Function()? clearHistory,
     TResult? Function()? refreshHistory,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +34,6 @@ mixin _$VocabularyHistoryEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadHistoryRequests,
     TResult Function(String requestId)? loadRequestDetails,
-    TResult Function()? clearHistory,
     TResult Function()? refreshHistory,
     required TResult orElse(),
   }) =>
@@ -45,7 +42,6 @@ mixin _$VocabularyHistoryEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(LoadHistoryRequests value) loadHistoryRequests,
     required TResult Function(LoadRequestDetails value) loadRequestDetails,
-    required TResult Function(ClearHistory value) clearHistory,
     required TResult Function(RefreshHistory value) refreshHistory,
   }) =>
       throw _privateConstructorUsedError;
@@ -53,7 +49,6 @@ mixin _$VocabularyHistoryEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadHistoryRequests value)? loadHistoryRequests,
     TResult? Function(LoadRequestDetails value)? loadRequestDetails,
-    TResult? Function(ClearHistory value)? clearHistory,
     TResult? Function(RefreshHistory value)? refreshHistory,
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +56,6 @@ mixin _$VocabularyHistoryEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadHistoryRequests value)? loadHistoryRequests,
     TResult Function(LoadRequestDetails value)? loadRequestDetails,
-    TResult Function(ClearHistory value)? clearHistory,
     TResult Function(RefreshHistory value)? refreshHistory,
     required TResult orElse(),
   }) =>
@@ -135,7 +129,6 @@ class _$LoadHistoryRequestsImpl implements LoadHistoryRequests {
   TResult when<TResult extends Object?>({
     required TResult Function() loadHistoryRequests,
     required TResult Function(String requestId) loadRequestDetails,
-    required TResult Function() clearHistory,
     required TResult Function() refreshHistory,
   }) {
     return loadHistoryRequests();
@@ -146,7 +139,6 @@ class _$LoadHistoryRequestsImpl implements LoadHistoryRequests {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadHistoryRequests,
     TResult? Function(String requestId)? loadRequestDetails,
-    TResult? Function()? clearHistory,
     TResult? Function()? refreshHistory,
   }) {
     return loadHistoryRequests?.call();
@@ -157,7 +149,6 @@ class _$LoadHistoryRequestsImpl implements LoadHistoryRequests {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadHistoryRequests,
     TResult Function(String requestId)? loadRequestDetails,
-    TResult Function()? clearHistory,
     TResult Function()? refreshHistory,
     required TResult orElse(),
   }) {
@@ -172,7 +163,6 @@ class _$LoadHistoryRequestsImpl implements LoadHistoryRequests {
   TResult map<TResult extends Object?>({
     required TResult Function(LoadHistoryRequests value) loadHistoryRequests,
     required TResult Function(LoadRequestDetails value) loadRequestDetails,
-    required TResult Function(ClearHistory value) clearHistory,
     required TResult Function(RefreshHistory value) refreshHistory,
   }) {
     return loadHistoryRequests(this);
@@ -183,7 +173,6 @@ class _$LoadHistoryRequestsImpl implements LoadHistoryRequests {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadHistoryRequests value)? loadHistoryRequests,
     TResult? Function(LoadRequestDetails value)? loadRequestDetails,
-    TResult? Function(ClearHistory value)? clearHistory,
     TResult? Function(RefreshHistory value)? refreshHistory,
   }) {
     return loadHistoryRequests?.call(this);
@@ -194,7 +183,6 @@ class _$LoadHistoryRequestsImpl implements LoadHistoryRequests {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadHistoryRequests value)? loadHistoryRequests,
     TResult Function(LoadRequestDetails value)? loadRequestDetails,
-    TResult Function(ClearHistory value)? clearHistory,
     TResult Function(RefreshHistory value)? refreshHistory,
     required TResult orElse(),
   }) {
@@ -281,7 +269,6 @@ class _$LoadRequestDetailsImpl implements LoadRequestDetails {
   TResult when<TResult extends Object?>({
     required TResult Function() loadHistoryRequests,
     required TResult Function(String requestId) loadRequestDetails,
-    required TResult Function() clearHistory,
     required TResult Function() refreshHistory,
   }) {
     return loadRequestDetails(requestId);
@@ -292,7 +279,6 @@ class _$LoadRequestDetailsImpl implements LoadRequestDetails {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadHistoryRequests,
     TResult? Function(String requestId)? loadRequestDetails,
-    TResult? Function()? clearHistory,
     TResult? Function()? refreshHistory,
   }) {
     return loadRequestDetails?.call(requestId);
@@ -303,7 +289,6 @@ class _$LoadRequestDetailsImpl implements LoadRequestDetails {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadHistoryRequests,
     TResult Function(String requestId)? loadRequestDetails,
-    TResult Function()? clearHistory,
     TResult Function()? refreshHistory,
     required TResult orElse(),
   }) {
@@ -318,7 +303,6 @@ class _$LoadRequestDetailsImpl implements LoadRequestDetails {
   TResult map<TResult extends Object?>({
     required TResult Function(LoadHistoryRequests value) loadHistoryRequests,
     required TResult Function(LoadRequestDetails value) loadRequestDetails,
-    required TResult Function(ClearHistory value) clearHistory,
     required TResult Function(RefreshHistory value) refreshHistory,
   }) {
     return loadRequestDetails(this);
@@ -329,7 +313,6 @@ class _$LoadRequestDetailsImpl implements LoadRequestDetails {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadHistoryRequests value)? loadHistoryRequests,
     TResult? Function(LoadRequestDetails value)? loadRequestDetails,
-    TResult? Function(ClearHistory value)? clearHistory,
     TResult? Function(RefreshHistory value)? refreshHistory,
   }) {
     return loadRequestDetails?.call(this);
@@ -340,7 +323,6 @@ class _$LoadRequestDetailsImpl implements LoadRequestDetails {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadHistoryRequests value)? loadHistoryRequests,
     TResult Function(LoadRequestDetails value)? loadRequestDetails,
-    TResult Function(ClearHistory value)? clearHistory,
     TResult Function(RefreshHistory value)? refreshHistory,
     required TResult orElse(),
   }) {
@@ -362,123 +344,6 @@ abstract class LoadRequestDetails implements VocabularyHistoryEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadRequestDetailsImplCopyWith<_$LoadRequestDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ClearHistoryImplCopyWith<$Res> {
-  factory _$$ClearHistoryImplCopyWith(
-          _$ClearHistoryImpl value, $Res Function(_$ClearHistoryImpl) then) =
-      __$$ClearHistoryImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ClearHistoryImplCopyWithImpl<$Res>
-    extends _$VocabularyHistoryEventCopyWithImpl<$Res, _$ClearHistoryImpl>
-    implements _$$ClearHistoryImplCopyWith<$Res> {
-  __$$ClearHistoryImplCopyWithImpl(
-      _$ClearHistoryImpl _value, $Res Function(_$ClearHistoryImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of VocabularyHistoryEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$ClearHistoryImpl implements ClearHistory {
-  const _$ClearHistoryImpl();
-
-  @override
-  String toString() {
-    return 'VocabularyHistoryEvent.clearHistory()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ClearHistoryImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loadHistoryRequests,
-    required TResult Function(String requestId) loadRequestDetails,
-    required TResult Function() clearHistory,
-    required TResult Function() refreshHistory,
-  }) {
-    return clearHistory();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loadHistoryRequests,
-    TResult? Function(String requestId)? loadRequestDetails,
-    TResult? Function()? clearHistory,
-    TResult? Function()? refreshHistory,
-  }) {
-    return clearHistory?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loadHistoryRequests,
-    TResult Function(String requestId)? loadRequestDetails,
-    TResult Function()? clearHistory,
-    TResult Function()? refreshHistory,
-    required TResult orElse(),
-  }) {
-    if (clearHistory != null) {
-      return clearHistory();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(LoadHistoryRequests value) loadHistoryRequests,
-    required TResult Function(LoadRequestDetails value) loadRequestDetails,
-    required TResult Function(ClearHistory value) clearHistory,
-    required TResult Function(RefreshHistory value) refreshHistory,
-  }) {
-    return clearHistory(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(LoadHistoryRequests value)? loadHistoryRequests,
-    TResult? Function(LoadRequestDetails value)? loadRequestDetails,
-    TResult? Function(ClearHistory value)? clearHistory,
-    TResult? Function(RefreshHistory value)? refreshHistory,
-  }) {
-    return clearHistory?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(LoadHistoryRequests value)? loadHistoryRequests,
-    TResult Function(LoadRequestDetails value)? loadRequestDetails,
-    TResult Function(ClearHistory value)? clearHistory,
-    TResult Function(RefreshHistory value)? refreshHistory,
-    required TResult orElse(),
-  }) {
-    if (clearHistory != null) {
-      return clearHistory(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ClearHistory implements VocabularyHistoryEvent {
-  const factory ClearHistory() = _$ClearHistoryImpl;
 }
 
 /// @nodoc
@@ -524,7 +389,6 @@ class _$RefreshHistoryImpl implements RefreshHistory {
   TResult when<TResult extends Object?>({
     required TResult Function() loadHistoryRequests,
     required TResult Function(String requestId) loadRequestDetails,
-    required TResult Function() clearHistory,
     required TResult Function() refreshHistory,
   }) {
     return refreshHistory();
@@ -535,7 +399,6 @@ class _$RefreshHistoryImpl implements RefreshHistory {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadHistoryRequests,
     TResult? Function(String requestId)? loadRequestDetails,
-    TResult? Function()? clearHistory,
     TResult? Function()? refreshHistory,
   }) {
     return refreshHistory?.call();
@@ -546,7 +409,6 @@ class _$RefreshHistoryImpl implements RefreshHistory {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadHistoryRequests,
     TResult Function(String requestId)? loadRequestDetails,
-    TResult Function()? clearHistory,
     TResult Function()? refreshHistory,
     required TResult orElse(),
   }) {
@@ -561,7 +423,6 @@ class _$RefreshHistoryImpl implements RefreshHistory {
   TResult map<TResult extends Object?>({
     required TResult Function(LoadHistoryRequests value) loadHistoryRequests,
     required TResult Function(LoadRequestDetails value) loadRequestDetails,
-    required TResult Function(ClearHistory value) clearHistory,
     required TResult Function(RefreshHistory value) refreshHistory,
   }) {
     return refreshHistory(this);
@@ -572,7 +433,6 @@ class _$RefreshHistoryImpl implements RefreshHistory {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadHistoryRequests value)? loadHistoryRequests,
     TResult? Function(LoadRequestDetails value)? loadRequestDetails,
-    TResult? Function(ClearHistory value)? clearHistory,
     TResult? Function(RefreshHistory value)? refreshHistory,
   }) {
     return refreshHistory?.call(this);
@@ -583,7 +443,6 @@ class _$RefreshHistoryImpl implements RefreshHistory {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadHistoryRequests value)? loadHistoryRequests,
     TResult Function(LoadRequestDetails value)? loadRequestDetails,
-    TResult Function(ClearHistory value)? clearHistory,
     TResult Function(RefreshHistory value)? refreshHistory,
     required TResult orElse(),
   }) {

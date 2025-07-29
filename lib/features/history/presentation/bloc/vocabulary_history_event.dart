@@ -29,12 +29,7 @@ class VocabularyHistoryEvent with _$VocabularyHistoryEvent {
   const factory VocabularyHistoryEvent.loadRequestDetails({
     required String requestId,
   }) = LoadRequestDetails;
-
-  /// Event to clear all history data
-  /// This event triggers the clearing of all vocabulary and phrase history
-  /// from local storage
-  const factory VocabularyHistoryEvent.clearHistory() = ClearHistory;
-
+  
   /// Event to refresh history data
   /// This event triggers a refresh of the current history data
   /// Useful for updating the UI after new data is added

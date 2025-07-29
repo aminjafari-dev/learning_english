@@ -86,19 +86,4 @@ abstract class VocabularyHistoryRepository {
   ///   );
   Future<Either<Failure, List<PhraseHistoryItem>>> getAllPhrases();
 
-  /// Clears all history data for the current user.
-  /// This method removes all vocabulary and phrase history from local storage,
-  /// effectively resetting the user's learning history.
-  ///
-  /// Returns:
-  /// - Right(Unit): Success confirmation
-  /// - Left(Failure): Error information if the operation fails
-  ///
-  /// Usage Example:
-  ///   final result = await repository.clearHistory();
-  ///   result.fold(
-  ///     (failure) => handleError(failure),
-  ///     (_) => showSuccessMessage('History cleared successfully'),
-  ///   );
-  Future<Either<Failure, Unit>> clearHistory();
 }

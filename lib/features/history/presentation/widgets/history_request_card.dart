@@ -44,22 +44,22 @@ class HistoryRequestCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Icons.history, color: AppTheme.primaryColor, size: 20),
-                  GGap.g8,
+                  // Icon(Icons.history, color: AppTheme.primaryColor, size: 20),
+                  // GGap.g8,
                   Expanded(
                     child: GText(
                       _formatFocusAreas(request.focusAreas),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AppTheme.primaryColor,
+                        color: AppTheme.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: AppTheme.accentColor,
-                    size: 16,
-                  ),
+                  // Icon(
+                  //   Icons.arrow_forward_ios,
+                  //   color: AppTheme.accentColor,
+                  //   size: 16,
+                  // ),
                 ],
               ),
               GGap.g12,
@@ -75,11 +75,7 @@ class HistoryRequestCard extends StatelessWidget {
                     _formatDate(request.createdAt),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                ],
-              ),
-              GGap.g8,
-              Row(
-                children: [
+                  Spacer(),
                   Icon(Icons.school, color: AppTheme.accentColor, size: 16),
                   GGap.g4,
                   GText(

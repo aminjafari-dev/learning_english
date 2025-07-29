@@ -22,17 +22,14 @@ class VocabularyHistoryBloc
     extends Bloc<VocabularyHistoryEvent, VocabularyHistoryState> {
   final GetHistoryRequestsUseCase getHistoryRequestsUseCase;
   final GetRequestDetailsUseCase getRequestDetailsUseCase;
-  final VocabularyHistoryRepository repository;
 
   VocabularyHistoryBloc({
     required this.getHistoryRequestsUseCase,
     required this.getRequestDetailsUseCase,
-    required this.repository,
   }) : super(
          VocabularyHistoryState(
            historyRequests: const HistoryRequestsState.initial(),
            requestDetails: const RequestDetailsState.initial(),
-           clearHistory: const ClearHistoryState.initial(),
          ),
        ) {
     on<VocabularyHistoryEvent>((event, emit) async {
@@ -40,7 +37,6 @@ class VocabularyHistoryBloc
         loadHistoryRequests: () => _onLoadHistoryRequests(emit),
         loadRequestDetails:
             (requestId) => _onLoadRequestDetails(requestId, emit),
-        clearHistory: () => _onClearHistory(emit),
         refreshHistory: () => _onRefreshHistory(emit),
       );
     });
@@ -124,36 +120,6 @@ class VocabularyHistoryBloc
     }
   }
 
-  /// Handles the ClearHistory event
-  /// Clears all history data from local storage
-  Future<void> _onClearHistory(Emitter<VocabularyHistoryState> emit) async {
-    emit(state.copyWith(clearHistory: const ClearHistoryState.loading()));
-
-    try {
-      final result = await repository.clearHistory();
-
-      result.fold(
-        (failure) {
-          emit(
-            state.copyWith(
-              clearHistory: ClearHistoryState.error(failure.message),
-            ),
-          );
-        },
-        (_) {
-          emit(
-            state.copyWith(
-              clearHistory: const ClearHistoryState.completed(),
-              historyRequests: const HistoryRequestsState.initial(),
-            ),
-          );
-        },
-      );
-    } catch (e) {
-      emit(state.copyWith(clearHistory: ClearHistoryState.error(e.toString())));
-    }
-  }
-
   /// Handles the RefreshHistory event
   /// Refreshes the current history data
   Future<void> _onRefreshHistory(Emitter<VocabularyHistoryState> emit) async {
@@ -162,7 +128,6 @@ class VocabularyHistoryBloc
       VocabularyHistoryState(
         historyRequests: const HistoryRequestsState.loading(),
         requestDetails: const RequestDetailsState.initial(),
-        clearHistory: const ClearHistoryState.initial(),
       ),
     );
 

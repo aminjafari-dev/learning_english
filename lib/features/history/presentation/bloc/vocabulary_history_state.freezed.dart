@@ -1276,595 +1276,10 @@ abstract class RequestDetailsError implements RequestDetailsState {
 }
 
 /// @nodoc
-mixin _$ClearHistoryState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() completed,
-    required TResult Function(String message) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? completed,
-    TResult? Function(String message)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? completed,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(ClearHistoryInitial value) initial,
-    required TResult Function(ClearHistoryLoading value) loading,
-    required TResult Function(ClearHistoryCompleted value) completed,
-    required TResult Function(ClearHistoryError value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ClearHistoryInitial value)? initial,
-    TResult? Function(ClearHistoryLoading value)? loading,
-    TResult? Function(ClearHistoryCompleted value)? completed,
-    TResult? Function(ClearHistoryError value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(ClearHistoryInitial value)? initial,
-    TResult Function(ClearHistoryLoading value)? loading,
-    TResult Function(ClearHistoryCompleted value)? completed,
-    TResult Function(ClearHistoryError value)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ClearHistoryStateCopyWith<$Res> {
-  factory $ClearHistoryStateCopyWith(
-          ClearHistoryState value, $Res Function(ClearHistoryState) then) =
-      _$ClearHistoryStateCopyWithImpl<$Res, ClearHistoryState>;
-}
-
-/// @nodoc
-class _$ClearHistoryStateCopyWithImpl<$Res, $Val extends ClearHistoryState>
-    implements $ClearHistoryStateCopyWith<$Res> {
-  _$ClearHistoryStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ClearHistoryState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$ClearHistoryInitialImplCopyWith<$Res> {
-  factory _$$ClearHistoryInitialImplCopyWith(_$ClearHistoryInitialImpl value,
-          $Res Function(_$ClearHistoryInitialImpl) then) =
-      __$$ClearHistoryInitialImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ClearHistoryInitialImplCopyWithImpl<$Res>
-    extends _$ClearHistoryStateCopyWithImpl<$Res, _$ClearHistoryInitialImpl>
-    implements _$$ClearHistoryInitialImplCopyWith<$Res> {
-  __$$ClearHistoryInitialImplCopyWithImpl(_$ClearHistoryInitialImpl _value,
-      $Res Function(_$ClearHistoryInitialImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ClearHistoryState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$ClearHistoryInitialImpl implements ClearHistoryInitial {
-  const _$ClearHistoryInitialImpl();
-
-  @override
-  String toString() {
-    return 'ClearHistoryState.initial()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ClearHistoryInitialImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() completed,
-    required TResult Function(String message) error,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? completed,
-    TResult? Function(String message)? error,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? completed,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(ClearHistoryInitial value) initial,
-    required TResult Function(ClearHistoryLoading value) loading,
-    required TResult Function(ClearHistoryCompleted value) completed,
-    required TResult Function(ClearHistoryError value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ClearHistoryInitial value)? initial,
-    TResult? Function(ClearHistoryLoading value)? loading,
-    TResult? Function(ClearHistoryCompleted value)? completed,
-    TResult? Function(ClearHistoryError value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(ClearHistoryInitial value)? initial,
-    TResult Function(ClearHistoryLoading value)? loading,
-    TResult Function(ClearHistoryCompleted value)? completed,
-    TResult Function(ClearHistoryError value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ClearHistoryInitial implements ClearHistoryState {
-  const factory ClearHistoryInitial() = _$ClearHistoryInitialImpl;
-}
-
-/// @nodoc
-abstract class _$$ClearHistoryLoadingImplCopyWith<$Res> {
-  factory _$$ClearHistoryLoadingImplCopyWith(_$ClearHistoryLoadingImpl value,
-          $Res Function(_$ClearHistoryLoadingImpl) then) =
-      __$$ClearHistoryLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ClearHistoryLoadingImplCopyWithImpl<$Res>
-    extends _$ClearHistoryStateCopyWithImpl<$Res, _$ClearHistoryLoadingImpl>
-    implements _$$ClearHistoryLoadingImplCopyWith<$Res> {
-  __$$ClearHistoryLoadingImplCopyWithImpl(_$ClearHistoryLoadingImpl _value,
-      $Res Function(_$ClearHistoryLoadingImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ClearHistoryState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$ClearHistoryLoadingImpl implements ClearHistoryLoading {
-  const _$ClearHistoryLoadingImpl();
-
-  @override
-  String toString() {
-    return 'ClearHistoryState.loading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ClearHistoryLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() completed,
-    required TResult Function(String message) error,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? completed,
-    TResult? Function(String message)? error,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? completed,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(ClearHistoryInitial value) initial,
-    required TResult Function(ClearHistoryLoading value) loading,
-    required TResult Function(ClearHistoryCompleted value) completed,
-    required TResult Function(ClearHistoryError value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ClearHistoryInitial value)? initial,
-    TResult? Function(ClearHistoryLoading value)? loading,
-    TResult? Function(ClearHistoryCompleted value)? completed,
-    TResult? Function(ClearHistoryError value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(ClearHistoryInitial value)? initial,
-    TResult Function(ClearHistoryLoading value)? loading,
-    TResult Function(ClearHistoryCompleted value)? completed,
-    TResult Function(ClearHistoryError value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ClearHistoryLoading implements ClearHistoryState {
-  const factory ClearHistoryLoading() = _$ClearHistoryLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$ClearHistoryCompletedImplCopyWith<$Res> {
-  factory _$$ClearHistoryCompletedImplCopyWith(
-          _$ClearHistoryCompletedImpl value,
-          $Res Function(_$ClearHistoryCompletedImpl) then) =
-      __$$ClearHistoryCompletedImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ClearHistoryCompletedImplCopyWithImpl<$Res>
-    extends _$ClearHistoryStateCopyWithImpl<$Res, _$ClearHistoryCompletedImpl>
-    implements _$$ClearHistoryCompletedImplCopyWith<$Res> {
-  __$$ClearHistoryCompletedImplCopyWithImpl(_$ClearHistoryCompletedImpl _value,
-      $Res Function(_$ClearHistoryCompletedImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ClearHistoryState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$ClearHistoryCompletedImpl implements ClearHistoryCompleted {
-  const _$ClearHistoryCompletedImpl();
-
-  @override
-  String toString() {
-    return 'ClearHistoryState.completed()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ClearHistoryCompletedImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() completed,
-    required TResult Function(String message) error,
-  }) {
-    return completed();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? completed,
-    TResult? Function(String message)? error,
-  }) {
-    return completed?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? completed,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (completed != null) {
-      return completed();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(ClearHistoryInitial value) initial,
-    required TResult Function(ClearHistoryLoading value) loading,
-    required TResult Function(ClearHistoryCompleted value) completed,
-    required TResult Function(ClearHistoryError value) error,
-  }) {
-    return completed(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ClearHistoryInitial value)? initial,
-    TResult? Function(ClearHistoryLoading value)? loading,
-    TResult? Function(ClearHistoryCompleted value)? completed,
-    TResult? Function(ClearHistoryError value)? error,
-  }) {
-    return completed?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(ClearHistoryInitial value)? initial,
-    TResult Function(ClearHistoryLoading value)? loading,
-    TResult Function(ClearHistoryCompleted value)? completed,
-    TResult Function(ClearHistoryError value)? error,
-    required TResult orElse(),
-  }) {
-    if (completed != null) {
-      return completed(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ClearHistoryCompleted implements ClearHistoryState {
-  const factory ClearHistoryCompleted() = _$ClearHistoryCompletedImpl;
-}
-
-/// @nodoc
-abstract class _$$ClearHistoryErrorImplCopyWith<$Res> {
-  factory _$$ClearHistoryErrorImplCopyWith(_$ClearHistoryErrorImpl value,
-          $Res Function(_$ClearHistoryErrorImpl) then) =
-      __$$ClearHistoryErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String message});
-}
-
-/// @nodoc
-class __$$ClearHistoryErrorImplCopyWithImpl<$Res>
-    extends _$ClearHistoryStateCopyWithImpl<$Res, _$ClearHistoryErrorImpl>
-    implements _$$ClearHistoryErrorImplCopyWith<$Res> {
-  __$$ClearHistoryErrorImplCopyWithImpl(_$ClearHistoryErrorImpl _value,
-      $Res Function(_$ClearHistoryErrorImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ClearHistoryState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_$ClearHistoryErrorImpl(
-      null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ClearHistoryErrorImpl implements ClearHistoryError {
-  const _$ClearHistoryErrorImpl(this.message);
-
-  @override
-  final String message;
-
-  @override
-  String toString() {
-    return 'ClearHistoryState.error(message: $message)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ClearHistoryErrorImpl &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  /// Create a copy of ClearHistoryState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ClearHistoryErrorImplCopyWith<_$ClearHistoryErrorImpl> get copyWith =>
-      __$$ClearHistoryErrorImplCopyWithImpl<_$ClearHistoryErrorImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() completed,
-    required TResult Function(String message) error,
-  }) {
-    return error(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? completed,
-    TResult? Function(String message)? error,
-  }) {
-    return error?.call(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? completed,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(ClearHistoryInitial value) initial,
-    required TResult Function(ClearHistoryLoading value) loading,
-    required TResult Function(ClearHistoryCompleted value) completed,
-    required TResult Function(ClearHistoryError value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ClearHistoryInitial value)? initial,
-    TResult? Function(ClearHistoryLoading value)? loading,
-    TResult? Function(ClearHistoryCompleted value)? completed,
-    TResult? Function(ClearHistoryError value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(ClearHistoryInitial value)? initial,
-    TResult Function(ClearHistoryLoading value)? loading,
-    TResult Function(ClearHistoryCompleted value)? completed,
-    TResult Function(ClearHistoryError value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ClearHistoryError implements ClearHistoryState {
-  const factory ClearHistoryError(final String message) =
-      _$ClearHistoryErrorImpl;
-
-  String get message;
-
-  /// Create a copy of ClearHistoryState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ClearHistoryErrorImplCopyWith<_$ClearHistoryErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
 mixin _$VocabularyHistoryState {
   HistoryRequestsState get historyRequests =>
       throw _privateConstructorUsedError;
   RequestDetailsState get requestDetails => throw _privateConstructorUsedError;
-  ClearHistoryState get clearHistory => throw _privateConstructorUsedError;
 
   /// Create a copy of VocabularyHistoryState
   /// with the given fields replaced by the non-null parameter values.
@@ -1881,12 +1296,10 @@ abstract class $VocabularyHistoryStateCopyWith<$Res> {
   @useResult
   $Res call(
       {HistoryRequestsState historyRequests,
-      RequestDetailsState requestDetails,
-      ClearHistoryState clearHistory});
+      RequestDetailsState requestDetails});
 
   $HistoryRequestsStateCopyWith<$Res> get historyRequests;
   $RequestDetailsStateCopyWith<$Res> get requestDetails;
-  $ClearHistoryStateCopyWith<$Res> get clearHistory;
 }
 
 /// @nodoc
@@ -1907,7 +1320,6 @@ class _$VocabularyHistoryStateCopyWithImpl<$Res,
   $Res call({
     Object? historyRequests = null,
     Object? requestDetails = null,
-    Object? clearHistory = null,
   }) {
     return _then(_value.copyWith(
       historyRequests: null == historyRequests
@@ -1918,10 +1330,6 @@ class _$VocabularyHistoryStateCopyWithImpl<$Res,
           ? _value.requestDetails
           : requestDetails // ignore: cast_nullable_to_non_nullable
               as RequestDetailsState,
-      clearHistory: null == clearHistory
-          ? _value.clearHistory
-          : clearHistory // ignore: cast_nullable_to_non_nullable
-              as ClearHistoryState,
     ) as $Val);
   }
 
@@ -1944,16 +1352,6 @@ class _$VocabularyHistoryStateCopyWithImpl<$Res,
       return _then(_value.copyWith(requestDetails: value) as $Val);
     });
   }
-
-  /// Create a copy of VocabularyHistoryState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ClearHistoryStateCopyWith<$Res> get clearHistory {
-    return $ClearHistoryStateCopyWith<$Res>(_value.clearHistory, (value) {
-      return _then(_value.copyWith(clearHistory: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -1967,15 +1365,12 @@ abstract class _$$VocabularyHistoryStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {HistoryRequestsState historyRequests,
-      RequestDetailsState requestDetails,
-      ClearHistoryState clearHistory});
+      RequestDetailsState requestDetails});
 
   @override
   $HistoryRequestsStateCopyWith<$Res> get historyRequests;
   @override
   $RequestDetailsStateCopyWith<$Res> get requestDetails;
-  @override
-  $ClearHistoryStateCopyWith<$Res> get clearHistory;
 }
 
 /// @nodoc
@@ -1995,7 +1390,6 @@ class __$$VocabularyHistoryStateImplCopyWithImpl<$Res>
   $Res call({
     Object? historyRequests = null,
     Object? requestDetails = null,
-    Object? clearHistory = null,
   }) {
     return _then(_$VocabularyHistoryStateImpl(
       historyRequests: null == historyRequests
@@ -2006,10 +1400,6 @@ class __$$VocabularyHistoryStateImplCopyWithImpl<$Res>
           ? _value.requestDetails
           : requestDetails // ignore: cast_nullable_to_non_nullable
               as RequestDetailsState,
-      clearHistory: null == clearHistory
-          ? _value.clearHistory
-          : clearHistory // ignore: cast_nullable_to_non_nullable
-              as ClearHistoryState,
     ));
   }
 }
@@ -2018,20 +1408,16 @@ class __$$VocabularyHistoryStateImplCopyWithImpl<$Res>
 
 class _$VocabularyHistoryStateImpl implements _VocabularyHistoryState {
   const _$VocabularyHistoryStateImpl(
-      {required this.historyRequests,
-      required this.requestDetails,
-      required this.clearHistory});
+      {required this.historyRequests, required this.requestDetails});
 
   @override
   final HistoryRequestsState historyRequests;
   @override
   final RequestDetailsState requestDetails;
-  @override
-  final ClearHistoryState clearHistory;
 
   @override
   String toString() {
-    return 'VocabularyHistoryState(historyRequests: $historyRequests, requestDetails: $requestDetails, clearHistory: $clearHistory)';
+    return 'VocabularyHistoryState(historyRequests: $historyRequests, requestDetails: $requestDetails)';
   }
 
   @override
@@ -2042,14 +1428,11 @@ class _$VocabularyHistoryStateImpl implements _VocabularyHistoryState {
             (identical(other.historyRequests, historyRequests) ||
                 other.historyRequests == historyRequests) &&
             (identical(other.requestDetails, requestDetails) ||
-                other.requestDetails == requestDetails) &&
-            (identical(other.clearHistory, clearHistory) ||
-                other.clearHistory == clearHistory));
+                other.requestDetails == requestDetails));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, historyRequests, requestDetails, clearHistory);
+  int get hashCode => Object.hash(runtimeType, historyRequests, requestDetails);
 
   /// Create a copy of VocabularyHistoryState
   /// with the given fields replaced by the non-null parameter values.
@@ -2064,16 +1447,13 @@ class _$VocabularyHistoryStateImpl implements _VocabularyHistoryState {
 abstract class _VocabularyHistoryState implements VocabularyHistoryState {
   const factory _VocabularyHistoryState(
           {required final HistoryRequestsState historyRequests,
-          required final RequestDetailsState requestDetails,
-          required final ClearHistoryState clearHistory}) =
+          required final RequestDetailsState requestDetails}) =
       _$VocabularyHistoryStateImpl;
 
   @override
   HistoryRequestsState get historyRequests;
   @override
   RequestDetailsState get requestDetails;
-  @override
-  ClearHistoryState get clearHistory;
 
   /// Create a copy of VocabularyHistoryState
   /// with the given fields replaced by the non-null parameter values.

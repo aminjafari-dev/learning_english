@@ -161,34 +161,4 @@ class VocabularyHistoryRepositoryImpl implements VocabularyHistoryRepository {
       return Left(CacheFailure('Failed to get phrases: ${e.toString()}'));
     }
   }
-
-  /// Clears all history data for the current user.
-  /// This method removes all vocabulary and phrase history from local storage,
-  /// effectively resetting the user's learning history.
-  ///
-  /// Returns:
-  /// - Right(Unit): Success confirmation
-  /// - Left(Failure): Error information if the operation fails
-  ///
-  /// Usage Example:
-  ///   final result = await repository.clearHistory();
-  ///   result.fold(
-  ///     (failure) => handleError(failure),
-  ///     (_) => showSuccessMessage('History cleared successfully'),
-  ///   );
-  @override
-  Future<Either<Failure, Unit>> clearHistory() async {
-    try {
-      // Ensure data source is initialized
-      await localDataSource.initialize();
-
-      // Clear history from local data source
-      await localDataSource.clearHistory();
-
-      return const Right(unit);
-    } catch (e) {
-      // Handle any errors and convert to Failure
-      return Left(CacheFailure('Failed to clear history: ${e.toString()}'));
-    }
-  }
 }

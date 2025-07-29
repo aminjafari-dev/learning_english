@@ -246,18 +246,6 @@ class VocabularyHistoryLocalDataSource {
     }
   }
 
-  /// Clears all history data from local storage
-  /// This method removes all learning request data
-  Future<void> clearHistory() async {
-    try {
-      await _learningRequestsBox.clear();
-      print('✅ [HISTORY_DS] Cleared all history data');
-    } catch (e) {
-      print('❌ [HISTORY_DS] Error clearing history: $e');
-      throw Exception('Failed to clear history: ${e.toString()}');
-    }
-  }
-
   /// Closes the Hive boxes
   /// Should be called when the data source is no longer needed
   Future<void> close() async {

@@ -53,91 +53,40 @@ class VocabularyHistoryPage extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocListener<VocabularyHistoryBloc, VocabularyHistoryState>(
+      body: BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
         bloc: getIt<VocabularyHistoryBloc>(),
-        listener: (context, state) {
-          // Handle clear history success
-          state.clearHistory.when(
-            initial: () {},
-            loading: () {},
-            completed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: GText(AppLocalizations.of(context)!.historyCleared),
-                  backgroundColor: AppTheme.primaryColor,
-                ),
+        builder: (context, state) {
+          print('🔄 [HISTORY] Current state: ${state.historyRequests}');
+          return state.historyRequests.when(
+            initial: () {
+              print('🔄 [HISTORY] Initial state - triggering load');
+              // Trigger load when in initial state
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                getIt<VocabularyHistoryBloc>().add(
+                  const VocabularyHistoryEvent.loadHistoryRequests(),
+                );
+              });
+              return const Center(
+                child: CircularProgressIndicator(color: AppTheme.primaryColor),
               );
             },
-            error: (message) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: GText(message),
-                  backgroundColor: AppTheme.errorColor,
-                ),
-              );
-            },
-          );
-        },
-        child: BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
-          bloc: getIt<VocabularyHistoryBloc>(),
-          builder: (context, state) {
-            print('🔄 [HISTORY] Current state: ${state.historyRequests}');
-            return state.historyRequests.when(
-              initial: () {
-                print('🔄 [HISTORY] Initial state - triggering load');
-                // Trigger load when in initial state
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  getIt<VocabularyHistoryBloc>().add(
-                    const VocabularyHistoryEvent.loadHistoryRequests(),
-                  );
-                });
-                return const Center(
+            loading:
+                () => const Center(
                   child: CircularProgressIndicator(
                     color: AppTheme.primaryColor,
                   ),
-                );
-              },
-              loading:
-                  () => const Center(
-                    child: CircularProgressIndicator(
-                      color: AppTheme.primaryColor,
-                    ),
-                  ),
-              completed: (requests) {
-                print(
-                  '🔄 [HISTORY] Completed with ${requests.length} requests',
-                );
-                return _buildHistoryList(context, requests);
-              },
-              error: (message) {
-                print('❌ [HISTORY] Error: $message');
-                return _buildErrorWidget(context, message);
-              },
-            );
-          },
-        ),
-      ),
-      floatingActionButton:
-          BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
-            bloc: getIt<VocabularyHistoryBloc>(),
-            builder: (context, state) {
-              return state.historyRequests.maybeWhen(
-                completed:
-                    (requests) =>
-                        requests.isNotEmpty
-                            ? FloatingActionButton(
-                              onPressed: () => _showClearHistoryDialog(context),
-                              backgroundColor: AppTheme.errorColor,
-                              child: const Icon(
-                                Icons.clear_all,
-                                color: AppTheme.backgroundColor,
-                              ),
-                            )
-                            : const SizedBox.shrink(),
-                orElse: () => const SizedBox.shrink(),
-              );
+                ),
+            completed: (requests) {
+              print('🔄 [HISTORY] Completed with ${requests.length} requests');
+              return _buildHistoryList(context, requests);
             },
-          ),
+            error: (message) {
+              print('❌ [HISTORY] Error: $message');
+              return _buildErrorWidget(context, message);
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -241,46 +190,5 @@ class VocabularyHistoryPage extends StatelessWidget {
     Navigator.of(
       context,
     ).pushNamed(PageName.requestDetails, arguments: requestId);
-  }
-
-  /// Shows the clear history confirmation dialog
-  void _showClearHistoryDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder:
-          (context) => AlertDialog(
-            backgroundColor: AppTheme.surface,
-            title: GText(
-              AppLocalizations.of(context)!.clearHistory,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            content: GText(
-              'Are you sure you want to clear all your learning history? This action cannot be undone.',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: GText(
-                  AppLocalizations.of(context)!.cancel,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  getIt<VocabularyHistoryBloc>().add(
-                    const VocabularyHistoryEvent.clearHistory(),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.errorColor,
-                  foregroundColor: AppTheme.backgroundColor,
-                ),
-                child: GText(AppLocalizations.of(context)!.clearHistory),
-              ),
-            ],
-          ),
-    );
   }
 }

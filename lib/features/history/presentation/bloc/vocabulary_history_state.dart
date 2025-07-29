@@ -38,21 +38,6 @@ class RequestDetailsState with _$RequestDetailsState {
   const factory RequestDetailsState.error(String message) = RequestDetailsError;
 }
 
-/// State for clearing history
-@freezed
-class ClearHistoryState with _$ClearHistoryState {
-  /// Initial state when no clear operation has been performed
-  const factory ClearHistoryState.initial() = ClearHistoryInitial;
-
-  /// Loading state when clearing history
-  const factory ClearHistoryState.loading() = ClearHistoryLoading;
-
-  /// Completed state when history is cleared successfully
-  const factory ClearHistoryState.completed() = ClearHistoryCompleted;
-
-  /// Error state when clearing fails
-  const factory ClearHistoryState.error(String message) = ClearHistoryError;
-}
 
 /// Main state combining all vocabulary history states
 @freezed
@@ -60,6 +45,5 @@ class VocabularyHistoryState with _$VocabularyHistoryState {
   const factory VocabularyHistoryState({
     required HistoryRequestsState historyRequests,
     required RequestDetailsState requestDetails,
-    required ClearHistoryState clearHistory,
   }) = _VocabularyHistoryState;
 }

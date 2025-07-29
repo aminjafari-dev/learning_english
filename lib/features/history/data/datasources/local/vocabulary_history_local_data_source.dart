@@ -17,6 +17,9 @@ import '../../../domain/entities/history_request.dart';
 import '../../models/vocabulary_history_model.dart';
 import '../../models/phrase_history_model.dart';
 import '../../models/history_request_model.dart';
+// Import the daily lessons models to read the typed data
+import '../../../../daily_lessons/data/models/vocabulary_model.dart';
+import '../../../../daily_lessons/data/models/phrase_model.dart';
 
 /// Local data source for vocabulary history using Hive storage
 /// Leverages existing daily lessons storage to provide history functionality
@@ -24,16 +27,18 @@ class VocabularyHistoryLocalDataSource {
   static const String _vocabulariesBoxName = 'user_vocabularies';
   static const String _phrasesBoxName = 'user_phrases';
 
-  late Box<dynamic> _vocabulariesBox;
-  late Box<dynamic> _phrasesBox;
+  late Box<VocabularyModel> _vocabulariesBox;
+  late Box<PhraseModel> _phrasesBox;
 
   /// Initialize Hive boxes for vocabulary and phrase storage
   /// This method should be called before using any other methods
   /// Uses the same boxes as the daily lessons feature
   Future<void> initialize() async {
     try {
-      _vocabulariesBox = await Hive.openBox<dynamic>(_vocabulariesBoxName);
-      _phrasesBox = await Hive.openBox<dynamic>(_phrasesBoxName);
+      _vocabulariesBox = await Hive.openBox<VocabularyModel>(
+        _vocabulariesBoxName,
+      );
+      _phrasesBox = await Hive.openBox<PhraseModel>(_phrasesBoxName);
     } catch (e) {
       throw Exception('Failed to initialize Hive boxes: ${e.toString()}');
     }
@@ -43,24 +48,36 @@ class VocabularyHistoryLocalDataSource {
   /// Converts stored data to domain entities for the history feature
   Future<List<VocabularyHistoryItem>> getAllVocabularies() async {
     try {
+      print('🔄 [HISTORY_DS] Getting all vocabularies from Hive...');
       final vocabularies = <VocabularyHistoryItem>[];
 
-      for (final item in _vocabulariesBox.values) {
-        if (item is Map<String, dynamic>) {
-          // Convert stored data to domain entity
-          final vocabulary = VocabularyHistoryItem(
-            english: item['english'] as String,
-            persian: item['persian'] as String,
-            requestId: item['requestId'] as String,
-            createdAt: DateTime.parse(item['createdAt'] as String),
-            isUsed: item['isUsed'] as bool? ?? false,
-          );
-          vocabularies.add(vocabulary);
-        }
+      // Read the typed VocabularyModel objects from Hive
+      final allValues = _vocabulariesBox.values.toList();
+      print(
+        '🔄 [HISTORY_DS] Found ${allValues.length} vocabulary items in Hive',
+      );
+
+      for (final vocabularyModel in allValues) {
+        print(
+          '🔄 [HISTORY_DS] Processing vocabulary: ${vocabularyModel.english}',
+        );
+        // Convert VocabularyModel to VocabularyHistoryItem
+        final vocabulary = VocabularyHistoryItem(
+          english: vocabularyModel.english,
+          persian: vocabularyModel.persian,
+          requestId: vocabularyModel.requestId,
+          createdAt: vocabularyModel.createdAt,
+          isUsed: vocabularyModel.isUsed,
+        );
+        vocabularies.add(vocabulary);
       }
 
+      print(
+        '🔄 [HISTORY_DS] Converted ${vocabularies.length} vocabularies to history items',
+      );
       return vocabularies;
     } catch (e) {
+      print('❌ [HISTORY_DS] Error getting vocabularies: $e');
       throw Exception('Failed to get vocabularies: ${e.toString()}');
     }
   }
@@ -69,24 +86,32 @@ class VocabularyHistoryLocalDataSource {
   /// Converts stored data to domain entities for the history feature
   Future<List<PhraseHistoryItem>> getAllPhrases() async {
     try {
+      print('🔄 [HISTORY_DS] Getting all phrases from Hive...');
       final phrases = <PhraseHistoryItem>[];
 
-      for (final item in _phrasesBox.values) {
-        if (item is Map<String, dynamic>) {
-          // Convert stored data to domain entity
-          final phrase = PhraseHistoryItem(
-            english: item['english'] as String,
-            persian: item['persian'] as String,
-            requestId: item['requestId'] as String,
-            createdAt: DateTime.parse(item['createdAt'] as String),
-            isUsed: item['isUsed'] as bool? ?? false,
-          );
-          phrases.add(phrase);
-        }
+      // Read the typed PhraseModel objects from Hive
+      final allValues = _phrasesBox.values.toList();
+      print('🔄 [HISTORY_DS] Found ${allValues.length} phrase items in Hive');
+
+      for (final phraseModel in allValues) {
+        print('🔄 [HISTORY_DS] Processing phrase: ${phraseModel.english}');
+        // Convert PhraseModel to PhraseHistoryItem
+        final phrase = PhraseHistoryItem(
+          english: phraseModel.english,
+          persian: phraseModel.persian,
+          requestId: phraseModel.requestId,
+          createdAt: phraseModel.createdAt,
+          isUsed: phraseModel.isUsed,
+        );
+        phrases.add(phrase);
       }
 
+      print(
+        '🔄 [HISTORY_DS] Converted ${phrases.length} phrases to history items',
+      );
       return phrases;
     } catch (e) {
+      print('❌ [HISTORY_DS] Error getting phrases: $e');
       throw Exception('Failed to get phrases: ${e.toString()}');
     }
   }

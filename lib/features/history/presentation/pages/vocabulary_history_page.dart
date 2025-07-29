@@ -28,95 +28,116 @@ class VocabularyHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GScaffold(
-        appBar: AppBar(
-          title: GText(
-            AppLocalizations.of(context)!.history,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          backgroundColor: AppTheme.surface,
-          foregroundColor: AppTheme.white,
-          actions: [
-            BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
-              bloc: getIt<VocabularyHistoryBloc>(),
-              builder: (context, state) {
-                return IconButton(
-                  icon: const Icon(Icons.refresh),
-                  onPressed: () {
-                      getIt<VocabularyHistoryBloc>().add(
-                      const VocabularyHistoryEvent.refreshHistory(),
-                    );
-                  },
-                );
-              },
-            ),
-          ],
+      appBar: AppBar(
+        title: GText(
+          AppLocalizations.of(context)!.history,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
-        body: BlocListener<VocabularyHistoryBloc, VocabularyHistoryState>(
-          bloc: getIt<VocabularyHistoryBloc>(),
-          listener: (context, state) {
-            // Handle clear history success
-            state.clearHistory.when(
-              initial: () {},
-              loading: () {},
-              completed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: GText(
-                      AppLocalizations.of(context)!.historyCleared,
-                    ),
-                    backgroundColor: AppTheme.primaryColor,
-                  ),
-                );
-              },
-              error: (message) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: GText(message),
-                    backgroundColor: AppTheme.errorColor,
-                  ),
-                );
-              },
-            );
-          },
-          child: BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
-            bloc: getIt<VocabularyHistoryBloc>(),
+        backgroundColor: AppTheme.surface,
+        foregroundColor: AppTheme.white,
+        actions: [
+          BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
+            bloc:
+                getIt<VocabularyHistoryBloc>()
+                  ..add(const VocabularyHistoryEvent.loadHistoryRequests()),
             builder: (context, state) {
-              return state.historyRequests.when(
-                initial: () => const SizedBox(),
-                loading:
-                    () => const Center(
-                      child: CircularProgressIndicator(
-                        color: AppTheme.primaryColor,
-                      ),
-                    ),
-                completed: (requests) => _buildHistoryList(context, requests),
-                error: (message) => _buildErrorWidget(context, message),
+              return IconButton(
+                icon: const Icon(Icons.refresh),
+                onPressed: () {
+                  getIt<VocabularyHistoryBloc>().add(
+                    const VocabularyHistoryEvent.refreshHistory(),
+                  );
+                },
               );
             },
           ),
-        ),
-        floatingActionButton:
-            BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
-              bloc: getIt<VocabularyHistoryBloc>(),
-              builder: (context, state) {
-                return state.historyRequests.maybeWhen(
-                  completed:
-                      (requests) =>
-                          requests.isNotEmpty
-                              ? FloatingActionButton(
-                                onPressed:
-                                    () => _showClearHistoryDialog(context),
-                                backgroundColor: AppTheme.errorColor,
-                                child: const Icon(
-                                  Icons.clear_all,
-                                  color: AppTheme.backgroundColor,
-                                ),
-                              )
-                              : const SizedBox.shrink(),
-                  orElse: () => const SizedBox.shrink(),
+        ],
+      ),
+      body: BlocListener<VocabularyHistoryBloc, VocabularyHistoryState>(
+        bloc: getIt<VocabularyHistoryBloc>(),
+        listener: (context, state) {
+          // Handle clear history success
+          state.clearHistory.when(
+            initial: () {},
+            loading: () {},
+            completed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: GText(AppLocalizations.of(context)!.historyCleared),
+                  backgroundColor: AppTheme.primaryColor,
+                ),
+              );
+            },
+            error: (message) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: GText(message),
+                  backgroundColor: AppTheme.errorColor,
+                ),
+              );
+            },
+          );
+        },
+        child: BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
+          bloc: getIt<VocabularyHistoryBloc>(),
+          builder: (context, state) {
+            print('🔄 [HISTORY] Current state: ${state.historyRequests}');
+            return state.historyRequests.when(
+              initial: () {
+                print('🔄 [HISTORY] Initial state - triggering load');
+                // Trigger load when in initial state
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  getIt<VocabularyHistoryBloc>().add(
+                    const VocabularyHistoryEvent.loadHistoryRequests(),
+                  );
+                });
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: AppTheme.primaryColor,
+                  ),
                 );
               },
-            ),
+              loading:
+                  () => const Center(
+                    child: CircularProgressIndicator(
+                      color: AppTheme.primaryColor,
+                    ),
+                  ),
+              completed: (requests) {
+                print(
+                  '🔄 [HISTORY] Completed with ${requests.length} requests',
+                );
+                return _buildHistoryList(context, requests);
+              },
+              error: (message) {
+                print('❌ [HISTORY] Error: $message');
+                return _buildErrorWidget(context, message);
+              },
+            );
+          },
+        ),
+      ),
+      floatingActionButton:
+          BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
+            bloc: getIt<VocabularyHistoryBloc>(),
+            builder: (context, state) {
+              return state.historyRequests.maybeWhen(
+                completed:
+                    (requests) =>
+                        requests.isNotEmpty
+                            ? FloatingActionButton(
+                              onPressed: () => _showClearHistoryDialog(context),
+                              backgroundColor: AppTheme.errorColor,
+                              child: const Icon(
+                                Icons.clear_all,
+                                color: AppTheme.backgroundColor,
+                              ),
+                            )
+                            : const SizedBox.shrink(),
+                orElse: () => const SizedBox.shrink(),
+              );
+            },
+          ),
     );
   }
 

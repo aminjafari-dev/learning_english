@@ -1,10 +1,15 @@
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learning_english/features/history/data/datasources/local/vocabulary_history_local_data_source.dart';
 import 'package:learning_english/features/history/data/repositories/vocabulary_history_repository_impl.dart';
 import 'package:learning_english/features/history/domain/repositories/vocabulary_history_repository.dart';
 import 'package:learning_english/features/history/domain/usecases/get_history_requests_usecase.dart';
 import 'package:learning_english/features/history/domain/usecases/get_request_details_usecase.dart';
 import 'package:learning_english/features/history/presentation/bloc/vocabulary_history_bloc.dart';
+// Import the daily lessons models to register their adapters
+import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
+import 'package:learning_english/features/daily_lessons/data/models/phrase_model.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/ai_provider_type.dart';
 
 /// Dependency injection setup for vocabulary history feature
 /// This file registers all the dependencies needed for the vocabulary history feature
@@ -15,37 +20,55 @@ import 'package:learning_english/features/history/presentation/bloc/vocabulary_h
 /// This follows the dependency injection pattern and provides
 /// clean separation of concerns for the vocabulary history feature.
 Future<void> setupVocabularyHistoryLocator(GetIt locator) async {
-  // Data Sources
-  locator.registerLazySingleton<VocabularyHistoryLocalDataSource>(
-    () => VocabularyHistoryLocalDataSource(),
-  );
+  try {
+    // Register Hive adapters for the models (same as daily lessons)
+    // This ensures the history feature can read the data saved by daily lessons
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(VocabularyModelAdapter());
+    }
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(PhraseModelAdapter());
+    }
+    if (!Hive.isAdapterRegistered(2)) {
+      Hive.registerAdapter(AiProviderTypeAdapter());
+    }
 
-  // Repositories
-  locator.registerLazySingleton<VocabularyHistoryRepository>(
-    () => VocabularyHistoryRepositoryImpl(
-      locator<VocabularyHistoryLocalDataSource>(),
-    ),
-  );
+    // Data Sources
+    locator.registerLazySingleton<VocabularyHistoryLocalDataSource>(
+      () => VocabularyHistoryLocalDataSource(),
+    );
 
-  // Use Cases
-  locator.registerLazySingleton<GetHistoryRequestsUseCase>(
-    () => GetHistoryRequestsUseCase(
-      locator<VocabularyHistoryRepository>(),
-    ),
-  );
+    // Initialize the local data source
+    await locator<VocabularyHistoryLocalDataSource>().initialize();
 
-  locator.registerLazySingleton<GetRequestDetailsUseCase>(
-    () => GetRequestDetailsUseCase(
-      locator<VocabularyHistoryRepository>(),
-    ),
-  );
+    // Repositories
+    locator.registerLazySingleton<VocabularyHistoryRepository>(
+      () => VocabularyHistoryRepositoryImpl(
+        locator<VocabularyHistoryLocalDataSource>(),
+      ),
+    );
 
-  // BLoC
-  locator.registerFactory<VocabularyHistoryBloc>(
-    () => VocabularyHistoryBloc(
-      getHistoryRequestsUseCase: locator<GetHistoryRequestsUseCase>(),
-      getRequestDetailsUseCase: locator<GetRequestDetailsUseCase>(),
-      repository: locator<VocabularyHistoryRepository>(),
-    ),
-  );
+    // Use Cases
+    locator.registerLazySingleton<GetHistoryRequestsUseCase>(
+      () => GetHistoryRequestsUseCase(locator<VocabularyHistoryRepository>()),
+    );
+
+    locator.registerLazySingleton<GetRequestDetailsUseCase>(
+      () => GetRequestDetailsUseCase(locator<VocabularyHistoryRepository>()),
+    );
+
+    // BLoC
+    locator.registerSingleton<VocabularyHistoryBloc>(
+       VocabularyHistoryBloc(
+        getHistoryRequestsUseCase: locator<GetHistoryRequestsUseCase>(),
+        getRequestDetailsUseCase: locator<GetRequestDetailsUseCase>(),
+        repository: locator<VocabularyHistoryRepository>(),
+      ),
+    );
+
+    print('✅ [DI] Vocabulary History dependencies registered successfully');
+  } catch (e) {
+    print('❌ [DI] Error setting up Vocabulary History dependencies: $e');
+    rethrow;
+  }
 }

@@ -44,14 +44,19 @@ class VocabularyHistoryRepositoryImpl implements VocabularyHistoryRepository {
   @override
   Future<Either<Failure, List<HistoryRequest>>> getHistoryRequests() async {
     try {
+      print('🔄 [HISTORY_REPO] Getting history requests...');
+
       // Ensure data source is initialized
       await localDataSource.initialize();
+      print('🔄 [HISTORY_REPO] Data source initialized');
 
       // Get history requests from local data source
       final requests = await localDataSource.getHistoryRequests();
+      print('🔄 [HISTORY_REPO] Retrieved ${requests.length} history requests');
 
       return Right(requests);
     } catch (e) {
+      print('❌ [HISTORY_REPO] Error getting history requests: $e');
       // Handle any errors and convert to Failure
       return Left(
         CacheFailure('Failed to get history requests: ${e.toString()}'),

@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:learning_english/core/error/failure.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
-import '../../domain/entities/history_request.dart';
 import '../../domain/usecases/get_history_requests_usecase.dart';
 import '../../domain/usecases/get_request_details_usecase.dart';
 import '../../domain/repositories/vocabulary_history_repository.dart';
@@ -53,13 +51,16 @@ class VocabularyHistoryBloc
   Future<void> _onLoadHistoryRequests(
     Emitter<VocabularyHistoryState> emit,
   ) async {
+    print('🔄 [HISTORY_BLOC] Loading history requests...');
     emit(state.copyWith(historyRequests: const HistoryRequestsState.loading()));
 
     try {
+      print('🔄 [HISTORY_BLOC] Calling use case...');
       final result = await getHistoryRequestsUseCase(NoParams());
 
       result.fold(
         (failure) {
+          print('❌ [HISTORY_BLOC] Use case failed: ${failure.message}');
           emit(
             state.copyWith(
               historyRequests: HistoryRequestsState.error(failure.message),
@@ -67,6 +68,9 @@ class VocabularyHistoryBloc
           );
         },
         (requests) {
+          print(
+            '✅ [HISTORY_BLOC] Use case succeeded with ${requests.length} requests',
+          );
           emit(
             state.copyWith(
               historyRequests: HistoryRequestsState.completed(requests),
@@ -75,6 +79,7 @@ class VocabularyHistoryBloc
         },
       );
     } catch (e) {
+      print('❌ [HISTORY_BLOC] Exception in use case: $e');
       emit(
         state.copyWith(
           historyRequests: HistoryRequestsState.error(e.toString()),

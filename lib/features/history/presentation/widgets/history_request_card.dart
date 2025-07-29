@@ -47,7 +47,7 @@ class HistoryRequestCard extends StatelessWidget {
                   GGap.g8,
                   Expanded(
                     child: GText(
-                      'Request ${request.requestId.substring(0, 8)}...',
+                      'Request ${request.requestId}...',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppTheme.primaryColor,
                         fontWeight: FontWeight.bold,

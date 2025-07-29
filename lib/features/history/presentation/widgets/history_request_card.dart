@@ -4,6 +4,7 @@ import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/core/widgets/g_gap.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import '../../domain/entities/history_request.dart';
+import '../../../daily_lessons/data/models/level_type.dart';
 
 /// Card widget for displaying history requests
 /// This widget shows a summary of a learning request including
@@ -47,7 +48,7 @@ class HistoryRequestCard extends StatelessWidget {
                   GGap.g8,
                   Expanded(
                     child: GText(
-                      'Request ${request.requestId}...',
+                      _formatFocusAreas(request.focusAreas),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppTheme.primaryColor,
                         fontWeight: FontWeight.bold,
@@ -79,27 +80,15 @@ class HistoryRequestCard extends StatelessWidget {
               GGap.g8,
               Row(
                 children: [
-                  if (request.hasVocabularies) ...[
-                    Icon(Icons.book, color: AppTheme.primaryColor, size: 16),
-                    GGap.g4,
-                    GText(
-                      '${request.vocabularyCount} vocabularies',
-                      style: Theme.of(context).textTheme.bodySmall,
+                  Icon(Icons.school, color: AppTheme.accentColor, size: 16),
+                  GGap.g4,
+                  GText(
+                    _formatUserLevel(request.userLevel),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppTheme.accentColor,
+                      fontWeight: FontWeight.w500,
                     ),
-                    GGap.g12,
-                  ],
-                  if (request.hasPhrases) ...[
-                    Icon(
-                      Icons.chat_bubble,
-                      color: AppTheme.primaryColor,
-                      size: 16,
-                    ),
-                    GGap.g4,
-                    GText(
-                      '${request.phraseCount} phrases',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
+                  ),
                 ],
               ),
               GGap.g8,
@@ -145,5 +134,45 @@ class HistoryRequestCard extends StatelessWidget {
     final hour = date.hour.toString().padLeft(2, '0');
     final minute = date.minute.toString().padLeft(2, '0');
     return '$hour:$minute';
+  }
+
+  /// Formats focus areas for display
+  /// Converts focus areas list to a readable string
+  String _formatFocusAreas(List<String> focusAreas) {
+    if (focusAreas.isEmpty) {
+      return 'General Learning';
+    }
+
+    // Capitalize and join focus areas
+    return focusAreas
+        .map(
+          (area) => area
+              .split('_')
+              .map(
+                (word) =>
+                    word.isNotEmpty
+                        ? '${word[0].toUpperCase()}${word.substring(1)}'
+                        : word,
+              )
+              .join(' '),
+        )
+        .join(', ');
+  }
+
+  /// Formats user level for display
+  /// Converts UserLevel enum to a readable string
+  String _formatUserLevel(UserLevel userLevel) {
+    switch (userLevel) {
+      case UserLevel.beginner:
+        return 'Beginner';
+      case UserLevel.elementary:
+        return 'Elementary';
+      case UserLevel.intermediate:
+        return 'Intermediate';
+      case UserLevel.advanced:
+        return 'Advanced';
+      default:
+        return 'Beginner';
+    }
   }
 }

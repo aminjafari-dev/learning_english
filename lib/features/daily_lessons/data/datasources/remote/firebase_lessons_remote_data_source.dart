@@ -62,16 +62,21 @@ class FirebaseLessonsRemoteDataSource {
   /// This enables smart content discovery and cost optimization
   ///
   /// Parameters:
-  /// - vocabularyModel: The vocabulary model with all metadata
+  /// - vocabularyModel: The vocabulary model with essential data
   /// - context: Learning context (level, focus area, difficulty)
   /// - createdBy: User ID who generated this content
+  /// - metadata: Additional metadata for tracking (aiProvider, tokensUsed, etc.)
   ///
   /// Returns: Either Failure or the saved vocabulary ID
   Future<Either<Failure, String>> saveVocabularyToGlobalPool(
     VocabularyModel vocabularyModel,
     LearningContext context,
-    String createdBy,
-  ) async {
+    String createdBy, {
+    AiProviderType aiProvider = AiProviderType.openai,
+    int tokensUsed = 0,
+    String requestId = '',
+    DateTime? createdAt,
+  }) async {
     try {
       print(
         '🔄 [FIREBASE] Saving vocabulary to global pool: ${vocabularyModel.english}',
@@ -90,15 +95,12 @@ class FirebaseLessonsRemoteDataSource {
       final data = {
         'english': vocabularyModel.english,
         'persian': vocabularyModel.persian,
-        'aiProvider': vocabularyModel.aiProvider.name,
-        'tokensUsed': vocabularyModel.tokensUsed,
-        'requestId': vocabularyModel.requestId,
-        'createdAt': vocabularyModel.createdAt.toIso8601String(),
+        'aiProvider': aiProvider.name,
+        'tokensUsed': tokensUsed,
+        'requestId': requestId,
+        'createdAt': (createdAt ?? DateTime.now()).toIso8601String(),
         'model': 'gpt-3.5-turbo', // Default model, can be made dynamic
-        'cost': _calculateCost(
-          vocabularyModel.tokensUsed,
-          vocabularyModel.aiProvider,
-        ),
+        'cost': _calculateCost(tokensUsed, aiProvider),
         'context': context.toJson(),
         'usageCount': 0, // Initially unused
         'createdBy': createdBy,
@@ -128,16 +130,21 @@ class FirebaseLessonsRemoteDataSource {
   /// Similar to saveVocabularyToGlobalPool but for phrases
   ///
   /// Parameters:
-  /// - phraseModel: The phrase model with all metadata
+  /// - phraseModel: The phrase model with essential data
   /// - context: Learning context (level, focus area, difficulty)
   /// - createdBy: User ID who generated this content
+  /// - metadata: Additional metadata for tracking (aiProvider, tokensUsed, etc.)
   ///
   /// Returns: Either Failure or the saved phrase ID
   Future<Either<Failure, String>> savePhraseToGlobalPool(
     PhraseModel phraseModel,
     LearningContext context,
-    String createdBy,
-  ) async {
+    String createdBy, {
+    AiProviderType aiProvider = AiProviderType.openai,
+    int tokensUsed = 0,
+    String requestId = '',
+    DateTime? createdAt,
+  }) async {
     try {
       print(
         '🔄 [FIREBASE] Saving phrase to global pool: ${phraseModel.english}',
@@ -156,12 +163,12 @@ class FirebaseLessonsRemoteDataSource {
       final data = {
         'english': phraseModel.english,
         'persian': phraseModel.persian,
-        'aiProvider': phraseModel.aiProvider.name,
-        'tokensUsed': phraseModel.tokensUsed,
-        'requestId': phraseModel.requestId,
-        'createdAt': phraseModel.createdAt.toIso8601String(),
+        'aiProvider': aiProvider.name,
+        'tokensUsed': tokensUsed,
+        'requestId': requestId,
+        'createdAt': (createdAt ?? DateTime.now()).toIso8601String(),
         'model': 'gpt-3.5-turbo', // Default model, can be made dynamic
-        'cost': _calculateCost(phraseModel.tokensUsed, phraseModel.aiProvider),
+        'cost': _calculateCost(tokensUsed, aiProvider),
         'context': context.toJson(),
         'usageCount': 0, // Initially unused
         'createdBy': createdBy,
@@ -222,13 +229,6 @@ class FirebaseLessonsRemoteDataSource {
             return VocabularyModel(
               english: data['english'] as String,
               persian: data['persian'] as String,
-              userId: data['createdBy'] as String,
-              aiProvider: AiProviderType.values.firstWhere(
-                (e) => e.name == data['aiProvider'],
-              ),
-              tokensUsed: data['tokensUsed'] as int,
-              requestId: data['requestId'] as String,
-              createdAt: DateTime.parse(data['createdAt'] as String),
               isUsed: false, // These are unused vocabularies
             );
           }).toList();
@@ -277,13 +277,6 @@ class FirebaseLessonsRemoteDataSource {
             return PhraseModel(
               english: data['english'] as String,
               persian: data['persian'] as String,
-              userId: data['createdBy'] as String,
-              aiProvider: AiProviderType.values.firstWhere(
-                (e) => e.name == data['aiProvider'],
-              ),
-              tokensUsed: data['tokensUsed'] as int,
-              requestId: data['requestId'] as String,
-              createdAt: DateTime.parse(data['createdAt'] as String),
               isUsed: false, // These are unused phrases
             );
           }).toList();
@@ -450,6 +443,9 @@ class FirebaseLessonsRemoteDataSource {
 //   vocabularyModel,
 //   context,
 //   'user123',
+//   aiProvider: AiProviderType.openai,
+//   tokensUsed: 25,
+//   requestId: 'req_123',
 // );
 //
 // // Get unused vocabularies for user context

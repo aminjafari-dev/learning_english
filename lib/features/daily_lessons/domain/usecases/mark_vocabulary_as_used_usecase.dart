@@ -9,18 +9,24 @@ import '../repositories/daily_lessons_repository.dart';
 
 /// Use case for marking vocabulary as used
 /// Prevents duplicate vocabulary suggestions for the same user
-class MarkVocabularyAsUsedUseCase implements UseCase<bool, String> {
+class MarkVocabularyAsUsedUseCase
+    implements UseCase<Unit, ({String requestId, String english})> {
   final DailyLessonsRepository repository;
 
   MarkVocabularyAsUsedUseCase(this.repository);
 
   /// Marks a vocabulary as used by the current user
-  /// @param english The English text of the vocabulary to mark as used
-  /// @return Either a Failure or true if successful
+  /// @param params Contains requestId and english text of the vocabulary
+  /// @return Either a Failure or Unit if successful
   @override
-  Future<Either<Failure, bool>> call(String english) async {
+  Future<Either<Failure, Unit>> call(
+    ({String requestId, String english}) params,
+  ) async {
     try {
-      return await repository.markVocabularyAsUsed(english);
+      return await repository.markVocabularyAsUsed(
+        params.requestId,
+        params.english,
+      );
     } catch (e) {
       return Left(
         ServerFailure('Failed to mark vocabulary as used: ${e.toString()}'),
@@ -31,7 +37,10 @@ class MarkVocabularyAsUsedUseCase implements UseCase<bool, String> {
 
 // Example usage:
 // final useCase = MarkVocabularyAsUsedUseCase(repository);
-// final result = await useCase('Perseverance');
+// final result = await useCase((
+//   requestId: 'req_123',
+//   english: 'Perseverance'
+// ));
 // result.fold(
 //   (failure) => print('Error: ${failure.message}'),
 //   (success) => print('Vocabulary marked as used successfully'),

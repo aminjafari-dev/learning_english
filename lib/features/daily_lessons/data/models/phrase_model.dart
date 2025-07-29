@@ -1,15 +1,14 @@
 // phrase_model.dart
-// Enhanced data model for phrase items with user tracking and AI metadata.
-// This model supports saving phrase data per user and per AI provider.
+// Simplified data model for phrase items with minimal fields.
+// This model represents phrase data with only essential information.
 
 import 'package:hive/hive.dart';
 import '../../domain/entities/phrase.dart';
-import '../datasources/ai_provider_type.dart';
 
 part 'phrase_model.g.dart';
 
-/// Enhanced phrase model with user tracking and AI metadata
-/// Hive type adapter for PhraseModel - allows storage in Hive boxes
+/// Simplified phrase model with minimal fields
+/// Hive type adapter for PhraseModel - contains only essential phrase data
 @HiveType(typeId: 1)
 class PhraseModel {
   @HiveField(0)
@@ -19,32 +18,12 @@ class PhraseModel {
   final String persian;
 
   @HiveField(2)
-  final String userId;
-
-  @HiveField(3)
-  final AiProviderType aiProvider;
-
-  @HiveField(4)
-  final DateTime createdAt;
-
-  @HiveField(5)
-  final int tokensUsed;
-
-  @HiveField(6)
-  final String requestId;
-
-  @HiveField(7)
   final bool isUsed;
 
   PhraseModel({
     required this.english,
     required this.persian,
-    required this.userId,
-    required this.aiProvider,
-    required this.createdAt,
-    required this.tokensUsed,
-    required this.requestId,
-    this.isUsed = false,
+    required this.isUsed,
   });
 
   /// Creates a PhraseModel from JSON
@@ -52,13 +31,6 @@ class PhraseModel {
   factory PhraseModel.fromJson(Map<String, dynamic> json) => PhraseModel(
     english: json['english'] as String,
     persian: json['persian'] as String,
-    userId: json['userId'] as String,
-    aiProvider: AiProviderType.values.firstWhere(
-      (e) => e.toString() == json['aiProvider'],
-    ),
-    createdAt: DateTime.parse(json['createdAt'] as String),
-    tokensUsed: json['tokensUsed'] as int,
-    requestId: json['requestId'] as String,
     isUsed: json['isUsed'] as bool? ?? false,
   );
 
@@ -67,11 +39,6 @@ class PhraseModel {
   Map<String, dynamic> toJson() => {
     'english': english,
     'persian': persian,
-    'userId': userId,
-    'aiProvider': aiProvider.toString(),
-    'createdAt': createdAt.toIso8601String(),
-    'tokensUsed': tokensUsed,
-    'requestId': requestId,
     'isUsed': isUsed,
   };
 
@@ -80,11 +47,6 @@ class PhraseModel {
   PhraseModel copyWith({bool? isUsed}) => PhraseModel(
     english: english,
     persian: persian,
-    userId: userId,
-    aiProvider: aiProvider,
-    createdAt: createdAt,
-    tokensUsed: tokensUsed,
-    requestId: requestId,
     isUsed: isUsed ?? this.isUsed,
   );
 
@@ -92,34 +54,35 @@ class PhraseModel {
   /// Strips away metadata for domain layer consumption
   Phrase toEntity() => Phrase(english: english, persian: persian);
 
-  /// Creates a model from domain entity with metadata
+  /// Creates a model from domain entity
   /// Used when saving new AI-generated phrase
-  factory PhraseModel.fromEntity(
-    Phrase phrase,
-    String userId,
-    AiProviderType aiProvider,
-    int tokensUsed,
-    String requestId,
-  ) => PhraseModel(
+  factory PhraseModel.fromEntity(Phrase phrase) => PhraseModel(
     english: phrase.english,
     persian: phrase.persian,
-    userId: userId,
-    aiProvider: aiProvider,
-    createdAt: DateTime.now(),
-    tokensUsed: tokensUsed,
-    requestId: requestId,
+    isUsed: false, // Initially not used
   );
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is PhraseModel &&
+        other.english == english &&
+        other.persian == persian &&
+        other.isUsed == isUsed;
+  }
+
+  @override
+  int get hashCode {
+    return english.hashCode ^ persian.hashCode ^ isUsed.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'PhraseModel(english: $english, persian: $persian, isUsed: $isUsed)';
+  }
 }
 
 // Example usage:
-// final model = PhraseModel.fromJson({
-//   'english': 'I owe it to myself',
-//   'persian': 'به اون امیدوارم',
-//   'userId': 'user123',
-//   'aiProvider': 'AiProviderType.openai',
-//   'createdAt': '2024-01-15T10:30:00Z',
-//   'tokensUsed': 35,
-//   'requestId': 'req_abc123',
-//   'isUsed': false
-// });
+// final model = PhraseModel.fromEntity(phrase);
 // final entity = model.toEntity();
+// final updatedModel = model.copyWith(isUsed: true);

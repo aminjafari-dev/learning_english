@@ -29,13 +29,16 @@ class DailyLessonsEvent with _$DailyLessonsEvent {
   /// Event to mark vocabulary as used by the current user
   /// Prevents the same vocabulary from being suggested again
   const factory DailyLessonsEvent.markVocabularyAsUsed({
+    required String requestId,
     required String english,
   }) = MarkVocabularyAsUsed;
 
   /// Event to mark phrase as used by the current user
   /// Prevents the same phrase from being suggested again
-  const factory DailyLessonsEvent.markPhraseAsUsed({required String english}) =
-      MarkPhraseAsUsed;
+  const factory DailyLessonsEvent.markPhraseAsUsed({
+    required String requestId,
+    required String english,
+  }) = MarkPhraseAsUsed;
 
   /// Event to get analytics data for the current user
   /// Provides insights into learning progress and AI usage costs
@@ -54,6 +57,9 @@ class DailyLessonsEvent with _$DailyLessonsEvent {
 // context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchVocabularies());
 // context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchLessons()); // More cost-effective
 // context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchPersonalizedLessons()); // Personalized content
-// context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.markVocabularyAsUsed(english: 'Perseverance'));
+// context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.markVocabularyAsUsed(
+//   requestId: 'req_123',
+//   english: 'Perseverance'
+// ));
 // context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.getUserAnalytics());
 // context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.getUserPreferences());

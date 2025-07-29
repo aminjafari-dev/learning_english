@@ -55,8 +55,11 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
         fetchLessons: () => _onFetchLessons(emit), // New cost-effective method
         refreshLessons: () => _onRefreshLessons(emit),
         markVocabularyAsUsed:
-            (english) => _onMarkVocabularyAsUsed(english, emit),
-        markPhraseAsUsed: (english) => _onMarkPhraseAsUsed(english, emit),
+            (requestId, english) =>
+                _onMarkVocabularyAsUsed(requestId, english, emit),
+        markPhraseAsUsed:
+            (requestId, english) =>
+                _onMarkPhraseAsUsed(requestId, english, emit),
         getUserAnalytics: () => _onGetUserAnalytics(emit),
         clearUserData: () => _onClearUserData(emit),
         getUserPreferences: () => _onGetUserPreferences(emit),
@@ -275,6 +278,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
   /// Marks vocabulary as used by the current user
   /// Updates the usage status in local storage to prevent duplicate suggestions
   Future<void> _onMarkVocabularyAsUsed(
+    String requestId,
     String english,
     Emitter<DailyLessonsState> emit,
   ) async {
@@ -282,7 +286,10 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
       emit(
         state.copyWith(dataManagement: const UserDataManagementState.loading()),
       );
-      final result = await markVocabularyAsUsedUseCase(english);
+      final result = await markVocabularyAsUsedUseCase((
+        requestId: requestId,
+        english: english,
+      ));
       result.fold(
         (failure) {
           if (!emit.isDone) {
@@ -319,6 +326,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
   /// Marks phrase as used by the current user
   /// Updates the usage status in local storage to prevent duplicate suggestions
   Future<void> _onMarkPhraseAsUsed(
+    String requestId,
     String english,
     Emitter<DailyLessonsState> emit,
   ) async {
@@ -326,7 +334,10 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
       emit(
         state.copyWith(dataManagement: const UserDataManagementState.loading()),
       );
-      final result = await markPhraseAsUsedUseCase(english);
+      final result = await markPhraseAsUsedUseCase((
+        requestId: requestId,
+        english: english,
+      ));
       result.fold(
         (failure) {
           if (!emit.isDone) {

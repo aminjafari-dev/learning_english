@@ -9,16 +9,16 @@ import '../repositories/daily_lessons_repository.dart';
 
 /// Use case for clearing all user data
 /// Resets the user's learning progress by removing all stored content
-class ClearUserDataUseCase implements UseCase<bool, void> {
+class ClearUserDataUseCase implements UseCase<Unit, void> {
   final DailyLessonsRepository repository;
 
   ClearUserDataUseCase(this.repository);
 
   /// Clears all data for the current user
   /// @param params Not used (void parameter for consistency)
-  /// @return Either a Failure or true if successful
+  /// @return Either a Failure or Unit if successful
   @override
-  Future<Either<Failure, bool>> call(void params) async {
+  Future<Either<Failure, Unit>> call(void params) async {
     try {
       return await repository.clearUserData();
     } catch (e) {

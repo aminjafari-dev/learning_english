@@ -1,15 +1,14 @@
 // vocabulary_model.dart
-// Data model for vocabulary items with Hive persistence support.
-// This model represents vocabulary data from AI providers and includes metadata for tracking.
+// Simplified data model for vocabulary items with minimal fields.
+// This model represents vocabulary data with only essential information.
 
 import 'package:hive/hive.dart';
 import '../../domain/entities/vocabulary.dart';
-import '../datasources/ai_provider_type.dart';
 
 part 'vocabulary_model.g.dart';
 
-/// Hive type adapter for VocabularyModel
-/// This allows VocabularyModel to be stored and retrieved from Hive boxes
+/// Simplified Hive type adapter for VocabularyModel
+/// Contains only essential vocabulary data without metadata duplication
 @HiveType(typeId: 0)
 class VocabularyModel {
   @HiveField(0)
@@ -19,53 +18,22 @@ class VocabularyModel {
   final String persian;
 
   @HiveField(2)
-  final String userId;
-
-  @HiveField(3)
-  final AiProviderType aiProvider;
-
-  @HiveField(4)
-  final int tokensUsed;
-
-  @HiveField(5)
-  final String requestId;
-
-  @HiveField(6)
-  final DateTime createdAt;
-
-  @HiveField(7)
   final bool isUsed;
 
   /// Constructor for VocabularyModel
-  /// All fields are required for complete data tracking
+  /// Contains only essential vocabulary data
   const VocabularyModel({
     required this.english,
     required this.persian,
-    required this.userId,
-    required this.aiProvider,
-    required this.tokensUsed,
-    required this.requestId,
-    required this.createdAt,
     required this.isUsed,
   });
 
   /// Creates a VocabularyModel from a domain entity
   /// Used when converting from domain layer to data layer
-  factory VocabularyModel.fromEntity(
-    Vocabulary vocabulary,
-    String userId,
-    AiProviderType aiProvider,
-    int tokensUsed,
-    String requestId,
-  ) {
+  factory VocabularyModel.fromEntity(Vocabulary vocabulary) {
     return VocabularyModel(
       english: vocabulary.english,
       persian: vocabulary.persian,
-      userId: userId,
-      aiProvider: aiProvider,
-      tokensUsed: tokensUsed,
-      requestId: requestId,
-      createdAt: DateTime.now(),
       isUsed: false, // Initially not used
     );
   }
@@ -77,25 +45,11 @@ class VocabularyModel {
   }
 
   /// Creates a copy of VocabularyModel with updated fields
-  /// Used for updating usage status or other properties
-  VocabularyModel copyWith({
-    String? english,
-    String? persian,
-    String? userId,
-    AiProviderType? aiProvider,
-    int? tokensUsed,
-    String? requestId,
-    DateTime? createdAt,
-    bool? isUsed,
-  }) {
+  /// Used for updating usage status
+  VocabularyModel copyWith({String? english, String? persian, bool? isUsed}) {
     return VocabularyModel(
       english: english ?? this.english,
       persian: persian ?? this.persian,
-      userId: userId ?? this.userId,
-      aiProvider: aiProvider ?? this.aiProvider,
-      tokensUsed: tokensUsed ?? this.tokensUsed,
-      requestId: requestId ?? this.requestId,
-      createdAt: createdAt ?? this.createdAt,
       isUsed: isUsed ?? this.isUsed,
     );
   }
@@ -103,16 +57,7 @@ class VocabularyModel {
   /// Converts VocabularyModel to JSON for serialization
   /// Used for debugging and data export
   Map<String, dynamic> toJson() {
-    return {
-      'english': english,
-      'persian': persian,
-      'userId': userId,
-      'aiProvider': aiProvider.toString(),
-      'tokensUsed': tokensUsed,
-      'requestId': requestId,
-      'createdAt': createdAt.toIso8601String(),
-      'isUsed': isUsed,
-    };
+    return {'english': english, 'persian': persian, 'isUsed': isUsed};
   }
 
   /// Creates VocabularyModel from JSON
@@ -121,14 +66,7 @@ class VocabularyModel {
     return VocabularyModel(
       english: json['english'] as String,
       persian: json['persian'] as String,
-      userId: json['userId'] as String,
-      aiProvider: AiProviderType.values.firstWhere(
-        (e) => e.toString() == json['aiProvider'],
-      ),
-      tokensUsed: json['tokensUsed'] as int,
-      requestId: json['requestId'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      isUsed: json['isUsed'] as bool,
+      isUsed: json['isUsed'] as bool? ?? false,
     );
   }
 
@@ -138,39 +76,21 @@ class VocabularyModel {
     return other is VocabularyModel &&
         other.english == english &&
         other.persian == persian &&
-        other.userId == userId &&
-        other.aiProvider == aiProvider &&
-        other.tokensUsed == tokensUsed &&
-        other.requestId == requestId &&
-        other.createdAt == createdAt &&
         other.isUsed == isUsed;
   }
 
   @override
   int get hashCode {
-    return english.hashCode ^
-        persian.hashCode ^
-        userId.hashCode ^
-        aiProvider.hashCode ^
-        tokensUsed.hashCode ^
-        requestId.hashCode ^
-        createdAt.hashCode ^
-        isUsed.hashCode;
+    return english.hashCode ^ persian.hashCode ^ isUsed.hashCode;
   }
 
   @override
   String toString() {
-    return 'VocabularyModel(english: $english, persian: $persian, userId: $userId, aiProvider: $aiProvider, tokensUsed: $tokensUsed, requestId: $requestId, createdAt: $createdAt, isUsed: $isUsed)';
+    return 'VocabularyModel(english: $english, persian: $persian, isUsed: $isUsed)';
   }
 }
 
 // Example usage:
-// final vocabularyModel = VocabularyModel.fromEntity(
-//   vocabulary,
-//   'user123',
-//   AiProviderType.openai,
-//   150,
-//   'req_1234567890',
-// );
+// final vocabularyModel = VocabularyModel.fromEntity(vocabulary);
 // final entity = vocabularyModel.toEntity();
 // final updatedModel = vocabularyModel.copyWith(isUsed: true);

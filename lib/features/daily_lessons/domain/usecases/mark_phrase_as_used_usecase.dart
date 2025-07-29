@@ -9,18 +9,24 @@ import '../repositories/daily_lessons_repository.dart';
 
 /// Use case for marking phrase as used
 /// Prevents duplicate phrase suggestions for the same user
-class MarkPhraseAsUsedUseCase implements UseCase<bool, String> {
+class MarkPhraseAsUsedUseCase
+    implements UseCase<Unit, ({String requestId, String english})> {
   final DailyLessonsRepository repository;
 
   MarkPhraseAsUsedUseCase(this.repository);
 
   /// Marks a phrase as used by the current user
-  /// @param english The English text of the phrase to mark as used
-  /// @return Either a Failure or true if successful
+  /// @param params Contains requestId and english text of the phrase
+  /// @return Either a Failure or Unit if successful
   @override
-  Future<Either<Failure, bool>> call(String english) async {
+  Future<Either<Failure, Unit>> call(
+    ({String requestId, String english}) params,
+  ) async {
     try {
-      return await repository.markPhraseAsUsed(english);
+      return await repository.markPhraseAsUsed(
+        params.requestId,
+        params.english,
+      );
     } catch (e) {
       return Left(
         ServerFailure('Failed to mark phrase as used: ${e.toString()}'),
@@ -31,7 +37,10 @@ class MarkPhraseAsUsedUseCase implements UseCase<bool, String> {
 
 // Example usage:
 // final useCase = MarkPhraseAsUsedUseCase(repository);
-// final result = await useCase('I owe it to myself');
+// final result = await useCase((
+//   requestId: 'req_123',
+//   english: 'I owe it to myself'
+// ));
 // result.fold(
 //   (failure) => print('Error: ${failure.message}'),
 //   (success) => print('Phrase marked as used successfully'),

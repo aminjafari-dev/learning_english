@@ -22,8 +22,10 @@ mixin _$DailyLessonsEvent {
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String english) markVocabularyAsUsed,
-    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function(String requestId, String english)
+        markVocabularyAsUsed,
+    required TResult Function(String requestId, String english)
+        markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
@@ -35,8 +37,8 @@ mixin _$DailyLessonsEvent {
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String english)? markVocabularyAsUsed,
-    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult? Function(String requestId, String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
@@ -48,8 +50,8 @@ mixin _$DailyLessonsEvent {
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String english)? markVocabularyAsUsed,
-    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult Function(String requestId, String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
@@ -164,8 +166,10 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String english) markVocabularyAsUsed,
-    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function(String requestId, String english)
+        markVocabularyAsUsed,
+    required TResult Function(String requestId, String english)
+        markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
@@ -180,8 +184,8 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String english)? markVocabularyAsUsed,
-    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult? Function(String requestId, String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
@@ -196,8 +200,8 @@ class _$FetchVocabulariesImpl implements FetchVocabularies {
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String english)? markVocabularyAsUsed,
-    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult Function(String requestId, String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
@@ -311,8 +315,10 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String english) markVocabularyAsUsed,
-    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function(String requestId, String english)
+        markVocabularyAsUsed,
+    required TResult Function(String requestId, String english)
+        markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
@@ -327,8 +333,8 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String english)? markVocabularyAsUsed,
-    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult? Function(String requestId, String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
@@ -343,8 +349,8 @@ class _$FetchPhrasesImpl implements FetchPhrases {
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String english)? markVocabularyAsUsed,
-    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult Function(String requestId, String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
@@ -458,8 +464,10 @@ class _$FetchLessonsImpl implements FetchLessons {
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String english) markVocabularyAsUsed,
-    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function(String requestId, String english)
+        markVocabularyAsUsed,
+    required TResult Function(String requestId, String english)
+        markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
@@ -474,8 +482,8 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String english)? markVocabularyAsUsed,
-    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult? Function(String requestId, String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
@@ -490,8 +498,8 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String english)? markVocabularyAsUsed,
-    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult Function(String requestId, String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
@@ -605,8 +613,10 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String english) markVocabularyAsUsed,
-    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function(String requestId, String english)
+        markVocabularyAsUsed,
+    required TResult Function(String requestId, String english)
+        markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
@@ -621,8 +631,8 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String english)? markVocabularyAsUsed,
-    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult? Function(String requestId, String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
@@ -637,8 +647,8 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String english)? markVocabularyAsUsed,
-    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult Function(String requestId, String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
@@ -713,7 +723,7 @@ abstract class _$$MarkVocabularyAsUsedImplCopyWith<$Res> {
           $Res Function(_$MarkVocabularyAsUsedImpl) then) =
       __$$MarkVocabularyAsUsedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String english});
+  $Res call({String requestId, String english});
 }
 
 /// @nodoc
@@ -729,9 +739,14 @@ class __$$MarkVocabularyAsUsedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? requestId = null,
     Object? english = null,
   }) {
     return _then(_$MarkVocabularyAsUsedImpl(
+      requestId: null == requestId
+          ? _value.requestId
+          : requestId // ignore: cast_nullable_to_non_nullable
+              as String,
       english: null == english
           ? _value.english
           : english // ignore: cast_nullable_to_non_nullable
@@ -743,14 +758,17 @@ class __$$MarkVocabularyAsUsedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
-  const _$MarkVocabularyAsUsedImpl({required this.english});
+  const _$MarkVocabularyAsUsedImpl(
+      {required this.requestId, required this.english});
 
+  @override
+  final String requestId;
   @override
   final String english;
 
   @override
   String toString() {
-    return 'DailyLessonsEvent.markVocabularyAsUsed(english: $english)';
+    return 'DailyLessonsEvent.markVocabularyAsUsed(requestId: $requestId, english: $english)';
   }
 
   @override
@@ -758,11 +776,13 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarkVocabularyAsUsedImpl &&
+            (identical(other.requestId, requestId) ||
+                other.requestId == requestId) &&
             (identical(other.english, english) || other.english == english));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, english);
+  int get hashCode => Object.hash(runtimeType, requestId, english);
 
   /// Create a copy of DailyLessonsEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -781,13 +801,15 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String english) markVocabularyAsUsed,
-    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function(String requestId, String english)
+        markVocabularyAsUsed,
+    required TResult Function(String requestId, String english)
+        markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
   }) {
-    return markVocabularyAsUsed(english);
+    return markVocabularyAsUsed(requestId, english);
   }
 
   @override
@@ -797,13 +819,13 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String english)? markVocabularyAsUsed,
-    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult? Function(String requestId, String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
   }) {
-    return markVocabularyAsUsed?.call(english);
+    return markVocabularyAsUsed?.call(requestId, english);
   }
 
   @override
@@ -813,15 +835,15 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String english)? markVocabularyAsUsed,
-    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult Function(String requestId, String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
     required TResult orElse(),
   }) {
     if (markVocabularyAsUsed != null) {
-      return markVocabularyAsUsed(english);
+      return markVocabularyAsUsed(requestId, english);
     }
     return orElse();
   }
@@ -880,9 +902,11 @@ class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
 }
 
 abstract class MarkVocabularyAsUsed implements DailyLessonsEvent {
-  const factory MarkVocabularyAsUsed({required final String english}) =
-      _$MarkVocabularyAsUsedImpl;
+  const factory MarkVocabularyAsUsed(
+      {required final String requestId,
+      required final String english}) = _$MarkVocabularyAsUsedImpl;
 
+  String get requestId;
   String get english;
 
   /// Create a copy of DailyLessonsEvent
@@ -898,7 +922,7 @@ abstract class _$$MarkPhraseAsUsedImplCopyWith<$Res> {
           $Res Function(_$MarkPhraseAsUsedImpl) then) =
       __$$MarkPhraseAsUsedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String english});
+  $Res call({String requestId, String english});
 }
 
 /// @nodoc
@@ -914,9 +938,14 @@ class __$$MarkPhraseAsUsedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? requestId = null,
     Object? english = null,
   }) {
     return _then(_$MarkPhraseAsUsedImpl(
+      requestId: null == requestId
+          ? _value.requestId
+          : requestId // ignore: cast_nullable_to_non_nullable
+              as String,
       english: null == english
           ? _value.english
           : english // ignore: cast_nullable_to_non_nullable
@@ -928,14 +957,17 @@ class __$$MarkPhraseAsUsedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
-  const _$MarkPhraseAsUsedImpl({required this.english});
+  const _$MarkPhraseAsUsedImpl(
+      {required this.requestId, required this.english});
 
+  @override
+  final String requestId;
   @override
   final String english;
 
   @override
   String toString() {
-    return 'DailyLessonsEvent.markPhraseAsUsed(english: $english)';
+    return 'DailyLessonsEvent.markPhraseAsUsed(requestId: $requestId, english: $english)';
   }
 
   @override
@@ -943,11 +975,13 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarkPhraseAsUsedImpl &&
+            (identical(other.requestId, requestId) ||
+                other.requestId == requestId) &&
             (identical(other.english, english) || other.english == english));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, english);
+  int get hashCode => Object.hash(runtimeType, requestId, english);
 
   /// Create a copy of DailyLessonsEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -965,13 +999,15 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String english) markVocabularyAsUsed,
-    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function(String requestId, String english)
+        markVocabularyAsUsed,
+    required TResult Function(String requestId, String english)
+        markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
   }) {
-    return markPhraseAsUsed(english);
+    return markPhraseAsUsed(requestId, english);
   }
 
   @override
@@ -981,13 +1017,13 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String english)? markVocabularyAsUsed,
-    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult? Function(String requestId, String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
   }) {
-    return markPhraseAsUsed?.call(english);
+    return markPhraseAsUsed?.call(requestId, english);
   }
 
   @override
@@ -997,15 +1033,15 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String english)? markVocabularyAsUsed,
-    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult Function(String requestId, String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
     required TResult orElse(),
   }) {
     if (markPhraseAsUsed != null) {
-      return markPhraseAsUsed(english);
+      return markPhraseAsUsed(requestId, english);
     }
     return orElse();
   }
@@ -1064,9 +1100,11 @@ class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
 }
 
 abstract class MarkPhraseAsUsed implements DailyLessonsEvent {
-  const factory MarkPhraseAsUsed({required final String english}) =
-      _$MarkPhraseAsUsedImpl;
+  const factory MarkPhraseAsUsed(
+      {required final String requestId,
+      required final String english}) = _$MarkPhraseAsUsedImpl;
 
+  String get requestId;
   String get english;
 
   /// Create a copy of DailyLessonsEvent
@@ -1121,8 +1159,10 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String english) markVocabularyAsUsed,
-    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function(String requestId, String english)
+        markVocabularyAsUsed,
+    required TResult Function(String requestId, String english)
+        markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
@@ -1137,8 +1177,8 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String english)? markVocabularyAsUsed,
-    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult? Function(String requestId, String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
@@ -1153,8 +1193,8 @@ class _$GetUserAnalyticsImpl implements GetUserAnalytics {
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String english)? markVocabularyAsUsed,
-    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult Function(String requestId, String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
@@ -1268,8 +1308,10 @@ class _$ClearUserDataImpl implements ClearUserData {
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String english) markVocabularyAsUsed,
-    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function(String requestId, String english)
+        markVocabularyAsUsed,
+    required TResult Function(String requestId, String english)
+        markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
@@ -1284,8 +1326,8 @@ class _$ClearUserDataImpl implements ClearUserData {
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String english)? markVocabularyAsUsed,
-    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult? Function(String requestId, String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
@@ -1300,8 +1342,8 @@ class _$ClearUserDataImpl implements ClearUserData {
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String english)? markVocabularyAsUsed,
-    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult Function(String requestId, String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
@@ -1415,8 +1457,10 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String english) markVocabularyAsUsed,
-    required TResult Function(String english) markPhraseAsUsed,
+    required TResult Function(String requestId, String english)
+        markVocabularyAsUsed,
+    required TResult Function(String requestId, String english)
+        markPhraseAsUsed,
     required TResult Function() getUserAnalytics,
     required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
@@ -1431,8 +1475,8 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String english)? markVocabularyAsUsed,
-    TResult? Function(String english)? markPhraseAsUsed,
+    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult? Function(String requestId, String english)? markPhraseAsUsed,
     TResult? Function()? getUserAnalytics,
     TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
@@ -1447,8 +1491,8 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String english)? markVocabularyAsUsed,
-    TResult Function(String english)? markPhraseAsUsed,
+    TResult Function(String requestId, String english)? markVocabularyAsUsed,
+    TResult Function(String requestId, String english)? markPhraseAsUsed,
     TResult Function()? getUserAnalytics,
     TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,

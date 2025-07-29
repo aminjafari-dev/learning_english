@@ -21,7 +21,7 @@ import 'ai_lessons_remote_data_source.dart';
 import 'openai_lessons_remote_data_source.dart';
 import 'gemini_lessons_remote_data_source.dart';
 import 'deepseek_lessons_remote_data_source.dart';
-import '../ai_provider_type.dart';
+import '../../models/ai_provider_type.dart';
 
 /// Delegator for AI-based lessons data sources
 /// All methods are personalized based on user preferences

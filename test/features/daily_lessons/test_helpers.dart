@@ -24,7 +24,7 @@ import 'package:learning_english/features/daily_lessons/domain/entities/ai_usage
 import 'package:learning_english/features/daily_lessons/domain/entities/user_preferences.dart';
 import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
 import 'package:learning_english/features/daily_lessons/data/models/phrase_model.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/ai_provider_type.dart';
+import 'package:learning_english/features/daily_lessons/data/models/ai_provider_type.dart';
 import 'package:learning_english/core/error/failure.dart';
 import 'package:learning_english/features/level_selection/domain/repositories/user_repository.dart';
 import 'package:learning_english/features/learning_focus_selection/domain/repositories/learning_focus_selection_repository.dart';

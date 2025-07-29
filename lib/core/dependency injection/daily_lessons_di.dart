@@ -7,9 +7,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:learning_english/features/daily_lessons/data/models/learning_request_model.dart';
+import 'package:learning_english/features/daily_lessons/data/models/level_type.dart';
 import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
 import 'package:learning_english/features/daily_lessons/data/models/phrase_model.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/ai_provider_type.dart';
+import 'package:learning_english/features/daily_lessons/data/models/ai_provider_type.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/ai_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/daily_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/local/daily_lessons_local_data_source.dart';
@@ -47,6 +49,12 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     }
     if (!Hive.isAdapterRegistered(2)) {
       Hive.registerAdapter(AiProviderTypeAdapter());
+    }
+    if (!Hive.isAdapterRegistered(3)) {
+      Hive.registerAdapter(LearningRequestModelAdapter());
+    }
+    if (!Hive.isAdapterRegistered(5)) {
+      Hive.registerAdapter(UserLevelAdapter());
     }
 
     // Local Data Source

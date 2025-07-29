@@ -6,7 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../models/learning_request_model.dart';
 import '../../models/vocabulary_model.dart';
 import '../../models/phrase_model.dart';
-import '../ai_provider_type.dart';
+import '../../models/ai_provider_type.dart';
 
 /// Local data source for learning requests storage using Hive
 /// Handles persistence of complete AI requests with all metadata and generated content

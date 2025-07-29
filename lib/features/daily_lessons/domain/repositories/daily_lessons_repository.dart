@@ -10,7 +10,7 @@ import '../entities/phrase.dart';
 import '../entities/ai_usage_metadata.dart';
 import '../entities/user_preferences.dart';
 import '../entities/learning_request.dart' as learning_request;
-import '../../data/datasources/ai_provider_type.dart';
+import '../../data/models/ai_provider_type.dart';
 
 /// Abstract repository for daily lessons with personalized content and complete request tracking
 abstract class DailyLessonsRepository {

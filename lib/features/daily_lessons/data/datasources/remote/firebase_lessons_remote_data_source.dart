@@ -13,7 +13,7 @@ import 'package:dartz/dartz.dart';
 import 'package:learning_english/core/error/failure.dart';
 import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
 import 'package:learning_english/features/daily_lessons/data/models/phrase_model.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/ai_provider_type.dart';
+import 'package:learning_english/features/daily_lessons/data/models/ai_provider_type.dart';
 import 'package:learning_english/features/level_selection/domain/entities/user_profile.dart';
 
 /// Learning context for categorizing content by user level and focus area

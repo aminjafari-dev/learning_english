@@ -5,6 +5,7 @@
 // Now includes complete request tracking with all metadata and generated content.
 
 import 'package:dartz/dartz.dart';
+import 'package:learning_english/features/daily_lessons/data/models/level_type.dart';
 import '../../domain/entities/vocabulary.dart';
 import '../../domain/entities/phrase.dart';
 import '../../domain/entities/ai_usage_metadata.dart';
@@ -13,15 +14,12 @@ import '../../domain/entities/learning_request.dart' as learning_request;
 import '../../domain/repositories/daily_lessons_repository.dart';
 import '../datasources/remote/ai_lessons_remote_data_source.dart';
 import '../datasources/local/daily_lessons_local_data_source.dart';
-import '../datasources/ai_provider_type.dart';
+import '../models/ai_provider_type.dart';
 import '../models/learning_request_model.dart';
-import '../models/vocabulary_model.dart';
-import '../models/phrase_model.dart';
 import 'package:learning_english/core/error/failure.dart';
 import '../services/content_sync_manager.dart';
 import 'package:learning_english/features/level_selection/domain/entities/user_profile.dart'
     as user_profile;
-import '../datasources/remote/firebase_lessons_remote_data_source.dart';
 import 'package:learning_english/features/level_selection/domain/repositories/user_repository.dart';
 import 'package:learning_english/features/learning_focus_selection/domain/repositories/learning_focus_selection_repository.dart';
 import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
@@ -107,7 +105,7 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
         createdAt: DateTime.now(),
         systemPrompt: _getSystemPrompt(preferences),
         userPrompt: _getUserPrompt(preferences),
-        status: learning_request.RequestStatus.success,
+        errorMessage: null,
         vocabularies: data.vocabularies,
         phrases: data.phrases,
         metadata: data.metadata.toJson(),
@@ -331,12 +329,17 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
   }
 
   /// Converts user level from UserProfile.Level to LearningRequest.Level
-  learning_request.Level _convertUserLevel(dynamic userLevel) {
-    if (userLevel is learning_request.Level) {
+  UserLevel _convertUserLevel(dynamic userLevel) {
+    // Handle the case where userLevel is already the correct type
+    if (userLevel is UserLevel) {
       return userLevel;
     }
+
+    // Handle conversion from other level types if needed
+    // For now, we'll use the same enum since LearningRequest uses user_profile.Level
+
     // Default fallback
-    return learning_request.Level.intermediate;
+    return UserLevel.intermediate;
   }
 
   /// Triggers complete request background sync with full request context

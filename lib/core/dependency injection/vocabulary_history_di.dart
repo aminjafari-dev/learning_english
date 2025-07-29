@@ -9,7 +9,7 @@ import 'package:learning_english/features/history/presentation/bloc/vocabulary_h
 // Import the daily lessons models to register their adapters
 import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
 import 'package:learning_english/features/daily_lessons/data/models/phrase_model.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/ai_provider_type.dart';
+import 'package:learning_english/features/daily_lessons/data/models/ai_provider_type.dart';
 
 /// Dependency injection setup for vocabulary history feature
 /// This file registers all the dependencies needed for the vocabulary history feature

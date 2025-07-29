@@ -1,13 +1,12 @@
 /// PhraseHistoryItem represents a single phrase item in the user's learning history.
-/// This entity contains all the information about a phrase that was generated
-/// for the user, including its translations, metadata, and usage status.
+/// This entity contains the essential information about a phrase item that was generated
+/// for the user, including its translations and usage status.
+/// Simplified to avoid data duplication with parent request metadata.
 ///
 /// Usage Example:
 ///   final phrase = PhraseHistoryItem(
-///     english: 'How are you?',
-///     persian: 'حال شما چطور است؟',
-///     requestId: 'req_123',
-///     createdAt: DateTime.now(),
+///     english: 'I owe it to myself',
+///     persian: 'من مدیون خودم هستم',
 ///     isUsed: true,
 ///   );
 ///
@@ -19,12 +18,6 @@ class PhraseHistoryItem {
   /// The Persian translation of the phrase
   final String persian;
 
-  /// The unique identifier for the request that generated this phrase
-  final String requestId;
-
-  /// When this phrase was created
-  final DateTime createdAt;
-
   /// Whether this phrase has been used by the user
   final bool isUsed;
 
@@ -33,25 +26,15 @@ class PhraseHistoryItem {
   const PhraseHistoryItem({
     required this.english,
     required this.persian,
-    required this.requestId,
-    required this.createdAt,
     required this.isUsed,
   });
 
   /// Creates a copy of PhraseHistoryItem with updated fields
   /// Useful for updating specific properties while keeping others unchanged
-  PhraseHistoryItem copyWith({
-    String? english,
-    String? persian,
-    String? requestId,
-    DateTime? createdAt,
-    bool? isUsed,
-  }) {
+  PhraseHistoryItem copyWith({String? english, String? persian, bool? isUsed}) {
     return PhraseHistoryItem(
       english: english ?? this.english,
       persian: persian ?? this.persian,
-      requestId: requestId ?? this.requestId,
-      createdAt: createdAt ?? this.createdAt,
       isUsed: isUsed ?? this.isUsed,
     );
   }
@@ -59,13 +42,7 @@ class PhraseHistoryItem {
   /// Converts the entity to a JSON map
   /// Used for serialization and data transfer
   Map<String, dynamic> toJson() {
-    return {
-      'english': english,
-      'persian': persian,
-      'requestId': requestId,
-      'createdAt': createdAt.toIso8601String(),
-      'isUsed': isUsed,
-    };
+    return {'english': english, 'persian': persian, 'isUsed': isUsed};
   }
 
   /// Creates a PhraseHistoryItem from a JSON map
@@ -74,8 +51,6 @@ class PhraseHistoryItem {
     return PhraseHistoryItem(
       english: json['english'] as String,
       persian: json['persian'] as String,
-      requestId: json['requestId'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
       isUsed: json['isUsed'] as bool,
     );
   }
@@ -86,22 +61,16 @@ class PhraseHistoryItem {
     return other is PhraseHistoryItem &&
         other.english == english &&
         other.persian == persian &&
-        other.requestId == requestId &&
-        other.createdAt == createdAt &&
         other.isUsed == isUsed;
   }
 
   @override
   int get hashCode {
-    return english.hashCode ^
-        persian.hashCode ^
-        requestId.hashCode ^
-        createdAt.hashCode ^
-        isUsed.hashCode;
+    return english.hashCode ^ persian.hashCode ^ isUsed.hashCode;
   }
 
   @override
   String toString() {
-    return 'PhraseHistoryItem(english: $english, persian: $persian, requestId: $requestId, createdAt: $createdAt, isUsed: $isUsed)';
+    return 'PhraseHistoryItem(english: $english, persian: $persian, isUsed: $isUsed)';
   }
 }

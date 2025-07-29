@@ -3,10 +3,9 @@
 // This model represents complete AI requests with all metadata and generated content.
 
 import 'package:hive/hive.dart';
+import 'package:learning_english/features/daily_lessons/data/models/level_type.dart';
 import '../../domain/entities/learning_request.dart';
-import '../../domain/entities/vocabulary.dart';
-import '../../domain/entities/phrase.dart';
-import '../datasources/ai_provider_type.dart';
+import 'ai_provider_type.dart';
 import 'vocabulary_model.dart';
 import 'phrase_model.dart';
 
@@ -23,7 +22,7 @@ class LearningRequestModel {
   final String userId;
 
   @HiveField(2)
-  final Level userLevel;
+  final UserLevel userLevel;
 
   @HiveField(3)
   final List<String> focusAreas;
@@ -53,18 +52,15 @@ class LearningRequestModel {
   final String userPrompt;
 
   @HiveField(12)
-  final RequestStatus status;
-
-  @HiveField(13)
   final String? errorMessage;
 
-  @HiveField(14)
+  @HiveField(13)
   final List<VocabularyModel> vocabularies;
 
-  @HiveField(15)
+  @HiveField(14)
   final List<PhraseModel> phrases;
 
-  @HiveField(16)
+  @HiveField(15)
   final Map<String, dynamic>? metadata;
 
   const LearningRequestModel({
@@ -80,7 +76,6 @@ class LearningRequestModel {
     required this.createdAt,
     required this.systemPrompt,
     required this.userPrompt,
-    required this.status,
     this.errorMessage,
     required this.vocabularies,
     required this.phrases,
@@ -103,7 +98,6 @@ class LearningRequestModel {
       createdAt: request.createdAt,
       systemPrompt: request.systemPrompt,
       userPrompt: request.userPrompt,
-      status: request.status,
       errorMessage: request.errorMessage,
       vocabularies:
           request.vocabularies
@@ -133,7 +127,6 @@ class LearningRequestModel {
       createdAt: createdAt,
       systemPrompt: systemPrompt,
       userPrompt: userPrompt,
-      status: status,
       errorMessage: errorMessage,
       vocabularies: vocabularies.map((vocab) => vocab.toEntity()).toList(),
       phrases: phrases.map((phrase) => phrase.toEntity()).toList(),
@@ -146,7 +139,7 @@ class LearningRequestModel {
   LearningRequestModel copyWith({
     String? requestId,
     String? userId,
-    Level? userLevel,
+    UserLevel? userLevel,
     List<String>? focusAreas,
     AiProviderType? aiProvider,
     String? aiModel,
@@ -156,7 +149,6 @@ class LearningRequestModel {
     DateTime? createdAt,
     String? systemPrompt,
     String? userPrompt,
-    RequestStatus? status,
     String? errorMessage,
     List<VocabularyModel>? vocabularies,
     List<PhraseModel>? phrases,
@@ -175,7 +167,6 @@ class LearningRequestModel {
       createdAt: createdAt ?? this.createdAt,
       systemPrompt: systemPrompt ?? this.systemPrompt,
       userPrompt: userPrompt ?? this.userPrompt,
-      status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
       vocabularies: vocabularies ?? this.vocabularies,
       phrases: phrases ?? this.phrases,
@@ -199,7 +190,6 @@ class LearningRequestModel {
       'createdAt': createdAt.toIso8601String(),
       'systemPrompt': systemPrompt,
       'userPrompt': userPrompt,
-      'status': status.toString(),
       'errorMessage': errorMessage,
       'vocabularies': vocabularies.map((v) => v.toJson()).toList(),
       'phrases': phrases.map((p) => p.toJson()).toList(),
@@ -213,7 +203,7 @@ class LearningRequestModel {
     return LearningRequestModel(
       requestId: json['requestId'] as String,
       userId: json['userId'] as String,
-      userLevel: Level.values.firstWhere(
+      userLevel: UserLevel.values.firstWhere(
         (e) => e.toString() == json['userLevel'],
       ),
       focusAreas: List<String>.from(json['focusAreas'] as List),
@@ -227,9 +217,6 @@ class LearningRequestModel {
       createdAt: DateTime.parse(json['createdAt'] as String),
       systemPrompt: json['systemPrompt'] as String,
       userPrompt: json['userPrompt'] as String,
-      status: RequestStatus.values.firstWhere(
-        (e) => e.toString() == json['status'],
-      ),
       errorMessage: json['errorMessage'] as String?,
       vocabularies:
           (json['vocabularies'] as List)
@@ -259,7 +246,6 @@ class LearningRequestModel {
         other.createdAt == createdAt &&
         other.systemPrompt == systemPrompt &&
         other.userPrompt == userPrompt &&
-        other.status == status &&
         other.errorMessage == errorMessage &&
         other.vocabularies == vocabularies &&
         other.phrases == phrases &&
@@ -280,7 +266,6 @@ class LearningRequestModel {
         createdAt.hashCode ^
         systemPrompt.hashCode ^
         userPrompt.hashCode ^
-        status.hashCode ^
         errorMessage.hashCode ^
         vocabularies.hashCode ^
         phrases.hashCode ^
@@ -289,7 +274,7 @@ class LearningRequestModel {
 
   @override
   String toString() {
-    return 'LearningRequestModel(requestId: $requestId, userId: $userId, userLevel: $userLevel, focusAreas: $focusAreas, aiProvider: $aiProvider, aiModel: $aiModel, totalTokensUsed: $totalTokensUsed, estimatedCost: $estimatedCost, requestTimestamp: $requestTimestamp, createdAt: $createdAt, systemPrompt: $systemPrompt, userPrompt: $userPrompt, status: $status, errorMessage: $errorMessage, vocabularies: $vocabularies, phrases: $phrases, metadata: $metadata)';
+    return 'LearningRequestModel(requestId: $requestId, userId: $userId, userLevel: $userLevel, focusAreas: $focusAreas, aiProvider: $aiProvider, aiModel: $aiModel, totalTokensUsed: $totalTokensUsed, estimatedCost: $estimatedCost, requestTimestamp: $requestTimestamp, createdAt: $createdAt, systemPrompt: $systemPrompt, userPrompt: $userPrompt, errorMessage: $errorMessage, vocabularies: $vocabularies, phrases: $phrases, metadata: $metadata)';
   }
 }
 

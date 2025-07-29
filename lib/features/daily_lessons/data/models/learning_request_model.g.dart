@@ -19,7 +19,7 @@ class LearningRequestModelAdapter extends TypeAdapter<LearningRequestModel> {
     return LearningRequestModel(
       requestId: fields[0] as String,
       userId: fields[1] as String,
-      userLevel: fields[2] as Level,
+      userLevel: fields[2] as UserLevel,
       focusAreas: (fields[3] as List).cast<String>(),
       aiProvider: fields[4] as AiProviderType,
       aiModel: fields[5] as String,
@@ -29,18 +29,17 @@ class LearningRequestModelAdapter extends TypeAdapter<LearningRequestModel> {
       createdAt: fields[9] as DateTime,
       systemPrompt: fields[10] as String,
       userPrompt: fields[11] as String,
-      status: fields[12] as RequestStatus,
-      errorMessage: fields[13] as String?,
-      vocabularies: (fields[14] as List).cast<VocabularyModel>(),
-      phrases: (fields[15] as List).cast<PhraseModel>(),
-      metadata: (fields[16] as Map?)?.cast<String, dynamic>(),
+      errorMessage: fields[12] as String?,
+      vocabularies: (fields[13] as List).cast<VocabularyModel>(),
+      phrases: (fields[14] as List).cast<PhraseModel>(),
+      metadata: (fields[15] as Map?)?.cast<String, dynamic>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, LearningRequestModel obj) {
     writer
-      ..writeByte(17)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.requestId)
       ..writeByte(1)
@@ -66,14 +65,12 @@ class LearningRequestModelAdapter extends TypeAdapter<LearningRequestModel> {
       ..writeByte(11)
       ..write(obj.userPrompt)
       ..writeByte(12)
-      ..write(obj.status)
-      ..writeByte(13)
       ..write(obj.errorMessage)
-      ..writeByte(14)
+      ..writeByte(13)
       ..write(obj.vocabularies)
-      ..writeByte(15)
+      ..writeByte(14)
       ..write(obj.phrases)
-      ..writeByte(16)
+      ..writeByte(15)
       ..write(obj.metadata);
   }
 

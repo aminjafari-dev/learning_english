@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/local/daily_lessons_local_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
 import 'package:learning_english/features/daily_lessons/data/models/phrase_model.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/ai_provider_type.dart';
+import 'package:learning_english/features/daily_lessons/data/models/ai_provider_type.dart';
 
 void main() {
   group('DailyLessonsLocalDataSource', () {

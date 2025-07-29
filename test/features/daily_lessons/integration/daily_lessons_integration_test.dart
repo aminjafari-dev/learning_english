@@ -18,7 +18,7 @@ import 'package:learning_english/features/daily_lessons/domain/usecases/get_user
 import 'package:learning_english/features/daily_lessons/domain/usecases/clear_user_data_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/entities/vocabulary.dart';
 import 'package:learning_english/features/daily_lessons/domain/entities/phrase.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/ai_provider_type.dart';
+import 'package:learning_english/features/daily_lessons/data/models/ai_provider_type.dart';
 
 class MockAiLessonsRemoteDataSource extends Mock
     implements AiLessonsRemoteDataSource {}

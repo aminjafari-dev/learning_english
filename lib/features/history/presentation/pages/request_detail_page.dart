@@ -41,7 +41,7 @@ class RequestDetailPage extends StatelessWidget {
           foregroundColor: AppTheme.white,
         ),
         body: BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
-          bloc: getIt<VocabularyHistoryBloc>(),
+          bloc: getIt<VocabularyHistoryBloc>()..add(VocabularyHistoryEvent.loadRequestDetails(requestId: requestId)),
           builder: (context, state) {
             return state.requestDetails.when(
               initial: () => const SizedBox(),

@@ -2,22 +2,20 @@
 // Domain entity for learning requests with complete metadata and generated content.
 // This entity represents a complete AI request with all context and generated vocabulary/phrases.
 
+import 'package:learning_english/features/daily_lessons/data/models/level_type.dart';
+
 import 'vocabulary.dart';
 import 'phrase.dart';
-import '../../data/datasources/ai_provider_type.dart';
+import '../../data/models/ai_provider_type.dart';
 
-/// Status of the learning request
-enum RequestStatus { pending, success, failed, partial }
 
-/// User's English proficiency level
-enum Level { beginner, elementary, intermediate, advanced }
 
 /// Domain entity for learning requests with complete metadata
 /// Contains all request context, AI provider info, and generated content
 class LearningRequest {
   final String requestId; // Unique request identifier
   final String userId; // User who made the request
-  final Level userLevel; // User's English level
+  final UserLevel userLevel; // User's English level
   final List<String> focusAreas; // Selected learning focus areas
   final AiProviderType aiProvider; // Which AI provider used
   final String aiModel; // Specific model (gpt-4, gemini-pro, etc.)
@@ -27,7 +25,6 @@ class LearningRequest {
   final DateTime createdAt; // When content was created
   final String systemPrompt; // The actual prompt sent to AI
   final String userPrompt; // User-specific prompt
-  final RequestStatus status; // success, failed, partial
   final String? errorMessage; // Error details if failed
   final List<Vocabulary> vocabularies; // Generated vocabularies
   final List<Phrase> phrases; // Generated phrases
@@ -46,7 +43,6 @@ class LearningRequest {
     required this.createdAt,
     required this.systemPrompt,
     required this.userPrompt,
-    required this.status,
     this.errorMessage,
     required this.vocabularies,
     required this.phrases,
@@ -57,7 +53,7 @@ class LearningRequest {
   LearningRequest copyWith({
     String? requestId,
     String? userId,
-    Level? userLevel,
+    UserLevel? userLevel,
     List<String>? focusAreas,
     AiProviderType? aiProvider,
     String? aiModel,
@@ -67,7 +63,6 @@ class LearningRequest {
     DateTime? createdAt,
     String? systemPrompt,
     String? userPrompt,
-    RequestStatus? status,
     String? errorMessage,
     List<Vocabulary>? vocabularies,
     List<Phrase>? phrases,
@@ -86,7 +81,6 @@ class LearningRequest {
       createdAt: createdAt ?? this.createdAt,
       systemPrompt: systemPrompt ?? this.systemPrompt,
       userPrompt: userPrompt ?? this.userPrompt,
-      status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
       vocabularies: vocabularies ?? this.vocabularies,
       phrases: phrases ?? this.phrases,
@@ -110,7 +104,6 @@ class LearningRequest {
         other.createdAt == createdAt &&
         other.systemPrompt == systemPrompt &&
         other.userPrompt == userPrompt &&
-        other.status == status &&
         other.errorMessage == errorMessage &&
         other.vocabularies == vocabularies &&
         other.phrases == phrases &&
@@ -131,7 +124,6 @@ class LearningRequest {
         createdAt.hashCode ^
         systemPrompt.hashCode ^
         userPrompt.hashCode ^
-        status.hashCode ^
         errorMessage.hashCode ^
         vocabularies.hashCode ^
         phrases.hashCode ^
@@ -140,7 +132,7 @@ class LearningRequest {
 
   @override
   String toString() {
-    return 'LearningRequest(requestId: $requestId, userId: $userId, userLevel: $userLevel, focusAreas: $focusAreas, aiProvider: $aiProvider, aiModel: $aiModel, totalTokensUsed: $totalTokensUsed, estimatedCost: $estimatedCost, requestTimestamp: $requestTimestamp, createdAt: $createdAt, systemPrompt: $systemPrompt, userPrompt: $userPrompt, status: $status, errorMessage: $errorMessage, vocabularies: $vocabularies, phrases: $phrases, metadata: $metadata)';
+    return 'LearningRequest(requestId: $requestId, userId: $userId, userLevel: $userLevel, focusAreas: $focusAreas, aiProvider: $aiProvider, aiModel: $aiModel, totalTokensUsed: $totalTokensUsed, estimatedCost: $estimatedCost, requestTimestamp: $requestTimestamp, createdAt: $createdAt, systemPrompt: $systemPrompt, userPrompt: $userPrompt, errorMessage: $errorMessage, vocabularies: $vocabularies, phrases: $phrases, metadata: $metadata)';
   }
 }
 

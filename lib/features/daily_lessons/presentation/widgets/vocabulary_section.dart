@@ -49,11 +49,11 @@ class VocabularySection extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
-                GGap.g8,
+                const Spacer(),
                 // Persian translation shimmer
                 Container(
                   height: 20,
-                  width: 80,
+                  width: 120,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(4),

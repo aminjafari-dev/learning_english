@@ -62,7 +62,6 @@ Future<void> setupVocabularyHistoryLocator(GetIt locator) async {
        VocabularyHistoryBloc(
         getHistoryRequestsUseCase: locator<GetHistoryRequestsUseCase>(),
         getRequestDetailsUseCase: locator<GetRequestDetailsUseCase>(),
-        repository: locator<VocabularyHistoryRepository>(),
       ),
     );
 

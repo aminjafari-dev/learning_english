@@ -70,15 +70,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     ProfileEvent event,
     Emitter<ProfileState> emit,
   ) async {
-    event.when(
-      loadProfile: (userId) => _onLoadProfile(userId, emit),
-      updateProfile: (profile) => _onUpdateProfile(profile, emit),
+    await event.when(
+      loadProfile: (userId) async => await _onLoadProfile(userId, emit),
+      updateProfile: (profile) async => await _onUpdateProfile(profile, emit),
       updateProfileImage:
-          (userId, imagePath) => _onUpdateProfileImage(userId, imagePath, emit),
+          (userId, imagePath) async =>
+              await _onUpdateProfileImage(userId, imagePath, emit),
       updateAppLanguage:
-          (userId, language) => _onUpdateAppLanguage(userId, language, emit),
-      saveChanges: (profile) => _onSaveChanges(profile, emit),
-      reset: () => _onReset(emit),
+          (userId, language) async =>
+              await _onUpdateAppLanguage(userId, language, emit),
+      saveChanges: (profile) async => await _onSaveChanges(profile, emit),
+      reset: () async => _onReset(emit),
     );
   }
 
@@ -91,15 +93,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ///   - userId: The unique identifier of the user
   ///   - emit: Function to emit new states
   Future<void> _onLoadProfile(String userId, Emitter<ProfileState> emit) async {
-    emit(const ProfileState.loading());
+    if (!emit.isDone) {
+      emit(const ProfileState.loading());
+    }
 
     final result = await _getUserProfileUseCase.call(
       GetUserProfileParams(userId: userId),
     );
 
     result.fold(
-      (failure) => emit(ProfileState.error(message: failure.message)),
-      (profile) => emit(ProfileState.loaded(profile: profile)),
+      (failure) {
+        if (!emit.isDone) {
+          emit(ProfileState.error(message: failure.message));
+        }
+      },
+      (profile) {
+        if (!emit.isDone) {
+          emit(ProfileState.loaded(profile: profile));
+        }
+      },
     );
   }
 
@@ -115,15 +127,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     UserProfile profile,
     Emitter<ProfileState> emit,
   ) async {
-    emit(ProfileState.updating(profile: profile));
+    if (!emit.isDone) {
+      emit(ProfileState.updating(profile: profile));
+    }
 
     final result = await _updateUserProfileUseCase.call(
       UpdateUserProfileParams(userProfile: profile),
     );
 
     result.fold(
-      (failure) => emit(ProfileState.error(message: failure.message)),
-      (updatedProfile) => emit(ProfileState.updated(profile: updatedProfile)),
+      (failure) {
+        if (!emit.isDone) {
+          emit(ProfileState.error(message: failure.message));
+        }
+      },
+      (updatedProfile) {
+        if (!emit.isDone) {
+          emit(ProfileState.updated(profile: updatedProfile));
+        }
+      },
     );
   }
 
@@ -146,10 +168,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
 
     result.fold(
-      (failure) => emit(ProfileState.error(message: failure.message)),
+      (failure) {
+        if (!emit.isDone) {
+          emit(ProfileState.error(message: failure.message));
+        }
+      },
       (imageUrl) {
         // Update the current profile with the new image URL
-        if (state is ProfileLoaded) {
+        if (state is ProfileLoaded && !emit.isDone) {
           final currentProfile = (state as ProfileLoaded).profile;
           final updatedProfile = currentProfile.copyWith(
             profileImageUrl: imageUrl,
@@ -179,10 +205,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
 
     result.fold(
-      (failure) => emit(ProfileState.error(message: failure.message)),
+      (failure) {
+        if (!emit.isDone) {
+          emit(ProfileState.error(message: failure.message));
+        }
+      },
       (updatedLanguage) {
         // Update the current profile with the new language
-        if (state is ProfileLoaded) {
+        if (state is ProfileLoaded && !emit.isDone) {
           final currentProfile = (state as ProfileLoaded).profile;
           final updatedProfile = currentProfile.copyWith(
             language: updatedLanguage,
@@ -205,15 +235,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     UserProfile profile,
     Emitter<ProfileState> emit,
   ) async {
-    emit(ProfileState.saving(profile: profile));
+    if (!emit.isDone) {
+      emit(ProfileState.saving(profile: profile));
+    }
 
     final result = await _updateUserProfileUseCase.call(
       UpdateUserProfileParams(userProfile: profile),
     );
 
     result.fold(
-      (failure) => emit(ProfileState.error(message: failure.message)),
-      (savedProfile) => emit(ProfileState.saved(profile: savedProfile)),
+      (failure) {
+        if (!emit.isDone) {
+          emit(ProfileState.error(message: failure.message));
+        }
+      },
+      (savedProfile) {
+        if (!emit.isDone) {
+          emit(ProfileState.saved(profile: savedProfile));
+        }
+      },
     );
   }
 
@@ -224,6 +264,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   /// Parameters:
   ///   - emit: Function to emit new states
   void _onReset(Emitter<ProfileState> emit) {
-    emit(const ProfileState.initial());
+    if (!emit.isDone) {
+      emit(const ProfileState.initial());
+    }
   }
 }

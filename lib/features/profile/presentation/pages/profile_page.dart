@@ -126,16 +126,6 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  /// Handles language selection
-  void _onLanguageChanged(String language) {
-    if (_currentProfile != null) {
-      // The BLoC will handle getting the user ID internally through the core use case
-      getIt<ProfileBloc>().add(
-        ProfileEvent.updateAppLanguage(userId: '', language: language),
-      );
-    }
-  }
-
   /// Handles profile image update
   void _onProfileImageChanged(String imagePath) {
     if (_currentProfile != null) {
@@ -285,10 +275,7 @@ class _ProfilePageState extends State<ProfilePage> {
             GGap.g16,
 
             // Language Selector
-            LanguageSelectorWidget(
-              currentLanguage: profile.language ?? 'en',
-              onLanguageChanged: _onLanguageChanged,
-            ),
+            const LanguageSelectorWidget(),
             GGap.g32,
 
             // Save Changes Button

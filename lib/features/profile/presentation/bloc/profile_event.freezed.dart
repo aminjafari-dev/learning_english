@@ -12,8 +12,7 @@ part of 'profile_event.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ProfileEvent {
@@ -22,11 +21,12 @@ mixin _$ProfileEvent {
     required TResult Function() loadProfile,
     required TResult Function(UserProfileEntity profile) updateProfile,
     required TResult Function(String userId, String imagePath)
-    updateProfileImage,
+        updateProfileImage,
     required TResult Function(String userId, String language) updateAppLanguage,
     required TResult Function(UserProfileEntity profile) saveChanges,
     required TResult Function() reset,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadProfile,
@@ -35,7 +35,8 @@ mixin _$ProfileEvent {
     TResult? Function(String userId, String language)? updateAppLanguage,
     TResult? Function(UserProfileEntity profile)? saveChanges,
     TResult? Function()? reset,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadProfile,
@@ -45,7 +46,8 @@ mixin _$ProfileEvent {
     TResult Function(UserProfileEntity profile)? saveChanges,
     TResult Function()? reset,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadProfile value) loadProfile,
@@ -54,7 +56,8 @@ mixin _$ProfileEvent {
     required TResult Function(UpdateAppLanguage value) updateAppLanguage,
     required TResult Function(SaveChanges value) saveChanges,
     required TResult Function(Reset value) reset,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadProfile value)? loadProfile,
@@ -63,7 +66,8 @@ mixin _$ProfileEvent {
     TResult? Function(UpdateAppLanguage value)? updateAppLanguage,
     TResult? Function(SaveChanges value)? saveChanges,
     TResult? Function(Reset value)? reset,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadProfile value)? loadProfile,
@@ -73,15 +77,15 @@ mixin _$ProfileEvent {
     TResult Function(SaveChanges value)? saveChanges,
     TResult Function(Reset value)? reset,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $ProfileEventCopyWith<$Res> {
   factory $ProfileEventCopyWith(
-    ProfileEvent value,
-    $Res Function(ProfileEvent) then,
-  ) = _$ProfileEventCopyWithImpl<$Res, ProfileEvent>;
+          ProfileEvent value, $Res Function(ProfileEvent) then) =
+      _$ProfileEventCopyWithImpl<$Res, ProfileEvent>;
 }
 
 /// @nodoc
@@ -101,9 +105,8 @@ class _$ProfileEventCopyWithImpl<$Res, $Val extends ProfileEvent>
 /// @nodoc
 abstract class _$$LoadProfileImplCopyWith<$Res> {
   factory _$$LoadProfileImplCopyWith(
-    _$LoadProfileImpl value,
-    $Res Function(_$LoadProfileImpl) then,
-  ) = __$$LoadProfileImplCopyWithImpl<$Res>;
+          _$LoadProfileImpl value, $Res Function(_$LoadProfileImpl) then) =
+      __$$LoadProfileImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -111,9 +114,8 @@ class __$$LoadProfileImplCopyWithImpl<$Res>
     extends _$ProfileEventCopyWithImpl<$Res, _$LoadProfileImpl>
     implements _$$LoadProfileImplCopyWith<$Res> {
   __$$LoadProfileImplCopyWithImpl(
-    _$LoadProfileImpl _value,
-    $Res Function(_$LoadProfileImpl) _then,
-  ) : super(_value, _then);
+      _$LoadProfileImpl _value, $Res Function(_$LoadProfileImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ProfileEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -144,7 +146,7 @@ class _$LoadProfileImpl implements LoadProfile {
     required TResult Function() loadProfile,
     required TResult Function(UserProfileEntity profile) updateProfile,
     required TResult Function(String userId, String imagePath)
-    updateProfileImage,
+        updateProfileImage,
     required TResult Function(String userId, String language) updateAppLanguage,
     required TResult Function(UserProfileEntity profile) saveChanges,
     required TResult Function() reset,
@@ -233,9 +235,8 @@ abstract class LoadProfile implements ProfileEvent {
 /// @nodoc
 abstract class _$$UpdateProfileImplCopyWith<$Res> {
   factory _$$UpdateProfileImplCopyWith(
-    _$UpdateProfileImpl value,
-    $Res Function(_$UpdateProfileImpl) then,
-  ) = __$$UpdateProfileImplCopyWithImpl<$Res>;
+          _$UpdateProfileImpl value, $Res Function(_$UpdateProfileImpl) then) =
+      __$$UpdateProfileImplCopyWithImpl<$Res>;
   @useResult
   $Res call({UserProfileEntity profile});
 }
@@ -245,24 +246,22 @@ class __$$UpdateProfileImplCopyWithImpl<$Res>
     extends _$ProfileEventCopyWithImpl<$Res, _$UpdateProfileImpl>
     implements _$$UpdateProfileImplCopyWith<$Res> {
   __$$UpdateProfileImplCopyWithImpl(
-    _$UpdateProfileImpl _value,
-    $Res Function(_$UpdateProfileImpl) _then,
-  ) : super(_value, _then);
+      _$UpdateProfileImpl _value, $Res Function(_$UpdateProfileImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ProfileEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? profile = null}) {
-    return _then(
-      _$UpdateProfileImpl(
-        profile:
-            null == profile
-                ? _value.profile
-                : profile // ignore: cast_nullable_to_non_nullable
-                    as UserProfileEntity,
-      ),
-    );
+  $Res call({
+    Object? profile = null,
+  }) {
+    return _then(_$UpdateProfileImpl(
+      profile: null == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as UserProfileEntity,
+    ));
   }
 }
 
@@ -304,7 +303,7 @@ class _$UpdateProfileImpl implements UpdateProfile {
     required TResult Function() loadProfile,
     required TResult Function(UserProfileEntity profile) updateProfile,
     required TResult Function(String userId, String imagePath)
-    updateProfileImage,
+        updateProfileImage,
     required TResult Function(String userId, String language) updateAppLanguage,
     required TResult Function(UserProfileEntity profile) saveChanges,
     required TResult Function() reset,
@@ -401,10 +400,9 @@ abstract class UpdateProfile implements ProfileEvent {
 
 /// @nodoc
 abstract class _$$UpdateProfileImageImplCopyWith<$Res> {
-  factory _$$UpdateProfileImageImplCopyWith(
-    _$UpdateProfileImageImpl value,
-    $Res Function(_$UpdateProfileImageImpl) then,
-  ) = __$$UpdateProfileImageImplCopyWithImpl<$Res>;
+  factory _$$UpdateProfileImageImplCopyWith(_$UpdateProfileImageImpl value,
+          $Res Function(_$UpdateProfileImageImpl) then) =
+      __$$UpdateProfileImageImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String userId, String imagePath});
 }
@@ -413,40 +411,36 @@ abstract class _$$UpdateProfileImageImplCopyWith<$Res> {
 class __$$UpdateProfileImageImplCopyWithImpl<$Res>
     extends _$ProfileEventCopyWithImpl<$Res, _$UpdateProfileImageImpl>
     implements _$$UpdateProfileImageImplCopyWith<$Res> {
-  __$$UpdateProfileImageImplCopyWithImpl(
-    _$UpdateProfileImageImpl _value,
-    $Res Function(_$UpdateProfileImageImpl) _then,
-  ) : super(_value, _then);
+  __$$UpdateProfileImageImplCopyWithImpl(_$UpdateProfileImageImpl _value,
+      $Res Function(_$UpdateProfileImageImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ProfileEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? userId = null, Object? imagePath = null}) {
-    return _then(
-      _$UpdateProfileImageImpl(
-        userId:
-            null == userId
-                ? _value.userId
-                : userId // ignore: cast_nullable_to_non_nullable
-                    as String,
-        imagePath:
-            null == imagePath
-                ? _value.imagePath
-                : imagePath // ignore: cast_nullable_to_non_nullable
-                    as String,
-      ),
-    );
+  $Res call({
+    Object? userId = null,
+    Object? imagePath = null,
+  }) {
+    return _then(_$UpdateProfileImageImpl(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      imagePath: null == imagePath
+          ? _value.imagePath
+          : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$UpdateProfileImageImpl implements UpdateProfileImage {
-  const _$UpdateProfileImageImpl({
-    required this.userId,
-    required this.imagePath,
-  });
+  const _$UpdateProfileImageImpl(
+      {required this.userId, required this.imagePath});
 
   @override
   final String userId;
@@ -478,9 +472,7 @@ class _$UpdateProfileImageImpl implements UpdateProfileImage {
   @pragma('vm:prefer-inline')
   _$$UpdateProfileImageImplCopyWith<_$UpdateProfileImageImpl> get copyWith =>
       __$$UpdateProfileImageImplCopyWithImpl<_$UpdateProfileImageImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -488,7 +480,7 @@ class _$UpdateProfileImageImpl implements UpdateProfileImage {
     required TResult Function() loadProfile,
     required TResult Function(UserProfileEntity profile) updateProfile,
     required TResult Function(String userId, String imagePath)
-    updateProfileImage,
+        updateProfileImage,
     required TResult Function(String userId, String language) updateAppLanguage,
     required TResult Function(UserProfileEntity profile) saveChanges,
     required TResult Function() reset,
@@ -571,10 +563,9 @@ class _$UpdateProfileImageImpl implements UpdateProfileImage {
 }
 
 abstract class UpdateProfileImage implements ProfileEvent {
-  const factory UpdateProfileImage({
-    required final String userId,
-    required final String imagePath,
-  }) = _$UpdateProfileImageImpl;
+  const factory UpdateProfileImage(
+      {required final String userId,
+      required final String imagePath}) = _$UpdateProfileImageImpl;
 
   String get userId;
   String get imagePath;
@@ -588,10 +579,9 @@ abstract class UpdateProfileImage implements ProfileEvent {
 
 /// @nodoc
 abstract class _$$UpdateAppLanguageImplCopyWith<$Res> {
-  factory _$$UpdateAppLanguageImplCopyWith(
-    _$UpdateAppLanguageImpl value,
-    $Res Function(_$UpdateAppLanguageImpl) then,
-  ) = __$$UpdateAppLanguageImplCopyWithImpl<$Res>;
+  factory _$$UpdateAppLanguageImplCopyWith(_$UpdateAppLanguageImpl value,
+          $Res Function(_$UpdateAppLanguageImpl) then) =
+      __$$UpdateAppLanguageImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String userId, String language});
 }
@@ -600,30 +590,28 @@ abstract class _$$UpdateAppLanguageImplCopyWith<$Res> {
 class __$$UpdateAppLanguageImplCopyWithImpl<$Res>
     extends _$ProfileEventCopyWithImpl<$Res, _$UpdateAppLanguageImpl>
     implements _$$UpdateAppLanguageImplCopyWith<$Res> {
-  __$$UpdateAppLanguageImplCopyWithImpl(
-    _$UpdateAppLanguageImpl _value,
-    $Res Function(_$UpdateAppLanguageImpl) _then,
-  ) : super(_value, _then);
+  __$$UpdateAppLanguageImplCopyWithImpl(_$UpdateAppLanguageImpl _value,
+      $Res Function(_$UpdateAppLanguageImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ProfileEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? userId = null, Object? language = null}) {
-    return _then(
-      _$UpdateAppLanguageImpl(
-        userId:
-            null == userId
-                ? _value.userId
-                : userId // ignore: cast_nullable_to_non_nullable
-                    as String,
-        language:
-            null == language
-                ? _value.language
-                : language // ignore: cast_nullable_to_non_nullable
-                    as String,
-      ),
-    );
+  $Res call({
+    Object? userId = null,
+    Object? language = null,
+  }) {
+    return _then(_$UpdateAppLanguageImpl(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      language: null == language
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
@@ -662,9 +650,7 @@ class _$UpdateAppLanguageImpl implements UpdateAppLanguage {
   @pragma('vm:prefer-inline')
   _$$UpdateAppLanguageImplCopyWith<_$UpdateAppLanguageImpl> get copyWith =>
       __$$UpdateAppLanguageImplCopyWithImpl<_$UpdateAppLanguageImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -672,7 +658,7 @@ class _$UpdateAppLanguageImpl implements UpdateAppLanguage {
     required TResult Function() loadProfile,
     required TResult Function(UserProfileEntity profile) updateProfile,
     required TResult Function(String userId, String imagePath)
-    updateProfileImage,
+        updateProfileImage,
     required TResult Function(String userId, String language) updateAppLanguage,
     required TResult Function(UserProfileEntity profile) saveChanges,
     required TResult Function() reset,
@@ -755,10 +741,9 @@ class _$UpdateAppLanguageImpl implements UpdateAppLanguage {
 }
 
 abstract class UpdateAppLanguage implements ProfileEvent {
-  const factory UpdateAppLanguage({
-    required final String userId,
-    required final String language,
-  }) = _$UpdateAppLanguageImpl;
+  const factory UpdateAppLanguage(
+      {required final String userId,
+      required final String language}) = _$UpdateAppLanguageImpl;
 
   String get userId;
   String get language;
@@ -773,9 +758,8 @@ abstract class UpdateAppLanguage implements ProfileEvent {
 /// @nodoc
 abstract class _$$SaveChangesImplCopyWith<$Res> {
   factory _$$SaveChangesImplCopyWith(
-    _$SaveChangesImpl value,
-    $Res Function(_$SaveChangesImpl) then,
-  ) = __$$SaveChangesImplCopyWithImpl<$Res>;
+          _$SaveChangesImpl value, $Res Function(_$SaveChangesImpl) then) =
+      __$$SaveChangesImplCopyWithImpl<$Res>;
   @useResult
   $Res call({UserProfileEntity profile});
 }
@@ -785,24 +769,22 @@ class __$$SaveChangesImplCopyWithImpl<$Res>
     extends _$ProfileEventCopyWithImpl<$Res, _$SaveChangesImpl>
     implements _$$SaveChangesImplCopyWith<$Res> {
   __$$SaveChangesImplCopyWithImpl(
-    _$SaveChangesImpl _value,
-    $Res Function(_$SaveChangesImpl) _then,
-  ) : super(_value, _then);
+      _$SaveChangesImpl _value, $Res Function(_$SaveChangesImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ProfileEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? profile = null}) {
-    return _then(
-      _$SaveChangesImpl(
-        profile:
-            null == profile
-                ? _value.profile
-                : profile // ignore: cast_nullable_to_non_nullable
-                    as UserProfileEntity,
-      ),
-    );
+  $Res call({
+    Object? profile = null,
+  }) {
+    return _then(_$SaveChangesImpl(
+      profile: null == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as UserProfileEntity,
+    ));
   }
 }
 
@@ -844,7 +826,7 @@ class _$SaveChangesImpl implements SaveChanges {
     required TResult Function() loadProfile,
     required TResult Function(UserProfileEntity profile) updateProfile,
     required TResult Function(String userId, String imagePath)
-    updateProfileImage,
+        updateProfileImage,
     required TResult Function(String userId, String language) updateAppLanguage,
     required TResult Function(UserProfileEntity profile) saveChanges,
     required TResult Function() reset,
@@ -942,9 +924,8 @@ abstract class SaveChanges implements ProfileEvent {
 /// @nodoc
 abstract class _$$ResetImplCopyWith<$Res> {
   factory _$$ResetImplCopyWith(
-    _$ResetImpl value,
-    $Res Function(_$ResetImpl) then,
-  ) = __$$ResetImplCopyWithImpl<$Res>;
+          _$ResetImpl value, $Res Function(_$ResetImpl) then) =
+      __$$ResetImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -952,9 +933,8 @@ class __$$ResetImplCopyWithImpl<$Res>
     extends _$ProfileEventCopyWithImpl<$Res, _$ResetImpl>
     implements _$$ResetImplCopyWith<$Res> {
   __$$ResetImplCopyWithImpl(
-    _$ResetImpl _value,
-    $Res Function(_$ResetImpl) _then,
-  ) : super(_value, _then);
+      _$ResetImpl _value, $Res Function(_$ResetImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ProfileEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -985,7 +965,7 @@ class _$ResetImpl implements Reset {
     required TResult Function() loadProfile,
     required TResult Function(UserProfileEntity profile) updateProfile,
     required TResult Function(String userId, String imagePath)
-    updateProfileImage,
+        updateProfileImage,
     required TResult Function(String userId, String language) updateAppLanguage,
     required TResult Function(UserProfileEntity profile) saveChanges,
     required TResult Function() reset,

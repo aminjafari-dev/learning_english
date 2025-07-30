@@ -12,6 +12,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/core/router/page_router.dart';
+import 'package:learning_english/features/localization/presentation/bloc/localization_state.dart';
+import 'package:learning_english/features/localization/presentation/bloc/localization_bloc.dart';
+import 'package:learning_english/features/localization/presentation/bloc/localization_event.dart';
+import 'package:learning_english/features/localization/domain/entities/locale_entity.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   // Ensure Flutter bindings are initialized before any async work
@@ -26,6 +31,10 @@ void main() async {
   // Register all dependencies after Firebase is ready
   await initDependencies();
 
+  // Initialize localization BLoC
+  final localizationBloc = getIt<LocalizationBloc>();
+  localizationBloc.add(const LocalizationEvent.loadCurrentLocale());
+
   // Run the app
   runApp(const MyApp());
 }
@@ -35,22 +44,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Lingo',
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [Locale('en'), Locale('fa')],
-      locale: const Locale('en'), // or use a cubit for dynamic switching
-      theme:
-          AppTheme
-              .lightTheme, // Use your custom theme class here if you have one
-      initialRoute: PageName.splash,
-      routes: PageRouter.routes,
+    return BlocBuilder<LocalizationBloc, LocalizationState>(
+      bloc: getIt<LocalizationBloc>(),
+        builder: (context, state) {
+          // Check both loadCurrentLocale and setLocale states
+          Locale currentLocale = const Locale('en');
+
+          if (state.loadCurrentLocale is LoadCurrentLocaleCompleted) {
+            currentLocale =
+                (state.loadCurrentLocale as LoadCurrentLocaleCompleted).locale
+                    .toLocale();
+          } else if (state.setLocale is SetLocaleCompleted) {
+            currentLocale =
+                (state.setLocale as SetLocaleCompleted).locale.toLocale();
+          }
+
+          print('MaterialApp Locale: ${currentLocale.languageCode}');
+          return MaterialApp(
+            title: 'Lingo',
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [Locale('en'), Locale('fa')],
+            locale: currentLocale,
+            theme: AppTheme.lightTheme,
+            initialRoute: PageName.splash,
+            routes: PageRouter.routes,
+          );
+        },
+      
     );
   }
 }

@@ -10,89 +10,106 @@
 ///     onLanguageChanged: (language) => print('Language changed: $language'),
 ///   );
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/core/widgets/g_gap.dart';
 import 'package:learning_english/core/widgets/g_text.dart';
+import 'package:learning_english/features/localization/domain/entities/locale_entity.dart';
+import 'package:learning_english/features/localization/presentation/bloc/localization_bloc.dart';
+import 'package:learning_english/features/localization/presentation/bloc/localization_event.dart';
+import 'package:learning_english/features/localization/presentation/bloc/localization_state.dart';
 
 /// Widget for selecting app language
 class LanguageSelectorWidget extends StatelessWidget {
-  /// Current selected language code
-  final String currentLanguage;
-
-  /// Callback function when language is changed
-  final Function(String language) onLanguageChanged;
-
   /// Constructor for LanguageSelectorWidget
-  const LanguageSelectorWidget({
-    super.key,
-    required this.currentLanguage,
-    required this.onLanguageChanged,
-  });
+  const LanguageSelectorWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppTheme.oliveColor),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Language Label
-          Row(
-            children: [
-              Icon(Icons.language, color: AppTheme.accentColor, size: 20),
-              GGap.g8,
-              GText(
-                l10n.language,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ],
-          ),
-          GGap.g16,
+    return BlocBuilder<LocalizationBloc, LocalizationState>(
+      bloc: getIt<LocalizationBloc>(),
+      builder: (context, state) {
+        // Check both loadCurrentLocale and setLocale states
+        LocaleEntity currentLocale = LocaleEntity.english;
 
-          // Language Options
-          Row(
+        if (state.loadCurrentLocale is LoadCurrentLocaleCompleted) {
+          currentLocale =
+              (state.loadCurrentLocale as LoadCurrentLocaleCompleted).locale;
+        } else if (state.setLocale is SetLocaleCompleted) {
+          currentLocale = (state.setLocale as SetLocaleCompleted).locale;
+        }
+
+        print('Current Locale: ${currentLocale.languageCode}');
+
+        return Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceColor,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppTheme.oliveColor),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: _buildLanguageOption(
-                  context,
-                  'en',
-                  l10n.english,
-                  currentLanguage == 'en',
-                ),
+              // Language Label
+              Row(
+                children: [
+                  Icon(Icons.language, color: AppTheme.accentColor, size: 20),
+                  GGap.g8,
+                  GText(
+                    l10n.language,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ],
               ),
-              GGap.g12,
-              Expanded(
-                child: _buildLanguageOption(
-                  context,
-                  'fa',
-                  l10n.persian,
-                  currentLanguage == 'fa',
-                ),
+              GGap.g16,
+
+              // Language Options
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildLanguageOption(
+                      context: context,
+                      locale: LocaleEntity.english,
+                      languageName: l10n.english,
+                      isSelected: currentLocale.languageCode == 'en',
+                    ),
+                  ),
+                  GGap.g12,
+                  Expanded(
+                    child: _buildLanguageOption(
+                      context: context,
+                      locale: LocaleEntity.persian,
+                      languageName: l10n.persian,
+                      isSelected: currentLocale.languageCode == 'fa',
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
   /// Builds a language option button
-  Widget _buildLanguageOption(
-    BuildContext context,
-    String languageCode,
-    String languageName,
-    bool isSelected,
-  ) {
+  Widget _buildLanguageOption({
+    required BuildContext context,
+    required LocaleEntity locale,
+    required String languageName,
+    required bool isSelected,
+  }) {
     return GestureDetector(
-      onTap: () => onLanguageChanged(languageCode),
+      onTap: () {
+        getIt<LocalizationBloc>().add(
+          LocalizationEvent.setLocale(locale: locale),
+        );
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         decoration: BoxDecoration(

@@ -22,7 +22,7 @@ import 'package:learning_english/features/level_selection/domain/entities/user_p
     as user_profile;
 import 'package:learning_english/features/level_selection/domain/repositories/user_repository.dart';
 import 'package:learning_english/features/learning_focus_selection/domain/repositories/learning_focus_selection_repository.dart';
-import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
+import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
 
 /// Enhanced implementation of DailyLessonsRepository with complete request tracking

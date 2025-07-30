@@ -11,9 +11,8 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:learning_english/features/authentication/domain/usecases/sign_in_with_google_usecase.dart';
-import 'package:learning_english/features/authentication/domain/usecases/save_user_id_usecase.dart';
-import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
-import 'package:learning_english/features/authentication/domain/usecases/remove_user_id_usecase.dart';
+import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
+import 'package:learning_english/core/repositories/user_repository.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_event.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_state.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
@@ -24,17 +23,15 @@ import 'package:learning_english/features/authentication/domain/entities/user.da
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final SignInWithGoogleUseCase signInWithGoogleUseCase;
-  final SaveUserIdUseCase saveUserIdUseCase;
   final GetUserIdUseCase getUserIdUseCase;
-  final RemoveUserIdUseCase removeUserIdUseCase;
+  final UserRepository userRepository;
 
   /// Constructor that injects all required use cases
   /// This allows the BLoC to handle both authentication and local storage operations
   AuthenticationBloc({
     required this.signInWithGoogleUseCase,
-    required this.saveUserIdUseCase,
     required this.getUserIdUseCase,
-    required this.removeUserIdUseCase,
+    required this.userRepository,
   }) : super(const AuthenticationState.initial()) {
     on<AuthenticationEvent>((event, emit) async {
       await event.when(
@@ -60,15 +57,16 @@ class AuthenticationBloc
         },
         (user) async {
           // Save user ID locally if authentication is successful
-          final saveResult = await saveUserIdUseCase(user.id);
-          saveResult.fold(
-            (saveFailure) => emit(
+          try {
+            await userRepository.saveUserId(user.id);
+            emit(AuthenticationState.authenticated(user));
+          } catch (e) {
+            emit(
               AuthenticationState.error(
-                'Authentication successful but failed to save user ID: ${saveFailure.message}',
+                'Authentication successful but failed to save user ID: ${e.toString()}',
               ),
-            ),
-            (_) => emit(AuthenticationState.authenticated(user)),
-          );
+            );
+          }
         },
       );
     } catch (e) {
@@ -115,17 +113,14 @@ class AuthenticationBloc
 
     try {
       // Remove user ID from local storage
-      final removeResult = await removeUserIdUseCase(NoParams());
-      removeResult.fold(
-        (failure) => emit(
-          AuthenticationState.error(
-            'Failed to clear local data: ${failure.message}',
-          ),
-        ),
-        (_) => emit(const AuthenticationState.unauthenticated()),
-      );
+      await userRepository.removeUserId();
+      emit(const AuthenticationState.unauthenticated());
     } catch (e) {
-      emit(AuthenticationState.error(e.toString()));
+      emit(
+        AuthenticationState.error(
+          'Failed to clear local data: ${e.toString()}',
+        ),
+      );
     }
   }
 }

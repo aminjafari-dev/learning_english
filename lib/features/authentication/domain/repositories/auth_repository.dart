@@ -21,12 +21,5 @@ abstract class AuthRepository {
   /// Signs out the current user.
   Future<void> signOut();
 
-  /// Saves the userId locally (for global access)
-  Future<void> saveUserId(String userId);
 
-  /// Retrieves the userId from local storage
-  Future<String?> getUserId();
-
-  /// Removes the userId from local storage (e.g., on logout)
-  Future<void> removeUserId();
 }

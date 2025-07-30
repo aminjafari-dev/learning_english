@@ -6,9 +6,8 @@ import 'package:learning_english/features/authentication/data/datasources/user_l
 import 'package:learning_english/features/authentication/data/repositories/auth_repository_impl.dart';
 import 'package:learning_english/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:learning_english/features/authentication/domain/usecases/sign_in_with_google_usecase.dart';
-import 'package:learning_english/features/authentication/domain/usecases/save_user_id_usecase.dart';
-import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
-import 'package:learning_english/features/authentication/domain/usecases/remove_user_id_usecase.dart';
+import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
+import 'package:learning_english/core/repositories/user_repository.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_bloc.dart';
 
 void signInDi(GetIt locator) {
@@ -33,23 +32,13 @@ void signInDi(GetIt locator) {
   getIt.registerLazySingleton<SignInWithGoogleUseCase>(
     () => SignInWithGoogleUseCase(getIt<AuthRepository>()),
   );
-  getIt.registerLazySingleton<SaveUserIdUseCase>(
-    () => SaveUserIdUseCase(getIt<AuthRepository>()),
-  );
-  getIt.registerLazySingleton<GetUserIdUseCase>(
-    () => GetUserIdUseCase(getIt<AuthRepository>()),
-  );
-  getIt.registerLazySingleton<RemoveUserIdUseCase>(
-    () => RemoveUserIdUseCase(getIt<AuthRepository>()),
-  );
 
   // Bloc
   getIt.registerSingleton(
     AuthenticationBloc(
       signInWithGoogleUseCase: getIt<SignInWithGoogleUseCase>(),
-      saveUserIdUseCase: getIt<SaveUserIdUseCase>(),
       getUserIdUseCase: getIt<GetUserIdUseCase>(),
-      removeUserIdUseCase: getIt<RemoveUserIdUseCase>(),
+      userRepository: getIt<UserRepository>(),
     ),
   );
 }

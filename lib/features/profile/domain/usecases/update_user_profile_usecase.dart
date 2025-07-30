@@ -20,15 +20,18 @@ import 'package:learning_english/features/profile/domain/repositories/profile_re
 /// Parameters for updating user profile
 class UpdateUserProfileParams {
   /// The updated user profile entity
-  final UserProfile userProfile;
+  final UserProfileEntity userProfile;
+
+  /// The user ID
+  final String userId;
 
   /// Constructor for UpdateUserProfileParams
-  const UpdateUserProfileParams({required this.userProfile});
+  const UpdateUserProfileParams({required this.userProfile, required this.userId});
 }
 
 /// Use case for updating user profile data
 class UpdateUserProfileUseCase
-    implements UseCase<UserProfile, UpdateUserProfileParams> {
+    implements UseCase<UserProfileEntity, UpdateUserProfileParams> {
   /// The profile repository dependency
   final ProfileRepository _profileRepository;
 
@@ -49,13 +52,14 @@ class UpdateUserProfileUseCase
   /// Returns:
   ///   - Either<Failure, UserProfile>: Success with updated profile or failure
   @override
-  Future<Either<Failure, UserProfile>> call(
+  Future<Either<Failure, UserProfileEntity>> call(
     UpdateUserProfileParams params,
   ) async {
     try {
       // Call the repository to update the user profile
       final result = await _profileRepository.updateUserProfile(
-        params.userProfile,
+        userId: params.userId,
+        userProfile: params.userProfile,
       );
 
       // Return the result (either success or failure)

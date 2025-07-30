@@ -67,6 +67,7 @@ Future<void> setupProfileDI(GetIt locator) async {
   // Register BLoC
   locator.registerSingleton<ProfileBloc>(
     ProfileBloc(
+      getUserIdUseCase: locator(),
       getUserProfileUseCase: locator(),
       updateUserProfileUseCase: locator(),
       updateProfileImageUseCase: locator(),

@@ -9,7 +9,7 @@
 ///     remoteDataSource: profileRemoteDataSource,
 ///     localDataSource: profileLocalDataSource,
 ///   );
-///   final result = await repository.getUserProfile('user123');
+///   final result = await repository.getUserProfile(currentUserId);
 import 'package:dartz/dartz.dart';
 import 'package:learning_english/core/error/failure.dart';
 import 'package:learning_english/features/profile/data/datasources/profile_local_data_source.dart';
@@ -49,14 +49,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
   /// Returns:
   ///   - Either<Failure, UserProfile>: Success with profile data or failure
   @override
-  Future<Either<Failure, UserProfile>> getUserProfile(String userId) async {
+  Future<Either<Failure, UserProfileEntity>> getUserProfile(
+    String userId,
+  ) async {
     try {
       // First, try to get cached profile from local storage
       final cachedProfile = await _localDataSource.getCachedProfile(userId);
 
       if (cachedProfile != null) {
         // Return cached profile if available
-        return Right(cachedProfile.toDomain());
+        return Right(cachedProfile);
       }
 
       // If no cached data, fetch from remote
@@ -65,7 +67,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       // Cache the remote data for future use
       await _localDataSource.cacheProfile(remoteProfile);
 
-      return Right(remoteProfile.toDomain());
+      return Right(remoteProfile);
     } catch (e) {
       return Left(ServerFailure('Failed to get user profile: ${e.toString()}'));
     }
@@ -82,30 +84,31 @@ class ProfileRepositoryImpl implements ProfileRepository {
   /// Returns:
   ///   - Either<Failure, UserProfile>: Success with updated profile or failure
   @override
-  Future<Either<Failure, UserProfile>> updateUserProfile(
-    UserProfile userProfile,
+  Future<Either<Failure, UserProfileEntity>> updateUserProfile(
+     {  required String userId,
+      required UserProfileEntity userProfile,}
   ) async {
     try {
       // Convert domain entity to model
       final userProfileModel = UserProfileModel(
-        id: userProfile.id,
         fullName: userProfile.fullName,
         email: userProfile.email,
         profileImageUrl: userProfile.profileImageUrl,
         phoneNumber: userProfile.phoneNumber,
-        dateOfBirth: userProfile.dateOfBirth?.toIso8601String(),
+        dateOfBirth: userProfile.dateOfBirth,
         language: userProfile.language,
       );
 
       // Update in remote storage
       final updatedProfile = await _remoteDataSource.updateUserProfile(
-        userProfileModel,
+        userId: userId,
+        userProfile: userProfileModel,
       );
 
       // Update local cache
       await _localDataSource.cacheProfile(updatedProfile);
 
-      return Right(updatedProfile.toDomain());
+      return Right(updatedProfile);
     } catch (e) {
       return Left(
         ServerFailure('Failed to update user profile: ${e.toString()}'),

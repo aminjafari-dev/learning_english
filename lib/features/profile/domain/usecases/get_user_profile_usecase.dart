@@ -6,7 +6,7 @@
 ///
 /// Usage Example:
 ///   final useCase = GetUserProfileUseCase(profileRepository);
-///   final result = await useCase.call(GetUserProfileParams(userId: 'user123'));
+///   final result = await useCase.call(GetUserProfileParams(userId: currentUserId));
 ///   result.fold(
 ///     (failure) => print('Error: ${failure.message}'),
 ///     (profile) => print('Profile: ${profile.fullName}'),
@@ -28,7 +28,7 @@ class GetUserProfileParams {
 
 /// Use case for retrieving user profile data
 class GetUserProfileUseCase
-    implements UseCase<UserProfile, GetUserProfileParams> {
+    implements UseCase<UserProfileEntity, GetUserProfileParams> {
   /// The profile repository dependency
   final ProfileRepository _profileRepository;
 
@@ -49,7 +49,9 @@ class GetUserProfileUseCase
   /// Returns:
   ///   - Either<Failure, UserProfile>: Success with profile data or failure
   @override
-  Future<Either<Failure, UserProfile>> call(GetUserProfileParams params) async {
+  Future<Either<Failure, UserProfileEntity>> call(
+    GetUserProfileParams params,
+  ) async {
     try {
       // Call the repository to get the user profile
       final result = await _profileRepository.getUserProfile(params.userId);

@@ -7,7 +7,7 @@
 /// Usage Example:
 ///   final useCase = UpdateAppLanguageUseCase(profileRepository);
 ///   final result = await useCase.call(UpdateAppLanguageParams(
-///     userId: 'user123',
+///     userId: currentUserId,
 ///     language: 'en',
 ///   ));
 ///   result.fold(

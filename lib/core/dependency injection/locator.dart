@@ -4,6 +4,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:learning_english/core/dependency%20injection/core_di.dart';
 import 'package:learning_english/core/dependency%20injection/sign_in_di.dart';
 import 'package:learning_english/core/dependency%20injection/level_selection_di.dart';
 import 'package:learning_english/core/dependency%20injection/daily_lessons_di.dart';
@@ -26,6 +27,9 @@ Future<void> initDependencies() async {
     final prefs = await SharedPreferences.getInstance();
     getIt.registerSingleton<SharedPreferences>(prefs);
 
+    // Core Dependencies (must be first as other features depend on them)
+    setupCoreDI(getIt);
+
     // Splash Feature
     await setupSplashLocator(getIt);
 
@@ -44,7 +48,7 @@ Future<void> initDependencies() async {
 
     // Profile Feature
     await setupProfileDI(getIt);
-    
+
     // Vocabulary History Feature
     await setupVocabularyHistoryLocator(getIt);
 

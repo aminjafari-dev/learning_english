@@ -5,7 +5,7 @@
 /// such as loading profile data, updating information, or changing settings.
 ///
 /// Usage Example:
-///   context.read<ProfileBloc>().add(ProfileEvent.loadProfile(userId: 'user123'));
+///   context.read<ProfileBloc>().add(ProfileEvent.loadProfile(userId: currentUserId));
 ///   context.read<ProfileBloc>().add(ProfileEvent.updateProfile(profile: updatedProfile));
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:learning_english/features/profile/domain/entities/user_profile.dart';
@@ -16,12 +16,12 @@ part 'profile_event.freezed.dart';
 @freezed
 class ProfileEvent with _$ProfileEvent {
   /// Event to load user profile data
-  const factory ProfileEvent.loadProfile({required String userId}) =
-      LoadProfile;
+  const factory ProfileEvent.loadProfile() = LoadProfile;
 
   /// Event to update user profile information
-  const factory ProfileEvent.updateProfile({required UserProfile profile}) =
-      UpdateProfile;
+  const factory ProfileEvent.updateProfile({
+    required UserProfileEntity profile,
+  }) = UpdateProfile;
 
   /// Event to update profile image
   const factory ProfileEvent.updateProfileImage({
@@ -36,7 +36,7 @@ class ProfileEvent with _$ProfileEvent {
   }) = UpdateAppLanguage;
 
   /// Event to save profile changes
-  const factory ProfileEvent.saveChanges({required UserProfile profile}) =
+  const factory ProfileEvent.saveChanges({required UserProfileEntity profile}) =
       SaveChanges;
 
   /// Event to reset profile state

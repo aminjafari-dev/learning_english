@@ -34,7 +34,7 @@ import 'package:learning_english/features/daily_lessons/data/services/content_sy
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:learning_english/features/level_selection/domain/repositories/user_repository.dart';
 import 'package:learning_english/features/learning_focus_selection/domain/repositories/learning_focus_selection_repository.dart';
-import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
+import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
 
 /// Call this function to register all dependencies for Daily Lessons
 /// @param getIt The GetIt instance for dependency injection

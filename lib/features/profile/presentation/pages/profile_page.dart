@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late TextEditingController _dateOfBirthController;
 
   /// Current user profile data
-  UserProfile? _currentProfile;
+  UserProfileEntity? _currentProfile;
 
   /// Flag to track if form has been modified
   bool _isFormModified = false;
@@ -80,15 +80,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
   /// Loads the user profile data
   void _loadProfile() {
-    // TODO: Get actual user ID from authentication
-    const userId = 'user123';
-    getIt<ProfileBloc>().add(ProfileEvent.loadProfile(userId: userId));
+    // The BLoC will handle getting the user ID internally through the core use case
+    getIt<ProfileBloc>().add(const ProfileEvent.loadProfile());
   }
 
   /// Updates form controllers with profile data
-  void _updateControllers(UserProfile profile) {
-    _fullNameController.text = profile.fullName;
-    _emailController.text = profile.email;
+  void _updateControllers(UserProfileEntity profile) {
+    _fullNameController.text = profile.fullName ?? '';
+    _emailController.text = profile.email ?? '';
     _phoneController.text = profile.phoneNumber ?? '';
     _dateOfBirthController.text =
         profile.dateOfBirth?.toString().split(' ')[0] ?? '';
@@ -130,9 +129,9 @@ class _ProfilePageState extends State<ProfilePage> {
   /// Handles language selection
   void _onLanguageChanged(String language) {
     if (_currentProfile != null) {
-      const userId = 'user123'; // TODO: Get actual user ID
+      // The BLoC will handle getting the user ID internally through the core use case
       getIt<ProfileBloc>().add(
-        ProfileEvent.updateAppLanguage(userId: userId, language: language),
+        ProfileEvent.updateAppLanguage(userId: '', language: language),
       );
     }
   }
@@ -140,9 +139,9 @@ class _ProfilePageState extends State<ProfilePage> {
   /// Handles profile image update
   void _onProfileImageChanged(String imagePath) {
     if (_currentProfile != null) {
-      const userId = 'user123'; // TODO: Get actual user ID
+      // The BLoC will handle getting the user ID internally through the core use case
       getIt<ProfileBloc>().add(
-        ProfileEvent.updateProfileImage(userId: userId, imagePath: imagePath),
+        ProfileEvent.updateProfileImage(userId: '', imagePath: imagePath),
       );
     }
   }
@@ -241,7 +240,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   /// Builds the main profile content
-  Widget _buildProfileContent(UserProfile profile, AppLocalizations l10n) {
+  Widget _buildProfileContent(
+    UserProfileEntity profile,
+    AppLocalizations l10n,
+  ) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Form(
@@ -284,7 +286,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
             // Language Selector
             LanguageSelectorWidget(
-              currentLanguage: profile.language,
+              currentLanguage: profile.language ?? 'en',
               onLanguageChanged: _onLanguageChanged,
             ),
             GGap.g32,

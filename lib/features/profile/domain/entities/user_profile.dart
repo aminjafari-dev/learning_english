@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 /// UserProfile entity represents the core business object for user profile data.
 ///
 /// This entity is part of the domain layer and contains the essential
@@ -7,7 +9,7 @@
 ///
 /// Usage Example:
 ///   final profile = UserProfile(
-///     id: 'user123',
+///     id: currentUserId,
 ///     fullName: 'John Doe',
 ///     email: 'john@example.com',
 ///     profileImageUrl: 'https://example.com/image.jpg',
@@ -15,15 +17,12 @@
 ///     dateOfBirth: DateTime(1990, 1, 1),
 ///     language: 'en',
 ///   );
-class UserProfile {
-  /// Unique identifier for the user profile
-  final String id;
-
+class UserProfileEntity extends Equatable {
   /// User's full name
-  final String fullName;
+  final String? fullName;
 
   /// User's email address
-  final String email;
+  final String? email;
 
   /// URL to the user's profile image
   final String? profileImageUrl;
@@ -35,21 +34,20 @@ class UserProfile {
   final DateTime? dateOfBirth;
 
   /// User's preferred app language (e.g., 'en', 'fa')
-  final String language;
+  final String? language;
 
   /// Constructor for UserProfile entity
-  const UserProfile({
-    required this.id,
-    required this.fullName,
-    required this.email,
+  const UserProfileEntity({
+    this.fullName,
+    this.email,
     this.profileImageUrl,
     this.phoneNumber,
     this.dateOfBirth,
-    required this.language,
+    this.language,
   });
 
   /// Creates a copy of this UserProfile with the given fields replaced by new values
-  UserProfile copyWith({
+  UserProfileEntity copyWith({
     String? id,
     String? fullName,
     String? email,
@@ -58,8 +56,7 @@ class UserProfile {
     DateTime? dateOfBirth,
     String? language,
   }) {
-    return UserProfile(
-      id: id ?? this.id,
+    return UserProfileEntity(
       fullName: fullName ?? this.fullName,
       email: email ?? this.email,
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
@@ -69,35 +66,13 @@ class UserProfile {
     );
   }
 
-  /// Compares this UserProfile with another object for equality
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is UserProfile &&
-        other.id == id &&
-        other.fullName == fullName &&
-        other.email == email &&
-        other.profileImageUrl == profileImageUrl &&
-        other.phoneNumber == phoneNumber &&
-        other.dateOfBirth == dateOfBirth &&
-        other.language == language;
-  }
-
-  /// Generates a hash code for this UserProfile
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        fullName.hashCode ^
-        email.hashCode ^
-        profileImageUrl.hashCode ^
-        phoneNumber.hashCode ^
-        dateOfBirth.hashCode ^
-        language.hashCode;
-  }
-
-  /// Returns a string representation of this UserProfile
-  @override
-  String toString() {
-    return 'UserProfile(id: $id, fullName: $fullName, email: $email, profileImageUrl: $profileImageUrl, phoneNumber: $phoneNumber, dateOfBirth: $dateOfBirth, language: $language)';
-  }
+  List<Object?> get props => [
+    fullName,
+    email,
+    profileImageUrl,
+    phoneNumber,
+    dateOfBirth,
+    language,
+  ];
 }

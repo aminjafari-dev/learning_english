@@ -6,7 +6,7 @@
 ///
 /// Usage Example:
 ///   final dataSource = ProfileRemoteDataSourceImpl();
-///   final profile = await dataSource.getUserProfile('user123');
+///   final profile = await dataSource.getUserProfile(currentUserId);
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:learning_english/core/error/failure.dart';
 import 'package:learning_english/features/profile/data/datasources/profile_remote_data_source.dart';
@@ -45,7 +45,6 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       if (!doc.exists) {
         // Create default profile if user doesn't exist
         final defaultProfile = UserProfileModel(
-          id: userId,
           fullName: '',
           email: '',
           language: 'en',
@@ -79,13 +78,15 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   /// Throws:
   ///   - ServerException: If the remote operation fails
   @override
-  Future<UserProfileModel> updateUserProfile(
-    UserProfileModel userProfile,
-  ) async {
+  Future<UserProfileModel> updateUserProfile({
+    required String userId,
+    required UserProfileModel userProfile,
+  }) 
+   async {              
     try {
       await _firestore
           .collection('users')
-          .doc(userProfile.id)
+          .doc(userId)
           .update(userProfile.toJson());
 
       return userProfile;

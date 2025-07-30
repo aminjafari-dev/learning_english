@@ -11,7 +11,7 @@ import 'package:learning_english/features/level_selection/domain/entities/user_p
 import 'package:learning_english/features/level_selection/domain/usecases/save_user_level_usecase.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_event.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_state.dart';
-import 'package:learning_english/features/authentication/domain/usecases/get_user_id_usecase.dart';
+import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
 import 'package:learning_english/core/error/firebase_failure.dart';
 

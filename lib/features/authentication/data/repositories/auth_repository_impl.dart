@@ -46,21 +46,5 @@ class AuthRepositoryImpl implements AuthRepository {
     await remoteDataSource.signOut();
   }
 
-  /// Saves the userId locally (for global access)
-  @override
-  Future<void> saveUserId(String userId) async {
-    await localDataSource.saveUserId(userId);
-  }
 
-  /// Retrieves the userId from local storage
-  @override
-  Future<String?> getUserId() async {
-    return await localDataSource.getUserId();
-  }
-
-  /// Removes the userId from local storage (e.g., on logout)
-  @override
-  Future<void> removeUserId() async {
-    await localDataSource.removeUserId();
-  }
 }

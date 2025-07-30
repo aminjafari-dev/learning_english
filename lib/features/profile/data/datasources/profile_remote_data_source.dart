@@ -43,7 +43,7 @@ abstract class ProfileRemoteDataSource {
   ///
   /// Throws:
   ///   - ServerException: If the remote operation fails
-  Future<UserProfileModel> updateUserProfile(UserProfileModel userProfile);
+  Future<UserProfileModel> updateUserProfile({required UserProfileModel userProfile, required String userId});
 
   /// Uploads a profile image to remote storage
   ///

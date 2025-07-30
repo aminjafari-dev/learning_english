@@ -15,6 +15,8 @@
 ///     child: ProfilePage(),
 ///   );
 import 'package:bloc/bloc.dart';
+import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
+import 'package:learning_english/core/usecase/usecase.dart';
 import 'package:learning_english/features/profile/domain/entities/user_profile.dart';
 import 'package:learning_english/features/profile/domain/usecases/get_user_profile_usecase.dart';
 import 'package:learning_english/features/profile/domain/usecases/update_app_language_usecase.dart';
@@ -25,6 +27,9 @@ import 'package:learning_english/features/profile/presentation/bloc/profile_stat
 
 /// BLoC for managing profile state and operations
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+  /// Use case for getting user ID
+  final GetUserIdUseCase _getUserIdUseCase;
+
   /// Use case for getting user profile
   final GetUserProfileUseCase _getUserProfileUseCase;
 
@@ -40,16 +45,19 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   /// Constructor for ProfileBloc
   ///
   /// Parameters:
+  ///   - getUserIdUseCase: Use case for retrieving user ID
   ///   - getUserProfileUseCase: Use case for retrieving user profile
   ///   - updateUserProfileUseCase: Use case for updating user profile
   ///   - updateProfileImageUseCase: Use case for updating profile image
   ///   - updateAppLanguageUseCase: Use case for updating app language
   ProfileBloc({
+    required GetUserIdUseCase getUserIdUseCase,
     required GetUserProfileUseCase getUserProfileUseCase,
     required UpdateUserProfileUseCase updateUserProfileUseCase,
     required UpdateProfileImageUseCase updateProfileImageUseCase,
     required UpdateAppLanguageUseCase updateAppLanguageUseCase,
-  }) : _getUserProfileUseCase = getUserProfileUseCase,
+  }) : _getUserIdUseCase = getUserIdUseCase,
+       _getUserProfileUseCase = getUserProfileUseCase,
        _updateUserProfileUseCase = updateUserProfileUseCase,
        _updateProfileImageUseCase = updateProfileImageUseCase,
        _updateAppLanguageUseCase = updateAppLanguageUseCase,
@@ -71,7 +79,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     Emitter<ProfileState> emit,
   ) async {
     await event.when(
-      loadProfile: (userId) async => await _onLoadProfile(userId, emit),
+      loadProfile: () async => await _onLoadProfile(emit),
       updateProfile: (profile) async => await _onUpdateProfile(profile, emit),
       updateProfileImage:
           (userId, imagePath) async =>
@@ -86,31 +94,51 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   /// Handles loading profile data
   ///
-  /// This method calls the use case to retrieve user profile data
+  /// This method gets the current user ID and then retrieves user profile data
   /// and emits appropriate states based on the result.
   ///
   /// Parameters:
-  ///   - userId: The unique identifier of the user
+  ///   - userId: The unique identifier of the user (unused, gets from core use case)
   ///   - emit: Function to emit new states
-  Future<void> _onLoadProfile(String userId, Emitter<ProfileState> emit) async {
+  Future<void> _onLoadProfile(Emitter<ProfileState> emit) async {
     if (!emit.isDone) {
       emit(const ProfileState.loading());
     }
 
-    final result = await _getUserProfileUseCase.call(
-      GetUserProfileParams(userId: userId),
-    );
+    // First, get the current user ID
+    final userIdResult = await _getUserIdUseCase(NoParams());
 
-    result.fold(
-      (failure) {
+    await userIdResult.fold(
+      (failure) async {
         if (!emit.isDone) {
           emit(ProfileState.error(message: failure.message));
         }
       },
-      (profile) {
-        if (!emit.isDone) {
-          emit(ProfileState.loaded(profile: profile));
+      (currentUserId) async {
+        if (currentUserId == null || currentUserId.isEmpty) {
+          if (!emit.isDone) {
+            emit(const ProfileState.error(message: 'User not authenticated'));
+          }
+          return;
         }
+
+        // Get the user profile using the user ID
+        final result = await _getUserProfileUseCase(
+          GetUserProfileParams(userId: currentUserId),
+        );
+
+        result.fold(
+          (failure) {
+            if (!emit.isDone) {
+              emit(ProfileState.error(message: failure.message));
+            }
+          },
+          (profile) {
+            if (!emit.isDone) {
+              emit(ProfileState.loaded(profile: profile));
+            }
+          },
+        );
       },
     );
   }
@@ -124,38 +152,49 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ///   - profile: The updated profile data
   ///   - emit: Function to emit new states
   Future<void> _onUpdateProfile(
-    UserProfile profile,
+    UserProfileEntity profile,
     Emitter<ProfileState> emit,
   ) async {
-    if (!emit.isDone) {
-      emit(ProfileState.updating(profile: profile));
-    }
+    final userIdResult = await _getUserIdUseCase(NoParams());
 
-    final result = await _updateUserProfileUseCase.call(
-      UpdateUserProfileParams(userProfile: profile),
-    );
-
-    result.fold(
-      (failure) {
+    await userIdResult.fold(
+      (failure) async {
         if (!emit.isDone) {
           emit(ProfileState.error(message: failure.message));
         }
       },
-      (updatedProfile) {
+      (currentUserId) async {
         if (!emit.isDone) {
-          emit(ProfileState.updated(profile: updatedProfile));
+          emit(ProfileState.updating(profile: profile));
         }
+
+        final result = await _updateUserProfileUseCase(
+          UpdateUserProfileParams(userProfile: profile, userId: currentUserId!),
+        );
+
+        result.fold(
+          (failure) {
+            if (!emit.isDone) {
+              emit(ProfileState.error(message: failure.message));
+            }
+          },
+          (updatedProfile) {
+            if (!emit.isDone) {
+              emit(ProfileState.updated(profile: updatedProfile));
+            }
+          },
+        );
       },
     );
   }
 
   /// Handles updating profile image
   ///
-  /// This method calls the use case to upload and update profile image
+  /// This method gets the current user ID and then uploads and updates profile image
   /// and emits appropriate states based on the result.
   ///
   /// Parameters:
-  ///   - userId: The unique identifier of the user
+  ///   - userId: The unique identifier of the user (unused, gets from core use case)
   ///   - imagePath: Local path to the image file
   ///   - emit: Function to emit new states
   Future<void> _onUpdateProfileImage(
@@ -163,36 +202,56 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     String imagePath,
     Emitter<ProfileState> emit,
   ) async {
-    final result = await _updateProfileImageUseCase.call(
-      UpdateProfileImageParams(userId: userId, imagePath: imagePath),
-    );
+    // First, get the current user ID
+    final userIdResult = await _getUserIdUseCase(NoParams());
 
-    result.fold(
-      (failure) {
+    await userIdResult.fold(
+      (failure) async {
         if (!emit.isDone) {
           emit(ProfileState.error(message: failure.message));
         }
       },
-      (imageUrl) {
-        // Update the current profile with the new image URL
-        if (state is ProfileLoaded && !emit.isDone) {
-          final currentProfile = (state as ProfileLoaded).profile;
-          final updatedProfile = currentProfile.copyWith(
-            profileImageUrl: imageUrl,
-          );
-          emit(ProfileState.updated(profile: updatedProfile));
+      (currentUserId) async {
+        if (currentUserId == null || currentUserId.isEmpty) {
+          if (!emit.isDone) {
+            emit(const ProfileState.error(message: 'User not authenticated'));
+          }
+          return;
         }
+
+        // Update the profile image using the user ID
+        final result = await _updateProfileImageUseCase(
+          UpdateProfileImageParams(userId: currentUserId, imagePath: imagePath),
+        );
+
+        result.fold(
+          (failure) {
+            if (!emit.isDone) {
+              emit(ProfileState.error(message: failure.message));
+            }
+          },
+          (imageUrl) {
+            // Update the current profile with the new image URL
+            if (state is ProfileLoaded && !emit.isDone) {
+              final currentProfile = (state as ProfileLoaded).profile;
+              final updatedProfile = currentProfile.copyWith(
+                profileImageUrl: imageUrl,
+              );
+              emit(ProfileState.updated(profile: updatedProfile));
+            }
+          },
+        );
       },
     );
   }
 
   /// Handles updating app language
   ///
-  /// This method calls the use case to update the app language setting
+  /// This method gets the current user ID and then updates the app language setting
   /// and emits appropriate states based on the result.
   ///
   /// Parameters:
-  ///   - userId: The unique identifier of the user
+  ///   - userId: The unique identifier of the user (unused, gets from core use case)
   ///   - language: The language code to set
   ///   - emit: Function to emit new states
   Future<void> _onUpdateAppLanguage(
@@ -200,25 +259,45 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     String language,
     Emitter<ProfileState> emit,
   ) async {
-    final result = await _updateAppLanguageUseCase.call(
-      UpdateAppLanguageParams(userId: userId, language: language),
-    );
+    // First, get the current user ID
+    final userIdResult = await _getUserIdUseCase(NoParams());
 
-    result.fold(
-      (failure) {
+    await userIdResult.fold(
+      (failure) async {
         if (!emit.isDone) {
           emit(ProfileState.error(message: failure.message));
         }
       },
-      (updatedLanguage) {
-        // Update the current profile with the new language
-        if (state is ProfileLoaded && !emit.isDone) {
-          final currentProfile = (state as ProfileLoaded).profile;
-          final updatedProfile = currentProfile.copyWith(
-            language: updatedLanguage,
-          );
-          emit(ProfileState.updated(profile: updatedProfile));
+      (currentUserId) async {
+        if (currentUserId == null || currentUserId.isEmpty) {
+          if (!emit.isDone) {
+            emit(const ProfileState.error(message: 'User not authenticated'));
+          }
+          return;
         }
+
+        // Update the app language using the user ID
+        final result = await _updateAppLanguageUseCase(
+          UpdateAppLanguageParams(userId: currentUserId, language: language),
+        );
+
+        result.fold(
+          (failure) {
+            if (!emit.isDone) {
+              emit(ProfileState.error(message: failure.message));
+            }
+          },
+          (updatedLanguage) {
+            // Update the current profile with the new language
+            if (state is ProfileLoaded && !emit.isDone) {
+              final currentProfile = (state as ProfileLoaded).profile;
+              final updatedProfile = currentProfile.copyWith(
+                language: updatedLanguage,
+              );
+              emit(ProfileState.updated(profile: updatedProfile));
+            }
+          },
+        );
       },
     );
   }
@@ -232,27 +311,45 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ///   - profile: The profile data to save
   ///   - emit: Function to emit new states
   Future<void> _onSaveChanges(
-    UserProfile profile,
+    UserProfileEntity profile,
     Emitter<ProfileState> emit,
   ) async {
-    if (!emit.isDone) {
-      emit(ProfileState.saving(profile: profile));
-    }
+    final userIdResult = await _getUserIdUseCase(NoParams());
 
-    final result = await _updateUserProfileUseCase.call(
-      UpdateUserProfileParams(userProfile: profile),
-    );
-
-    result.fold(
-      (failure) {
+    await userIdResult.fold(
+      (failure) async {
         if (!emit.isDone) {
           emit(ProfileState.error(message: failure.message));
         }
       },
-      (savedProfile) {
-        if (!emit.isDone) {
-          emit(ProfileState.saved(profile: savedProfile));
+      (currentUserId) async {
+        if (currentUserId == null || currentUserId.isEmpty) {
+          if (!emit.isDone) {
+            emit(const ProfileState.error(message: 'User not authenticated'));
+          }
+          return;
         }
+
+        if (!emit.isDone) {
+          emit(ProfileState.saving(profile: profile));
+        }
+
+        final result = await _updateUserProfileUseCase(
+          UpdateUserProfileParams(userProfile: profile, userId: currentUserId!),
+        );
+
+        result.fold(
+          (failure) {
+            if (!emit.isDone) {
+              emit(ProfileState.error(message: failure.message));
+            }
+          },
+          (savedProfile) {
+            if (!emit.isDone) {
+              emit(ProfileState.saved(profile: savedProfile));
+            }
+          },
+        );
       },
     );
   }

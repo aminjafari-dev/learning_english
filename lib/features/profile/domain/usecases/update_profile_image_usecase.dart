@@ -7,7 +7,7 @@
 /// Usage Example:
 ///   final useCase = UpdateProfileImageUseCase(profileRepository);
 ///   final result = await useCase.call(UpdateProfileImageParams(
-///     userId: 'user123',
+///     userId: currentUserId,
 ///     imagePath: '/path/to/image.jpg',
 ///   ));
 ///   result.fold(

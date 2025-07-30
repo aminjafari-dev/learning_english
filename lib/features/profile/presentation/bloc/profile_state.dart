@@ -30,25 +30,25 @@ class ProfileState with _$ProfileState {
   const factory ProfileState.loading() = ProfileLoading;
 
   /// Loaded state when profile data has been successfully retrieved
-  const factory ProfileState.loaded({required UserProfile profile}) =
+  const factory ProfileState.loaded({required UserProfileEntity profile}) =
       ProfileLoaded;
 
   /// Updating state when profile data is being updated
-  const factory ProfileState.updating({required UserProfile profile}) =
+  const factory ProfileState.updating({required UserProfileEntity profile}) =
       ProfileUpdating;
 
   /// Updated state when profile data has been successfully updated
-  const factory ProfileState.updated({required UserProfile profile}) =
+  const factory ProfileState.updated({required UserProfileEntity profile}) =
       ProfileUpdated;
 
   /// Error state when an error occurs during profile operations
   const factory ProfileState.error({required String message}) = ProfileError;
 
   /// Saving state when profile changes are being saved
-  const factory ProfileState.saving({required UserProfile profile}) =
+  const factory ProfileState.saving({required UserProfileEntity profile}) =
       ProfileSaving;
 
   /// Saved state when profile changes have been successfully saved
-  const factory ProfileState.saved({required UserProfile profile}) =
+  const factory ProfileState.saved({required UserProfileEntity profile}) =
       ProfileSaved;
 }

@@ -27,7 +27,7 @@ abstract class ProfileRepository {
   ///
   /// Returns:
   ///   - Either<Failure, UserProfile>: Success with profile data or failure
-  Future<Either<Failure, UserProfile>> getUserProfile(String userId);
+  Future<Either<Failure, UserProfileEntity>> getUserProfile(String userId);
 
   /// Updates the user profile information
   ///
@@ -38,8 +38,8 @@ abstract class ProfileRepository {
   ///
   /// Returns:
   ///   - Either<Failure, UserProfile>: Success with updated profile or failure
-  Future<Either<Failure, UserProfile>> updateUserProfile(
-    UserProfile userProfile,
+  Future<Either<Failure, UserProfileEntity>> updateUserProfile(
+    {required String userId, required UserProfileEntity userProfile,}
   );
 
   /// Updates the user's profile image

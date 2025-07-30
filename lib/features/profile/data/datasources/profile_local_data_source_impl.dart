@@ -6,7 +6,7 @@
 ///
 /// Usage Example:
 ///   final dataSource = ProfileLocalDataSourceImpl(sharedPreferences: prefs);
-///   final profile = await dataSource.getCachedProfile('user123');
+///   final profile = await dataSource.getCachedProfile(currentUserId);
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:learning_english/features/profile/data/datasources/profile_local_data_source.dart';
 import 'package:learning_english/features/profile/data/models/user_profile_model.dart';
@@ -77,7 +77,7 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
     try {
       final profileJson = userProfile.toJson().toString();
       await _sharedPreferences.setString(
-        'profile_${userProfile.id}',
+        'profile_${userProfile.email}',
         profileJson,
       );
       return true;

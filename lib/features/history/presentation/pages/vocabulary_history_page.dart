@@ -90,6 +90,7 @@ class VocabularyHistoryPage extends StatelessWidget {
     );
   }
 
+
   /// Builds the history list widget
   Widget _buildHistoryList(BuildContext context, List<dynamic> requests) {
     if (requests.isEmpty) {

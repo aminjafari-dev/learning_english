@@ -19,6 +19,7 @@ class VocabularyHistoryCard extends StatelessWidget {
 
   const VocabularyHistoryCard({super.key, required this.vocabulary});
 
+
   @override
   Widget build(BuildContext context) {
     return Card(

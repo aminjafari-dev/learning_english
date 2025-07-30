@@ -17,6 +17,7 @@ import '../../domain/entities/phrase_history_item.dart';
 class PhraseHistoryCard extends StatelessWidget {
   final PhraseHistoryItem phrase;
 
+
   const PhraseHistoryCard({super.key, required this.phrase});
 
   @override

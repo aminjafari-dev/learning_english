@@ -5,6 +5,7 @@
 ///
 /// This helps maintain consistent text styling and allows for future customization.
 import 'package:flutter/material.dart';
+import 'package:learning_english/core/constants/font_constants.dart';
 
 class GText extends StatelessWidget {
   final String data;
@@ -26,7 +27,7 @@ class GText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       data,
-      style: style,
+      style: style?.copyWith(fontFamily: FontConstants.shabnamFont),
       textAlign: textAlign,
       maxLines: maxLines,
       overflow: overflow,

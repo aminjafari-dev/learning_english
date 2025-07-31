@@ -7,6 +7,7 @@
 ///
 /// This helps maintain a consistent look and feel across the app.
 import 'package:flutter/material.dart';
+import 'package:learning_english/core/constants/font_constants.dart';
 
 /// This class defines all the color constants used throughout the app.
 /// Only use these colors in the UI. If you need a new color, add it here first.
@@ -76,20 +77,35 @@ class AppTheme {
         fontSize: 18,
         color: white,
         fontWeight: FontWeight.w600,
+        fontFamily: FontConstants.persianFont,
       ),
-      bodyMedium: TextStyle(fontSize: 16, color: white),
-      bodySmall: TextStyle(fontSize: 14, color: accentColor),
+      bodyMedium: TextStyle(
+        fontSize: 16,
+        color: white,
+        fontFamily: FontConstants.persianFont,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 14,
+        color: accentColor,
+        fontFamily: FontConstants.persianFont,
+      ),
       titleLarge: TextStyle(
         fontSize: 22,
         color: white,
         fontWeight: FontWeight.bold,
+        fontFamily: FontConstants.persianFont,
       ),
       titleMedium: TextStyle(
         fontSize: 18,
         color: accentColor,
         fontWeight: FontWeight.w500,
+        fontFamily: FontConstants.persianFont,
       ),
-      titleSmall: TextStyle(fontSize: 16, color: accentColor),
+      titleSmall: TextStyle(
+        fontSize: 16,
+        color: accentColor,
+        fontFamily: FontConstants.persianFont,
+      ),
     ),
     cardColor: surfaceColor,
     dividerColor: oliveColor,
@@ -109,8 +125,14 @@ class AppTheme {
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(color: primaryColor, width: 2),
       ),
-      hintStyle: const TextStyle(color: Color(0xFFC7BA94)),
-      labelStyle: const TextStyle(color: Color(0xFFC7BA94)),
+      hintStyle: const TextStyle(
+        color: Color(0xFFC7BA94),
+        fontFamily: FontConstants.persianFont,
+      ),
+      labelStyle: const TextStyle(
+        color: Color(0xFFC7BA94),
+        fontFamily: FontConstants.persianFont,
+      ),
     ),
   );
 }

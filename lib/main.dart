@@ -15,7 +15,6 @@ import 'package:learning_english/core/router/page_router.dart';
 import 'package:learning_english/features/localization/presentation/bloc/localization_state.dart';
 import 'package:learning_english/features/localization/presentation/bloc/localization_bloc.dart';
 import 'package:learning_english/features/localization/presentation/bloc/localization_event.dart';
-import 'package:learning_english/features/localization/domain/entities/locale_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
@@ -59,7 +58,6 @@ class MyApp extends StatelessWidget {
                 (state.setLocale as SetLocaleCompleted).locale.toLocale();
           }
 
-          print('MaterialApp Locale: ${currentLocale.languageCode}');
           return MaterialApp(
             title: 'Lingo',
             debugShowCheckedModeBanner: false,

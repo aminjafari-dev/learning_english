@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/core/widgets/g_scaffold.dart';
-import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/features/level_selection/presentation/widgets/level_selection_content.dart';
 import 'package:learning_english/features/level_selection/domain/entities/user_profile.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_bloc.dart';
@@ -15,7 +14,8 @@ import 'package:learning_english/features/level_selection/presentation/blocs/lev
 import 'package:learning_english/core/dependency%20injection/locator.dart';
 
 /// LevelSelectionPage allows users to select their English proficiency level.
-/// Now retrieves userId from local storage using GetUserIdUseCase (DI), not via constructor.
+/// Now navigates immediately when a level is selected, without waiting for Firebase response.
+/// Errors are handled silently without showing anything to the user.
 class LevelSelectionPage extends StatelessWidget {
   const LevelSelectionPage({super.key});
 
@@ -29,13 +29,12 @@ class LevelSelectionPage extends StatelessWidget {
           selectionMade: (_) {},
           loading: (_) {},
           success: (_) {
-            // Navigate to the learning focus selection page after level selection
+            // Navigate to the learning focus selection page immediately when level is selected
             Navigator.of(context).pushNamed(PageName.learningFocusSelection);
           },
           error: (message, _) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: GText(message)));
+            // Errors are handled silently - no UI feedback to user
+            // Firebase operations happen in background and errors are logged only
           },
         );
       },

@@ -14,7 +14,7 @@ class LevelOptionCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final bool selected;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const LevelOptionCard({
     super.key,
@@ -38,7 +38,9 @@ class LevelOptionCard extends StatelessWidget {
           decoration: BoxDecoration(
             color:
                 selected
-                    ? Theme.of(context).colorScheme.primary.withOpacity(0.15)
+                    ? Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.15)
                     : Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(

@@ -198,5 +198,47 @@
   "errorLoadingHistory": "Error loading history",
   "@errorLoadingHistory": {
     "description": "Error message when loading history fails."
+  },
+  "today": "Today",
+  "@today": {
+    "description": "Text for today in date formatting."
+  },
+  "yesterday": "Yesterday",
+  "@yesterday": {
+    "description": "Text for yesterday in date formatting."
+  },
+  "daysAgo": "{count} days ago",
+  "@daysAgo": {
+    "description": "Text for days ago in date formatting.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "at": "at",
+  "@at": {
+    "description": "Text for 'at' in time formatting."
+  },
+  "generalLearning": "General Learning",
+  "@generalLearning": {
+    "description": "Text for general learning focus area."
+  },
+  "levelBeginnerShort": "Beginner",
+  "@levelBeginnerShort": {
+    "description": "Short text for beginner level."
+  },
+  "levelElementaryShort": "Elementary",
+  "@levelElementaryShort": {
+    "description": "Short text for elementary level."
+  },
+  "levelIntermediateShort": "Intermediate",
+  "@levelIntermediateShort": {
+    "description": "Short text for intermediate level."
+  },
+  "levelAdvancedShort": "Advanced",
+  "@levelAdvancedShort": {
+    "description": "Short text for advanced level."
   }
 } 

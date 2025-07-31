@@ -162,5 +162,47 @@
   "history": "تاریخچه",
   "@history": {
     "description": "عنوان صفحه تاریخچه واژگان."
+  },
+  "today": "امروز",
+  "@today": {
+    "description": "متن برای امروز در فرمت تاریخ."
+  },
+  "yesterday": "دیروز",
+  "@yesterday": {
+    "description": "متن برای دیروز در فرمت تاریخ."
+  },
+  "daysAgo": "{count} روز پیش",
+  "@daysAgo": {
+    "description": "متن برای روزهای پیش در فرمت تاریخ.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "at": "در",
+  "@at": {
+    "description": "متن برای 'در' در فرمت زمان."
+  },
+  "generalLearning": "یادگیری عمومی",
+  "@generalLearning": {
+    "description": "متن برای تمرکز یادگیری عمومی."
+  },
+  "levelBeginnerShort": "مبتدی",
+  "@levelBeginnerShort": {
+    "description": "متن کوتاه برای سطح مبتدی."
+  },
+  "levelElementaryShort": "ابتدایی",
+  "@levelElementaryShort": {
+    "description": "متن کوتاه برای سطح ابتدایی."
+  },
+  "levelIntermediateShort": "متوسط",
+  "@levelIntermediateShort": {
+    "description": "متن کوتاه برای سطح متوسط."
+  },
+  "levelAdvancedShort": "پیشرفته",
+  "@levelAdvancedShort": {
+    "description": "متن کوتاه برای سطح پیشرفته."
   }
 } 

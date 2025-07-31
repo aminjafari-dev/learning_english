@@ -48,7 +48,7 @@ class HistoryRequestCard extends StatelessWidget {
                   // GGap.g8,
                   Expanded(
                     child: GText(
-                      _formatFocusAreas(request.focusAreas),
+                      _formatFocusAreas(request.focusAreas, context),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppTheme.white,
                         fontWeight: FontWeight.bold,
@@ -72,14 +72,14 @@ class HistoryRequestCard extends StatelessWidget {
                   ),
                   GGap.g4,
                   GText(
-                    _formatDate(request.createdAt),
+                    _formatDate(request.createdAt, context),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   Spacer(),
                   Icon(Icons.school, color: AppTheme.accentColor, size: 16),
                   GGap.g4,
                   GText(
-                    _formatUserLevel(request.userLevel),
+                    _formatUserLevel(request.userLevel, context),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppTheme.accentColor,
                       fontWeight: FontWeight.w500,
@@ -88,20 +88,20 @@ class HistoryRequestCard extends StatelessWidget {
                 ],
               ),
               GGap.g8,
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppTheme.primaryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: GText(
-                  '${request.totalItems} ${AppLocalizations.of(context)!.itemsGenerated}',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppTheme.primaryColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
+              // Container(
+              //   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              //   decoration: BoxDecoration(
+              //     color: AppTheme.primaryColor.withOpacity(0.1),
+              //     borderRadius: BorderRadius.circular(8),
+              //   ),
+              //   child: GText(
+              //     '${request.totalItems} ${AppLocalizations.of(context)!.itemsGenerated}',
+              //     style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              //       color: AppTheme.primaryColor,
+              //       fontWeight: FontWeight.w500,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -109,34 +109,40 @@ class HistoryRequestCard extends StatelessWidget {
     );
   }
 
-  /// Formats the date for display
-  String _formatDate(DateTime date) {
+  /// Formats the date for display using localized strings
+  /// Supports both English and Persian date formatting
+  String _formatDate(DateTime date, BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final now = DateTime.now();
     final difference = now.difference(date);
 
     if (difference.inDays == 0) {
-      return 'Today at ${_formatTime(date)}';
+      return '${l10n.today} ${l10n.at} ${_formatTime(date)}';
     } else if (difference.inDays == 1) {
-      return 'Yesterday at ${_formatTime(date)}';
+      return '${l10n.yesterday} ${l10n.at} ${_formatTime(date)}';
     } else if (difference.inDays < 7) {
-      return '${difference.inDays} days ago';
+      return l10n.daysAgo(difference.inDays);
     } else {
       return '${date.day}/${date.month}/${date.year}';
     }
   }
 
   /// Formats the time for display
+  /// Returns time in HH:MM format
   String _formatTime(DateTime date) {
     final hour = date.hour.toString().padLeft(2, '0');
     final minute = date.minute.toString().padLeft(2, '0');
     return '$hour:$minute';
   }
 
-  /// Formats focus areas for display
+  /// Formats focus areas for display using localized strings
   /// Converts focus areas list to a readable string
-  String _formatFocusAreas(List<String> focusAreas) {
+  /// Uses localization for general learning fallback
+  String _formatFocusAreas(List<String> focusAreas, BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (focusAreas.isEmpty) {
-      return 'General Learning';
+      return l10n.generalLearning;
     }
 
     // Capitalize and join focus areas
@@ -155,20 +161,20 @@ class HistoryRequestCard extends StatelessWidget {
         .join(', ');
   }
 
-  /// Formats user level for display
+  /// Formats user level for display using localized strings
   /// Converts UserLevel enum to a readable string
-  String _formatUserLevel(UserLevel userLevel) {
+  String _formatUserLevel(UserLevel userLevel, BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     switch (userLevel) {
       case UserLevel.beginner:
-        return 'Beginner';
+        return l10n.levelBeginnerShort;
       case UserLevel.elementary:
-        return 'Elementary';
+        return l10n.levelElementaryShort;
       case UserLevel.intermediate:
-        return 'Intermediate';
+        return l10n.levelIntermediateShort;
       case UserLevel.advanced:
-        return 'Advanced';
-      default:
-        return 'Beginner';
+        return l10n.levelAdvancedShort;
     }
   }
 }

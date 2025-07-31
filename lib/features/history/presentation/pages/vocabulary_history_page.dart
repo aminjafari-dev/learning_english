@@ -56,10 +56,8 @@ class VocabularyHistoryPage extends StatelessWidget {
       body: BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
         bloc: getIt<VocabularyHistoryBloc>(),
         builder: (context, state) {
-          print('🔄 [HISTORY] Current state: ${state.historyRequests}');
           return state.historyRequests.when(
             initial: () {
-              print('🔄 [HISTORY] Initial state - triggering load');
               // Trigger load when in initial state
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 getIt<VocabularyHistoryBloc>().add(
@@ -77,11 +75,9 @@ class VocabularyHistoryPage extends StatelessWidget {
                   ),
                 ),
             completed: (requests) {
-              print('🔄 [HISTORY] Completed with ${requests.length} requests');
               return _buildHistoryList(context, requests);
             },
             error: (message) {
-              print('❌ [HISTORY] Error: $message');
               return _buildErrorWidget(context, message);
             },
           );
@@ -89,7 +85,6 @@ class VocabularyHistoryPage extends StatelessWidget {
       ),
     );
   }
-
 
   /// Builds the history list widget
   Widget _buildHistoryList(BuildContext context, List<dynamic> requests) {
@@ -116,36 +111,17 @@ class VocabularyHistoryPage extends StatelessWidget {
 
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              GText(
-                AppLocalizations.of(context)!.historyRequests,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const Spacer(),
-              GText(
-                '${requests.length} requests',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ),
+        GGap.g16,
         Expanded(
           child: ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             itemCount: requests.length,
             itemBuilder: (context, index) {
               final request = requests[index];
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: HistoryRequestCard(
-                  request: request,
-                  onTap:
-                      () =>
-                          _navigateToRequestDetails(context, request.requestId),
-                ),
+              return HistoryRequestCard(
+                request: request,
+                onTap:
+                    () => _navigateToRequestDetails(context, request.requestId),
               );
             },
           ),

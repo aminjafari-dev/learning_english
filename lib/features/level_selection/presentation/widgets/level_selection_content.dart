@@ -3,7 +3,6 @@
 // Now only combines header and level options list since level selection is immediate.
 
 import 'package:flutter/material.dart';
-import 'package:learning_english/features/level_selection/presentation/widgets/level_selection_header.dart';
 import 'package:learning_english/features/level_selection/presentation/widgets/level_options_list.dart';
 import 'package:learning_english/features/level_selection/domain/entities/user_profile.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_state.dart';
@@ -26,7 +25,6 @@ class LevelSelectionContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const LevelSelectionHeader(),
         LevelOptionsList(selectedLevel: selectedLevel, state: state),
         // Continue button removed - level selection now happens immediately
         // when user taps on any level option

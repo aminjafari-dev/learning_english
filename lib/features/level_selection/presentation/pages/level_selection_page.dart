@@ -6,12 +6,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_english/core/router/page_name.dart';
+import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/core/widgets/g_scaffold.dart';
+import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/features/level_selection/presentation/widgets/level_selection_content.dart';
 import 'package:learning_english/features/level_selection/domain/entities/user_profile.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_bloc.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_state.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// LevelSelectionPage allows users to select their English proficiency level.
 /// Now navigates immediately when a level is selected, without waiting for Firebase response.
@@ -49,6 +52,16 @@ class LevelSelectionPage extends StatelessWidget {
         );
 
         return GScaffold(
+
+
+      appBar: AppBar(
+        title: GText(
+          AppLocalizations.of(context)!.levelSelectionTitle,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        backgroundColor: AppTheme.surface,
+        foregroundColor: AppTheme.white,
+      ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
             child: LevelSelectionContent(

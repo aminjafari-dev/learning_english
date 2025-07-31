@@ -89,26 +89,31 @@ class PhraseCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GText(
-          phrase!.english,
-          style: Theme.of(
-            context,
-          ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: GText(
+              phrase!.english,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
         GGap.g4,
         Align(
           alignment: Alignment.centerRight,
-          child: 
-        Directionality(
-          textDirection: TextDirection.rtl,
-          child: GText(
-            phrase!.persian,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: AppTheme.hint),
-            textAlign: TextAlign.start,
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: GText(
+              phrase!.persian,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: AppTheme.hint),
+              textAlign: TextAlign.start,
+            ),
           ),
-        ),
         ),
       ],
     );

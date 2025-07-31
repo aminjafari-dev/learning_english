@@ -81,6 +81,7 @@ class VocabularySection extends StatelessWidget {
                 (vocab) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2.0),
                   child: Row(
+                    textDirection: TextDirection.ltr,
                     children: [
                       GText(
                         vocab.english,

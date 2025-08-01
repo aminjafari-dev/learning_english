@@ -9,6 +9,7 @@
 //   );
 
 import 'package:flutter/material.dart';
+import 'package:learning_english/core/widgets/g_text.dart';
 
 class LevelOptionCard extends StatelessWidget {
   final String title;
@@ -58,14 +59,14 @@ class LevelOptionCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    GText(
                       title,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text(
+                    GText(
                       subtitle,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),

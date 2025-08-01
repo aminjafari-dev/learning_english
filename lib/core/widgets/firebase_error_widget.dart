@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/core/widgets/g_text.dart';
 import '../error/firebase_failure.dart';
 import 'g_button.dart';
 import 'g_gap.dart';
@@ -62,7 +63,7 @@ class FirebaseErrorWidget extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: Text(
+                child: GText(
                   _getErrorTitle(l10n),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: Theme.of(context).colorScheme.error,
@@ -76,7 +77,7 @@ class FirebaseErrorWidget extends StatelessWidget {
           GGap.g12,
 
           // Error message
-          Text(
+          GText(
             failure.userFriendlyMessage,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
@@ -96,25 +97,25 @@ class FirebaseErrorWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  GText(
                     'Technical Details:',
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   GGap.g4,
-                  Text(
+                  GText(
                     'Type: ${failure.runtimeType}',
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   if (failure.code != null) ...[
-                    Text(
+                    GText(
                       'Code: ${failure.code}',
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ],
                   if (failure.details != null) ...[
-                    Text(
+                    GText(
                       'Details: ${failure.details}',
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
@@ -206,7 +207,7 @@ class FirebaseErrorSnackBar extends StatelessWidget {
           ),
           GGap.g12,
           Expanded(
-            child: Text(
+            child: GText(
               failure.userFriendlyMessage,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onErrorContainer,
@@ -265,7 +266,7 @@ class FirebaseErrorDialog extends StatelessWidget {
         children: [
           Icon(_getErrorIcon(), color: Theme.of(context).colorScheme.error),
           GGap.g8,
-          Text(_getErrorTitle()),
+          GText(_getErrorTitle()),
         ],
       ),
       content: FirebaseErrorWidget(
@@ -277,13 +278,13 @@ class FirebaseErrorDialog extends StatelessWidget {
       ),
       actions: [
         if (onClose != null)
-          TextButton(onPressed: onClose, child: const Text('Close')),
+          TextButton(onPressed: onClose, child: const GText('Close')),
         if (failure.isRecoverable && onRetry != null)
-          TextButton(onPressed: onRetry, child: const Text('Retry')),
+          TextButton(onPressed: onRetry, child: const GText('Retry')),
         if (failure.requiresUserAction && onContactSupport != null)
           TextButton(
             onPressed: onContactSupport,
-            child: const Text('Contact Support'),
+            child: const GText('Contact Support'),
           ),
       ],
     );

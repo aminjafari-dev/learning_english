@@ -11,6 +11,7 @@ import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/core/widgets/g_scaffold.dart';
 import 'package:learning_english/core/widgets/g_gap.dart';
 import 'package:learning_english/core/constants/image_path.dart';
+import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:learning_english/features/splash/presentation/bloc/splash_event.dart';
 import 'package:learning_english/features/splash/presentation/bloc/splash_state.dart';
@@ -83,7 +84,7 @@ class _SplashPageState extends State<SplashPage> {
           GGap.g32,
 
           // App title
-          const Text(
+          const GText(
             'Learning English',
             style: TextStyle(
               fontSize: 28,
@@ -98,7 +99,7 @@ class _SplashPageState extends State<SplashPage> {
           GGap.g16,
 
           // Loading text
-          const Text(
+          const GText(
             'Loading...',
             style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
@@ -120,7 +121,7 @@ class _SplashPageState extends State<SplashPage> {
   /// Shows error message and navigates to authentication page
   void _showErrorAndNavigateToAuth(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error: $message'), backgroundColor: Colors.red),
+      SnackBar(content: GText('Error: $message'), backgroundColor: Colors.red),
     );
     // Navigate to authentication page after showing error
     Future.delayed(const Duration(seconds: 2), () {

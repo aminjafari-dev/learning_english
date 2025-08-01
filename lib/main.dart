@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
             ],
             supportedLocales: const [Locale('en'), Locale('fa')],
             locale: currentLocale,
-            theme: AppTheme.lightTheme,
+            theme: AppTheme.darkTheme,
             initialRoute: PageName.splash,
             routes: PageRouter.routes,
           );

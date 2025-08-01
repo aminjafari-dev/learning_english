@@ -105,7 +105,7 @@ class VocabularySection extends StatelessWidget {
                           // Show error feedback
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('❌ Error playing audio: $error'),
+                              content: GText('❌ Error playing audio: $error'),
                               duration: const Duration(seconds: 2),
                               backgroundColor: Colors.red,
                             ),
@@ -133,7 +133,7 @@ class VocabularySection extends StatelessWidget {
                             // Show error feedback
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('❌ Error playing audio: $e'),
+                                content: GText('❌ Error playing audio: $e'),
                                 duration: const Duration(seconds: 2),
                                 backgroundColor: Colors.red,
                               ),

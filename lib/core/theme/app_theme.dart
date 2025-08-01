@@ -58,7 +58,7 @@ class AppTheme {
   static Color get hint => accentColor;
 
   /// Light theme for the app using the defined color palette.
-  static ThemeData get lightTheme => ThemeData(
+  static ThemeData get darkTheme => ThemeData(
     primaryColor: primaryColor,
     colorScheme: ColorScheme(
       brightness: Brightness.light,
@@ -152,100 +152,4 @@ class AppTheme {
     ),
   );
 
-  /// Dark theme for the app based on the UI design.
-  /// This theme matches the dark interface shown in the design screens.
-  static ThemeData get darkTheme => ThemeData(
-    primaryColor: yellowButtonColor,
-    colorScheme: ColorScheme(
-      brightness: Brightness.dark,
-      primary: yellowButtonColor,
-      onPrimary: darkBackgroundColor, // Text/icons on primary
-      secondary: darkSecondaryTextColor,
-      onSecondary: darkBackgroundColor, // Text/icons on secondary
-      background: darkBackgroundColor,
-      onBackground: darkTextColor, // Text/icons on background
-      surface: darkSurfaceColor,
-      onSurface: darkTextColor, // Text/icons on surface
-      error: yellowButtonColor,
-      onError: darkBackgroundColor, // Text/icons on error
-    ),
-    scaffoldBackgroundColor: darkBackgroundColor,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: darkSurfaceColor,
-      foregroundColor: darkTextColor,
-      elevation: 0,
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: yellowButtonColor,
-        foregroundColor: darkBackgroundColor,
-        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 0,
-        minimumSize: const Size(double.infinity, 50),
-      ),
-    ),
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(
-        fontSize: 18,
-        color: darkTextColor,
-        fontWeight: FontWeight.w600,
-        fontFamily: FontConstants.persianFont,
-      ),
-      bodyMedium: TextStyle(
-        fontSize: 16,
-        color: darkTextColor,
-        fontFamily: FontConstants.persianFont,
-      ),
-      bodySmall: TextStyle(
-        fontSize: 14,
-        color: darkSecondaryTextColor,
-        fontFamily: FontConstants.persianFont,
-      ),
-      titleLarge: TextStyle(
-        fontSize: 22,
-        color: darkTextColor,
-        fontWeight: FontWeight.bold,
-        fontFamily: FontConstants.persianFont,
-      ),
-      titleMedium: TextStyle(
-        fontSize: 18,
-        color: darkTextColor,
-        fontWeight: FontWeight.w500,
-        fontFamily: FontConstants.persianFont,
-      ),
-      titleSmall: TextStyle(
-        fontSize: 16,
-        color: darkSecondaryTextColor,
-        fontFamily: FontConstants.persianFont,
-      ),
-    ),
-    cardColor: darkSurfaceColor,
-    dividerColor: darkSecondaryBackground,
-    iconTheme: const IconThemeData(color: darkSecondaryTextColor),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: darkSecondaryBackground,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: darkSecondaryBackground),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: darkSecondaryBackground),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: yellowButtonColor, width: 2),
-      ),
-      hintStyle: const TextStyle(
-        color: darkSecondaryTextColor,
-        fontFamily: FontConstants.persianFont,
-      ),
-      labelStyle: const TextStyle(
-        color: darkSecondaryTextColor,
-        fontFamily: FontConstants.persianFont,
-      ),
-    ),
-  );
 }

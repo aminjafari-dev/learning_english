@@ -6,12 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:learning_english/core/widgets/g_text.dart';
 import 'package:learning_english/core/widgets/g_gap.dart';
+import 'package:learning_english/core/widgets/audio_button.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import '../../domain/entities/phrase.dart';
+import 'package:learning_english/core/services/tts_service.dart';
+import 'package:learning_english/core/dependency injection/locator.dart';
 
 /// Widget for displaying a phrase with English and Persian translations
 /// Supports shimmer loading animation for better user experience
-/// Now includes audio icon for phrase pronunciation
+/// Now uses the reusable AudioButton widget for consistent audio functionality
 ///
 /// Usage:
 /// ```dart
@@ -39,7 +42,7 @@ class PhraseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(12),
-      width: double.infinity,
+      width: double.maxFinite,
       decoration: BoxDecoration(
         color: AppTheme.surface,
         borderRadius: BorderRadius.circular(8),
@@ -102,25 +105,68 @@ class PhraseCard extends StatelessWidget {
 
   /// Builds the actual phrase content when not loading
   /// Displays English and Persian translations with proper styling
-  /// Now includes audio icon for phrase pronunciation
+  /// Now uses the reusable AudioButton widget for consistent audio functionality
+  /// English text is also clickable for audio playback
   Widget _buildPhraseContent(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          textDirection: TextDirection.ltr,
           children: [
-            // Audio icon button for phrase
-            _buildAudioIconButton(context, phrase!.english),
+            // Audio button for phrase using reusable widget
+            AudioButton(
+              text: phrase!.english,
+              onError: (error) {
+                // Show error feedback
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('❌ Error playing audio: $error'),
+                    duration: const Duration(seconds: 2),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              },
+            ),
             GGap.g8,
+            // Clickable English text for audio playback
             Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: GText(
-                    phrase!.english,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(8),
+                  splashColor: Theme.of(
+                    context,
+                  ).primaryColor.withValues(alpha: .4),
+                  highlightColor: Theme.of(
+                    context,
+                  ).primaryColor.withValues(alpha: .4),
+                  onTap: () async {
+                    try {
+                      // Get TTS service from dependency injection
+                      final ttsService = getIt<TTSService>();
+
+                      // Play phrase audio
+                      await ttsService.speakText(phrase!.english);
+                    } catch (e) {
+                      // Show error feedback
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('❌ Error playing audio: $e'),
+                          duration: const Duration(seconds: 2),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: GText(
+                      phrase!.english,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        decorationColor: AppTheme.primaryColor.withOpacity(0.7),
+                      ),
                     ),
                   ),
                 ),
@@ -129,46 +175,26 @@ class PhraseCard extends StatelessWidget {
           ],
         ),
         GGap.g4,
-        Align(
-          alignment: Alignment.centerRight,
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: GText(
-              phrase!.persian,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppTheme.hint),
-              textAlign: TextAlign.start,
+        Row(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: GText(
+                    phrase!.persian,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.copyWith(color: AppTheme.hint),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ],
-    );
-  }
-
-  /// Builds audio icon button for phrase pronunciation
-  /// Uses volume_up icon with gold color and suitable size
-  /// Handles tap events for audio playback
-  Widget _buildAudioIconButton(BuildContext context, String english) {
-    return GestureDetector(
-      onTap: () {
-        // TODO: Implement audio playback functionality
-        // This will be connected to the bloc for audio playback
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Playing audio for: $english'),
-            duration: const Duration(seconds: 1),
-          ),
-        );
-      },
-      child: Container(
-        padding: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          color: AppTheme.primaryColor.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Icon(Icons.volume_up, size: 16, color: AppTheme.primaryColor),
-      ),
     );
   }
 }

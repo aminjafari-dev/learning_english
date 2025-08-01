@@ -48,7 +48,7 @@ class RequestDetailContent extends StatelessWidget {
 
           // Vocabulary section - reuse daily lessons vocabulary section
           if (request.hasVocabularies) ...[
-            SectionHeader(title: AppLocalizations.of(context)!.vocabularyItems),
+            SectionHeader(title: AppLocalizations.of(context)!.vocabularies),
             GGap.g4,
             _buildVocabularyHistorySection(request.vocabularies),
             GGap.g24,
@@ -56,7 +56,7 @@ class RequestDetailContent extends StatelessWidget {
 
           // Phrases section - reuse daily lessons phrases section
           if (request.hasPhrases) ...[
-            SectionHeader(title: AppLocalizations.of(context)!.phraseItems),
+            SectionHeader(title: AppLocalizations.of(context)!.phrases),
             GGap.g8,
             _buildPhraseHistorySection(request.phrases),
           ],

@@ -1,7 +1,7 @@
 /// Core DI (Dependency Injection) setup for core dependencies.
 ///
 /// This file registers core dependencies that can be used across multiple features
-/// including user repository and core use cases.
+/// including user repository, core use cases, and TTS service.
 ///
 /// Usage Example:
 ///   setupCoreDI(getIt);
@@ -10,6 +10,7 @@ import 'package:learning_english/core/repositories/user_repository.dart';
 import 'package:learning_english/core/repositories/user_repository_impl.dart';
 import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
 import 'package:learning_english/features/authentication/data/datasources/user_local_data_source.dart';
+import 'package:learning_english/core/services/tts_service.dart';
 
 /// Sets up dependency injection for core dependencies
 ///
@@ -28,4 +29,8 @@ void setupCoreDI(GetIt locator) {
   locator.registerLazySingleton<GetUserIdUseCase>(
     () => GetUserIdUseCase(locator<UserRepository>()),
   );
-} 
+
+  // Register TTS Service as a singleton
+  // This service can be used across multiple features for audio playback
+  locator.registerLazySingleton<TTSService>(() => TTSService());
+}

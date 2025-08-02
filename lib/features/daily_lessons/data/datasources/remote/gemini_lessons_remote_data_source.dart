@@ -23,7 +23,7 @@ class GeminiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
   final Dio dio;
   final String apiKey;
   static const String _geminiEndpoint =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+      'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
 
   GeminiLessonsRemoteDataSource({Dio? dio, required this.apiKey})
     : dio = dio ?? Dio();
@@ -61,16 +61,12 @@ class GeminiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
   fetchPersonalizedDailyLessons(UserPreferences preferences) async {
     try {
       final response = await dio.post(
-        _geminiEndpoint,
-        options: Options(
-          headers: {
-            'x-goog-api-key': apiKey,
-            'Content-Type': 'application/json',
-          },
-        ),
+        '$_geminiEndpoint?key=$apiKey',
+        options: Options(headers: {'Content-Type': 'application/json'}),
         data: {
           'contents': [
             {
+              'role': 'user',
               'parts': [
                 {
                   'text': AiPrompts.getPersonalizedLessonsSystemPrompt(
@@ -80,6 +76,12 @@ class GeminiLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
               ],
             },
           ],
+          'generationConfig': {
+            'temperature': 0.7,
+            'topK': 40,
+            'topP': 0.95,
+            'maxOutputTokens': 1000,
+          },
         },
       );
 

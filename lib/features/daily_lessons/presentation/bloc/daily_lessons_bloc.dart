@@ -1,30 +1,32 @@
 // daily_lessons_bloc.dart
 // Bloc for managing daily lessons operations.
+// Now uses conversation-based lessons to avoid repetitive content.
 // Now includes user-specific data management and analytics functionality.
 // Now supports personalized content generation based on user preferences.
 
 import 'package:bloc/bloc.dart';
 import 'daily_lessons_event.dart';
 import 'daily_lessons_state.dart';
-import '../../domain/usecases/get_daily_lessons_usecase.dart';
+import '../../domain/usecases/get_conversation_lessons_usecase.dart';
 import '../../domain/usecases/get_user_preferences_usecase.dart';
 import '../../domain/usecases/send_conversation_message_usecase.dart';
 import '../../domain/entities/user_preferences.dart';
 import '../../data/models/conversation_thread_model.dart';
+import '../../data/models/level_type.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
 
 /// Bloc for managing daily lessons (vocabularies and phrases)
-/// Now uses cost-effective combined requests to reduce API costs
+/// Now uses conversation-based lessons to avoid repetitive content
 /// Includes user-specific data management and analytics functionality
 /// Now supports personalized content generation based on user preferences
 /// Now includes conversation mode functionality
 class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
-  final GetDailyLessonsUseCase getDailyLessonsUseCase;
+  final GetConversationLessonsUseCase getConversationLessonsUseCase;
   final GetUserPreferencesUseCase getUserPreferencesUseCase;
   final SendConversationMessageUseCase sendConversationMessageUseCase;
 
   DailyLessonsBloc({
-    required this.getDailyLessonsUseCase,
+    required this.getConversationLessonsUseCase,
     required this.getUserPreferencesUseCase,
     required this.sendConversationMessageUseCase,
   }) : super(
@@ -39,7 +41,10 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
        ) {
     on<DailyLessonsEvent>((event, emit) async {
       await event.when(
-        fetchLessons: () => _onFetchLessons(emit), // New cost-effective method
+        fetchLessons:
+            () => _onFetchConversationLessons(
+              emit,
+            ), // New conversation-based method
         refreshLessons: () => _onRefreshLessons(emit),
         getUserPreferences: () => _onGetUserPreferences(emit),
         sendConversationMessage:
@@ -49,9 +54,11 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
     });
   }
 
-  /// Fetches both vocabularies and phrases in a single request (cost-effective)
-  /// This method reduces API costs by ~25-40% compared to separate requests
-  Future<void> _onFetchLessons(Emitter<DailyLessonsState> emit) async {
+  /// Fetches lessons through conversation mode to avoid repetitive content
+  /// This method uses AI conversation to suggest new vocabularies and phrases
+  Future<void> _onFetchConversationLessons(
+    Emitter<DailyLessonsState> emit,
+  ) async {
     try {
       if (!emit.isDone) {
         emit(
@@ -62,6 +69,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
           ),
         );
       }
+
       // First get user preferences
       final preferencesResult = await getUserPreferencesUseCase(NoParams());
       final preferences = preferencesResult.fold((failure) {
@@ -83,8 +91,8 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
 
       if (preferences == null) return;
 
-      // Then fetch personalized lessons using the preferences
-      final result = await getDailyLessonsUseCase(preferences);
+      // Then fetch conversation-based lessons using the preferences
+      final result = await getConversationLessonsUseCase(preferences);
       result.fold(
         (failure) {
           if (!emit.isDone) {
@@ -114,10 +122,10 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
         emit(
           state.copyWith(
             vocabularies: VocabulariesState.error(
-              'Failed to fetch lessons: ${e.toString()}',
+              'Failed to fetch conversation lessons: ${e.toString()}',
             ),
             phrases: PhrasesState.error(
-              'Failed to fetch lessons: ${e.toString()}',
+              'Failed to fetch conversation lessons: ${e.toString()}',
             ),
             isRefreshing: false,
           ),
@@ -148,11 +156,10 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
   }
 
   /// Refreshes all daily lesson content
-  /// Clears local cache and fetches fresh content from AI
+  /// Clears local cache and fetches fresh content from conversation
   Future<void> _onRefreshLessons(Emitter<DailyLessonsState> emit) async {
     add(const DailyLessonsEvent.fetchLessons());
   }
-
 
   // ===== CONVERSATION EVENT HANDLERS =====
 
@@ -204,6 +211,27 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
                   ),
                 ),
               );
+            } else {
+              // Create new conversation state
+              final thread = ConversationThreadModel.create(
+                userId: 'current_user',
+                context: 'conversation',
+                userLevel: UserLevel.intermediate,
+                focusAreas: preferences.focusAreas,
+              );
+
+              final userMessage = ConversationMessageModel.user(message);
+              final aiMessage = ConversationMessageModel.model(response);
+
+              emit(
+                state.copyWith(
+                  conversation: ConversationState.loaded(
+                    currentThread: thread,
+                    messages: [userMessage, aiMessage],
+                    userThreads: [],
+                  ),
+                ),
+              );
             }
           }
         },
@@ -211,21 +239,9 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
     } catch (e) {
       if (!emit.isDone) {
         emit(
-          state.copyWith(
-            conversation: ConversationState.error(
-              'Failed to send message: ${e.toString()}',
-            ),
-          ),
+          state.copyWith(conversation: ConversationState.error(e.toString())),
         );
       }
     }
   }
-
 }
-
-// Example usage:
-// BlocProvider(create: (context) => DailyLessonsBloc(...))
-//
-// // Personalized content usage:
-// context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchPersonalizedLessons());
-// context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.getUserPreferences());

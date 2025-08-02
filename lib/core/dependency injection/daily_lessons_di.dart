@@ -7,6 +7,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:learning_english/features/daily_lessons/data/models/conversation_thread_model.dart';
 import 'package:learning_english/features/daily_lessons/data/models/learning_request_model.dart';
 import 'package:learning_english/features/daily_lessons/data/models/level_type.dart';
 import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
@@ -32,6 +33,7 @@ import 'package:learning_english/features/learning_focus_selection/domain/reposi
 import 'package:learning_english/core/repositories/user_repository.dart'
     as core_user;
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_daily_lessons_usecase.dart';
+import 'package:learning_english/features/daily_lessons/domain/usecases/get_conversation_lessons_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_user_preferences_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/send_conversation_message_usecase.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/gemini_conversation_service.dart';
@@ -59,6 +61,12 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     }
     if (!Hive.isAdapterRegistered(5)) {
       Hive.registerAdapter(UserLevelAdapter());
+    }
+    if (!Hive.isAdapterRegistered(6)) {
+      Hive.registerAdapter(ConversationThreadModelAdapter());
+    }
+    if (!Hive.isAdapterRegistered(7)) {
+      Hive.registerAdapter(ConversationMessageModelAdapter());
     }
 
     // ===== SPECIALIZED LOCAL DATA SOURCES =====
@@ -164,6 +172,14 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     getIt.registerFactory(() => GetDailyLessonsUseCase(getIt()));
 
     getIt.registerFactory(
+      () => GetConversationLessonsUseCase(
+        getIt<ConversationRepository>(),
+        getIt<DailyLessonsLocalDataSource>(),
+        getIt<core_user.UserRepository>(),
+      ),
+    );
+
+    getIt.registerFactory(
       () => GetUserPreferencesUseCase(getIt<UserPreferencesRepository>()),
     );
 
@@ -175,7 +191,7 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     // Bloc
     getIt.registerSingleton<DailyLessonsBloc>(
       DailyLessonsBloc(
-        getDailyLessonsUseCase: getIt<GetDailyLessonsUseCase>(),
+        getConversationLessonsUseCase: getIt<GetConversationLessonsUseCase>(),
         getUserPreferencesUseCase: getIt<GetUserPreferencesUseCase>(),
         sendConversationMessageUseCase: getIt<SendConversationMessageUseCase>(),
       ),

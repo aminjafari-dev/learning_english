@@ -18,7 +18,7 @@ class GeminiConversationService {
   final DailyLessonsLocalDataSource _localDataSource;
   final String _apiKey;
   final String _baseUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+      'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
 
   // Current active thread for each user (loaded from Hive)
   final Map<String, ConversationThreadModel?> _activeThreads = {};
@@ -179,24 +179,41 @@ Please respond with new, diverse content that builds upon previous learning with
   /// Send request to Gemini API
   Future<String> _sendToGemini(List<Map<String, dynamic>> thread) async {
     try {
+      print('🤖 [GEMINI] Sending request to: $_baseUrl');
+      print('🤖 [GEMINI] Thread length: ${thread.length}');
+
+      final requestBody = {
+        'contents': thread,
+        'generationConfig': {
+          'temperature': 0.7,
+          'topK': 40,
+          'topP': 0.95,
+          'maxOutputTokens': 1000,
+        },
+      };
+
+      print('🤖 [GEMINI] Request body: ${jsonEncode(requestBody)}');
+
       final response = await http.post(
         Uri.parse('$_baseUrl?key=$_apiKey'),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'contents': thread,
-          'generationConfig': {
-            'temperature': 0.7,
-            'topK': 40,
-            'topP': 0.95,
-            'maxOutputTokens': 1000,
-          },
-        }),
+        body: jsonEncode(requestBody),
       );
+
+      print('🤖 [GEMINI] Response status: ${response.statusCode}');
+      print('🤖 [GEMINI] Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        return data['candidates'][0]['content']['parts'][0]['text'];
+        final text = data['candidates'][0]['content']['parts'][0]['text'];
+        print(
+          '🤖 [GEMINI] Extracted text: ${text.substring(0, text.length > 100 ? 100 : text.length)}...',
+        );
+        return text;
       } else {
+        print(
+          '❌ [GEMINI] API error: ${response.statusCode} - ${response.body}',
+        );
         throw Exception(
           'Gemini API error: ${response.statusCode} - ${response.body}',
         );

@@ -11,7 +11,7 @@ part 'conversation_thread_model.g.dart';
 /// Model for storing conversation threads in Hive
 /// Allows persistence of conversation context across app sessions
 /// Threads are organized by user preferences (level + focus areas)
-@HiveType(typeId: 5)
+@HiveType(typeId: 6)
 class ConversationThreadModel extends HiveObject {
   @HiveField(0)
   final String userId;
@@ -166,7 +166,7 @@ class ConversationThreadModel extends HiveObject {
 }
 
 /// Model for individual conversation messages
-@HiveType(typeId: 6)
+@HiveType(typeId: 7)
 class ConversationMessageModel {
   @HiveField(0)
   final String role; // 'user' or 'model'

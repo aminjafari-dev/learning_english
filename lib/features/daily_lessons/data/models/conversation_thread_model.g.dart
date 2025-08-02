@@ -9,7 +9,7 @@ part of 'conversation_thread_model.dart';
 class ConversationThreadModelAdapter
     extends TypeAdapter<ConversationThreadModel> {
   @override
-  final int typeId = 5;
+  final int typeId = 6;
 
   @override
   ConversationThreadModel read(BinaryReader reader) {
@@ -68,7 +68,7 @@ class ConversationThreadModelAdapter
 class ConversationMessageModelAdapter
     extends TypeAdapter<ConversationMessageModel> {
   @override
-  final int typeId = 6;
+  final int typeId = 7;
 
   @override
   ConversationMessageModel read(BinaryReader reader) {

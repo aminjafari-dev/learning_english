@@ -3,7 +3,7 @@
 // Integrates with existing Hive database to avoid repetitive content and provide personalized learning.
 
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:learning_english/features/daily_lessons/data/models/level_type.dart';
 import '../local/daily_lessons_local_data_source.dart';
 import '../../models/learning_request_model.dart';
@@ -20,10 +20,22 @@ class GeminiConversationService {
   final String _baseUrl =
       'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
 
+  // Dio instance for HTTP requests
+  late final Dio _dio;
+
   // Current active thread for each user (loaded from Hive)
   final Map<String, ConversationThreadModel?> _activeThreads = {};
 
-  GeminiConversationService(this._localDataSource, this._apiKey);
+  GeminiConversationService(this._localDataSource, this._apiKey) {
+    // Initialize Dio with default configuration
+    _dio = Dio(
+      BaseOptions(
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+        headers: {'Content-Type': 'application/json'},
+      ),
+    );
+  }
 
   /// Initialize the conversation service
   Future<void> initialize() async {
@@ -176,7 +188,7 @@ Please respond with new, diverse content that builds upon previous learning with
         .toList();
   }
 
-  /// Send request to Gemini API
+  /// Send request to Gemini API using Dio
   Future<String> _sendToGemini(List<Map<String, dynamic>> thread) async {
     try {
       print('🤖 [GEMINI] Sending request to: $_baseUrl');
@@ -194,17 +206,17 @@ Please respond with new, diverse content that builds upon previous learning with
 
       print('🤖 [GEMINI] Request body: ${jsonEncode(requestBody)}');
 
-      final response = await http.post(
-        Uri.parse('$_baseUrl?key=$_apiKey'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(requestBody),
+      // Use Dio to make the HTTP request
+      final response = await _dio.post(
+        '$_baseUrl?key=$_apiKey',
+        data: requestBody,
       );
 
       print('🤖 [GEMINI] Response status: ${response.statusCode}');
-      print('🤖 [GEMINI] Response body: ${response.body}');
+      print('🤖 [GEMINI] Response body: ${response.data}');
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        final data = response.data;
         final text = data['candidates'][0]['content']['parts'][0]['text'];
         print(
           '🤖 [GEMINI] Extracted text: ${text.substring(0, text.length > 100 ? 100 : text.length)}...',
@@ -212,11 +224,22 @@ Please respond with new, diverse content that builds upon previous learning with
         return text;
       } else {
         print(
-          '❌ [GEMINI] API error: ${response.statusCode} - ${response.body}',
+          '❌ [GEMINI] API error: ${response.statusCode} - ${response.data}',
         );
         throw Exception(
-          'Gemini API error: ${response.statusCode} - ${response.body}',
+          'Gemini API error: ${response.statusCode} - ${response.data}',
         );
+      }
+    } on DioException catch (e) {
+      print('❌ [GEMINI] Dio error: ${e.message}');
+      if (e.response != null) {
+        print('❌ [GEMINI] Response status: ${e.response!.statusCode}');
+        print('❌ [GEMINI] Response data: ${e.response!.data}');
+        throw Exception(
+          'Gemini API error: ${e.response!.statusCode} - ${e.response!.data}',
+        );
+      } else {
+        throw Exception('Failed to communicate with Gemini: ${e.message}');
       }
     } catch (e) {
       throw Exception('Failed to communicate with Gemini: ${e.toString()}');

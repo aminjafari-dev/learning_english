@@ -3,6 +3,7 @@
 // Example:
 //   final repo = UserRepositoryImpl(remoteDataSource: ...);
 //   await repo.saveUserLevel('user123', Level.beginner);
+//   final level = await repo.getUserLevel('user123');
 
 import 'package:dartz/dartz.dart';
 import '../../domain/entities/user_profile.dart';
@@ -31,9 +32,26 @@ class UserRepositoryImpl implements UserRepository {
         exception,
         context: 'user_repository_save_level',
       );
-      
+
       // Return the FirebaseFailure as a generic Failure
       // You can also create a custom failure type if needed
+      return Left(ServerFailure(failure.userFriendlyMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Level?>> getUserLevel(String userId) async {
+    try {
+      final level = await remoteDataSource.getUserLevel(userId);
+      return Right(level);
+    } catch (exception) {
+      // Convert the exception to appropriate FirebaseFailure
+      final failure = FirebaseErrorHandler.handleException(
+        exception,
+        context: 'user_repository_get_level',
+      );
+
+      // Return the FirebaseFailure as a generic Failure
       return Left(ServerFailure(failure.userFriendlyMessage));
     }
   }

@@ -1,19 +1,24 @@
 // daily_lessons_local_data_source.dart
 // Local data source for storing and retrieving learning request data using Hive.
 // This handles persistence of complete AI requests with all metadata and generated content.
+// Now includes conversation thread management for Gemini integration.
 
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:learning_english/features/daily_lessons/data/models/level_type.dart';
 import '../../models/learning_request_model.dart';
 import '../../models/vocabulary_model.dart';
 import '../../models/phrase_model.dart';
 import '../../models/ai_provider_type.dart';
+import '../../models/conversation_thread_model.dart';
 
 /// Local data source for learning requests storage using Hive
 /// Handles persistence of complete AI requests with all metadata and generated content
 class DailyLessonsLocalDataSource {
   static const String _learningRequestsBoxName = 'learning_requests';
+  static const String _conversationThreadsBoxName = 'conversation_threads';
 
   late Box<LearningRequestModel> _learningRequestsBox;
+  late Box<ConversationThreadModel> _conversationThreadsBox;
 
   /// Initialize Hive boxes for learning request storage
   /// This method should be called before using any other methods
@@ -21,6 +26,9 @@ class DailyLessonsLocalDataSource {
     try {
       _learningRequestsBox = await Hive.openBox<LearningRequestModel>(
         _learningRequestsBoxName,
+      );
+      _conversationThreadsBox = await Hive.openBox<ConversationThreadModel>(
+        _conversationThreadsBoxName,
       );
     } catch (e) {
       throw Exception('Failed to initialize Hive boxes: ${e.toString()}');
@@ -189,6 +197,178 @@ class DailyLessonsLocalDataSource {
     }
   }
 
+  // ===== CONVERSATION THREAD MANAGEMENT =====
+
+  /// Saves a conversation thread to Hive
+  /// Stores the complete conversation history for persistence
+  Future<void> saveConversationThread(ConversationThreadModel thread) async {
+    try {
+      await _conversationThreadsBox.put(thread.threadId, thread);
+    } catch (e) {
+      throw Exception('Failed to save conversation thread: ${e.toString()}');
+    }
+  }
+
+  /// Retrieves all conversation threads for a specific user
+  /// Returns list of ConversationThreadModel with complete conversation history
+  Future<List<ConversationThreadModel>> getUserConversationThreads(
+    String userId,
+  ) async {
+    try {
+      return _conversationThreadsBox.values
+          .where((thread) => thread.userId == userId)
+          .toList();
+    } catch (e) {
+      throw Exception(
+        'Failed to get user conversation threads: ${e.toString()}',
+      );
+    }
+  }
+
+  /// Retrieves a specific conversation thread by ID
+  /// Returns the complete thread with all messages
+  Future<ConversationThreadModel?> getConversationThreadById(
+    String threadId,
+  ) async {
+    try {
+      return _conversationThreadsBox.get(threadId);
+    } catch (e) {
+      throw Exception(
+        'Failed to get conversation thread by ID: ${e.toString()}',
+      );
+    }
+  }
+
+  /// Updates a conversation thread with new messages
+  /// Adds new messages to existing thread
+  Future<void> updateConversationThread(
+    ConversationThreadModel updatedThread,
+  ) async {
+    try {
+      await _conversationThreadsBox.put(updatedThread.threadId, updatedThread);
+    } catch (e) {
+      throw Exception('Failed to update conversation thread: ${e.toString()}');
+    }
+  }
+
+  /// Deletes a conversation thread
+  /// Removes the thread and all its messages
+  Future<void> deleteConversationThread(String threadId) async {
+    try {
+      await _conversationThreadsBox.delete(threadId);
+    } catch (e) {
+      throw Exception('Failed to delete conversation thread: ${e.toString()}');
+    }
+  }
+
+  /// Clears all conversation threads for a user
+  /// Used when user wants to reset their conversation history
+  Future<void> clearUserConversationThreads(String userId) async {
+    try {
+      final userThreads = await getUserConversationThreads(userId);
+      for (final thread in userThreads) {
+        await _conversationThreadsBox.delete(thread.threadId);
+      }
+    } catch (e) {
+      throw Exception(
+        'Failed to clear user conversation threads: ${e.toString()}',
+      );
+    }
+  }
+
+  /// Find conversation thread by user preferences
+  /// Returns existing thread if found, null otherwise
+  Future<ConversationThreadModel?> findThreadByPreferences(
+    String userId,
+    UserLevel level,
+    List<String> focusAreas,
+  ) async {
+    try {
+      final userThreads = await getUserConversationThreads(userId);
+
+      // Find thread that matches the exact preferences
+      for (final thread in userThreads) {
+        if (thread.matchesPreferences(level, focusAreas)) {
+          return thread;
+        }
+      }
+
+      return null; // No matching thread found
+    } catch (e) {
+      throw Exception('Failed to find thread by preferences: ${e.toString()}');
+    }
+  }
+
+  /// Get all threads for a user with their preference descriptions
+  /// Returns list of threads with their preference information
+  Future<List<Map<String, dynamic>>> getUserThreadsWithPreferences(
+    String userId,
+  ) async {
+    try {
+      final userThreads = await getUserConversationThreads(userId);
+
+      return userThreads
+          .map(
+            (thread) => {
+              'thread': thread,
+              'preferencesDescription': thread.preferencesDescription,
+              'messageCount': thread.messages.length,
+              'lastActivity': thread.lastUpdatedAt.toIso8601String(),
+            },
+          )
+          .toList();
+    } catch (e) {
+      throw Exception(
+        'Failed to get user threads with preferences: ${e.toString()}',
+      );
+    }
+  }
+
+  /// Gets conversation analytics for a user
+  /// Returns statistics about conversation usage
+  Future<Map<String, dynamic>> getConversationAnalytics(String userId) async {
+    try {
+      final userThreads = await getUserConversationThreads(userId);
+
+      final totalThreads = userThreads.length;
+      final totalMessages = userThreads.fold<int>(
+        0,
+        (sum, thread) => sum + thread.messages.length,
+      );
+
+      final userMessages = userThreads.fold<int>(
+        0,
+        (sum, thread) =>
+            sum + thread.messages.where((m) => m.isUserMessage).length,
+      );
+
+      final modelMessages = userThreads.fold<int>(
+        0,
+        (sum, thread) =>
+            sum + thread.messages.where((m) => m.isModelMessage).length,
+      );
+
+      final contexts = userThreads.map((t) => t.context).toSet().toList();
+
+      return {
+        'totalThreads': totalThreads,
+        'totalMessages': totalMessages,
+        'userMessages': userMessages,
+        'modelMessages': modelMessages,
+        'contexts': contexts,
+        'lastActivity':
+            userThreads.isNotEmpty
+                ? userThreads
+                    .map((t) => t.lastUpdatedAt)
+                    .reduce((a, b) => a.isAfter(b) ? a : b)
+                    .toIso8601String()
+                : null,
+      };
+    } catch (e) {
+      throw Exception('Failed to get conversation analytics: ${e.toString()}');
+    }
+  }
+
   /// Gets analytics data for the current user
   /// Returns usage statistics and cost analysis
   Future<Map<String, dynamic>> getUserAnalytics(String userId) async {
@@ -299,6 +479,7 @@ class DailyLessonsLocalDataSource {
   Future<void> dispose() async {
     try {
       await _learningRequestsBox.close();
+      await _conversationThreadsBox.close();
     } catch (e) {
       throw Exception('Failed to dispose local data source: ${e.toString()}');
     }

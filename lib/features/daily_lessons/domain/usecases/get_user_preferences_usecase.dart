@@ -13,12 +13,13 @@ import 'package:dartz/dartz.dart';
 import 'package:learning_english/core/error/failure.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
 import '../entities/user_preferences.dart';
-import '../repositories/daily_lessons_repository.dart';
+import '../repositories/user_preferences_repository.dart';
 
 /// Use case for fetching user preferences for personalized content generation
 /// Combines user's English level and selected learning focus areas
+/// Updated to use dedicated UserPreferencesRepository
 class GetUserPreferencesUseCase implements UseCase<UserPreferences, NoParams> {
-  final DailyLessonsRepository repository;
+  final UserPreferencesRepository repository;
 
   GetUserPreferencesUseCase(this.repository);
 

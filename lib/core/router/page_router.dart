@@ -5,11 +5,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:learning_english/core/router/page_name.dart';
+import 'package:learning_english/features/daily_lessons/presentation/pages/daily_lessons_page.dart';
 import 'package:learning_english/features/splash/presentation/pages/splash_page.dart';
 import 'package:learning_english/features/authentication/presentation/pages/authentication_page.dart';
 import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
 import 'package:learning_english/features/learning_focus_selection/presentation/pages/learning_focus_selection_page.dart';
-import 'package:learning_english/features/daily_lessons/presentation/pages/daily_lessons_page.dart';
 import 'package:learning_english/features/profile/presentation/pages/profile_page.dart';
 import 'package:learning_english/features/navigation/presentation/pages/main_navigation_page.dart';
 import 'package:learning_english/features/history/presentation/pages/vocabulary_history_page.dart';
@@ -23,7 +23,7 @@ class PageRouter {
     PageName.levelSelection: (context) => const LevelSelectionPage(),
     PageName.learningFocusSelection:
         (context) => const LearningFocusSelectionPage(),
-    // Daily Lessons page
+    // Conversation page (replacing Daily Lessons)
     PageName.dailyLessons: (context) => const DailyLessonsPage(),
     // Profile page
     PageName.profile: (context) => const ProfilePage(),

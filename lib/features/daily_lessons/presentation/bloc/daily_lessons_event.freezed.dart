@@ -18,83 +18,55 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$DailyLessonsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fetchVocabularies,
-    required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String requestId, String english)
-        markVocabularyAsUsed,
-    required TResult Function(String requestId, String english)
-        markPhraseAsUsed,
-    required TResult Function() getUserAnalytics,
-    required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
+    required TResult Function(UserPreferences preferences, String message)
+        sendConversationMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVocabularies,
-    TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult? Function(String requestId, String english)? markPhraseAsUsed,
-    TResult? Function()? getUserAnalytics,
-    TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
+    TResult? Function(UserPreferences preferences, String message)?
+        sendConversationMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVocabularies,
-    TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult Function(String requestId, String english)? markPhraseAsUsed,
-    TResult Function()? getUserAnalytics,
-    TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
+    TResult Function(UserPreferences preferences, String message)?
+        sendConversationMessage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(FetchVocabularies value) fetchVocabularies,
-    required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
-    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
-    required TResult Function(GetUserAnalytics value) getUserAnalytics,
-    required TResult Function(ClearUserData value) clearUserData,
     required TResult Function(GetUserPreferences value) getUserPreferences,
+    required TResult Function(SendConversationMessage value)
+        sendConversationMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchVocabularies value)? fetchVocabularies,
-    TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult? Function(ClearUserData value)? clearUserData,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
+    TResult? Function(SendConversationMessage value)? sendConversationMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchVocabularies value)? fetchVocabularies,
-    TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult Function(ClearUserData value)? clearUserData,
     TResult Function(GetUserPreferences value)? getUserPreferences,
+    TResult Function(SendConversationMessage value)? sendConversationMessage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,304 +91,6 @@ class _$DailyLessonsEventCopyWithImpl<$Res, $Val extends DailyLessonsEvent>
 
   /// Create a copy of DailyLessonsEvent
   /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$FetchVocabulariesImplCopyWith<$Res> {
-  factory _$$FetchVocabulariesImplCopyWith(_$FetchVocabulariesImpl value,
-          $Res Function(_$FetchVocabulariesImpl) then) =
-      __$$FetchVocabulariesImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$FetchVocabulariesImplCopyWithImpl<$Res>
-    extends _$DailyLessonsEventCopyWithImpl<$Res, _$FetchVocabulariesImpl>
-    implements _$$FetchVocabulariesImplCopyWith<$Res> {
-  __$$FetchVocabulariesImplCopyWithImpl(_$FetchVocabulariesImpl _value,
-      $Res Function(_$FetchVocabulariesImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$FetchVocabulariesImpl implements FetchVocabularies {
-  const _$FetchVocabulariesImpl();
-
-  @override
-  String toString() {
-    return 'DailyLessonsEvent.fetchVocabularies()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$FetchVocabulariesImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() fetchVocabularies,
-    required TResult Function() fetchPhrases,
-    required TResult Function() fetchLessons,
-    required TResult Function() refreshLessons,
-    required TResult Function(String requestId, String english)
-        markVocabularyAsUsed,
-    required TResult Function(String requestId, String english)
-        markPhraseAsUsed,
-    required TResult Function() getUserAnalytics,
-    required TResult Function() clearUserData,
-    required TResult Function() getUserPreferences,
-  }) {
-    return fetchVocabularies();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVocabularies,
-    TResult? Function()? fetchPhrases,
-    TResult? Function()? fetchLessons,
-    TResult? Function()? refreshLessons,
-    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult? Function(String requestId, String english)? markPhraseAsUsed,
-    TResult? Function()? getUserAnalytics,
-    TResult? Function()? clearUserData,
-    TResult? Function()? getUserPreferences,
-  }) {
-    return fetchVocabularies?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVocabularies,
-    TResult Function()? fetchPhrases,
-    TResult Function()? fetchLessons,
-    TResult Function()? refreshLessons,
-    TResult Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult Function(String requestId, String english)? markPhraseAsUsed,
-    TResult Function()? getUserAnalytics,
-    TResult Function()? clearUserData,
-    TResult Function()? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (fetchVocabularies != null) {
-      return fetchVocabularies();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FetchVocabularies value) fetchVocabularies,
-    required TResult Function(FetchPhrases value) fetchPhrases,
-    required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
-    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
-    required TResult Function(GetUserAnalytics value) getUserAnalytics,
-    required TResult Function(ClearUserData value) clearUserData,
-    required TResult Function(GetUserPreferences value) getUserPreferences,
-  }) {
-    return fetchVocabularies(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchVocabularies value)? fetchVocabularies,
-    TResult? Function(FetchPhrases value)? fetchPhrases,
-    TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult? Function(ClearUserData value)? clearUserData,
-    TResult? Function(GetUserPreferences value)? getUserPreferences,
-  }) {
-    return fetchVocabularies?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchVocabularies value)? fetchVocabularies,
-    TResult Function(FetchPhrases value)? fetchPhrases,
-    TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult Function(ClearUserData value)? clearUserData,
-    TResult Function(GetUserPreferences value)? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (fetchVocabularies != null) {
-      return fetchVocabularies(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class FetchVocabularies implements DailyLessonsEvent {
-  const factory FetchVocabularies() = _$FetchVocabulariesImpl;
-}
-
-/// @nodoc
-abstract class _$$FetchPhrasesImplCopyWith<$Res> {
-  factory _$$FetchPhrasesImplCopyWith(
-          _$FetchPhrasesImpl value, $Res Function(_$FetchPhrasesImpl) then) =
-      __$$FetchPhrasesImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$FetchPhrasesImplCopyWithImpl<$Res>
-    extends _$DailyLessonsEventCopyWithImpl<$Res, _$FetchPhrasesImpl>
-    implements _$$FetchPhrasesImplCopyWith<$Res> {
-  __$$FetchPhrasesImplCopyWithImpl(
-      _$FetchPhrasesImpl _value, $Res Function(_$FetchPhrasesImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$FetchPhrasesImpl implements FetchPhrases {
-  const _$FetchPhrasesImpl();
-
-  @override
-  String toString() {
-    return 'DailyLessonsEvent.fetchPhrases()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$FetchPhrasesImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() fetchVocabularies,
-    required TResult Function() fetchPhrases,
-    required TResult Function() fetchLessons,
-    required TResult Function() refreshLessons,
-    required TResult Function(String requestId, String english)
-        markVocabularyAsUsed,
-    required TResult Function(String requestId, String english)
-        markPhraseAsUsed,
-    required TResult Function() getUserAnalytics,
-    required TResult Function() clearUserData,
-    required TResult Function() getUserPreferences,
-  }) {
-    return fetchPhrases();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVocabularies,
-    TResult? Function()? fetchPhrases,
-    TResult? Function()? fetchLessons,
-    TResult? Function()? refreshLessons,
-    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult? Function(String requestId, String english)? markPhraseAsUsed,
-    TResult? Function()? getUserAnalytics,
-    TResult? Function()? clearUserData,
-    TResult? Function()? getUserPreferences,
-  }) {
-    return fetchPhrases?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVocabularies,
-    TResult Function()? fetchPhrases,
-    TResult Function()? fetchLessons,
-    TResult Function()? refreshLessons,
-    TResult Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult Function(String requestId, String english)? markPhraseAsUsed,
-    TResult Function()? getUserAnalytics,
-    TResult Function()? clearUserData,
-    TResult Function()? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (fetchPhrases != null) {
-      return fetchPhrases();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FetchVocabularies value) fetchVocabularies,
-    required TResult Function(FetchPhrases value) fetchPhrases,
-    required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
-    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
-    required TResult Function(GetUserAnalytics value) getUserAnalytics,
-    required TResult Function(ClearUserData value) clearUserData,
-    required TResult Function(GetUserPreferences value) getUserPreferences,
-  }) {
-    return fetchPhrases(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchVocabularies value)? fetchVocabularies,
-    TResult? Function(FetchPhrases value)? fetchPhrases,
-    TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult? Function(ClearUserData value)? clearUserData,
-    TResult? Function(GetUserPreferences value)? getUserPreferences,
-  }) {
-    return fetchPhrases?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchVocabularies value)? fetchVocabularies,
-    TResult Function(FetchPhrases value)? fetchPhrases,
-    TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult Function(ClearUserData value)? clearUserData,
-    TResult Function(GetUserPreferences value)? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (fetchPhrases != null) {
-      return fetchPhrases(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class FetchPhrases implements DailyLessonsEvent {
-  const factory FetchPhrases() = _$FetchPhrasesImpl;
 }
 
 /// @nodoc
@@ -460,17 +134,11 @@ class _$FetchLessonsImpl implements FetchLessons {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fetchVocabularies,
-    required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String requestId, String english)
-        markVocabularyAsUsed,
-    required TResult Function(String requestId, String english)
-        markPhraseAsUsed,
-    required TResult Function() getUserAnalytics,
-    required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
+    required TResult Function(UserPreferences preferences, String message)
+        sendConversationMessage,
   }) {
     return fetchLessons();
   }
@@ -478,15 +146,11 @@ class _$FetchLessonsImpl implements FetchLessons {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVocabularies,
-    TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult? Function(String requestId, String english)? markPhraseAsUsed,
-    TResult? Function()? getUserAnalytics,
-    TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
+    TResult? Function(UserPreferences preferences, String message)?
+        sendConversationMessage,
   }) {
     return fetchLessons?.call();
   }
@@ -494,15 +158,11 @@ class _$FetchLessonsImpl implements FetchLessons {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVocabularies,
-    TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult Function(String requestId, String english)? markPhraseAsUsed,
-    TResult Function()? getUserAnalytics,
-    TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
+    TResult Function(UserPreferences preferences, String message)?
+        sendConversationMessage,
     required TResult orElse(),
   }) {
     if (fetchLessons != null) {
@@ -514,15 +174,11 @@ class _$FetchLessonsImpl implements FetchLessons {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(FetchVocabularies value) fetchVocabularies,
-    required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
-    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
-    required TResult Function(GetUserAnalytics value) getUserAnalytics,
-    required TResult Function(ClearUserData value) clearUserData,
     required TResult Function(GetUserPreferences value) getUserPreferences,
+    required TResult Function(SendConversationMessage value)
+        sendConversationMessage,
   }) {
     return fetchLessons(this);
   }
@@ -530,15 +186,10 @@ class _$FetchLessonsImpl implements FetchLessons {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchVocabularies value)? fetchVocabularies,
-    TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult? Function(ClearUserData value)? clearUserData,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
+    TResult? Function(SendConversationMessage value)? sendConversationMessage,
   }) {
     return fetchLessons?.call(this);
   }
@@ -546,15 +197,10 @@ class _$FetchLessonsImpl implements FetchLessons {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchVocabularies value)? fetchVocabularies,
-    TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult Function(ClearUserData value)? clearUserData,
     TResult Function(GetUserPreferences value)? getUserPreferences,
+    TResult Function(SendConversationMessage value)? sendConversationMessage,
     required TResult orElse(),
   }) {
     if (fetchLessons != null) {
@@ -609,17 +255,11 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fetchVocabularies,
-    required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String requestId, String english)
-        markVocabularyAsUsed,
-    required TResult Function(String requestId, String english)
-        markPhraseAsUsed,
-    required TResult Function() getUserAnalytics,
-    required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
+    required TResult Function(UserPreferences preferences, String message)
+        sendConversationMessage,
   }) {
     return refreshLessons();
   }
@@ -627,15 +267,11 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVocabularies,
-    TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult? Function(String requestId, String english)? markPhraseAsUsed,
-    TResult? Function()? getUserAnalytics,
-    TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
+    TResult? Function(UserPreferences preferences, String message)?
+        sendConversationMessage,
   }) {
     return refreshLessons?.call();
   }
@@ -643,15 +279,11 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVocabularies,
-    TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult Function(String requestId, String english)? markPhraseAsUsed,
-    TResult Function()? getUserAnalytics,
-    TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
+    TResult Function(UserPreferences preferences, String message)?
+        sendConversationMessage,
     required TResult orElse(),
   }) {
     if (refreshLessons != null) {
@@ -663,15 +295,11 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(FetchVocabularies value) fetchVocabularies,
-    required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
-    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
-    required TResult Function(GetUserAnalytics value) getUserAnalytics,
-    required TResult Function(ClearUserData value) clearUserData,
     required TResult Function(GetUserPreferences value) getUserPreferences,
+    required TResult Function(SendConversationMessage value)
+        sendConversationMessage,
   }) {
     return refreshLessons(this);
   }
@@ -679,15 +307,10 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchVocabularies value)? fetchVocabularies,
-    TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult? Function(ClearUserData value)? clearUserData,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
+    TResult? Function(SendConversationMessage value)? sendConversationMessage,
   }) {
     return refreshLessons?.call(this);
   }
@@ -695,15 +318,10 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchVocabularies value)? fetchVocabularies,
-    TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult Function(ClearUserData value)? clearUserData,
     TResult Function(GetUserPreferences value)? getUserPreferences,
+    TResult Function(SendConversationMessage value)? sendConversationMessage,
     required TResult orElse(),
   }) {
     if (refreshLessons != null) {
@@ -715,701 +333,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
 
 abstract class RefreshLessons implements DailyLessonsEvent {
   const factory RefreshLessons() = _$RefreshLessonsImpl;
-}
-
-/// @nodoc
-abstract class _$$MarkVocabularyAsUsedImplCopyWith<$Res> {
-  factory _$$MarkVocabularyAsUsedImplCopyWith(_$MarkVocabularyAsUsedImpl value,
-          $Res Function(_$MarkVocabularyAsUsedImpl) then) =
-      __$$MarkVocabularyAsUsedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String requestId, String english});
-}
-
-/// @nodoc
-class __$$MarkVocabularyAsUsedImplCopyWithImpl<$Res>
-    extends _$DailyLessonsEventCopyWithImpl<$Res, _$MarkVocabularyAsUsedImpl>
-    implements _$$MarkVocabularyAsUsedImplCopyWith<$Res> {
-  __$$MarkVocabularyAsUsedImplCopyWithImpl(_$MarkVocabularyAsUsedImpl _value,
-      $Res Function(_$MarkVocabularyAsUsedImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? requestId = null,
-    Object? english = null,
-  }) {
-    return _then(_$MarkVocabularyAsUsedImpl(
-      requestId: null == requestId
-          ? _value.requestId
-          : requestId // ignore: cast_nullable_to_non_nullable
-              as String,
-      english: null == english
-          ? _value.english
-          : english // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$MarkVocabularyAsUsedImpl implements MarkVocabularyAsUsed {
-  const _$MarkVocabularyAsUsedImpl(
-      {required this.requestId, required this.english});
-
-  @override
-  final String requestId;
-  @override
-  final String english;
-
-  @override
-  String toString() {
-    return 'DailyLessonsEvent.markVocabularyAsUsed(requestId: $requestId, english: $english)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$MarkVocabularyAsUsedImpl &&
-            (identical(other.requestId, requestId) ||
-                other.requestId == requestId) &&
-            (identical(other.english, english) || other.english == english));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, requestId, english);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$MarkVocabularyAsUsedImplCopyWith<_$MarkVocabularyAsUsedImpl>
-      get copyWith =>
-          __$$MarkVocabularyAsUsedImplCopyWithImpl<_$MarkVocabularyAsUsedImpl>(
-              this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() fetchVocabularies,
-    required TResult Function() fetchPhrases,
-    required TResult Function() fetchLessons,
-    required TResult Function() refreshLessons,
-    required TResult Function(String requestId, String english)
-        markVocabularyAsUsed,
-    required TResult Function(String requestId, String english)
-        markPhraseAsUsed,
-    required TResult Function() getUserAnalytics,
-    required TResult Function() clearUserData,
-    required TResult Function() getUserPreferences,
-  }) {
-    return markVocabularyAsUsed(requestId, english);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVocabularies,
-    TResult? Function()? fetchPhrases,
-    TResult? Function()? fetchLessons,
-    TResult? Function()? refreshLessons,
-    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult? Function(String requestId, String english)? markPhraseAsUsed,
-    TResult? Function()? getUserAnalytics,
-    TResult? Function()? clearUserData,
-    TResult? Function()? getUserPreferences,
-  }) {
-    return markVocabularyAsUsed?.call(requestId, english);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVocabularies,
-    TResult Function()? fetchPhrases,
-    TResult Function()? fetchLessons,
-    TResult Function()? refreshLessons,
-    TResult Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult Function(String requestId, String english)? markPhraseAsUsed,
-    TResult Function()? getUserAnalytics,
-    TResult Function()? clearUserData,
-    TResult Function()? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (markVocabularyAsUsed != null) {
-      return markVocabularyAsUsed(requestId, english);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FetchVocabularies value) fetchVocabularies,
-    required TResult Function(FetchPhrases value) fetchPhrases,
-    required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
-    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
-    required TResult Function(GetUserAnalytics value) getUserAnalytics,
-    required TResult Function(ClearUserData value) clearUserData,
-    required TResult Function(GetUserPreferences value) getUserPreferences,
-  }) {
-    return markVocabularyAsUsed(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchVocabularies value)? fetchVocabularies,
-    TResult? Function(FetchPhrases value)? fetchPhrases,
-    TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult? Function(ClearUserData value)? clearUserData,
-    TResult? Function(GetUserPreferences value)? getUserPreferences,
-  }) {
-    return markVocabularyAsUsed?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchVocabularies value)? fetchVocabularies,
-    TResult Function(FetchPhrases value)? fetchPhrases,
-    TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult Function(ClearUserData value)? clearUserData,
-    TResult Function(GetUserPreferences value)? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (markVocabularyAsUsed != null) {
-      return markVocabularyAsUsed(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class MarkVocabularyAsUsed implements DailyLessonsEvent {
-  const factory MarkVocabularyAsUsed(
-      {required final String requestId,
-      required final String english}) = _$MarkVocabularyAsUsedImpl;
-
-  String get requestId;
-  String get english;
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MarkVocabularyAsUsedImplCopyWith<_$MarkVocabularyAsUsedImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$MarkPhraseAsUsedImplCopyWith<$Res> {
-  factory _$$MarkPhraseAsUsedImplCopyWith(_$MarkPhraseAsUsedImpl value,
-          $Res Function(_$MarkPhraseAsUsedImpl) then) =
-      __$$MarkPhraseAsUsedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String requestId, String english});
-}
-
-/// @nodoc
-class __$$MarkPhraseAsUsedImplCopyWithImpl<$Res>
-    extends _$DailyLessonsEventCopyWithImpl<$Res, _$MarkPhraseAsUsedImpl>
-    implements _$$MarkPhraseAsUsedImplCopyWith<$Res> {
-  __$$MarkPhraseAsUsedImplCopyWithImpl(_$MarkPhraseAsUsedImpl _value,
-      $Res Function(_$MarkPhraseAsUsedImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? requestId = null,
-    Object? english = null,
-  }) {
-    return _then(_$MarkPhraseAsUsedImpl(
-      requestId: null == requestId
-          ? _value.requestId
-          : requestId // ignore: cast_nullable_to_non_nullable
-              as String,
-      english: null == english
-          ? _value.english
-          : english // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$MarkPhraseAsUsedImpl implements MarkPhraseAsUsed {
-  const _$MarkPhraseAsUsedImpl(
-      {required this.requestId, required this.english});
-
-  @override
-  final String requestId;
-  @override
-  final String english;
-
-  @override
-  String toString() {
-    return 'DailyLessonsEvent.markPhraseAsUsed(requestId: $requestId, english: $english)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$MarkPhraseAsUsedImpl &&
-            (identical(other.requestId, requestId) ||
-                other.requestId == requestId) &&
-            (identical(other.english, english) || other.english == english));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, requestId, english);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$MarkPhraseAsUsedImplCopyWith<_$MarkPhraseAsUsedImpl> get copyWith =>
-      __$$MarkPhraseAsUsedImplCopyWithImpl<_$MarkPhraseAsUsedImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() fetchVocabularies,
-    required TResult Function() fetchPhrases,
-    required TResult Function() fetchLessons,
-    required TResult Function() refreshLessons,
-    required TResult Function(String requestId, String english)
-        markVocabularyAsUsed,
-    required TResult Function(String requestId, String english)
-        markPhraseAsUsed,
-    required TResult Function() getUserAnalytics,
-    required TResult Function() clearUserData,
-    required TResult Function() getUserPreferences,
-  }) {
-    return markPhraseAsUsed(requestId, english);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVocabularies,
-    TResult? Function()? fetchPhrases,
-    TResult? Function()? fetchLessons,
-    TResult? Function()? refreshLessons,
-    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult? Function(String requestId, String english)? markPhraseAsUsed,
-    TResult? Function()? getUserAnalytics,
-    TResult? Function()? clearUserData,
-    TResult? Function()? getUserPreferences,
-  }) {
-    return markPhraseAsUsed?.call(requestId, english);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVocabularies,
-    TResult Function()? fetchPhrases,
-    TResult Function()? fetchLessons,
-    TResult Function()? refreshLessons,
-    TResult Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult Function(String requestId, String english)? markPhraseAsUsed,
-    TResult Function()? getUserAnalytics,
-    TResult Function()? clearUserData,
-    TResult Function()? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (markPhraseAsUsed != null) {
-      return markPhraseAsUsed(requestId, english);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FetchVocabularies value) fetchVocabularies,
-    required TResult Function(FetchPhrases value) fetchPhrases,
-    required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
-    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
-    required TResult Function(GetUserAnalytics value) getUserAnalytics,
-    required TResult Function(ClearUserData value) clearUserData,
-    required TResult Function(GetUserPreferences value) getUserPreferences,
-  }) {
-    return markPhraseAsUsed(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchVocabularies value)? fetchVocabularies,
-    TResult? Function(FetchPhrases value)? fetchPhrases,
-    TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult? Function(ClearUserData value)? clearUserData,
-    TResult? Function(GetUserPreferences value)? getUserPreferences,
-  }) {
-    return markPhraseAsUsed?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchVocabularies value)? fetchVocabularies,
-    TResult Function(FetchPhrases value)? fetchPhrases,
-    TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult Function(ClearUserData value)? clearUserData,
-    TResult Function(GetUserPreferences value)? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (markPhraseAsUsed != null) {
-      return markPhraseAsUsed(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class MarkPhraseAsUsed implements DailyLessonsEvent {
-  const factory MarkPhraseAsUsed(
-      {required final String requestId,
-      required final String english}) = _$MarkPhraseAsUsedImpl;
-
-  String get requestId;
-  String get english;
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MarkPhraseAsUsedImplCopyWith<_$MarkPhraseAsUsedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$GetUserAnalyticsImplCopyWith<$Res> {
-  factory _$$GetUserAnalyticsImplCopyWith(_$GetUserAnalyticsImpl value,
-          $Res Function(_$GetUserAnalyticsImpl) then) =
-      __$$GetUserAnalyticsImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$GetUserAnalyticsImplCopyWithImpl<$Res>
-    extends _$DailyLessonsEventCopyWithImpl<$Res, _$GetUserAnalyticsImpl>
-    implements _$$GetUserAnalyticsImplCopyWith<$Res> {
-  __$$GetUserAnalyticsImplCopyWithImpl(_$GetUserAnalyticsImpl _value,
-      $Res Function(_$GetUserAnalyticsImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$GetUserAnalyticsImpl implements GetUserAnalytics {
-  const _$GetUserAnalyticsImpl();
-
-  @override
-  String toString() {
-    return 'DailyLessonsEvent.getUserAnalytics()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GetUserAnalyticsImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() fetchVocabularies,
-    required TResult Function() fetchPhrases,
-    required TResult Function() fetchLessons,
-    required TResult Function() refreshLessons,
-    required TResult Function(String requestId, String english)
-        markVocabularyAsUsed,
-    required TResult Function(String requestId, String english)
-        markPhraseAsUsed,
-    required TResult Function() getUserAnalytics,
-    required TResult Function() clearUserData,
-    required TResult Function() getUserPreferences,
-  }) {
-    return getUserAnalytics();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVocabularies,
-    TResult? Function()? fetchPhrases,
-    TResult? Function()? fetchLessons,
-    TResult? Function()? refreshLessons,
-    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult? Function(String requestId, String english)? markPhraseAsUsed,
-    TResult? Function()? getUserAnalytics,
-    TResult? Function()? clearUserData,
-    TResult? Function()? getUserPreferences,
-  }) {
-    return getUserAnalytics?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVocabularies,
-    TResult Function()? fetchPhrases,
-    TResult Function()? fetchLessons,
-    TResult Function()? refreshLessons,
-    TResult Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult Function(String requestId, String english)? markPhraseAsUsed,
-    TResult Function()? getUserAnalytics,
-    TResult Function()? clearUserData,
-    TResult Function()? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (getUserAnalytics != null) {
-      return getUserAnalytics();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FetchVocabularies value) fetchVocabularies,
-    required TResult Function(FetchPhrases value) fetchPhrases,
-    required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
-    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
-    required TResult Function(GetUserAnalytics value) getUserAnalytics,
-    required TResult Function(ClearUserData value) clearUserData,
-    required TResult Function(GetUserPreferences value) getUserPreferences,
-  }) {
-    return getUserAnalytics(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchVocabularies value)? fetchVocabularies,
-    TResult? Function(FetchPhrases value)? fetchPhrases,
-    TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult? Function(ClearUserData value)? clearUserData,
-    TResult? Function(GetUserPreferences value)? getUserPreferences,
-  }) {
-    return getUserAnalytics?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchVocabularies value)? fetchVocabularies,
-    TResult Function(FetchPhrases value)? fetchPhrases,
-    TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult Function(ClearUserData value)? clearUserData,
-    TResult Function(GetUserPreferences value)? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (getUserAnalytics != null) {
-      return getUserAnalytics(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class GetUserAnalytics implements DailyLessonsEvent {
-  const factory GetUserAnalytics() = _$GetUserAnalyticsImpl;
-}
-
-/// @nodoc
-abstract class _$$ClearUserDataImplCopyWith<$Res> {
-  factory _$$ClearUserDataImplCopyWith(
-          _$ClearUserDataImpl value, $Res Function(_$ClearUserDataImpl) then) =
-      __$$ClearUserDataImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ClearUserDataImplCopyWithImpl<$Res>
-    extends _$DailyLessonsEventCopyWithImpl<$Res, _$ClearUserDataImpl>
-    implements _$$ClearUserDataImplCopyWith<$Res> {
-  __$$ClearUserDataImplCopyWithImpl(
-      _$ClearUserDataImpl _value, $Res Function(_$ClearUserDataImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$ClearUserDataImpl implements ClearUserData {
-  const _$ClearUserDataImpl();
-
-  @override
-  String toString() {
-    return 'DailyLessonsEvent.clearUserData()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ClearUserDataImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() fetchVocabularies,
-    required TResult Function() fetchPhrases,
-    required TResult Function() fetchLessons,
-    required TResult Function() refreshLessons,
-    required TResult Function(String requestId, String english)
-        markVocabularyAsUsed,
-    required TResult Function(String requestId, String english)
-        markPhraseAsUsed,
-    required TResult Function() getUserAnalytics,
-    required TResult Function() clearUserData,
-    required TResult Function() getUserPreferences,
-  }) {
-    return clearUserData();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVocabularies,
-    TResult? Function()? fetchPhrases,
-    TResult? Function()? fetchLessons,
-    TResult? Function()? refreshLessons,
-    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult? Function(String requestId, String english)? markPhraseAsUsed,
-    TResult? Function()? getUserAnalytics,
-    TResult? Function()? clearUserData,
-    TResult? Function()? getUserPreferences,
-  }) {
-    return clearUserData?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVocabularies,
-    TResult Function()? fetchPhrases,
-    TResult Function()? fetchLessons,
-    TResult Function()? refreshLessons,
-    TResult Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult Function(String requestId, String english)? markPhraseAsUsed,
-    TResult Function()? getUserAnalytics,
-    TResult Function()? clearUserData,
-    TResult Function()? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (clearUserData != null) {
-      return clearUserData();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FetchVocabularies value) fetchVocabularies,
-    required TResult Function(FetchPhrases value) fetchPhrases,
-    required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
-    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
-    required TResult Function(GetUserAnalytics value) getUserAnalytics,
-    required TResult Function(ClearUserData value) clearUserData,
-    required TResult Function(GetUserPreferences value) getUserPreferences,
-  }) {
-    return clearUserData(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchVocabularies value)? fetchVocabularies,
-    TResult? Function(FetchPhrases value)? fetchPhrases,
-    TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult? Function(ClearUserData value)? clearUserData,
-    TResult? Function(GetUserPreferences value)? getUserPreferences,
-  }) {
-    return clearUserData?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchVocabularies value)? fetchVocabularies,
-    TResult Function(FetchPhrases value)? fetchPhrases,
-    TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult Function(ClearUserData value)? clearUserData,
-    TResult Function(GetUserPreferences value)? getUserPreferences,
-    required TResult orElse(),
-  }) {
-    if (clearUserData != null) {
-      return clearUserData(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ClearUserData implements DailyLessonsEvent {
-  const factory ClearUserData() = _$ClearUserDataImpl;
 }
 
 /// @nodoc
@@ -1453,17 +376,11 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fetchVocabularies,
-    required TResult Function() fetchPhrases,
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
-    required TResult Function(String requestId, String english)
-        markVocabularyAsUsed,
-    required TResult Function(String requestId, String english)
-        markPhraseAsUsed,
-    required TResult Function() getUserAnalytics,
-    required TResult Function() clearUserData,
     required TResult Function() getUserPreferences,
+    required TResult Function(UserPreferences preferences, String message)
+        sendConversationMessage,
   }) {
     return getUserPreferences();
   }
@@ -1471,15 +388,11 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVocabularies,
-    TResult? Function()? fetchPhrases,
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
-    TResult? Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult? Function(String requestId, String english)? markPhraseAsUsed,
-    TResult? Function()? getUserAnalytics,
-    TResult? Function()? clearUserData,
     TResult? Function()? getUserPreferences,
+    TResult? Function(UserPreferences preferences, String message)?
+        sendConversationMessage,
   }) {
     return getUserPreferences?.call();
   }
@@ -1487,15 +400,11 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVocabularies,
-    TResult Function()? fetchPhrases,
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
-    TResult Function(String requestId, String english)? markVocabularyAsUsed,
-    TResult Function(String requestId, String english)? markPhraseAsUsed,
-    TResult Function()? getUserAnalytics,
-    TResult Function()? clearUserData,
     TResult Function()? getUserPreferences,
+    TResult Function(UserPreferences preferences, String message)?
+        sendConversationMessage,
     required TResult orElse(),
   }) {
     if (getUserPreferences != null) {
@@ -1507,15 +416,11 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(FetchVocabularies value) fetchVocabularies,
-    required TResult Function(FetchPhrases value) fetchPhrases,
     required TResult Function(FetchLessons value) fetchLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(MarkVocabularyAsUsed value) markVocabularyAsUsed,
-    required TResult Function(MarkPhraseAsUsed value) markPhraseAsUsed,
-    required TResult Function(GetUserAnalytics value) getUserAnalytics,
-    required TResult Function(ClearUserData value) clearUserData,
     required TResult Function(GetUserPreferences value) getUserPreferences,
+    required TResult Function(SendConversationMessage value)
+        sendConversationMessage,
   }) {
     return getUserPreferences(this);
   }
@@ -1523,15 +428,10 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchVocabularies value)? fetchVocabularies,
-    TResult? Function(FetchPhrases value)? fetchPhrases,
     TResult? Function(FetchLessons value)? fetchLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult? Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult? Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult? Function(ClearUserData value)? clearUserData,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
+    TResult? Function(SendConversationMessage value)? sendConversationMessage,
   }) {
     return getUserPreferences?.call(this);
   }
@@ -1539,15 +439,10 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchVocabularies value)? fetchVocabularies,
-    TResult Function(FetchPhrases value)? fetchPhrases,
     TResult Function(FetchLessons value)? fetchLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(MarkVocabularyAsUsed value)? markVocabularyAsUsed,
-    TResult Function(MarkPhraseAsUsed value)? markPhraseAsUsed,
-    TResult Function(GetUserAnalytics value)? getUserAnalytics,
-    TResult Function(ClearUserData value)? clearUserData,
     TResult Function(GetUserPreferences value)? getUserPreferences,
+    TResult Function(SendConversationMessage value)? sendConversationMessage,
     required TResult orElse(),
   }) {
     if (getUserPreferences != null) {
@@ -1559,4 +454,176 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
 
 abstract class GetUserPreferences implements DailyLessonsEvent {
   const factory GetUserPreferences() = _$GetUserPreferencesImpl;
+}
+
+/// @nodoc
+abstract class _$$SendConversationMessageImplCopyWith<$Res> {
+  factory _$$SendConversationMessageImplCopyWith(
+          _$SendConversationMessageImpl value,
+          $Res Function(_$SendConversationMessageImpl) then) =
+      __$$SendConversationMessageImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({UserPreferences preferences, String message});
+}
+
+/// @nodoc
+class __$$SendConversationMessageImplCopyWithImpl<$Res>
+    extends _$DailyLessonsEventCopyWithImpl<$Res, _$SendConversationMessageImpl>
+    implements _$$SendConversationMessageImplCopyWith<$Res> {
+  __$$SendConversationMessageImplCopyWithImpl(
+      _$SendConversationMessageImpl _value,
+      $Res Function(_$SendConversationMessageImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of DailyLessonsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? preferences = null,
+    Object? message = null,
+  }) {
+    return _then(_$SendConversationMessageImpl(
+      preferences: null == preferences
+          ? _value.preferences
+          : preferences // ignore: cast_nullable_to_non_nullable
+              as UserPreferences,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SendConversationMessageImpl implements SendConversationMessage {
+  const _$SendConversationMessageImpl(
+      {required this.preferences, required this.message});
+
+  @override
+  final UserPreferences preferences;
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'DailyLessonsEvent.sendConversationMessage(preferences: $preferences, message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SendConversationMessageImpl &&
+            (identical(other.preferences, preferences) ||
+                other.preferences == preferences) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, preferences, message);
+
+  /// Create a copy of DailyLessonsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SendConversationMessageImplCopyWith<_$SendConversationMessageImpl>
+      get copyWith => __$$SendConversationMessageImplCopyWithImpl<
+          _$SendConversationMessageImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetchLessons,
+    required TResult Function() refreshLessons,
+    required TResult Function() getUserPreferences,
+    required TResult Function(UserPreferences preferences, String message)
+        sendConversationMessage,
+  }) {
+    return sendConversationMessage(preferences, message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetchLessons,
+    TResult? Function()? refreshLessons,
+    TResult? Function()? getUserPreferences,
+    TResult? Function(UserPreferences preferences, String message)?
+        sendConversationMessage,
+  }) {
+    return sendConversationMessage?.call(preferences, message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetchLessons,
+    TResult Function()? refreshLessons,
+    TResult Function()? getUserPreferences,
+    TResult Function(UserPreferences preferences, String message)?
+        sendConversationMessage,
+    required TResult orElse(),
+  }) {
+    if (sendConversationMessage != null) {
+      return sendConversationMessage(preferences, message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(RefreshLessons value) refreshLessons,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
+    required TResult Function(SendConversationMessage value)
+        sendConversationMessage,
+  }) {
+    return sendConversationMessage(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(RefreshLessons value)? refreshLessons,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
+    TResult? Function(SendConversationMessage value)? sendConversationMessage,
+  }) {
+    return sendConversationMessage?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(RefreshLessons value)? refreshLessons,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
+    TResult Function(SendConversationMessage value)? sendConversationMessage,
+    required TResult orElse(),
+  }) {
+    if (sendConversationMessage != null) {
+      return sendConversationMessage(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SendConversationMessage implements DailyLessonsEvent {
+  const factory SendConversationMessage(
+      {required final UserPreferences preferences,
+      required final String message}) = _$SendConversationMessageImpl;
+
+  UserPreferences get preferences;
+  String get message;
+
+  /// Create a copy of DailyLessonsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SendConversationMessageImplCopyWith<_$SendConversationMessageImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

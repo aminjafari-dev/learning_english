@@ -19,22 +19,23 @@ import 'package:learning_english/features/daily_lessons/data/datasources/remote/
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/gemini_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/deepseek_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/repositories/daily_lessons_repository_impl.dart';
+import 'package:learning_english/features/daily_lessons/data/repositories/user_preferences_repository_impl.dart';
+import 'package:learning_english/features/daily_lessons/data/repositories/conversation_repository_impl.dart';
+import 'package:learning_english/features/daily_lessons/domain/repositories/conversation_repository.dart';
 import 'package:learning_english/features/daily_lessons/domain/repositories/daily_lessons_repository.dart';
-import 'package:learning_english/features/daily_lessons/domain/usecases/get_daily_vocabularies_usecase.dart';
-import 'package:learning_english/features/daily_lessons/domain/usecases/get_daily_phrases_usecase.dart';
+import 'package:learning_english/features/daily_lessons/domain/repositories/user_preferences_repository.dart';
+import 'package:learning_english/features/level_selection/domain/repositories/user_repository.dart';
+import 'package:learning_english/features/learning_focus_selection/domain/repositories/learning_focus_selection_repository.dart';
+import 'package:learning_english/core/repositories/user_repository.dart'
+    as core_user;
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_daily_lessons_usecase.dart';
-import 'package:learning_english/features/daily_lessons/domain/usecases/mark_vocabulary_as_used_usecase.dart';
-import 'package:learning_english/features/daily_lessons/domain/usecases/mark_phrase_as_used_usecase.dart';
-import 'package:learning_english/features/daily_lessons/domain/usecases/get_user_analytics_usecase.dart';
-import 'package:learning_english/features/daily_lessons/domain/usecases/clear_user_data_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_user_preferences_usecase.dart';
+import 'package:learning_english/features/daily_lessons/domain/usecases/send_conversation_message_usecase.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/remote/gemini_conversation_service.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_bloc.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/firebase_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/services/content_sync_service_factory.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:learning_english/features/level_selection/domain/repositories/user_repository.dart';
-import 'package:learning_english/features/learning_focus_selection/domain/repositories/learning_focus_selection_repository.dart';
-import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
 
 /// Call this function to register all dependencies for Daily Lessons
 /// @param getIt The GetIt instance for dependency injection
@@ -102,59 +103,59 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     final contentSyncFactory = getIt<ContentSyncServiceFactory>();
     contentSyncFactory.initialize();
 
-    // Get the content sync manager
-    final contentSyncManager = contentSyncFactory.getContentSyncManager();
+    // Gemini Conversation Service
+    getIt.registerLazySingleton<GeminiConversationService>(
+      () => GeminiConversationService(
+        getIt<DailyLessonsLocalDataSource>(),
+        _getGeminiApiKey(),
+      ),
+    );
 
-    // Repository with injected content sync manager and user preference dependencies
-    getIt.registerLazySingleton<DailyLessonsRepository>(() {
-      final repository = DailyLessonsRepositoryImpl(
+    // Daily Lessons Repository - focused on core lesson generation only
+    getIt.registerLazySingleton<DailyLessonsRepository>(
+      () => DailyLessonsRepositoryImpl(
         remoteDataSource: getIt<AiLessonsRemoteDataSource>(),
         localDataSource: getIt<DailyLessonsLocalDataSource>(),
+        coreUserRepository: getIt<core_user.UserRepository>(),
+      ),
+    );
+
+    // User Preferences Repository - handles user settings and preferences
+    getIt.registerLazySingleton<UserPreferencesRepository>(
+      () => UserPreferencesRepositoryImpl(
         userRepository: getIt<UserRepository>(),
         learningFocusRepository: getIt<LearningFocusSelectionRepository>(),
-        getUserIdUseCase: getIt<GetUserIdUseCase>(),
-      );
+        coreUserRepository: getIt<core_user.UserRepository>(),
+      ),
+    );
 
-      // Inject the content sync manager if available
-      if (contentSyncManager != null) {
-        repository.setContentSyncManager(contentSyncManager);
-        print(
-          '✅ [DI] Content sync manager injected into repository successfully',
-        );
-      } else {
-        print(
-          '⚠️ [DI] Content sync manager not available for repository injection',
-        );
-      }
-
-      return repository;
-    });
+    // Conversation Repository - handles AI conversation threads and messaging
+    getIt.registerLazySingleton<ConversationRepository>(
+      () => ConversationRepositoryImpl(
+        localDataSource: getIt<DailyLessonsLocalDataSource>(),
+        geminiConversationService: getIt<GeminiConversationService>(),
+        coreUserRepository: getIt<core_user.UserRepository>(),
+      ),
+    );
 
     // Use Cases
-    getIt.registerFactory(() => GetDailyVocabulariesUseCase(getIt()));
-    getIt.registerFactory(() => GetDailyPhrasesUseCase(getIt()));
-    getIt.registerFactory(
-      () => GetDailyLessonsUseCase(getIt()),
-    ); // New cost-effective use case
+    getIt.registerFactory(() => GetDailyLessonsUseCase(getIt()));
 
-    // New user-specific use cases
-    getIt.registerFactory(() => MarkVocabularyAsUsedUseCase(getIt()));
-    getIt.registerFactory(() => MarkPhraseAsUsedUseCase(getIt()));
-    getIt.registerFactory(() => GetUserAnalyticsUseCase(getIt()));
-    getIt.registerFactory(() => ClearUserDataUseCase(getIt()));
-    getIt.registerFactory(() => GetUserPreferencesUseCase(getIt()));
+    getIt.registerFactory(
+      () => GetUserPreferencesUseCase(getIt<UserPreferencesRepository>()),
+    );
+
+    // Conversation use cases
+    getIt.registerFactory(
+      () => SendConversationMessageUseCase(getIt<ConversationRepository>()),
+    );
 
     // Bloc
     getIt.registerSingleton<DailyLessonsBloc>(
       DailyLessonsBloc(
-        getDailyVocabulariesUseCase: getIt<GetDailyVocabulariesUseCase>(),
-        getDailyPhrasesUseCase: getIt<GetDailyPhrasesUseCase>(),
         getDailyLessonsUseCase: getIt<GetDailyLessonsUseCase>(),
-        markVocabularyAsUsedUseCase: getIt<MarkVocabularyAsUsedUseCase>(),
-        markPhraseAsUsedUseCase: getIt<MarkPhraseAsUsedUseCase>(),
-        getUserAnalyticsUseCase: getIt<GetUserAnalyticsUseCase>(),
-        clearUserDataUseCase: getIt<ClearUserDataUseCase>(),
         getUserPreferencesUseCase: getIt<GetUserPreferencesUseCase>(),
+        sendConversationMessageUseCase: getIt<SendConversationMessageUseCase>(),
       ),
     );
 

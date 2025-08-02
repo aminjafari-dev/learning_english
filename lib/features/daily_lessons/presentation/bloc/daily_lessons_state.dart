@@ -5,6 +5,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../domain/entities/vocabulary.dart';
 import '../../domain/entities/phrase.dart';
+import '../../data/models/conversation_thread_model.dart';
 
 part 'daily_lessons_state.freezed.dart';
 
@@ -44,12 +45,25 @@ class UserDataManagementState with _$UserDataManagementState {
 }
 
 @freezed
+class ConversationState with _$ConversationState {
+  const factory ConversationState.initial() = ConversationInitial;
+  const factory ConversationState.loading() = ConversationLoading;
+  const factory ConversationState.loaded({
+    required ConversationThreadModel? currentThread,
+    required List<ConversationMessageModel> messages,
+    required List<ConversationThreadModel> userThreads,
+  }) = ConversationLoaded;
+  const factory ConversationState.error(String message) = ConversationError;
+}
+
+@freezed
 abstract class DailyLessonsState with _$DailyLessonsState {
   const factory DailyLessonsState({
     required VocabulariesState vocabularies,
     required PhrasesState phrases,
     required UserAnalyticsState analytics,
     required UserDataManagementState dataManagement,
+    required ConversationState conversation,
     @Default(false) bool isRefreshing,
   }) = _DailyLessonsState;
 }

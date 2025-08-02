@@ -10,12 +10,12 @@
 //   final prompt = AiPrompts.getPersonalizedVocabularyPrompt(preferences);
 
 import 'package:equatable/equatable.dart';
-import '../../../level_selection/domain/entities/user_profile.dart';
+import '../../data/models/level_type.dart';
 
 /// Entity representing user preferences for personalized content generation
 /// Combines English level and selected learning focus areas
 class UserPreferences extends Equatable {
-  final Level level;
+  final UserLevel level;
   final List<String> focusAreas;
 
   const UserPreferences({required this.level, required this.focusAreas});
@@ -24,7 +24,7 @@ class UserPreferences extends Equatable {
   /// Used when user preferences are not available
   factory UserPreferences.defaultPreferences() {
     return const UserPreferences(
-      level: Level.intermediate,
+      level: UserLevel.intermediate,
       focusAreas: ['general'],
     );
   }
@@ -43,15 +43,23 @@ class UserPreferences extends Equatable {
   /// Gets level description for prompt generation
   String get levelDescription {
     switch (level) {
-      case Level.beginner:
+      case UserLevel.beginner:
         return 'beginner';
-      case Level.elementary:
+      case UserLevel.elementary:
         return 'elementary';
-      case Level.intermediate:
+      case UserLevel.intermediate:
         return 'intermediate';
-      case Level.advanced:
+      case UserLevel.advanced:
         return 'advanced';
     }
+  }
+
+  /// Creates a copy of UserPreferences with updated fields
+  UserPreferences copyWith({UserLevel? level, List<String>? focusAreas}) {
+    return UserPreferences(
+      level: level ?? this.level,
+      focusAreas: focusAreas ?? this.focusAreas,
+    );
   }
 
   @override

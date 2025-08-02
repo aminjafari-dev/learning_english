@@ -2484,12 +2484,738 @@ abstract class UserDataManagementError implements UserDataManagementState {
 }
 
 /// @nodoc
+mixin _$ConversationState {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)
+        loaded,
+    required TResult Function(String message) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)?
+        loaded,
+    TResult? Function(String message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)?
+        loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConversationInitial value) initial,
+    required TResult Function(ConversationLoading value) loading,
+    required TResult Function(ConversationLoaded value) loaded,
+    required TResult Function(ConversationError value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConversationInitial value)? initial,
+    TResult? Function(ConversationLoading value)? loading,
+    TResult? Function(ConversationLoaded value)? loaded,
+    TResult? Function(ConversationError value)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConversationInitial value)? initial,
+    TResult Function(ConversationLoading value)? loading,
+    TResult Function(ConversationLoaded value)? loaded,
+    TResult Function(ConversationError value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ConversationStateCopyWith<$Res> {
+  factory $ConversationStateCopyWith(
+          ConversationState value, $Res Function(ConversationState) then) =
+      _$ConversationStateCopyWithImpl<$Res, ConversationState>;
+}
+
+/// @nodoc
+class _$ConversationStateCopyWithImpl<$Res, $Val extends ConversationState>
+    implements $ConversationStateCopyWith<$Res> {
+  _$ConversationStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ConversationState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$ConversationInitialImplCopyWith<$Res> {
+  factory _$$ConversationInitialImplCopyWith(_$ConversationInitialImpl value,
+          $Res Function(_$ConversationInitialImpl) then) =
+      __$$ConversationInitialImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ConversationInitialImplCopyWithImpl<$Res>
+    extends _$ConversationStateCopyWithImpl<$Res, _$ConversationInitialImpl>
+    implements _$$ConversationInitialImplCopyWith<$Res> {
+  __$$ConversationInitialImplCopyWithImpl(_$ConversationInitialImpl _value,
+      $Res Function(_$ConversationInitialImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ConversationState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$ConversationInitialImpl implements ConversationInitial {
+  const _$ConversationInitialImpl();
+
+  @override
+  String toString() {
+    return 'ConversationState.initial()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ConversationInitialImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)
+        loaded,
+    required TResult Function(String message) error,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)?
+        loaded,
+    TResult? Function(String message)? error,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)?
+        loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConversationInitial value) initial,
+    required TResult Function(ConversationLoading value) loading,
+    required TResult Function(ConversationLoaded value) loaded,
+    required TResult Function(ConversationError value) error,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConversationInitial value)? initial,
+    TResult? Function(ConversationLoading value)? loading,
+    TResult? Function(ConversationLoaded value)? loaded,
+    TResult? Function(ConversationError value)? error,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConversationInitial value)? initial,
+    TResult Function(ConversationLoading value)? loading,
+    TResult Function(ConversationLoaded value)? loaded,
+    TResult Function(ConversationError value)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ConversationInitial implements ConversationState {
+  const factory ConversationInitial() = _$ConversationInitialImpl;
+}
+
+/// @nodoc
+abstract class _$$ConversationLoadingImplCopyWith<$Res> {
+  factory _$$ConversationLoadingImplCopyWith(_$ConversationLoadingImpl value,
+          $Res Function(_$ConversationLoadingImpl) then) =
+      __$$ConversationLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ConversationLoadingImplCopyWithImpl<$Res>
+    extends _$ConversationStateCopyWithImpl<$Res, _$ConversationLoadingImpl>
+    implements _$$ConversationLoadingImplCopyWith<$Res> {
+  __$$ConversationLoadingImplCopyWithImpl(_$ConversationLoadingImpl _value,
+      $Res Function(_$ConversationLoadingImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ConversationState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$ConversationLoadingImpl implements ConversationLoading {
+  const _$ConversationLoadingImpl();
+
+  @override
+  String toString() {
+    return 'ConversationState.loading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ConversationLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)
+        loaded,
+    required TResult Function(String message) error,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)?
+        loaded,
+    TResult? Function(String message)? error,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)?
+        loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConversationInitial value) initial,
+    required TResult Function(ConversationLoading value) loading,
+    required TResult Function(ConversationLoaded value) loaded,
+    required TResult Function(ConversationError value) error,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConversationInitial value)? initial,
+    TResult? Function(ConversationLoading value)? loading,
+    TResult? Function(ConversationLoaded value)? loaded,
+    TResult? Function(ConversationError value)? error,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConversationInitial value)? initial,
+    TResult Function(ConversationLoading value)? loading,
+    TResult Function(ConversationLoaded value)? loaded,
+    TResult Function(ConversationError value)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ConversationLoading implements ConversationState {
+  const factory ConversationLoading() = _$ConversationLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$ConversationLoadedImplCopyWith<$Res> {
+  factory _$$ConversationLoadedImplCopyWith(_$ConversationLoadedImpl value,
+          $Res Function(_$ConversationLoadedImpl) then) =
+      __$$ConversationLoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {ConversationThreadModel? currentThread,
+      List<ConversationMessageModel> messages,
+      List<ConversationThreadModel> userThreads});
+}
+
+/// @nodoc
+class __$$ConversationLoadedImplCopyWithImpl<$Res>
+    extends _$ConversationStateCopyWithImpl<$Res, _$ConversationLoadedImpl>
+    implements _$$ConversationLoadedImplCopyWith<$Res> {
+  __$$ConversationLoadedImplCopyWithImpl(_$ConversationLoadedImpl _value,
+      $Res Function(_$ConversationLoadedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ConversationState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? currentThread = freezed,
+    Object? messages = null,
+    Object? userThreads = null,
+  }) {
+    return _then(_$ConversationLoadedImpl(
+      currentThread: freezed == currentThread
+          ? _value.currentThread
+          : currentThread // ignore: cast_nullable_to_non_nullable
+              as ConversationThreadModel?,
+      messages: null == messages
+          ? _value._messages
+          : messages // ignore: cast_nullable_to_non_nullable
+              as List<ConversationMessageModel>,
+      userThreads: null == userThreads
+          ? _value._userThreads
+          : userThreads // ignore: cast_nullable_to_non_nullable
+              as List<ConversationThreadModel>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ConversationLoadedImpl implements ConversationLoaded {
+  const _$ConversationLoadedImpl(
+      {required this.currentThread,
+      required final List<ConversationMessageModel> messages,
+      required final List<ConversationThreadModel> userThreads})
+      : _messages = messages,
+        _userThreads = userThreads;
+
+  @override
+  final ConversationThreadModel? currentThread;
+  final List<ConversationMessageModel> _messages;
+  @override
+  List<ConversationMessageModel> get messages {
+    if (_messages is EqualUnmodifiableListView) return _messages;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_messages);
+  }
+
+  final List<ConversationThreadModel> _userThreads;
+  @override
+  List<ConversationThreadModel> get userThreads {
+    if (_userThreads is EqualUnmodifiableListView) return _userThreads;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_userThreads);
+  }
+
+  @override
+  String toString() {
+    return 'ConversationState.loaded(currentThread: $currentThread, messages: $messages, userThreads: $userThreads)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ConversationLoadedImpl &&
+            (identical(other.currentThread, currentThread) ||
+                other.currentThread == currentThread) &&
+            const DeepCollectionEquality().equals(other._messages, _messages) &&
+            const DeepCollectionEquality()
+                .equals(other._userThreads, _userThreads));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      currentThread,
+      const DeepCollectionEquality().hash(_messages),
+      const DeepCollectionEquality().hash(_userThreads));
+
+  /// Create a copy of ConversationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ConversationLoadedImplCopyWith<_$ConversationLoadedImpl> get copyWith =>
+      __$$ConversationLoadedImplCopyWithImpl<_$ConversationLoadedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)
+        loaded,
+    required TResult Function(String message) error,
+  }) {
+    return loaded(currentThread, messages, userThreads);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)?
+        loaded,
+    TResult? Function(String message)? error,
+  }) {
+    return loaded?.call(currentThread, messages, userThreads);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)?
+        loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (loaded != null) {
+      return loaded(currentThread, messages, userThreads);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConversationInitial value) initial,
+    required TResult Function(ConversationLoading value) loading,
+    required TResult Function(ConversationLoaded value) loaded,
+    required TResult Function(ConversationError value) error,
+  }) {
+    return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConversationInitial value)? initial,
+    TResult? Function(ConversationLoading value)? loading,
+    TResult? Function(ConversationLoaded value)? loaded,
+    TResult? Function(ConversationError value)? error,
+  }) {
+    return loaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConversationInitial value)? initial,
+    TResult Function(ConversationLoading value)? loading,
+    TResult Function(ConversationLoaded value)? loaded,
+    TResult Function(ConversationError value)? error,
+    required TResult orElse(),
+  }) {
+    if (loaded != null) {
+      return loaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ConversationLoaded implements ConversationState {
+  const factory ConversationLoaded(
+          {required final ConversationThreadModel? currentThread,
+          required final List<ConversationMessageModel> messages,
+          required final List<ConversationThreadModel> userThreads}) =
+      _$ConversationLoadedImpl;
+
+  ConversationThreadModel? get currentThread;
+  List<ConversationMessageModel> get messages;
+  List<ConversationThreadModel> get userThreads;
+
+  /// Create a copy of ConversationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ConversationLoadedImplCopyWith<_$ConversationLoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ConversationErrorImplCopyWith<$Res> {
+  factory _$$ConversationErrorImplCopyWith(_$ConversationErrorImpl value,
+          $Res Function(_$ConversationErrorImpl) then) =
+      __$$ConversationErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$ConversationErrorImplCopyWithImpl<$Res>
+    extends _$ConversationStateCopyWithImpl<$Res, _$ConversationErrorImpl>
+    implements _$$ConversationErrorImplCopyWith<$Res> {
+  __$$ConversationErrorImplCopyWithImpl(_$ConversationErrorImpl _value,
+      $Res Function(_$ConversationErrorImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ConversationState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ConversationErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ConversationErrorImpl implements ConversationError {
+  const _$ConversationErrorImpl(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'ConversationState.error(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ConversationErrorImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of ConversationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ConversationErrorImplCopyWith<_$ConversationErrorImpl> get copyWith =>
+      __$$ConversationErrorImplCopyWithImpl<_$ConversationErrorImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)
+        loaded,
+    required TResult Function(String message) error,
+  }) {
+    return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)?
+        loaded,
+    TResult? Function(String message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+            ConversationThreadModel? currentThread,
+            List<ConversationMessageModel> messages,
+            List<ConversationThreadModel> userThreads)?
+        loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConversationInitial value) initial,
+    required TResult Function(ConversationLoading value) loading,
+    required TResult Function(ConversationLoaded value) loaded,
+    required TResult Function(ConversationError value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConversationInitial value)? initial,
+    TResult? Function(ConversationLoading value)? loading,
+    TResult? Function(ConversationLoaded value)? loaded,
+    TResult? Function(ConversationError value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConversationInitial value)? initial,
+    TResult Function(ConversationLoading value)? loading,
+    TResult Function(ConversationLoaded value)? loaded,
+    TResult Function(ConversationError value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ConversationError implements ConversationState {
+  const factory ConversationError(final String message) =
+      _$ConversationErrorImpl;
+
+  String get message;
+
+  /// Create a copy of ConversationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ConversationErrorImplCopyWith<_$ConversationErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$DailyLessonsState {
   VocabulariesState get vocabularies => throw _privateConstructorUsedError;
   PhrasesState get phrases => throw _privateConstructorUsedError;
   UserAnalyticsState get analytics => throw _privateConstructorUsedError;
   UserDataManagementState get dataManagement =>
       throw _privateConstructorUsedError;
+  ConversationState get conversation => throw _privateConstructorUsedError;
   bool get isRefreshing => throw _privateConstructorUsedError;
 
   /// Create a copy of DailyLessonsState
@@ -2510,12 +3236,14 @@ abstract class $DailyLessonsStateCopyWith<$Res> {
       PhrasesState phrases,
       UserAnalyticsState analytics,
       UserDataManagementState dataManagement,
+      ConversationState conversation,
       bool isRefreshing});
 
   $VocabulariesStateCopyWith<$Res> get vocabularies;
   $PhrasesStateCopyWith<$Res> get phrases;
   $UserAnalyticsStateCopyWith<$Res> get analytics;
   $UserDataManagementStateCopyWith<$Res> get dataManagement;
+  $ConversationStateCopyWith<$Res> get conversation;
 }
 
 /// @nodoc
@@ -2537,6 +3265,7 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
     Object? phrases = null,
     Object? analytics = null,
     Object? dataManagement = null,
+    Object? conversation = null,
     Object? isRefreshing = null,
   }) {
     return _then(_value.copyWith(
@@ -2556,6 +3285,10 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
           ? _value.dataManagement
           : dataManagement // ignore: cast_nullable_to_non_nullable
               as UserDataManagementState,
+      conversation: null == conversation
+          ? _value.conversation
+          : conversation // ignore: cast_nullable_to_non_nullable
+              as ConversationState,
       isRefreshing: null == isRefreshing
           ? _value.isRefreshing
           : isRefreshing // ignore: cast_nullable_to_non_nullable
@@ -2603,6 +3336,16 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
       return _then(_value.copyWith(dataManagement: value) as $Val);
     });
   }
+
+  /// Create a copy of DailyLessonsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ConversationStateCopyWith<$Res> get conversation {
+    return $ConversationStateCopyWith<$Res>(_value.conversation, (value) {
+      return _then(_value.copyWith(conversation: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -2618,6 +3361,7 @@ abstract class _$$DailyLessonsStateImplCopyWith<$Res>
       PhrasesState phrases,
       UserAnalyticsState analytics,
       UserDataManagementState dataManagement,
+      ConversationState conversation,
       bool isRefreshing});
 
   @override
@@ -2628,6 +3372,8 @@ abstract class _$$DailyLessonsStateImplCopyWith<$Res>
   $UserAnalyticsStateCopyWith<$Res> get analytics;
   @override
   $UserDataManagementStateCopyWith<$Res> get dataManagement;
+  @override
+  $ConversationStateCopyWith<$Res> get conversation;
 }
 
 /// @nodoc
@@ -2647,6 +3393,7 @@ class __$$DailyLessonsStateImplCopyWithImpl<$Res>
     Object? phrases = null,
     Object? analytics = null,
     Object? dataManagement = null,
+    Object? conversation = null,
     Object? isRefreshing = null,
   }) {
     return _then(_$DailyLessonsStateImpl(
@@ -2666,6 +3413,10 @@ class __$$DailyLessonsStateImplCopyWithImpl<$Res>
           ? _value.dataManagement
           : dataManagement // ignore: cast_nullable_to_non_nullable
               as UserDataManagementState,
+      conversation: null == conversation
+          ? _value.conversation
+          : conversation // ignore: cast_nullable_to_non_nullable
+              as ConversationState,
       isRefreshing: null == isRefreshing
           ? _value.isRefreshing
           : isRefreshing // ignore: cast_nullable_to_non_nullable
@@ -2682,6 +3433,7 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
       required this.phrases,
       required this.analytics,
       required this.dataManagement,
+      required this.conversation,
       this.isRefreshing = false});
 
   @override
@@ -2693,12 +3445,14 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
   @override
   final UserDataManagementState dataManagement;
   @override
+  final ConversationState conversation;
+  @override
   @JsonKey()
   final bool isRefreshing;
 
   @override
   String toString() {
-    return 'DailyLessonsState(vocabularies: $vocabularies, phrases: $phrases, analytics: $analytics, dataManagement: $dataManagement, isRefreshing: $isRefreshing)';
+    return 'DailyLessonsState(vocabularies: $vocabularies, phrases: $phrases, analytics: $analytics, dataManagement: $dataManagement, conversation: $conversation, isRefreshing: $isRefreshing)';
   }
 
   @override
@@ -2713,13 +3467,15 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
                 other.analytics == analytics) &&
             (identical(other.dataManagement, dataManagement) ||
                 other.dataManagement == dataManagement) &&
+            (identical(other.conversation, conversation) ||
+                other.conversation == conversation) &&
             (identical(other.isRefreshing, isRefreshing) ||
                 other.isRefreshing == isRefreshing));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vocabularies, phrases, analytics,
-      dataManagement, isRefreshing);
+      dataManagement, conversation, isRefreshing);
 
   /// Create a copy of DailyLessonsState
   /// with the given fields replaced by the non-null parameter values.
@@ -2737,6 +3493,7 @@ abstract class _DailyLessonsState implements DailyLessonsState {
       required final PhrasesState phrases,
       required final UserAnalyticsState analytics,
       required final UserDataManagementState dataManagement,
+      required final ConversationState conversation,
       final bool isRefreshing}) = _$DailyLessonsStateImpl;
 
   @override
@@ -2747,6 +3504,8 @@ abstract class _DailyLessonsState implements DailyLessonsState {
   UserAnalyticsState get analytics;
   @override
   UserDataManagementState get dataManagement;
+  @override
+  ConversationState get conversation;
   @override
   bool get isRefreshing;
 

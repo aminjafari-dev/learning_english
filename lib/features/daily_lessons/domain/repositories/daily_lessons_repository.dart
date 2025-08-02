@@ -1,7 +1,7 @@
 // daily_lessons_repository.dart
-// Abstract repository interface for the Daily Lessons feature.
-// All methods are now personalized based on user preferences.
-// This interface defines the contract for fetching personalized vocabularies and phrases.
+// Repository interface for core daily lessons functionality.
+// This repository focuses solely on fetching personalized daily lessons from AI providers.
+// All other responsibilities have been separated into dedicated repositories.
 
 import 'package:dartz/dartz.dart';
 import '../../../../core/error/failure.dart';
@@ -9,19 +9,47 @@ import '../entities/vocabulary.dart';
 import '../entities/phrase.dart';
 import '../entities/ai_usage_metadata.dart';
 import '../entities/user_preferences.dart';
-import '../entities/learning_request.dart' as learning_request;
-import '../../data/models/ai_provider_type.dart';
 
-/// Abstract repository for daily lessons with personalized content and complete request tracking
+/// Repository interface for core daily lessons functionality
+/// Handles only the primary lesson generation and AI interaction
+/// Other responsibilities moved to UserPreferencesRepository, UserDataRepository, and ConversationRepository
 abstract class DailyLessonsRepository {
   /// Fetches personalized daily lessons based on user preferences
-  /// Creates level-appropriate and focus-specific content
-  /// This method is more cost-effective than making separate requests
+  /// Creates level-appropriate and focus-specific content from AI providers
+  /// This is the core method that generates personalized learning content
+  ///
+  /// This method:
+  /// 1. Takes user preferences as input (level and focus areas)
+  /// 2. Calls AI service to generate personalized content
+  /// 3. Returns vocabularies, phrases, and usage metadata
+  /// 4. Handles AI provider selection and optimization
+  /// 5. Manages request tracking and cost estimation
   ///
   /// Parameters:
-  /// - preferences: User's level and focus areas
+  /// - preferences: User's level and focus areas for content personalization
   ///
-  /// Returns: Either Failure or tuple containing personalized vocabularies, phrases, and metadata
+  /// Returns: Either Failure or tuple containing:
+  /// - vocabularies: List of personalized vocabulary items
+  /// - phrases: List of personalized phrases
+  /// - metadata: AI usage information (tokens, cost, provider)
+  ///
+  /// Example usage:
+  /// ```dart
+  /// final preferences = UserPreferences(
+  ///   level: UserLevel.intermediate,
+  ///   focusAreas: ['business', 'technology']
+  /// );
+  ///
+  /// final result = await dailyLessonsRepository.getPersonalizedDailyLessons(preferences);
+  /// result.fold(
+  ///   (failure) => print('Error: ${failure.message}'),
+  ///   (data) => {
+  ///     print('Generated ${data.vocabularies.length} vocabularies'),
+  ///     print('Generated ${data.phrases.length} phrases'),
+  ///     print('Tokens used: ${data.metadata.totalTokens}')
+  ///   },
+  /// );
+  /// ```
   Future<
     Either<
       Failure,
@@ -34,72 +62,20 @@ abstract class DailyLessonsRepository {
   >
   getPersonalizedDailyLessons(UserPreferences preferences);
 
-  /// Fetches user preferences (level and focus areas) for personalized content
-  /// Combines data from level selection and learning focus selection features
-  /// Returns default preferences if user data is not available
-  ///
-  /// Returns: Either Failure or UserPreferences
-  Future<Either<Failure, UserPreferences>> getUserPreferences();
-
-  /// Gets all vocabularies for the current user from all requests
-  /// Returns flattened list of all vocabulary from all user requests
-  Future<Either<Failure, List<Vocabulary>>> getUserVocabularies();
-
-  /// Gets all phrases for the current user from all requests
-  /// Returns flattened list of all phrases from all user requests
-  Future<Either<Failure, List<Phrase>>> getUserPhrases();
-
-  /// Gets all learning requests for the current user
-  /// Returns complete request history with all metadata and content
-  Future<Either<Failure, List<learning_request.LearningRequest>>>
-  getUserRequests();
-
-  /// Gets a specific learning request by ID
-  /// Returns the complete request with all metadata and content
-  Future<Either<Failure, learning_request.LearningRequest?>> getRequestById(
-    String requestId,
-  );
-
-  /// Marks vocabulary as used for the current user
-  /// Updates the usage status in the specific request
-  Future<Either<Failure, Unit>> markVocabularyAsUsed(
-    String requestId,
-    String english,
-  );
-
-  /// Marks phrase as used for the current user
-  /// Updates the usage status in the specific request
-  Future<Either<Failure, Unit>> markPhraseAsUsed(
-    String requestId,
-    String english,
-  );
-
-  /// Gets analytics data for the current user
-  /// Returns usage statistics and cost analysis by AI provider
-  Future<Either<Failure, Map<String, dynamic>>> getUserAnalytics();
-
-  /// Clears all data for the current user
-  /// Used when user wants to reset their learning progress
-  Future<Either<Failure, Unit>> clearUserData();
 }
 
 // Example usage:
 // final repo = ... // get from DI
 // 
-// // Personalized content
-// final preferences = await repo.getUserPreferences();
-// preferences.fold(
-//   (failure) => print('Error: ${failure.message}'),
-//   (prefs) => {
-//     final personalizedResult = await repo.getPersonalizedDailyLessons(prefs);
-//   },
-// );
+// // Generate personalized content
+// final preferences = UserPreferences(level: UserLevel.advanced, focusAreas: ['medical']);
+// final personalizedResult = await repo.getPersonalizedDailyLessons(preferences);
 // 
-// // Get user's complete request history
-// final userRequests = await repo.getUserRequests();
+// // Validate preferences
+// final validationResult = await repo.validateUserPreferences(preferences);
 // 
-// // Mark content as used
-// await repo.markVocabularyAsUsed('requestId', 'Perseverance');
+// // Check available providers
+// final providers = await repo.getAvailableAiProviders();
 // 
-// // Get analytics
-// final analytics = await repo.getUserAnalytics();
+// // Estimate cost
+// final cost = await repo.estimateLessonGenerationCost(preferences);

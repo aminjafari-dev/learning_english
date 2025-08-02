@@ -15,6 +15,9 @@ import 'package:learning_english/features/daily_lessons/data/models/ai_provider_
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/ai_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/daily_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/local/daily_lessons_local_data_source.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/local/learning_requests_local_data_source.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/local/conversation_threads_local_data_source.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/local/analytics_local_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/openai_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/gemini_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/deepseek_lessons_remote_data_source.dart';
@@ -58,12 +61,31 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
       Hive.registerAdapter(UserLevelAdapter());
     }
 
-    // Local Data Source
+    // ===== SPECIALIZED LOCAL DATA SOURCES =====
+
+    // Learning Requests Local Data Source - handles learning request CRUD operations
+    getIt.registerLazySingleton<LearningRequestsLocalDataSource>(
+      () => LearningRequestsLocalDataSource(),
+    );
+
+    // Conversation Threads Local Data Source - handles conversation thread management
+    getIt.registerLazySingleton<ConversationThreadsLocalDataSource>(
+      () => ConversationThreadsLocalDataSource(),
+    );
+
+    // Analytics Local Data Source - handles analytics and statistics calculation
+    getIt.registerLazySingleton<AnalyticsLocalDataSource>(
+      () => AnalyticsLocalDataSource(),
+    );
+
+    // ===== MAIN COORDINATOR LOCAL DATA SOURCE =====
+
+    // Main Local Data Source - uses composition pattern with specialized data sources
     getIt.registerLazySingleton<DailyLessonsLocalDataSource>(
       () => DailyLessonsLocalDataSource(),
     );
 
-    // Initialize the local data source
+    // Initialize the main local data source (which initializes all specialized data sources)
     await getIt<DailyLessonsLocalDataSource>().initialize();
 
     // Remote Data Source

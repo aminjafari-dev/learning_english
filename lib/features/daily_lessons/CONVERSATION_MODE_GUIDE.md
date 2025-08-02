@@ -54,34 +54,53 @@ Conversation continues in same thread
 
 ## Usage Examples
 
-### 1. Initialize Conversation
+### 1. Send Conversation Message
 ```dart
-final controller = context.read<ConversationController>();
+final bloc = context.read<DailyLessonsBloc>();
 final preferences = UserPreferences(
   level: UserLevel.intermediate,
   focusAreas: ['business'],
 );
 
-await controller.initializeConversation(preferences);
+bloc.add(DailyLessonsEvent.sendConversationMessage(
+  preferences: preferences,
+  message: "Hello, how are you?",
+));
 ```
 
-### 2. Send Message
+### 2. Get User Preferences
 ```dart
-await controller.sendMessage(preferences, "Hello, how are you?");
+bloc.add(const DailyLessonsEvent.getUserPreferences());
 ```
 
-### 3. Load User Threads
+### 3. Access Conversation State
 ```dart
-await controller.loadUserThreads();
-final threads = controller.userThreads;
+BlocBuilder<DailyLessonsBloc, DailyLessonsState>(
+  builder: (context, state) {
+    return state.conversation.when(
+      initial: () => _buildInitialState(),
+      loading: () => _buildLoadingState(),
+      loaded: (currentThread, messages, userThreads) => _buildConversation(
+        currentThread, messages, userThreads,
+      ),
+      error: (message) => _buildErrorState(message),
+    );
+  },
+);
 ```
 
-### 4. Switch Thread
+### 4. Switch Thread (Automatic)
 ```dart
-final thread = controller.getThreadForPreferences(preferences);
-if (thread != null) {
-  await controller.switchToThread(thread);
-}
+// Thread switching is automatic - just send a message with different preferences
+final newPreferences = UserPreferences(
+  level: UserLevel.advanced,
+  focusAreas: ['travel'],
+);
+
+bloc.add(DailyLessonsEvent.sendConversationMessage(
+  preferences: newPreferences,
+  message: "Let's practice travel English",
+));
 ```
 
 ## Thread Identification

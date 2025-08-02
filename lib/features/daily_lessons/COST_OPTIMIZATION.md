@@ -106,24 +106,25 @@ Future<Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>>
 
 ### For Developers
 
-1. **Use the new combined method:**
+1. **Use the personalized combined method:**
 ```dart
-// Instead of:
-final vocabResult = await repo.getDailyVocabularies();
-final phraseResult = await repo.getDailyPhrases();
-
-// Use:
-final lessonsResult = await repo.getDailyLessons();
+// Current implementation:
+final userPreferences = await userPreferencesRepo.getUserPreferences();
+final lessonsResult = await repo.getPersonalizedDailyLessons(userPreferences);
 ```
 
-2. **Update BLoC events:**
+2. **Use simplified BLoC events:**
 ```dart
-// Instead of:
-context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchVocabularies());
-context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchPhrases());
-
-// Use:
+// Current usage (automatically gets preferences and uses combined request):
 context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchLessons());
+
+// For conversation mode:
+context.read<DailyLessonsBloc>().add(
+  DailyLessonsEvent.sendConversationMessage(
+    preferences: preferences,
+    message: "Hello",
+  ),
+);
 ```
 
 ### For UI Updates

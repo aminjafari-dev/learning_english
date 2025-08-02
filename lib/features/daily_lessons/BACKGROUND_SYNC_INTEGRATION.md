@@ -68,22 +68,25 @@ The current implementation uses placeholder values for:
 
 1. **Get Actual User ID**
 ```dart
-// In repository, replace 'current_user' with actual user ID
-final userId = await getUserIdUseCase(NoParams());
+// In repository, replace 'current_user' with actual user ID from core user repository
+final userId = await coreUserRepository.getUserId();
 ```
 
-2. **Get User Profile**
+2. **Get User Preferences**
 ```dart
-// Get user's level and preferences
-final userProfile = await getUserProfileUseCase(userId);
-final level = userProfile.level;
+// Get user's level and preferences using the dedicated repository
+final userPreferences = await userPreferencesRepository.getUserPreferences();
+final level = userPreferences.level;
+final focusAreas = userPreferences.focusAreas;
 ```
 
-3. **Get Learning Focus**
+3. **Use Preferences in Sync**
 ```dart
-// Get user's learning focus areas
-final focusAreas = await getLearningFocusUseCase(userId);
-final focusArea = focusAreas.first; // or primary focus
+// Use the user preferences in background sync context
+final context = SyncContext(
+  level: userPreferences.level,
+  focusAreas: userPreferences.focusAreas,
+);
 ```
 
 ## 🎯 **Benefits Achieved**

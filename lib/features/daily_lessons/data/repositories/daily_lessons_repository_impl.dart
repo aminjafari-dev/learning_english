@@ -5,8 +5,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:learning_english/core/error/failure.dart';
-import 'package:learning_english/core/repositories/user_repository.dart'
-    ;
+import 'package:learning_english/core/repositories/user_repository.dart';
 import '../../domain/entities/vocabulary.dart';
 import '../../domain/entities/phrase.dart';
 import '../../domain/entities/ai_usage_metadata.dart';

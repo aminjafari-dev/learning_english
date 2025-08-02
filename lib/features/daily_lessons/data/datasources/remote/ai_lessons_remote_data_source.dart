@@ -13,27 +13,6 @@ import 'package:learning_english/core/error/failure.dart';
 /// Abstract interface for AI-based lessons data sources
 /// All methods are personalized based on user preferences
 abstract class AiLessonsRemoteDataSource {
-  /// Fetches personalized daily vocabularies based on user preferences
-  /// Creates level-appropriate and focus-specific vocabulary content
-  ///
-  /// Parameters:
-  /// - preferences: User's level and focus areas
-  ///
-  /// Returns: Either Failure or list of personalized vocabularies
-  Future<Either<Failure, List<Vocabulary>>> fetchPersonalizedDailyVocabularies(
-    UserPreferences preferences,
-  );
-
-  /// Fetches personalized daily phrases based on user preferences
-  /// Creates level-appropriate and focus-specific phrase content
-  ///
-  /// Parameters:
-  /// - preferences: User's level and focus areas
-  ///
-  /// Returns: Either Failure or list of personalized phrases
-  Future<Either<Failure, List<Phrase>>> fetchPersonalizedDailyPhrases(
-    UserPreferences preferences,
-  );
 
   /// Fetches personalized daily lessons (vocabularies and phrases) based on user preferences
   /// Creates level-appropriate and focus-specific content in a single request

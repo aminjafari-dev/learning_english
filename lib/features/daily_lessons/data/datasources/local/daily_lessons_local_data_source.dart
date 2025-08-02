@@ -1,487 +1,244 @@
 // daily_lessons_local_data_source.dart
-// Local data source for storing and retrieving learning request data using Hive.
-// This handles persistence of complete AI requests with all metadata and generated content.
-// Now includes conversation thread management for Gemini integration.
+// Main coordinator local data source for daily lessons feature using composition pattern.
+// This class combines specialized data sources for learning requests, conversation threads, and analytics.
+// Usage: Use this class as the main entry point for all daily lessons local data operations.
 
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learning_english/features/daily_lessons/data/models/level_type.dart';
 import '../../models/learning_request_model.dart';
 import '../../models/vocabulary_model.dart';
 import '../../models/phrase_model.dart';
 import '../../models/ai_provider_type.dart';
 import '../../models/conversation_thread_model.dart';
+import 'learning_requests_local_data_source.dart';
+import 'conversation_threads_local_data_source.dart';
+import 'analytics_local_data_source.dart';
 
-/// Local data source for learning requests storage using Hive
-/// Handles persistence of complete AI requests with all metadata and generated content
+/// Main coordinator local data source for daily lessons using composition pattern
+/// This class delegates operations to specialized data sources for better maintainability
+/// Usage: Use this as the main interface for all daily lessons local data operations
 class DailyLessonsLocalDataSource {
-  static const String _learningRequestsBoxName = 'learning_requests';
-  static const String _conversationThreadsBoxName = 'conversation_threads';
+  late LearningRequestsLocalDataSource _learningRequestsDataSource;
+  late ConversationThreadsLocalDataSource _conversationThreadsDataSource;
+  late AnalyticsLocalDataSource _analyticsDataSource;
 
-  late Box<LearningRequestModel> _learningRequestsBox;
-  late Box<ConversationThreadModel> _conversationThreadsBox;
-
-  /// Initialize Hive boxes for learning request storage
+  /// Initialize all specialized data sources
   /// This method should be called before using any other methods
+  /// Example: await dataSource.initialize();
   Future<void> initialize() async {
     try {
-      _learningRequestsBox = await Hive.openBox<LearningRequestModel>(
-        _learningRequestsBoxName,
-      );
-      _conversationThreadsBox = await Hive.openBox<ConversationThreadModel>(
-        _conversationThreadsBoxName,
-      );
+      // Initialize learning requests data source
+      _learningRequestsDataSource = LearningRequestsLocalDataSource();
+      await _learningRequestsDataSource.initialize();
+
+      // Initialize conversation threads data source
+      _conversationThreadsDataSource = ConversationThreadsLocalDataSource();
+      await _conversationThreadsDataSource.initialize();
+
+      // Initialize analytics data source
+      _analyticsDataSource = AnalyticsLocalDataSource();
+      await _analyticsDataSource.initialize();
     } catch (e) {
-      throw Exception('Failed to initialize Hive boxes: ${e.toString()}');
+      throw Exception(
+        'Failed to initialize daily lessons data sources: ${e.toString()}',
+      );
     }
   }
 
+  // ===== LEARNING REQUESTS DELEGATION =====
+
   /// Saves complete learning request data
-  /// Stores all request metadata and generated content
+  /// Delegates to specialized learning requests data source
+  /// Example: await dataSource.saveLearningRequest(requestModel);
   Future<void> saveLearningRequest(LearningRequestModel request) async {
-    try {
-      // Use request ID as the key for easy retrieval and updates
-      await _learningRequestsBox.put(request.requestId, request);
-    } catch (e) {
-      throw Exception('Failed to save learning request: ${e.toString()}');
-    }
+    return _learningRequestsDataSource.saveLearningRequest(request);
   }
 
   /// Retrieves all learning requests for a specific user
-  /// Returns list of LearningRequestModel with complete metadata
+  /// Delegates to specialized learning requests data source
+  /// Example: final requests = await dataSource.getUserRequests('user123');
   Future<List<LearningRequestModel>> getUserRequests(String userId) async {
-    try {
-      return _learningRequestsBox.values
-          .where((request) => request.userId == userId)
-          .toList();
-    } catch (e) {
-      throw Exception('Failed to get user requests: ${e.toString()}');
-    }
+    return _learningRequestsDataSource.getUserRequests(userId);
   }
 
   /// Retrieves a specific learning request by ID
-  /// Returns the complete request with all metadata and content
+  /// Delegates to specialized learning requests data source
+  /// Example: final request = await dataSource.getRequestById('req123');
   Future<LearningRequestModel?> getRequestById(String requestId) async {
-    try {
-      return _learningRequestsBox.get(requestId);
-    } catch (e) {
-      throw Exception('Failed to get request by ID: ${e.toString()}');
-    }
+    return _learningRequestsDataSource.getRequestById(requestId);
   }
 
   /// Retrieves all vocabulary from user's requests
-  /// Returns flattened list of all vocabulary from all user requests
+  /// Delegates to specialized learning requests data source
+  /// Example: final vocabularies = await dataSource.getUserVocabularies('user123');
   Future<List<VocabularyModel>> getUserVocabularies(String userId) async {
-    try {
-      final userRequests = await getUserRequests(userId);
-      final allVocabularies = <VocabularyModel>[];
-
-      for (final request in userRequests) {
-        allVocabularies.addAll(request.vocabularies);
-      }
-
-      return allVocabularies;
-    } catch (e) {
-      throw Exception('Failed to get user vocabularies: ${e.toString()}');
-    }
+    return _learningRequestsDataSource.getUserVocabularies(userId);
   }
 
   /// Retrieves all phrases from user's requests
-  /// Returns flattened list of all phrases from all user requests
+  /// Delegates to specialized learning requests data source
+  /// Example: final phrases = await dataSource.getUserPhrases('user123');
   Future<List<PhraseModel>> getUserPhrases(String userId) async {
-    try {
-      final userRequests = await getUserRequests(userId);
-      final allPhrases = <PhraseModel>[];
-
-      for (final request in userRequests) {
-        allPhrases.addAll(request.phrases);
-      }
-
-      return allPhrases;
-    } catch (e) {
-      throw Exception('Failed to get user phrases: ${e.toString()}');
-    }
+    return _learningRequestsDataSource.getUserPhrases(userId);
   }
 
   /// Retrieves unused vocabulary for the current user
-  /// Used to avoid suggesting previously used content
+  /// Delegates to specialized learning requests data source
+  /// Example: final unused = await dataSource.getUnusedVocabularies('user123');
   Future<List<VocabularyModel>> getUnusedVocabularies(String userId) async {
-    try {
-      final allVocabularies = await getUserVocabularies(userId);
-      return allVocabularies.where((vocab) => !vocab.isUsed).toList();
-    } catch (e) {
-      throw Exception('Failed to get unused vocabularies: ${e.toString()}');
-    }
+    return _learningRequestsDataSource.getUnusedVocabularies(userId);
   }
 
   /// Retrieves unused phrases for the current user
-  /// Used to avoid suggesting previously used content
+  /// Delegates to specialized learning requests data source
+  /// Example: final unused = await dataSource.getUnusedPhrases('user123');
   Future<List<PhraseModel>> getUnusedPhrases(String userId) async {
-    try {
-      final allPhrases = await getUserPhrases(userId);
-      return allPhrases.where((phrase) => !phrase.isUsed).toList();
-    } catch (e) {
-      throw Exception('Failed to get unused phrases: ${e.toString()}');
-    }
+    return _learningRequestsDataSource.getUnusedPhrases(userId);
   }
 
   /// Marks vocabulary as used for the current user
-  /// Updates the usage status in the specific request
+  /// Delegates to specialized learning requests data source
+  /// Example: await dataSource.markVocabularyAsUsed('req123', 'hello');
   Future<void> markVocabularyAsUsed(String requestId, String english) async {
-    try {
-      final request = _learningRequestsBox.get(requestId);
-      if (request != null) {
-        final updatedVocabularies =
-            request.vocabularies.map((vocab) {
-              if (vocab.english == english) {
-                return vocab.copyWith(isUsed: true);
-              }
-              return vocab;
-            }).toList();
-
-        final updatedRequest = request.copyWith(
-          vocabularies: updatedVocabularies,
-        );
-        await _learningRequestsBox.put(requestId, updatedRequest);
-      }
-    } catch (e) {
-      throw Exception('Failed to mark vocabulary as used: ${e.toString()}');
-    }
+    return _learningRequestsDataSource.markVocabularyAsUsed(requestId, english);
   }
 
   /// Marks phrase as used for the current user
-  /// Updates the usage status in the specific request
+  /// Delegates to specialized learning requests data source
+  /// Example: await dataSource.markPhraseAsUsed('req123', 'Good morning');
   Future<void> markPhraseAsUsed(String requestId, String english) async {
-    try {
-      final request = _learningRequestsBox.get(requestId);
-      if (request != null) {
-        final updatedPhrases =
-            request.phrases.map((phrase) {
-              if (phrase.english == english) {
-                return phrase.copyWith(isUsed: true);
-              }
-              return phrase;
-            }).toList();
-
-        final updatedRequest = request.copyWith(phrases: updatedPhrases);
-        await _learningRequestsBox.put(requestId, updatedRequest);
-      }
-    } catch (e) {
-      throw Exception('Failed to mark phrase as used: ${e.toString()}');
-    }
+    return _learningRequestsDataSource.markPhraseAsUsed(requestId, english);
   }
 
   /// Retrieves request data by AI provider for analytics
-  /// Used for analyzing performance and cost by provider
+  /// Delegates to specialized learning requests data source
+  /// Example: final requests = await dataSource.getRequestsByProvider(AiProviderType.openai);
   Future<List<LearningRequestModel>> getRequestsByProvider(
     AiProviderType provider,
   ) async {
-    try {
-      return _learningRequestsBox.values
-          .where((request) => request.aiProvider == provider)
-          .toList();
-    } catch (e) {
-      throw Exception('Failed to get requests by provider: ${e.toString()}');
-    }
+    return _learningRequestsDataSource.getRequestsByProvider(provider);
   }
 
-  /// Clears all data for the current user
-  /// Used when user wants to reset their learning progress
+  /// Clears all learning request data for the current user
+  /// Delegates to specialized learning requests data source
+  /// Example: await dataSource.clearUserData('user123');
   Future<void> clearUserData(String userId) async {
-    try {
-      final userRequests = await getUserRequests(userId);
-      for (final request in userRequests) {
-        await _learningRequestsBox.delete(request.requestId);
-      }
-    } catch (e) {
-      throw Exception('Failed to clear user data: ${e.toString()}');
-    }
+    return _learningRequestsDataSource.clearUserData(userId);
   }
 
-  // ===== CONVERSATION THREAD MANAGEMENT =====
+  // ===== CONVERSATION THREAD DELEGATION =====
 
   /// Saves a conversation thread to Hive
-  /// Stores the complete conversation history for persistence
+  /// Delegates to specialized conversation threads data source
+  /// Example: await dataSource.saveConversationThread(threadModel);
   Future<void> saveConversationThread(ConversationThreadModel thread) async {
-    try {
-      await _conversationThreadsBox.put(thread.threadId, thread);
-    } catch (e) {
-      throw Exception('Failed to save conversation thread: ${e.toString()}');
-    }
+    return _conversationThreadsDataSource.saveConversationThread(thread);
   }
 
   /// Retrieves all conversation threads for a specific user
-  /// Returns list of ConversationThreadModel with complete conversation history
+  /// Delegates to specialized conversation threads data source
+  /// Example: final threads = await dataSource.getUserConversationThreads('user123');
   Future<List<ConversationThreadModel>> getUserConversationThreads(
     String userId,
   ) async {
-    try {
-      return _conversationThreadsBox.values
-          .where((thread) => thread.userId == userId)
-          .toList();
-    } catch (e) {
-      throw Exception(
-        'Failed to get user conversation threads: ${e.toString()}',
-      );
-    }
+    return _conversationThreadsDataSource.getUserConversationThreads(userId);
   }
 
   /// Retrieves a specific conversation thread by ID
-  /// Returns the complete thread with all messages
+  /// Delegates to specialized conversation threads data source
+  /// Example: final thread = await dataSource.getConversationThreadById('thread123');
   Future<ConversationThreadModel?> getConversationThreadById(
     String threadId,
   ) async {
-    try {
-      return _conversationThreadsBox.get(threadId);
-    } catch (e) {
-      throw Exception(
-        'Failed to get conversation thread by ID: ${e.toString()}',
-      );
-    }
+    return _conversationThreadsDataSource.getConversationThreadById(threadId);
   }
 
   /// Updates a conversation thread with new messages
-  /// Adds new messages to existing thread
+  /// Delegates to specialized conversation threads data source
+  /// Example: await dataSource.updateConversationThread(updatedThread);
   Future<void> updateConversationThread(
     ConversationThreadModel updatedThread,
   ) async {
-    try {
-      await _conversationThreadsBox.put(updatedThread.threadId, updatedThread);
-    } catch (e) {
-      throw Exception('Failed to update conversation thread: ${e.toString()}');
-    }
+    return _conversationThreadsDataSource.updateConversationThread(
+      updatedThread,
+    );
   }
 
   /// Deletes a conversation thread
-  /// Removes the thread and all its messages
+  /// Delegates to specialized conversation threads data source
+  /// Example: await dataSource.deleteConversationThread('thread123');
   Future<void> deleteConversationThread(String threadId) async {
-    try {
-      await _conversationThreadsBox.delete(threadId);
-    } catch (e) {
-      throw Exception('Failed to delete conversation thread: ${e.toString()}');
-    }
+    return _conversationThreadsDataSource.deleteConversationThread(threadId);
   }
 
   /// Clears all conversation threads for a user
-  /// Used when user wants to reset their conversation history
+  /// Delegates to specialized conversation threads data source
+  /// Example: await dataSource.clearUserConversationThreads('user123');
   Future<void> clearUserConversationThreads(String userId) async {
-    try {
-      final userThreads = await getUserConversationThreads(userId);
-      for (final thread in userThreads) {
-        await _conversationThreadsBox.delete(thread.threadId);
-      }
-    } catch (e) {
-      throw Exception(
-        'Failed to clear user conversation threads: ${e.toString()}',
-      );
-    }
+    return _conversationThreadsDataSource.clearUserConversationThreads(userId);
   }
 
   /// Find conversation thread by user preferences
-  /// Returns existing thread if found, null otherwise
+  /// Delegates to specialized conversation threads data source
+  /// Example: final thread = await dataSource.findThreadByPreferences('user123', UserLevel.intermediate, ['vocabulary']);
   Future<ConversationThreadModel?> findThreadByPreferences(
     String userId,
     UserLevel level,
     List<String> focusAreas,
   ) async {
-    try {
-      final userThreads = await getUserConversationThreads(userId);
-
-      // Find thread that matches the exact preferences
-      for (final thread in userThreads) {
-        if (thread.matchesPreferences(level, focusAreas)) {
-          return thread;
-        }
-      }
-
-      return null; // No matching thread found
-    } catch (e) {
-      throw Exception('Failed to find thread by preferences: ${e.toString()}');
-    }
+    return _conversationThreadsDataSource.findThreadByPreferences(
+      userId,
+      level,
+      focusAreas,
+    );
   }
 
   /// Get all threads for a user with their preference descriptions
-  /// Returns list of threads with their preference information
+  /// Delegates to specialized conversation threads data source
+  /// Example: final threadsInfo = await dataSource.getUserThreadsWithPreferences('user123');
   Future<List<Map<String, dynamic>>> getUserThreadsWithPreferences(
     String userId,
   ) async {
-    try {
-      final userThreads = await getUserConversationThreads(userId);
-
-      return userThreads
-          .map(
-            (thread) => {
-              'thread': thread,
-              'preferencesDescription': thread.preferencesDescription,
-              'messageCount': thread.messages.length,
-              'lastActivity': thread.lastUpdatedAt.toIso8601String(),
-            },
-          )
-          .toList();
-    } catch (e) {
-      throw Exception(
-        'Failed to get user threads with preferences: ${e.toString()}',
-      );
-    }
+    return _conversationThreadsDataSource.getUserThreadsWithPreferences(userId);
   }
 
   /// Gets conversation analytics for a user
-  /// Returns statistics about conversation usage
+  /// Delegates to specialized conversation threads data source
+  /// Example: final analytics = await dataSource.getConversationAnalytics('user123');
   Future<Map<String, dynamic>> getConversationAnalytics(String userId) async {
-    try {
-      final userThreads = await getUserConversationThreads(userId);
-
-      final totalThreads = userThreads.length;
-      final totalMessages = userThreads.fold<int>(
-        0,
-        (sum, thread) => sum + thread.messages.length,
-      );
-
-      final userMessages = userThreads.fold<int>(
-        0,
-        (sum, thread) =>
-            sum + thread.messages.where((m) => m.isUserMessage).length,
-      );
-
-      final modelMessages = userThreads.fold<int>(
-        0,
-        (sum, thread) =>
-            sum + thread.messages.where((m) => m.isModelMessage).length,
-      );
-
-      final contexts = userThreads.map((t) => t.context).toSet().toList();
-
-      return {
-        'totalThreads': totalThreads,
-        'totalMessages': totalMessages,
-        'userMessages': userMessages,
-        'modelMessages': modelMessages,
-        'contexts': contexts,
-        'lastActivity':
-            userThreads.isNotEmpty
-                ? userThreads
-                    .map((t) => t.lastUpdatedAt)
-                    .reduce((a, b) => a.isAfter(b) ? a : b)
-                    .toIso8601String()
-                : null,
-      };
-    } catch (e) {
-      throw Exception('Failed to get conversation analytics: ${e.toString()}');
-    }
+    return _conversationThreadsDataSource.getConversationAnalytics(userId);
   }
 
-  /// Gets analytics data for the current user
-  /// Returns usage statistics and cost analysis
+  // ===== ANALYTICS DELEGATION =====
+
+  /// Gets comprehensive analytics data for the current user
+  /// Delegates to specialized analytics data source
+  /// Example: final analytics = await dataSource.getUserAnalytics('user123');
   Future<Map<String, dynamic>> getUserAnalytics(String userId) async {
-    try {
-      final userRequests =
-          _learningRequestsBox.values
-              .where((request) => request.userId == userId)
-              .toList();
-
-      final totalTokens = userRequests.fold<int>(
-        0,
-        (sum, request) => sum + request.totalTokensUsed,
-      );
-
-      final totalCost = userRequests.fold<double>(
-        0,
-        (sum, request) => sum + request.estimatedCost,
-      );
-
-      final providerStats = <String, Map<String, dynamic>>{};
-
-      for (final provider in AiProviderType.values) {
-        final providerRequests =
-            userRequests
-                .where((request) => request.aiProvider == provider)
-                .toList();
-
-        final providerTokens = providerRequests.fold<int>(
-          0,
-          (sum, request) => sum + request.totalTokensUsed,
-        );
-
-        final providerCost = providerRequests.fold<double>(
-          0,
-          (sum, request) => sum + request.estimatedCost,
-        );
-
-        final totalVocabularies = providerRequests.fold<int>(
-          0,
-          (sum, request) => sum + request.vocabularies.length,
-        );
-
-        final totalPhrases = providerRequests.fold<int>(
-          0,
-          (sum, request) => sum + request.phrases.length,
-        );
-
-        final usedVocabularies = providerRequests.fold<int>(
-          0,
-          (sum, request) =>
-              sum + request.vocabularies.where((v) => v.isUsed).length,
-        );
-
-        final usedPhrases = providerRequests.fold<int>(
-          0,
-          (sum, request) => sum + request.phrases.where((p) => p.isUsed).length,
-        );
-
-        providerStats[provider.toString()] = {
-          'requests': providerRequests.length,
-          'vocabularies': totalVocabularies,
-          'phrases': totalPhrases,
-          'tokensUsed': providerTokens,
-          'estimatedCost': providerCost,
-          'usedVocabularies': usedVocabularies,
-          'usedPhrases': usedPhrases,
-        };
-      }
-
-      final totalVocabularies = userRequests.fold<int>(
-        0,
-        (sum, request) => sum + request.vocabularies.length,
-      );
-
-      final totalPhrases = userRequests.fold<int>(
-        0,
-        (sum, request) => sum + request.phrases.length,
-      );
-
-      final usedVocabularies = userRequests.fold<int>(
-        0,
-        (sum, request) =>
-            sum + request.vocabularies.where((v) => v.isUsed).length,
-      );
-
-      final usedPhrases = userRequests.fold<int>(
-        0,
-        (sum, request) => sum + request.phrases.where((p) => p.isUsed).length,
-      );
-
-      return {
-        'totalRequests': userRequests.length,
-        'totalVocabularies': totalVocabularies,
-        'totalPhrases': totalPhrases,
-        'totalTokens': totalTokens,
-        'totalCost': totalCost,
-        'usedVocabularies': usedVocabularies,
-        'usedPhrases': usedPhrases,
-        'providerStats': providerStats,
-      };
-    } catch (e) {
-      throw Exception('Failed to get user analytics: ${e.toString()}');
-    }
+    return _analyticsDataSource.getUserAnalytics(userId);
   }
 
-  /// Closes the Hive boxes to free up resources
-  /// Should be called when the data source is no longer needed
+  /// Gets learning progress analytics for a user
+  /// Delegates to specialized analytics data source
+  /// Example: final progress = await dataSource.getLearningProgressAnalytics('user123');
+  Future<Map<String, dynamic>> getLearningProgressAnalytics(
+    String userId,
+  ) async {
+    return _analyticsDataSource.getLearningProgressAnalytics(userId);
+  }
+
+  /// Closes all specialized data sources to free up resources
+  /// Should be called when the main data source is no longer needed
+  /// Example: await dataSource.dispose();
   Future<void> dispose() async {
     try {
-      await _learningRequestsBox.close();
-      await _conversationThreadsBox.close();
+      // Dispose all specialized data sources
+      await _learningRequestsDataSource.dispose();
+      await _conversationThreadsDataSource.dispose();
+      await _analyticsDataSource.dispose();
     } catch (e) {
-      throw Exception('Failed to dispose local data source: ${e.toString()}');
+      throw Exception(
+        'Failed to dispose daily lessons data sources: ${e.toString()}',
+      );
     }
   }
 }
@@ -489,7 +246,17 @@ class DailyLessonsLocalDataSource {
 // Example usage:
 // final localDataSource = DailyLessonsLocalDataSource();
 // await localDataSource.initialize();
+// 
+// // Learning requests operations
 // await localDataSource.saveLearningRequest(learningRequestModel);
 // final userRequests = await localDataSource.getUserRequests('user123');
+// 
+// // Conversation thread operations
+// await localDataSource.saveConversationThread(threadModel);
+// final threads = await localDataSource.getUserConversationThreads('user123');
+// 
+// // Analytics operations
 // final analytics = await localDataSource.getUserAnalytics('user123');
+// final progress = await localDataSource.getLearningProgressAnalytics('user123');
+// 
 // await localDataSource.dispose();

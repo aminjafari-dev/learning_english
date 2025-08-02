@@ -2,30 +2,26 @@
 
 ## Description
 
-The Daily Lessons feature provides AI-generated English vocabulary and phrases for daily learning. It follows Clean Architecture principles and includes user-specific data management, analytics, and cost optimization. **Now supports personalized content generation based on user preferences (English level and learning focus areas).**
+The Daily Lessons feature provides AI-generated English vocabulary and phrases for daily learning with **conversation mode capabilities**. It follows Clean Architecture principles with a simplified, focused architecture that emphasizes personalized content generation, cost optimization, and interactive learning through conversations.
 
 ## Architecture
 
-The daily lessons feature is structured according to Clean Architecture principles:
+The daily lessons feature is structured according to Clean Architecture principles with a simplified, focused approach:
 
 ### **Domain Layer**
 - `entities/` - Business objects:
   - `vocabulary.dart` - Vocabulary entity with English and Persian translations
   - `phrase.dart` - Phrase entity with English and Persian translations
   - `ai_usage_metadata.dart` - Metadata for AI usage tracking and cost analysis
-  - `user_preferences.dart` - **NEW**: User preferences for personalized content
+  - `user_preferences.dart` - User preferences for personalized content
 - `repositories/` - Abstract repository interfaces:
-  - `daily_lessons_repository.dart` - Main repository interface with personalized methods
-- `usecases/` - Business logic:
-  - `get_daily_vocabularies_usecase.dart` - Fetches vocabularies
-  - `get_daily_phrases_usecase.dart` - Fetches phrases
-  - `get_daily_lessons_usecase.dart` - **Cost-effective**: Fetches both in one request
-  - `get_user_preferences_usecase.dart` - **NEW**: Fetches user preferences for personalization
-  - `refresh_daily_lessons_usecase.dart` - Refreshes all content
-  - `mark_vocabulary_as_used_usecase.dart` - Marks vocabulary as used
-  - `mark_phrase_as_used_usecase.dart` - Marks phrase as used
-  - `get_user_analytics_usecase.dart` - Gets user analytics
-  - `clear_user_data_usecase.dart` - Clears user data
+  - `daily_lessons_repository.dart` - Core lesson generation repository
+  - `conversation_repository.dart` - Conversation management repository
+  - `user_preferences_repository.dart` - User preferences management repository
+- `usecases/` - Business logic (simplified):
+  - `get_daily_lessons_usecase.dart` - **Cost-effective**: Fetches personalized lessons in one request
+  - `get_user_preferences_usecase.dart` - Fetches user preferences for personalization
+  - `send_conversation_message_usecase.dart` - Handles conversation messaging
 
 ### **Data Layer**
 - `datasources/` - Data sources:
@@ -34,20 +30,34 @@ The daily lessons feature is structured according to Clean Architecture principl
     - `openai_lessons_remote_data_source.dart` - OpenAI implementation
     - `gemini_lessons_remote_data_source.dart` - Gemini implementation
     - `deepseek_lessons_remote_data_source.dart` - DeepSeek implementation
-    - `ai_prompts.dart` - **ENHANCED**: Centralized prompts with personalization support
-  - `local/` - Local storage:
-    - `daily_lessons_local_data_source.dart` - Hive-based local storage
+    - `ai_prompts.dart` - Centralized prompts with personalization support
+    - `gemini_conversation_service.dart` - AI conversation service
+    - `firebase_lessons_remote_data_source.dart` - Background sync with Firebase
+  - `local/` - Specialized local storage (composition pattern):
+    - `daily_lessons_local_data_source.dart` - Main coordinator using composition
+    - `learning_requests_local_data_source.dart` - Learning request CRUD operations
+    - `conversation_threads_local_data_source.dart` - Conversation thread management
+    - `analytics_local_data_source.dart` - Analytics and statistics calculation
 - `models/` - Data models:
   - `vocabulary_model.dart` - Vocabulary data model
   - `phrase_model.dart` - Phrase data model
+  - `conversation_thread_model.dart` - Conversation thread data model
+  - `learning_request_model.dart` - Learning request data model
 - `repositories/` - Repository implementations:
-  - `daily_lessons_repository_impl.dart` - **ENHANCED**: Main repository with personalization
+  - `daily_lessons_repository_impl.dart` - Core lesson generation
+  - `conversation_repository_impl.dart` - Conversation management
+  - `user_preferences_repository_impl.dart` - User preferences management
+- `services/` - Background services:
+  - `background_content_sync_service.dart` - Firebase sync service
+  - `content_sync_event_bus.dart` - Event bus for background sync
+  - `content_sync_manager.dart` - Sync management
+  - `content_sync_service_factory.dart` - Service factory
 
 ### **Presentation Layer**
 - `bloc/` - State management:
-  - `daily_lessons_bloc.dart` - **ENHANCED**: Main bloc with personalized events
-  - `daily_lessons_event.dart` - **ENHANCED**: Events including personalized content
-  - `daily_lessons_state.dart` - State management
+  - `daily_lessons_bloc.dart` - **Simplified**: Main bloc with conversation + lessons functionality
+  - `daily_lessons_event.dart` - **Simplified**: 4 core events (fetchLessons, refreshLessons, getUserPreferences, sendConversationMessage)
+  - `daily_lessons_state.dart` - **Enhanced**: Combined state management for lessons and conversations
 - `pages/` - UI screens:
   - `daily_lessons_page.dart` - Main lessons page
 - `widgets/` - Reusable components:
@@ -57,25 +67,20 @@ The daily lessons feature is structured according to Clean Architecture principl
 
 ## Use Cases
 
-### **1. Get Daily Lessons (Cost-Effective)**
+### **1. Get Personalized Daily Lessons** ⭐
 - **Use Case:** `GetDailyLessonsUseCase`
-- **Description:** Fetches both vocabularies and phrases in a single AI request, reducing costs by 25-40%
+- **Description:** Fetches personalized vocabularies and phrases in a single AI request based on user preferences, reducing costs by 25-40%
 - **Data Flow:** Page -> Bloc -> UseCase -> Repository -> AI DataSource
 
-### **2. Get Personalized Daily Lessons** ⭐ **NEW**
-- **Use Case:** `GetUserPreferencesUseCase` + `GetDailyLessonsUseCase`
-- **Description:** Fetches personalized content based on user's English level and learning focus areas
-- **Data Flow:** Page -> Bloc -> GetUserPreferencesUseCase -> Repository -> User Preferences -> Personalized AI DataSource
+### **2. Get User Preferences**
+- **Use Case:** `GetUserPreferencesUseCase`
+- **Description:** Fetches user's English level and learning focus areas for content personalization
+- **Data Flow:** Page -> Bloc -> UseCase -> UserPreferencesRepository -> Level/Focus Repositories
 
-### **3. User Data Management**
-- **Use Cases:** `MarkVocabularyAsUsedUseCase`, `MarkPhraseAsUsedUseCase`, `ClearUserDataUseCase`
-- **Description:** Manages user's learning progress and prevents duplicate content suggestions
-- **Data Flow:** Page -> Bloc -> UseCase -> Repository -> Local DataSource
-
-### **4. Analytics and Cost Tracking**
-- **Use Case:** `GetUserAnalyticsUseCase`
-- **Description:** Provides insights into learning progress and AI usage costs
-- **Data Flow:** Page -> Bloc -> UseCase -> Repository -> Local DataSource
+### **3. Send Conversation Message** ⭐ **NEW**
+- **Use Case:** `SendConversationMessageUseCase`
+- **Description:** Handles AI-powered conversation for interactive learning sessions with thread persistence
+- **Data Flow:** Page -> Bloc -> UseCase -> ConversationRepository -> AI Conversation Service
 
 ## **Personalized Content Generation** ⭐ **NEW FEATURE**
 
@@ -110,30 +115,35 @@ context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.getUserPreferences(
 
 ## Data Flow
 
-### **Standard Content Flow**
+### **Personalized Lessons Flow** ⭐
 1. User opens Daily Lessons page
 2. `DailyLessonsBloc` triggers `FetchLessons` event
-3. `GetDailyLessonsUseCase` calls repository
-4. Repository checks local cache first, then fetches from AI if needed
-5. Content is saved locally and displayed to user
-
-### **Personalized Content Flow** ⭐ **NEW**
-1. User opens Daily Lessons page
-2. `DailyLessonsBloc` triggers `FetchPersonalizedLessons` event
 3. `GetUserPreferencesUseCase` fetches user's level and focus areas
-4. Repository creates personalized AI prompts based on preferences
-5. AI generates level-appropriate and focus-specific content
-6. Content is saved locally with personalized context and displayed to user
+4. `GetDailyLessonsUseCase` calls repository with user preferences
+5. Repository creates personalized AI prompts based on preferences
+6. AI generates level-appropriate and focus-specific content in a single request
+7. Content is saved locally with analytics metadata and displayed to user
+8. Background sync service silently saves content to Firebase for global reuse
+
+### **Conversation Flow** ⭐ **NEW**
+1. User starts conversation or sends message
+2. `DailyLessonsBloc` triggers `SendConversationMessage` event with preferences and message
+3. `SendConversationMessageUseCase` calls conversation repository
+4. Repository finds existing thread for preferences or creates new one
+5. AI conversation service generates context-aware response
+6. Conversation is saved locally with thread persistence
+7. Response is displayed to user
 
 ## Key Components
 
 - **AI Providers:** OpenAI, Gemini, DeepSeek with unified interface
 - **Cost Optimization:** Combined requests reduce API costs by 25-40%
-- **Local Storage:** Hive-based persistence with metadata tracking
-- **User Analytics:** Learning progress and cost analysis
-- **Personalization:** **NEW**: Level and focus-specific content generation
-- **Background Sync:** Firebase integration for content sharing
-- **Clean Architecture:** Separation of concerns and testability
+- **Specialized Local Storage:** Hive-based persistence using composition pattern
+- **Analytics:** Learning progress and usage analytics through specialized data source
+- **Personalization:** Level and focus-specific content generation
+- **Conversation Mode:** Persistent AI conversations with thread management
+- **Background Sync:** Firebase integration for content sharing with event-driven architecture
+- **Clean Architecture:** Simplified, focused separation of concerns
 
 ## **Personalization Benefits** ⭐
 
@@ -154,17 +164,30 @@ context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.getUserPreferences(
 
 ## Usage
 
-To use the daily lessons feature with personalization:
+To use the daily lessons feature with personalization and conversation capabilities:
 
 ```dart
-// Standard usage
+// Fetch personalized lessons (automatically uses user preferences)
 context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchLessons());
 
-// Personalized usage ⭐ NEW
-context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchPersonalizedLessons());
+// Refresh lessons
+context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.refreshLessons());
 
 // Get user preferences
 context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.getUserPreferences());
+
+// Start conversation mode ⭐ NEW
+final preferences = UserPreferences(
+  level: UserLevel.intermediate,
+  focusAreas: ['business'],
+);
+
+context.read<DailyLessonsBloc>().add(
+  DailyLessonsEvent.sendConversationMessage(
+    preferences: preferences,
+    message: "Can you help me practice business English?",
+  ),
+);
 ```
 
-The personalized content will automatically adapt to the user's English level and selected learning focus areas, providing a more engaging and effective learning experience.
+The feature automatically adapts to the user's English level and selected learning focus areas, providing personalized content and context-aware conversations for an engaging learning experience.

@@ -49,19 +49,6 @@ class MultiModelLessonsRemoteDataSource implements AiLessonsRemoteDataSource {
     }
   }
 
-  @override
-  Future<Either<Failure, List<Vocabulary>>> fetchPersonalizedDailyVocabularies(
-    UserPreferences preferences,
-  ) {
-    return _delegate.fetchPersonalizedDailyVocabularies(preferences);
-  }
-
-  @override
-  Future<Either<Failure, List<Phrase>>> fetchPersonalizedDailyPhrases(
-    UserPreferences preferences,
-  ) {
-    return _delegate.fetchPersonalizedDailyPhrases(preferences);
-  }
 
   @override
   Future<

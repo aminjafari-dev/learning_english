@@ -31,6 +31,7 @@
   "learningFocusCustomHint": "Or write your own learning focus...",
   "learningFocusCustomLabel": "Custom Learning Focus",
   "learningFocusSavedSnack": "Selection saved! Navigating...",
+  "focusAreasSelection": "Focus Areas",
   "yourDailyLessons": "Your Daily Lessons",
   "@yourDailyLessons": {
     "description": "Title for the daily lessons page."

@@ -5,6 +5,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../domain/entities/vocabulary.dart';
 import '../../domain/entities/phrase.dart';
+import '../../domain/entities/user_preferences.dart';
 import '../../data/models/conversation_thread_model.dart';
 
 part 'daily_lessons_state.freezed.dart';
@@ -24,6 +25,16 @@ class PhrasesState with _$PhrasesState {
   const factory PhrasesState.loading() = PhrasesLoading;
   const factory PhrasesState.loaded(List<Phrase> phrases) = PhrasesLoaded;
   const factory PhrasesState.error(String message) = PhrasesError;
+}
+
+@freezed
+class UserPreferencesState with _$UserPreferencesState {
+  const factory UserPreferencesState.initial() = UserPreferencesInitial;
+  const factory UserPreferencesState.loading() = UserPreferencesLoading;
+  const factory UserPreferencesState.loaded(UserPreferences preferences) =
+      UserPreferencesLoaded;
+  const factory UserPreferencesState.error(String message) =
+      UserPreferencesError;
 }
 
 @freezed
@@ -61,6 +72,7 @@ abstract class DailyLessonsState with _$DailyLessonsState {
   const factory DailyLessonsState({
     required VocabulariesState vocabularies,
     required PhrasesState phrases,
+    required UserPreferencesState userPreferences,
     required UserAnalyticsState analytics,
     required UserDataManagementState dataManagement,
     required ConversationState conversation,

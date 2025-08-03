@@ -20,8 +20,11 @@ class DailyLessonsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Use getIt for dependency injection instead of BlocProvider in the UI
-    final bloc =
-        getIt<DailyLessonsBloc>()..add(const DailyLessonsEvent.fetchLessons());
+    final bloc = getIt<DailyLessonsBloc>();
+
+    // Fetch both lessons and user preferences
+    bloc.add(const DailyLessonsEvent.fetchLessons());
+    bloc.add(const DailyLessonsEvent.getUserPreferences());
 
     return GScaffold(
       appBar: AppBar(

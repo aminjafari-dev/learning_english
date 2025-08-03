@@ -1261,6 +1261,636 @@ abstract class PhrasesError implements PhrasesState {
 }
 
 /// @nodoc
+mixin _$UserPreferencesState {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(UserPreferences preferences) loaded,
+    required TResult Function(String message) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(UserPreferences preferences)? loaded,
+    TResult? Function(String message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(UserPreferences preferences)? loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UserPreferencesInitial value) initial,
+    required TResult Function(UserPreferencesLoading value) loading,
+    required TResult Function(UserPreferencesLoaded value) loaded,
+    required TResult Function(UserPreferencesError value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserPreferencesInitial value)? initial,
+    TResult? Function(UserPreferencesLoading value)? loading,
+    TResult? Function(UserPreferencesLoaded value)? loaded,
+    TResult? Function(UserPreferencesError value)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserPreferencesInitial value)? initial,
+    TResult Function(UserPreferencesLoading value)? loading,
+    TResult Function(UserPreferencesLoaded value)? loaded,
+    TResult Function(UserPreferencesError value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserPreferencesStateCopyWith<$Res> {
+  factory $UserPreferencesStateCopyWith(UserPreferencesState value,
+          $Res Function(UserPreferencesState) then) =
+      _$UserPreferencesStateCopyWithImpl<$Res, UserPreferencesState>;
+}
+
+/// @nodoc
+class _$UserPreferencesStateCopyWithImpl<$Res,
+        $Val extends UserPreferencesState>
+    implements $UserPreferencesStateCopyWith<$Res> {
+  _$UserPreferencesStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of UserPreferencesState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$UserPreferencesInitialImplCopyWith<$Res> {
+  factory _$$UserPreferencesInitialImplCopyWith(
+          _$UserPreferencesInitialImpl value,
+          $Res Function(_$UserPreferencesInitialImpl) then) =
+      __$$UserPreferencesInitialImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UserPreferencesInitialImplCopyWithImpl<$Res>
+    extends _$UserPreferencesStateCopyWithImpl<$Res,
+        _$UserPreferencesInitialImpl>
+    implements _$$UserPreferencesInitialImplCopyWith<$Res> {
+  __$$UserPreferencesInitialImplCopyWithImpl(
+      _$UserPreferencesInitialImpl _value,
+      $Res Function(_$UserPreferencesInitialImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UserPreferencesState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$UserPreferencesInitialImpl implements UserPreferencesInitial {
+  const _$UserPreferencesInitialImpl();
+
+  @override
+  String toString() {
+    return 'UserPreferencesState.initial()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserPreferencesInitialImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(UserPreferences preferences) loaded,
+    required TResult Function(String message) error,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(UserPreferences preferences)? loaded,
+    TResult? Function(String message)? error,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(UserPreferences preferences)? loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UserPreferencesInitial value) initial,
+    required TResult Function(UserPreferencesLoading value) loading,
+    required TResult Function(UserPreferencesLoaded value) loaded,
+    required TResult Function(UserPreferencesError value) error,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserPreferencesInitial value)? initial,
+    TResult? Function(UserPreferencesLoading value)? loading,
+    TResult? Function(UserPreferencesLoaded value)? loaded,
+    TResult? Function(UserPreferencesError value)? error,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserPreferencesInitial value)? initial,
+    TResult Function(UserPreferencesLoading value)? loading,
+    TResult Function(UserPreferencesLoaded value)? loaded,
+    TResult Function(UserPreferencesError value)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserPreferencesInitial implements UserPreferencesState {
+  const factory UserPreferencesInitial() = _$UserPreferencesInitialImpl;
+}
+
+/// @nodoc
+abstract class _$$UserPreferencesLoadingImplCopyWith<$Res> {
+  factory _$$UserPreferencesLoadingImplCopyWith(
+          _$UserPreferencesLoadingImpl value,
+          $Res Function(_$UserPreferencesLoadingImpl) then) =
+      __$$UserPreferencesLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UserPreferencesLoadingImplCopyWithImpl<$Res>
+    extends _$UserPreferencesStateCopyWithImpl<$Res,
+        _$UserPreferencesLoadingImpl>
+    implements _$$UserPreferencesLoadingImplCopyWith<$Res> {
+  __$$UserPreferencesLoadingImplCopyWithImpl(
+      _$UserPreferencesLoadingImpl _value,
+      $Res Function(_$UserPreferencesLoadingImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UserPreferencesState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$UserPreferencesLoadingImpl implements UserPreferencesLoading {
+  const _$UserPreferencesLoadingImpl();
+
+  @override
+  String toString() {
+    return 'UserPreferencesState.loading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserPreferencesLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(UserPreferences preferences) loaded,
+    required TResult Function(String message) error,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(UserPreferences preferences)? loaded,
+    TResult? Function(String message)? error,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(UserPreferences preferences)? loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UserPreferencesInitial value) initial,
+    required TResult Function(UserPreferencesLoading value) loading,
+    required TResult Function(UserPreferencesLoaded value) loaded,
+    required TResult Function(UserPreferencesError value) error,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserPreferencesInitial value)? initial,
+    TResult? Function(UserPreferencesLoading value)? loading,
+    TResult? Function(UserPreferencesLoaded value)? loaded,
+    TResult? Function(UserPreferencesError value)? error,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserPreferencesInitial value)? initial,
+    TResult Function(UserPreferencesLoading value)? loading,
+    TResult Function(UserPreferencesLoaded value)? loaded,
+    TResult Function(UserPreferencesError value)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserPreferencesLoading implements UserPreferencesState {
+  const factory UserPreferencesLoading() = _$UserPreferencesLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$UserPreferencesLoadedImplCopyWith<$Res> {
+  factory _$$UserPreferencesLoadedImplCopyWith(
+          _$UserPreferencesLoadedImpl value,
+          $Res Function(_$UserPreferencesLoadedImpl) then) =
+      __$$UserPreferencesLoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({UserPreferences preferences});
+}
+
+/// @nodoc
+class __$$UserPreferencesLoadedImplCopyWithImpl<$Res>
+    extends _$UserPreferencesStateCopyWithImpl<$Res,
+        _$UserPreferencesLoadedImpl>
+    implements _$$UserPreferencesLoadedImplCopyWith<$Res> {
+  __$$UserPreferencesLoadedImplCopyWithImpl(_$UserPreferencesLoadedImpl _value,
+      $Res Function(_$UserPreferencesLoadedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UserPreferencesState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? preferences = null,
+  }) {
+    return _then(_$UserPreferencesLoadedImpl(
+      null == preferences
+          ? _value.preferences
+          : preferences // ignore: cast_nullable_to_non_nullable
+              as UserPreferences,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UserPreferencesLoadedImpl implements UserPreferencesLoaded {
+  const _$UserPreferencesLoadedImpl(this.preferences);
+
+  @override
+  final UserPreferences preferences;
+
+  @override
+  String toString() {
+    return 'UserPreferencesState.loaded(preferences: $preferences)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserPreferencesLoadedImpl &&
+            (identical(other.preferences, preferences) ||
+                other.preferences == preferences));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, preferences);
+
+  /// Create a copy of UserPreferencesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserPreferencesLoadedImplCopyWith<_$UserPreferencesLoadedImpl>
+      get copyWith => __$$UserPreferencesLoadedImplCopyWithImpl<
+          _$UserPreferencesLoadedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(UserPreferences preferences) loaded,
+    required TResult Function(String message) error,
+  }) {
+    return loaded(preferences);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(UserPreferences preferences)? loaded,
+    TResult? Function(String message)? error,
+  }) {
+    return loaded?.call(preferences);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(UserPreferences preferences)? loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (loaded != null) {
+      return loaded(preferences);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UserPreferencesInitial value) initial,
+    required TResult Function(UserPreferencesLoading value) loading,
+    required TResult Function(UserPreferencesLoaded value) loaded,
+    required TResult Function(UserPreferencesError value) error,
+  }) {
+    return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserPreferencesInitial value)? initial,
+    TResult? Function(UserPreferencesLoading value)? loading,
+    TResult? Function(UserPreferencesLoaded value)? loaded,
+    TResult? Function(UserPreferencesError value)? error,
+  }) {
+    return loaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserPreferencesInitial value)? initial,
+    TResult Function(UserPreferencesLoading value)? loading,
+    TResult Function(UserPreferencesLoaded value)? loaded,
+    TResult Function(UserPreferencesError value)? error,
+    required TResult orElse(),
+  }) {
+    if (loaded != null) {
+      return loaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserPreferencesLoaded implements UserPreferencesState {
+  const factory UserPreferencesLoaded(final UserPreferences preferences) =
+      _$UserPreferencesLoadedImpl;
+
+  UserPreferences get preferences;
+
+  /// Create a copy of UserPreferencesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UserPreferencesLoadedImplCopyWith<_$UserPreferencesLoadedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UserPreferencesErrorImplCopyWith<$Res> {
+  factory _$$UserPreferencesErrorImplCopyWith(_$UserPreferencesErrorImpl value,
+          $Res Function(_$UserPreferencesErrorImpl) then) =
+      __$$UserPreferencesErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$UserPreferencesErrorImplCopyWithImpl<$Res>
+    extends _$UserPreferencesStateCopyWithImpl<$Res, _$UserPreferencesErrorImpl>
+    implements _$$UserPreferencesErrorImplCopyWith<$Res> {
+  __$$UserPreferencesErrorImplCopyWithImpl(_$UserPreferencesErrorImpl _value,
+      $Res Function(_$UserPreferencesErrorImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UserPreferencesState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$UserPreferencesErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UserPreferencesErrorImpl implements UserPreferencesError {
+  const _$UserPreferencesErrorImpl(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'UserPreferencesState.error(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserPreferencesErrorImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of UserPreferencesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserPreferencesErrorImplCopyWith<_$UserPreferencesErrorImpl>
+      get copyWith =>
+          __$$UserPreferencesErrorImplCopyWithImpl<_$UserPreferencesErrorImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(UserPreferences preferences) loaded,
+    required TResult Function(String message) error,
+  }) {
+    return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(UserPreferences preferences)? loaded,
+    TResult? Function(String message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(UserPreferences preferences)? loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UserPreferencesInitial value) initial,
+    required TResult Function(UserPreferencesLoading value) loading,
+    required TResult Function(UserPreferencesLoaded value) loaded,
+    required TResult Function(UserPreferencesError value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserPreferencesInitial value)? initial,
+    TResult? Function(UserPreferencesLoading value)? loading,
+    TResult? Function(UserPreferencesLoaded value)? loaded,
+    TResult? Function(UserPreferencesError value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserPreferencesInitial value)? initial,
+    TResult Function(UserPreferencesLoading value)? loading,
+    TResult Function(UserPreferencesLoaded value)? loaded,
+    TResult Function(UserPreferencesError value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserPreferencesError implements UserPreferencesState {
+  const factory UserPreferencesError(final String message) =
+      _$UserPreferencesErrorImpl;
+
+  String get message;
+
+  /// Create a copy of UserPreferencesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UserPreferencesErrorImplCopyWith<_$UserPreferencesErrorImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$UserAnalyticsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -3212,6 +3842,8 @@ abstract class ConversationError implements ConversationState {
 mixin _$DailyLessonsState {
   VocabulariesState get vocabularies => throw _privateConstructorUsedError;
   PhrasesState get phrases => throw _privateConstructorUsedError;
+  UserPreferencesState get userPreferences =>
+      throw _privateConstructorUsedError;
   UserAnalyticsState get analytics => throw _privateConstructorUsedError;
   UserDataManagementState get dataManagement =>
       throw _privateConstructorUsedError;
@@ -3234,6 +3866,7 @@ abstract class $DailyLessonsStateCopyWith<$Res> {
   $Res call(
       {VocabulariesState vocabularies,
       PhrasesState phrases,
+      UserPreferencesState userPreferences,
       UserAnalyticsState analytics,
       UserDataManagementState dataManagement,
       ConversationState conversation,
@@ -3241,6 +3874,7 @@ abstract class $DailyLessonsStateCopyWith<$Res> {
 
   $VocabulariesStateCopyWith<$Res> get vocabularies;
   $PhrasesStateCopyWith<$Res> get phrases;
+  $UserPreferencesStateCopyWith<$Res> get userPreferences;
   $UserAnalyticsStateCopyWith<$Res> get analytics;
   $UserDataManagementStateCopyWith<$Res> get dataManagement;
   $ConversationStateCopyWith<$Res> get conversation;
@@ -3263,6 +3897,7 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
   $Res call({
     Object? vocabularies = null,
     Object? phrases = null,
+    Object? userPreferences = null,
     Object? analytics = null,
     Object? dataManagement = null,
     Object? conversation = null,
@@ -3277,6 +3912,10 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
           ? _value.phrases
           : phrases // ignore: cast_nullable_to_non_nullable
               as PhrasesState,
+      userPreferences: null == userPreferences
+          ? _value.userPreferences
+          : userPreferences // ignore: cast_nullable_to_non_nullable
+              as UserPreferencesState,
       analytics: null == analytics
           ? _value.analytics
           : analytics // ignore: cast_nullable_to_non_nullable
@@ -3313,6 +3952,16 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
   $PhrasesStateCopyWith<$Res> get phrases {
     return $PhrasesStateCopyWith<$Res>(_value.phrases, (value) {
       return _then(_value.copyWith(phrases: value) as $Val);
+    });
+  }
+
+  /// Create a copy of DailyLessonsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserPreferencesStateCopyWith<$Res> get userPreferences {
+    return $UserPreferencesStateCopyWith<$Res>(_value.userPreferences, (value) {
+      return _then(_value.copyWith(userPreferences: value) as $Val);
     });
   }
 
@@ -3359,6 +4008,7 @@ abstract class _$$DailyLessonsStateImplCopyWith<$Res>
   $Res call(
       {VocabulariesState vocabularies,
       PhrasesState phrases,
+      UserPreferencesState userPreferences,
       UserAnalyticsState analytics,
       UserDataManagementState dataManagement,
       ConversationState conversation,
@@ -3368,6 +4018,8 @@ abstract class _$$DailyLessonsStateImplCopyWith<$Res>
   $VocabulariesStateCopyWith<$Res> get vocabularies;
   @override
   $PhrasesStateCopyWith<$Res> get phrases;
+  @override
+  $UserPreferencesStateCopyWith<$Res> get userPreferences;
   @override
   $UserAnalyticsStateCopyWith<$Res> get analytics;
   @override
@@ -3391,6 +4043,7 @@ class __$$DailyLessonsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? vocabularies = null,
     Object? phrases = null,
+    Object? userPreferences = null,
     Object? analytics = null,
     Object? dataManagement = null,
     Object? conversation = null,
@@ -3405,6 +4058,10 @@ class __$$DailyLessonsStateImplCopyWithImpl<$Res>
           ? _value.phrases
           : phrases // ignore: cast_nullable_to_non_nullable
               as PhrasesState,
+      userPreferences: null == userPreferences
+          ? _value.userPreferences
+          : userPreferences // ignore: cast_nullable_to_non_nullable
+              as UserPreferencesState,
       analytics: null == analytics
           ? _value.analytics
           : analytics // ignore: cast_nullable_to_non_nullable
@@ -3431,6 +4088,7 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
   const _$DailyLessonsStateImpl(
       {required this.vocabularies,
       required this.phrases,
+      required this.userPreferences,
       required this.analytics,
       required this.dataManagement,
       required this.conversation,
@@ -3440,6 +4098,8 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
   final VocabulariesState vocabularies;
   @override
   final PhrasesState phrases;
+  @override
+  final UserPreferencesState userPreferences;
   @override
   final UserAnalyticsState analytics;
   @override
@@ -3452,7 +4112,7 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
 
   @override
   String toString() {
-    return 'DailyLessonsState(vocabularies: $vocabularies, phrases: $phrases, analytics: $analytics, dataManagement: $dataManagement, conversation: $conversation, isRefreshing: $isRefreshing)';
+    return 'DailyLessonsState(vocabularies: $vocabularies, phrases: $phrases, userPreferences: $userPreferences, analytics: $analytics, dataManagement: $dataManagement, conversation: $conversation, isRefreshing: $isRefreshing)';
   }
 
   @override
@@ -3463,6 +4123,8 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
             (identical(other.vocabularies, vocabularies) ||
                 other.vocabularies == vocabularies) &&
             (identical(other.phrases, phrases) || other.phrases == phrases) &&
+            (identical(other.userPreferences, userPreferences) ||
+                other.userPreferences == userPreferences) &&
             (identical(other.analytics, analytics) ||
                 other.analytics == analytics) &&
             (identical(other.dataManagement, dataManagement) ||
@@ -3474,8 +4136,8 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, vocabularies, phrases, analytics,
-      dataManagement, conversation, isRefreshing);
+  int get hashCode => Object.hash(runtimeType, vocabularies, phrases,
+      userPreferences, analytics, dataManagement, conversation, isRefreshing);
 
   /// Create a copy of DailyLessonsState
   /// with the given fields replaced by the non-null parameter values.
@@ -3491,6 +4153,7 @@ abstract class _DailyLessonsState implements DailyLessonsState {
   const factory _DailyLessonsState(
       {required final VocabulariesState vocabularies,
       required final PhrasesState phrases,
+      required final UserPreferencesState userPreferences,
       required final UserAnalyticsState analytics,
       required final UserDataManagementState dataManagement,
       required final ConversationState conversation,
@@ -3500,6 +4163,8 @@ abstract class _DailyLessonsState implements DailyLessonsState {
   VocabulariesState get vocabularies;
   @override
   PhrasesState get phrases;
+  @override
+  UserPreferencesState get userPreferences;
   @override
   UserAnalyticsState get analytics;
   @override

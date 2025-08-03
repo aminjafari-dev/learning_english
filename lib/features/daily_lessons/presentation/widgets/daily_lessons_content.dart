@@ -9,6 +9,7 @@ import 'package:learning_english/features/daily_lessons/presentation/widgets/sec
 import 'package:learning_english/core/widgets/vocabulary_section.dart';
 import 'package:learning_english/core/widgets/phrases_list_section.dart';
 import 'package:learning_english/features/daily_lessons/presentation/widgets/refresh_button.dart';
+import 'package:learning_english/features/daily_lessons/presentation/widgets/user_preferences_display.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -26,6 +27,9 @@ class DailyLessonsContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          GGap.g16,
+          // User Preferences Display - shows user's level and focus areas
+          const UserPreferencesDisplay(),
           GGap.g16,
           SectionHeader(title: AppLocalizations.of(context)!.vocabularies),
           GGap.g4,

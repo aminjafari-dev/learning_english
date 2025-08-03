@@ -33,6 +33,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
          const DailyLessonsState(
            vocabularies: VocabulariesState.initial(),
            phrases: PhrasesState.initial(),
+           userPreferences: UserPreferencesState.initial(),
            analytics: UserAnalyticsState.initial(),
            dataManagement: UserDataManagementState.initial(),
            conversation: ConversationState.initial(),
@@ -65,6 +66,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
           state.copyWith(
             vocabularies: const VocabulariesState.loading(),
             phrases: const PhrasesState.loading(),
+            userPreferences: const UserPreferencesState.loading(),
             isRefreshing: true,
           ),
         );
@@ -82,6 +84,9 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
               phrases: PhrasesState.error(
                 'Failed to get user preferences: ${failure.message}',
               ),
+              userPreferences: UserPreferencesState.error(
+                'Failed to get user preferences: ${failure.message}',
+              ),
               isRefreshing: false,
             ),
           );
@@ -90,6 +95,15 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
       }, (preferences) => preferences);
 
       if (preferences == null) return;
+
+      // Emit user preferences state
+      if (!emit.isDone) {
+        emit(
+          state.copyWith(
+            userPreferences: UserPreferencesState.loaded(preferences),
+          ),
+        );
+      }
 
       // Then fetch conversation-based lessons using the preferences
       final result = await getConversationLessonsUseCase(preferences);
@@ -138,20 +152,41 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
   /// Returns user's level and selected learning focus areas
   Future<void> _onGetUserPreferences(Emitter<DailyLessonsState> emit) async {
     try {
+      if (!emit.isDone) {
+        emit(
+          state.copyWith(userPreferences: const UserPreferencesState.loading()),
+        );
+      }
+
       final result = await getUserPreferencesUseCase(NoParams());
       result.fold(
         (failure) {
-          // Don't emit error state for preferences, just log it
-          print('⚠️ [BLOC] Failed to get user preferences: ${failure.message}');
+          if (!emit.isDone) {
+            emit(
+              state.copyWith(
+                userPreferences: UserPreferencesState.error(failure.message),
+              ),
+            );
+          }
         },
         (preferences) {
-          print('✅ [BLOC] Retrieved user preferences: $preferences');
-          // You could emit a state with preferences if needed
-          // For now, we'll just log it
+          if (!emit.isDone) {
+            emit(
+              state.copyWith(
+                userPreferences: UserPreferencesState.loaded(preferences),
+              ),
+            );
+          }
         },
       );
     } catch (e) {
-      print('❌ [BLOC] Error getting user preferences: $e');
+      if (!emit.isDone) {
+        emit(
+          state.copyWith(
+            userPreferences: UserPreferencesState.error(e.toString()),
+          ),
+        );
+      }
     }
   }
 

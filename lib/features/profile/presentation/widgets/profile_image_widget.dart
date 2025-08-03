@@ -45,8 +45,8 @@ class ProfileImageWidget extends StatelessWidget {
               height: 120,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppTheme.surfaceColor,
-                border: Border.all(color: AppTheme.primaryColor, width: 3),
+                color: AppTheme.surface,
+                border: Border.all(color: AppTheme.gold, width: 3),
               ),
               child: ClipOval(
                 child:
@@ -71,14 +71,14 @@ class ProfileImageWidget extends StatelessWidget {
                 height: 36,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppTheme.primaryColor,
-                  border: Border.all(color: AppTheme.backgroundColor, width: 3),
+                  color: AppTheme.gold,
+                  border: Border.all(color: AppTheme.background, width: 3),
                 ),
                 child: IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.camera_alt,
                     size: 18,
-                    color: AppTheme.backgroundColor,
+                    color: AppTheme.background,
                   ),
                   onPressed: () => _showImagePickerDialog(context, l10n),
                   padding: EdgeInsets.zero,
@@ -94,7 +94,7 @@ class ProfileImageWidget extends StatelessWidget {
           l10n.changePhoto,
           style: Theme.of(
             context,
-          ).textTheme.bodyMedium?.copyWith(color: AppTheme.primaryColor),
+          ).textTheme.bodyMedium?.copyWith(color: AppTheme.gold),
         ),
       ],
     );
@@ -104,7 +104,7 @@ class ProfileImageWidget extends StatelessWidget {
   Widget _buildDefaultAvatar() {
     return Container(
       color: AppTheme.secondaryBackground,
-      child: Icon(Icons.person, size: 60, color: AppTheme.accentColor),
+      child: Icon(Icons.person, size: 60, color: AppTheme.accent),
     );
   }
 
@@ -112,7 +112,7 @@ class ProfileImageWidget extends StatelessWidget {
   void _showImagePickerDialog(BuildContext context, AppLocalizations l10n) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: AppTheme.surfaceColor,
+      backgroundColor: AppTheme.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -127,7 +127,7 @@ class ProfileImageWidget extends StatelessWidget {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: AppTheme.accentColor,
+                    color: AppTheme.accent,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -144,18 +144,18 @@ class ProfileImageWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                                    _buildImageOption(
-                  context,
-                  l10n.takePhoto,
-                  Icons.camera_alt,
-                  () => _pickImage(context, 'camera'),
-                ),
-                _buildImageOption(
-                  context,
-                  l10n.chooseFromGallery,
-                  Icons.photo_library,
-                  () => _pickImage(context, 'gallery'),
-                ),
+                    _buildImageOption(
+                      context,
+                      l10n.takePhoto,
+                      Icons.camera_alt,
+                      () => _pickImage(context, 'camera'),
+                    ),
+                    _buildImageOption(
+                      context,
+                      l10n.chooseFromGallery,
+                      Icons.photo_library,
+                      () => _pickImage(context, 'gallery'),
+                    ),
                   ],
                 ),
                 GGap.g16,
@@ -167,7 +167,7 @@ class ProfileImageWidget extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pop(),
                     child: GText(
                       l10n.cancel,
-                      style: TextStyle(color: AppTheme.accentColor),
+                      style: TextStyle(color: AppTheme.accent),
                     ),
                   ),
                 ),
@@ -189,10 +189,10 @@ class ProfileImageWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: ElevatedButton.icon(
           onPressed: onPressed,
-          icon: Icon(icon, color: AppTheme.backgroundColor),
-          label: GText(text, style: TextStyle(color: AppTheme.backgroundColor)),
+          icon: Icon(icon, color: AppTheme.background),
+          label: GText(text, style: TextStyle(color: AppTheme.background)),
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppTheme.primaryColor,
+            backgroundColor: AppTheme.gold,
             padding: const EdgeInsets.symmetric(vertical: 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -210,12 +210,12 @@ class ProfileImageWidget extends StatelessWidget {
       // For now, simulate image selection
       onImageChanged('/placeholder/image/path');
       Navigator.of(context).pop();
-      
+
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: GText('Image picker not yet implemented'),
-            backgroundColor: AppTheme.primaryColor,
+            backgroundColor: AppTheme.gold,
           ),
         );
       }
@@ -225,7 +225,7 @@ class ProfileImageWidget extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: GText('Failed to pick image: ${e.toString()}'),
-            backgroundColor: AppTheme.errorColor,
+            backgroundColor: AppTheme.error,
           ),
         );
       }

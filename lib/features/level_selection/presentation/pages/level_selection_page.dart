@@ -52,16 +52,14 @@ class LevelSelectionPage extends StatelessWidget {
         );
 
         return GScaffold(
-
-
-      appBar: AppBar(
-        title: GText(
-          AppLocalizations.of(context)!.levelSelectionTitle,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        backgroundColor: AppTheme.surface,
-        foregroundColor: AppTheme.white,
-      ),
+          appBar: AppBar(
+            title: GText(
+              AppLocalizations.of(context)!.levelSelectionTitle,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            backgroundColor: AppTheme.surface,
+            foregroundColor: AppTheme.text,
+          ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
             child: LevelSelectionContent(

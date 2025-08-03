@@ -31,9 +31,7 @@ class RequestDetailContent extends StatelessWidget {
     return state.requestDetails.when(
       initial: () => const SizedBox(),
       loading:
-          () => const Center(
-            child: CircularProgressIndicator(color: AppTheme.primaryColor),
-          ),
+          () => Center(child: CircularProgressIndicator(color: AppTheme.gold)),
       completed: (request) => _buildRequestContent(context, request),
       error: (message) => _buildErrorWidget(context, message),
     );
@@ -45,7 +43,6 @@ class RequestDetailContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           // Vocabulary section - reuse daily lessons vocabulary section
           if (request.hasVocabularies) ...[
             SectionHeader(title: AppLocalizations.of(context)!.vocabularies),
@@ -79,13 +76,13 @@ class RequestDetailContent extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.history, color: AppTheme.primaryColor, size: 24),
+                Icon(Icons.history, color: AppTheme.gold, size: 24),
                 GGap.g8,
                 Expanded(
                   child: GText(
                     'Request ${request.requestId.substring(0, 8)}...',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: AppTheme.primaryColor,
+                      color: AppTheme.gold,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -95,7 +92,7 @@ class RequestDetailContent extends StatelessWidget {
             GGap.g8,
             Row(
               children: [
-                Icon(Icons.access_time, color: AppTheme.accentColor, size: 16),
+                Icon(Icons.access_time, color: AppTheme.accent, size: 16),
                 GGap.g4,
                 GText(
                   _formatDate(request.createdAt),
@@ -107,13 +104,13 @@ class RequestDetailContent extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppTheme.primaryColor.withOpacity(0.1),
+                color: AppTheme.gold.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: GText(
                 '${request.totalItems} ${AppLocalizations.of(context)!.itemsGenerated}',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppTheme.primaryColor,
+                  color: AppTheme.gold,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -164,7 +161,7 @@ class RequestDetailContent extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, size: 64, color: AppTheme.errorColor),
+          Icon(Icons.error_outline, size: 64, color: AppTheme.error),
           GGap.g16,
           GText(
             AppLocalizations.of(context)!.errorLoadingHistory,

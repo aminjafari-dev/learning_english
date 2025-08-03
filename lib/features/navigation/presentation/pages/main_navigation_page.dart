@@ -40,7 +40,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     final l10n = AppLocalizations.of(context)!;
 
     return GScaffold(
-      backgroundColor: AppTheme.backgroundColor,
+      backgroundColor: AppTheme.background,
       body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -50,8 +50,8 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           });
         },
         // backgroundColor: AppTheme.backgroundColor,
-        selectedItemColor: AppTheme.primaryColor,
-        unselectedItemColor: AppTheme.accentColor.withValues(alpha: 0.7),
+        selectedItemColor: AppTheme.gold,
+        unselectedItemColor: AppTheme.accent.withValues(alpha: 0.7),
         selectedLabelStyle: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
@@ -61,14 +61,8 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           fontSize: 12,
           fontFamily: FontConstants.persianFont,
         ),
-        selectedIconTheme: const IconThemeData(
-          color: AppTheme.primaryColor,
-          size: 24,
-        ),
-        unselectedIconTheme: const IconThemeData(
-          color: AppTheme.accentColor,
-          size: 18,
-        ),
+        selectedIconTheme: IconThemeData(color: AppTheme.gold, size: 24),
+        unselectedIconTheme: IconThemeData(color: AppTheme.accent, size: 18),
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.school),

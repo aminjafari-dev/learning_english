@@ -40,9 +40,8 @@ class LearningFocusOptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = selected ? AppTheme.primaryColor : AppTheme.oliveColor;
-    final backgroundColor =
-        selected ? AppTheme.surfaceColor : Colors.transparent;
+    final borderColor = selected ? AppTheme.gold : AppTheme.secondary;
+    final backgroundColor = selected ? AppTheme.surface : Colors.transparent;
     return Material(
       color: backgroundColor,
       borderRadius: BorderRadius.circular(16),
@@ -60,7 +59,7 @@ class LearningFocusOptionCard extends StatelessWidget {
               Icon(
                 icon,
                 size: 24,
-                color: AppTheme.accentColor,
+                color: AppTheme.accent,
                 semanticLabel: title,
               ),
               GGap.g8,

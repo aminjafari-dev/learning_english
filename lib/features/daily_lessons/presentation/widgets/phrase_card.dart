@@ -165,7 +165,7 @@ class PhraseCard extends StatelessWidget {
                       phrase!.english,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        decorationColor: AppTheme.primaryColor.withOpacity(0.7),
+                        decorationColor: AppTheme.gold.withValues(alpha: 0.7),
                       ),
                     ),
                   ),

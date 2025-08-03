@@ -8,148 +8,129 @@
 /// This helps maintain a consistent look and feel across the app.
 import 'package:flutter/material.dart';
 import 'package:learning_english/core/constants/font_constants.dart';
+import 'package:learning_english/core/theme/app_colors.dart';
 
-/// This class defines all the color constants used throughout the app.
-/// Only use these colors in the UI. If you need a new color, add it here first.
+/// This class defines the app's theme configuration using the centralized color palette.
 class AppTheme {
-  // Primary brand color (Gold)
-  static const Color primaryColor = Color(0xFFD1A317); // Gold
-  // Accent color (Light Beige)
-  static const Color accentColor = Color(0xFFC7BA94); // Light Beige
-  // Main background color (Dark Brown)
-  static const Color backgroundColor = Color(0xFF211F12); // Dark Brown
-  // Card/Surface color (Medium Brown)
-  static const Color surfaceColor = Color(0xFF332B1A); // Medium Brown
-  // Secondary background (Brown)
-  static const Color secondaryBackground = Color(0xFF473D24); // Brown
-  // Olive color for secondary elements
-  static const Color oliveColor = Color(0xFF665933); // Olive
-  // Error color (use Gold for warnings, or define a new one if needed)
-  static const Color errorColor = Color(0xFFD1A317); // Gold as warning/error
-  // White for text/icons on dark backgrounds
-  static const Color white = Color(0xFFFFFFFF);
-
-  // Dark theme colors based on the UI design
-  // Dark background color (from the UI screens)
-  static const Color darkBackgroundColor = Color(0xFF1A1A1A); // Very dark gray
-  // Dark surface/card color
-  static const Color darkSurfaceColor = Color(0xFF2D2D2D); // Dark gray
-  // Dark secondary background
-  static const Color darkSecondaryBackground = Color(
-    0xFF3A3A3A,
-  ); // Medium dark gray
-  // Yellow button color (from the UI)
-  static const Color yellowButtonColor = Color(0xFFFFD700); // Bright yellow
-  // Dark text color
-  static const Color darkTextColor = Color(0xFFFFFFFF); // White text
-  // Secondary text color for dark theme
-  static const Color darkSecondaryTextColor = Color(0xFFB0B0B0); // Light gray
-
   /// Gold color for highlights and buttons
-  static Color get gold => primaryColor;
+  static Color get gold => AppColors.gold;
 
   /// Main background color
-  static Color get background => backgroundColor;
+  static Color get background => AppColors.background;
 
   /// Surface/card color
-  static Color get surface => surfaceColor;
+  static Color get surface => AppColors.surface;
 
   /// Hint/secondary text color
-  static Color get hint => accentColor;
+  static Color get hint => AppColors.hint;
 
-  /// Light theme for the app using the defined color palette.
+  /// Error color
+  static Color get error => AppColors.error;
+
+  /// Text color
+  static Color get text => AppColors.text;
+
+  /// Accent color
+  static Color get accent => AppColors.accent;
+
+  /// Secondary color
+  static Color get secondary => AppColors.secondary;
+
+  /// Secondary background color
+  static Color get secondaryBackground => AppColors.secondaryBackground;
+
+  /// Dark theme for the app using the defined color palette.
   static ThemeData get darkTheme => ThemeData(
-    primaryColor: primaryColor,
+    primaryColor: AppColors.primary,
     colorScheme: ColorScheme(
       brightness: Brightness.light,
-      primary: primaryColor,
-      onPrimary: backgroundColor, // Text/icons on primary
-      secondary: accentColor,
-      onSecondary: backgroundColor, // Text/icons on secondary
-      background: backgroundColor,
-      onBackground: white, // Text/icons on background
-      surface: surfaceColor,
-      onSurface: white, // Text/icons on surface
-      error: errorColor,
-      onError: backgroundColor, // Text/icons on error
+      primary: AppColors.primary,
+      onPrimary: AppColors.background, // Text/icons on primary
+      secondary: AppColors.accent,
+      onSecondary: AppColors.background, // Text/icons on secondary
+      background: AppColors.background,
+      onBackground: AppColors.text, // Text/icons on background
+      surface: AppColors.surface,
+      onSurface: AppColors.text, // Text/icons on surface
+      error: AppColors.error,
+      onError: AppColors.background, // Text/icons on error
     ),
-    scaffoldBackgroundColor: backgroundColor,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: surfaceColor,
-      foregroundColor: white,
+    scaffoldBackgroundColor: AppColors.background,
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColors.surface,
+      foregroundColor: AppColors.white,
       elevation: 0,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryColor,
-        foregroundColor: backgroundColor,
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.background,
         textStyle: const TextStyle(fontWeight: FontWeight.bold),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 0,
       ),
     ),
-    textTheme: const TextTheme(
+    textTheme: TextTheme(
       bodyLarge: TextStyle(
         fontSize: 18,
-        color: white,
+        color: AppColors.white,
         fontWeight: FontWeight.w600,
         fontFamily: FontConstants.persianFont,
       ),
       bodyMedium: TextStyle(
         fontSize: 16,
-        color: white,
+        color: AppColors.white,
         fontFamily: FontConstants.persianFont,
       ),
       bodySmall: TextStyle(
         fontSize: 14,
-        color: accentColor,
+        color: AppColors.accent,
         fontFamily: FontConstants.persianFont,
       ),
       titleLarge: TextStyle(
         fontSize: 22,
-        color: white,
+        color: AppColors.white,
         fontWeight: FontWeight.bold,
         fontFamily: FontConstants.persianFont,
       ),
       titleMedium: TextStyle(
         fontSize: 18,
-        color: accentColor,
+        color: AppColors.accent,
         fontWeight: FontWeight.w500,
         fontFamily: FontConstants.persianFont,
       ),
       titleSmall: TextStyle(
         fontSize: 16,
-        color: accentColor,
+        color: AppColors.accent,
         fontFamily: FontConstants.persianFont,
       ),
     ),
-    cardColor: surfaceColor,
-    dividerColor: oliveColor,
-    iconTheme: const IconThemeData(color: accentColor),
+    cardColor: AppColors.surface,
+    dividerColor: AppColors.secondary,
+    iconTheme: IconThemeData(color: AppColors.accent),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: secondaryBackground,
+      fillColor: AppColors.secondaryBackground,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: oliveColor),
+        borderSide: BorderSide(color: AppColors.secondary),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: oliveColor),
+        borderSide: BorderSide(color: AppColors.secondary),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: primaryColor, width: 2),
+        borderSide: BorderSide(color: AppColors.primary, width: 2),
       ),
-      hintStyle: const TextStyle(
-        color: Color(0xFFC7BA94),
+      hintStyle: TextStyle(
+        color: AppColors.accent,
         fontFamily: FontConstants.persianFont,
       ),
-      labelStyle: const TextStyle(
-        color: Color(0xFFC7BA94),
+      labelStyle: TextStyle(
+        color: AppColors.accent,
         fontFamily: FontConstants.persianFont,
       ),
     ),
   );
-
 }

@@ -135,34 +135,34 @@ class ProfileInfoFormWidget extends StatelessWidget {
       readOnly: readOnly,
       onTap: onTap,
       validator: validator,
-      style: const TextStyle(color: AppTheme.white),
+      style: TextStyle(color: AppTheme.text),
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: AppTheme.accentColor),
+        prefixIcon: Icon(icon, color: AppTheme.accent),
         filled: true,
         fillColor: AppTheme.secondaryBackground,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppTheme.oliveColor),
+          borderSide: BorderSide(color: AppTheme.secondary),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppTheme.oliveColor),
+          borderSide: BorderSide(color: AppTheme.secondary),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppTheme.primaryColor, width: 2),
+          borderSide: BorderSide(color: AppTheme.gold, width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppTheme.errorColor),
+          borderSide: BorderSide(color: AppTheme.error),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppTheme.errorColor, width: 2),
+          borderSide: BorderSide(color: AppTheme.error, width: 2),
         ),
-        labelStyle: TextStyle(color: AppTheme.accentColor),
-        errorStyle: TextStyle(color: AppTheme.errorColor),
+        labelStyle: TextStyle(color: AppTheme.accent),
+        errorStyle: TextStyle(color: AppTheme.error),
       ),
     );
   }
@@ -180,12 +180,12 @@ class ProfileInfoFormWidget extends StatelessWidget {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.dark(
-              primary: AppTheme.primaryColor,
-              onPrimary: AppTheme.backgroundColor,
-              surface: AppTheme.surfaceColor,
-              onSurface: AppTheme.white,
+              primary: AppTheme.gold,
+              onPrimary: AppTheme.background,
+              surface: AppTheme.surface,
+              onSurface: AppTheme.text,
             ),
-            dialogBackgroundColor: AppTheme.surfaceColor,
+            dialogBackgroundColor: AppTheme.surface,
           ),
           child: child!,
         );

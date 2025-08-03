@@ -34,7 +34,7 @@ class VocabularyHistoryPage extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         backgroundColor: AppTheme.surface,
-        foregroundColor: AppTheme.white,
+        foregroundColor: AppTheme.text,
         actions: [
           BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
             bloc:
@@ -64,15 +64,13 @@ class VocabularyHistoryPage extends StatelessWidget {
                   const VocabularyHistoryEvent.loadHistoryRequests(),
                 );
               });
-              return const Center(
-                child: CircularProgressIndicator(color: AppTheme.primaryColor),
+              return Center(
+                child: CircularProgressIndicator(color: AppTheme.gold),
               );
             },
             loading:
-                () => const Center(
-                  child: CircularProgressIndicator(
-                    color: AppTheme.primaryColor,
-                  ),
+                () => Center(
+                  child: CircularProgressIndicator(color: AppTheme.gold),
                 ),
             completed: (requests) {
               return _buildHistoryList(context, requests);
@@ -93,7 +91,7 @@ class VocabularyHistoryPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.history, size: 64, color: AppTheme.accentColor),
+            Icon(Icons.history, size: 64, color: AppTheme.accent),
             GGap.g16,
             GText(
               AppLocalizations.of(context)!.noHistoryFound,
@@ -136,7 +134,7 @@ class VocabularyHistoryPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, size: 64, color: AppTheme.errorColor),
+          Icon(Icons.error_outline, size: 64, color: AppTheme.error),
           GGap.g16,
           GText(
             AppLocalizations.of(context)!.errorLoadingHistory,

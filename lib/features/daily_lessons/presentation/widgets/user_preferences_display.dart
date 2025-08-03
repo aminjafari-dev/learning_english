@@ -56,10 +56,10 @@ class UserPreferencesDisplay extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.primaryColor.withValues(alpha: 0.05),
+        color: AppTheme.gold.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppTheme.primaryColor.withValues(alpha: 0.2),
+          color: AppTheme.gold.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -108,10 +108,10 @@ class UserPreferencesDisplay extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.primaryColor.withValues(alpha: 0.05),
+        color: AppTheme.gold.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppTheme.primaryColor.withValues(alpha: 0.2),
+          color: AppTheme.gold.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -122,14 +122,14 @@ class UserPreferencesDisplay extends StatelessWidget {
             height: 16,
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primaryColor),
+              valueColor: AlwaysStoppedAnimation<Color>(AppTheme.gold),
             ),
           ),
           const SizedBox(width: 12),
           GText(
             'Loading your preferences...',
             style: TextStyle(
-              color: AppTheme.primaryColor,
+              color: AppTheme.gold,
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
@@ -146,22 +146,22 @@ class UserPreferencesDisplay extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.errorColor.withValues(alpha: 0.05),
+        color: AppTheme.error.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppTheme.errorColor.withValues(alpha: 0.2),
+          color: AppTheme.error.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
       child: Row(
         children: [
-          Icon(Icons.error_outline, color: AppTheme.errorColor, size: 16),
+          Icon(Icons.error_outline, color: AppTheme.error, size: 16),
           const SizedBox(width: 8),
           Expanded(
             child: GText(
               'Could not load preferences',
               style: TextStyle(
-                color: AppTheme.errorColor,
+                color: AppTheme.error,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
@@ -194,7 +194,7 @@ class UserPreferencesDisplay extends StatelessWidget {
           GText(
             "$title:",
             style: TextStyle(
-              color: AppTheme.primaryColor.withValues(alpha: 0.8),
+              color: AppTheme.gold.withValues(alpha: 0.8),
               fontSize: 12,
               fontWeight: FontWeight.w500,
             ),
@@ -203,7 +203,7 @@ class UserPreferencesDisplay extends StatelessWidget {
           GText(
             value,
             style: TextStyle(
-              color: AppTheme.primaryColor,
+              color: AppTheme.gold,
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),

@@ -146,9 +146,7 @@ class VocabularySection extends StatelessWidget {
                             context,
                           ).textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
-                            decorationColor: AppTheme.primaryColor.withOpacity(
-                              0.7,
-                            ),
+                            decorationColor: AppTheme.gold.withOpacity(0.7),
                           ),
                         ),
                       ),

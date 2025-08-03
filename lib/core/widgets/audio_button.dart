@@ -101,18 +101,16 @@ class _AudioButtonState extends State<AudioButton> {
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        splashColor: AppTheme.primaryColor.withValues(alpha: 0.5),
-        highlightColor: AppTheme.primaryColor.withValues(alpha: 0.5),
+        splashColor: AppTheme.gold.withValues(alpha: 0.5),
+        highlightColor: AppTheme.gold.withValues(alpha: 0.5),
         onTap: _isPlaying ? null : _handleTap,
         child: Container(
           padding: EdgeInsets.all(widget.padding),
           decoration: BoxDecoration(
             color:
                 _isPlaying
-                    ? AppTheme.primaryColor.withOpacity(
-                      0.3,
-                    ) // Darker when playing
-                    : AppTheme.primaryColor.withOpacity(0.1),
+                    ? AppTheme.gold.withValues(alpha: .3) // Darker when playing
+                    : AppTheme.gold.withOpacity(0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
@@ -120,10 +118,10 @@ class _AudioButtonState extends State<AudioButton> {
             size: widget.iconSize,
             color:
                 _isPlaying
-                    ? AppTheme.primaryColor.withOpacity(
+                    ? AppTheme.gold.withOpacity(
                       0.8,
                     ) // Slightly dimmed when playing
-                    : AppTheme.primaryColor,
+                    : AppTheme.gold,
           ),
         ),
       ),

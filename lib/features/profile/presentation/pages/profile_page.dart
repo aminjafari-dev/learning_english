@@ -143,11 +143,11 @@ class _ProfilePageState extends State<ProfilePage> {
     return GScaffold(
       appBar: AppBar(
         title: GText(l10n.profileTitle),
-        backgroundColor: AppTheme.surfaceColor,
-        foregroundColor: AppTheme.white,
+        backgroundColor: AppTheme.surface,
+        foregroundColor: AppTheme.text,
         elevation: 0,
       ),
-      backgroundColor: AppTheme.backgroundColor,
+      backgroundColor: AppTheme.background,
       body: BlocListener<ProfileBloc, ProfileState>(
         bloc: getIt<ProfileBloc>(),
         listener: (context, state) {
@@ -159,7 +159,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: GText(l10n.changesSaved),
-                  backgroundColor: AppTheme.primaryColor,
+                  backgroundColor: AppTheme.gold,
                 ),
               );
             },
@@ -167,7 +167,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: GText(l10n.errorSavingChanges),
-                  backgroundColor: AppTheme.errorColor,
+                  backgroundColor: AppTheme.error,
                 ),
               );
             },
@@ -198,7 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(color: AppTheme.primaryColor),
+          CircularProgressIndicator(color: AppTheme.gold),
           GGap.g16,
           GText(
             l10n.loadingProfile,
@@ -215,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, size: 64, color: AppTheme.errorColor),
+          Icon(Icons.error_outline, size: 64, color: AppTheme.error),
           GGap.g16,
           GText(
             message,

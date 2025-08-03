@@ -4,10 +4,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:learning_english/core/widgets/g_text.dart';
+import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import '../error/firebase_failure.dart';
-import 'g_button.dart';
-import 'g_gap.dart';
+import 'global_widget/g_button.dart';
+import 'global_widget/g_gap.dart';
 
 /// Reusable widget for displaying Firebase errors
 /// Provides user-friendly error messages and appropriate action buttons

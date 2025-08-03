@@ -8,7 +8,7 @@
 ///   Navigator.of(context).pushNamed(PageName.mainNavigation);
 import 'package:flutter/material.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
-import 'package:learning_english/core/widgets/g_scaffold.dart';
+import 'package:learning_english/core/widgets/global_widget/g_scaffold.dart';
 import 'package:learning_english/core/constants/font_constants.dart';
 import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
 import 'package:learning_english/features/profile/presentation/pages/profile_page.dart';

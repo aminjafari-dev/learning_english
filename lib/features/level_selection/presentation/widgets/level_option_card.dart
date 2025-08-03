@@ -9,7 +9,7 @@
 //   );
 
 import 'package:flutter/material.dart';
-import 'package:learning_english/core/widgets/g_text.dart';
+import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 
 class LevelOptionCard extends StatelessWidget {
   final String title;

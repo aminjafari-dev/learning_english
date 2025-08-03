@@ -3,7 +3,7 @@
 // Changes appearance and behavior based on the current state.
 
 import 'package:flutter/material.dart';
-import 'package:learning_english/core/widgets/g_button.dart';
+import 'package:learning_english/core/widgets/global_widget/g_button.dart';
 import 'package:learning_english/features/level_selection/domain/entities/user_profile.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_bloc.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_event.dart';

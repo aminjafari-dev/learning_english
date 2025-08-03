@@ -3,7 +3,7 @@
 // Displays the title and settings button.
 
 import 'package:flutter/material.dart';
-import 'package:learning_english/core/widgets/g_text.dart';
+import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Header widget for the Daily Lessons page

@@ -4,10 +4,10 @@
 // Uses a single scroll view for the entire content.
 
 import 'package:flutter/material.dart';
-import 'package:learning_english/core/widgets/g_gap.dart';
+import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
 import 'package:learning_english/features/daily_lessons/presentation/widgets/section_header.dart';
-import 'package:learning_english/features/daily_lessons/presentation/widgets/vocabulary_section.dart';
-import 'package:learning_english/features/daily_lessons/presentation/widgets/phrases_list_section.dart';
+import 'package:learning_english/core/widgets/vocabulary_section.dart';
+import 'package:learning_english/core/widgets/phrases_list_section.dart';
 import 'package:learning_english/features/daily_lessons/presentation/widgets/refresh_button.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

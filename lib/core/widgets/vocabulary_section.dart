@@ -4,8 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:learning_english/core/widgets/g_text.dart';
-import 'package:learning_english/core/widgets/g_gap.dart';
+import 'package:learning_english/core/widgets/global_widget/g_text.dart';
+import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
 import 'package:learning_english/core/widgets/audio_button.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';

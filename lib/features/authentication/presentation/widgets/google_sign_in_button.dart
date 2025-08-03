@@ -7,7 +7,7 @@
 // This widget uses GButton, localization, and ImagePath.
 
 import 'package:flutter/material.dart';
-import 'package:learning_english/core/widgets/g_button.dart';
+import 'package:learning_english/core/widgets/global_widget/g_button.dart';
 import 'package:learning_english/core/constants/image_path.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

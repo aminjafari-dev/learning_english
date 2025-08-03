@@ -3,7 +3,7 @@ import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/features/learning_focus_selection/presentation/bloc/learning_focus_selection_cubit.dart';
 import 'package:learning_english/core/router/page_name.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learning_english/core/widgets/g_button.dart';
+import 'package:learning_english/core/widgets/global_widget/g_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Continue button widget that enables navigation to the next page.

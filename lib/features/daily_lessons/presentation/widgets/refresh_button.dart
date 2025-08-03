@@ -3,7 +3,7 @@
 // Shows loading indicator or button based on refresh state.
 
 import 'package:flutter/material.dart';
-import 'package:learning_english/core/widgets/g_button.dart';
+import 'package:learning_english/core/widgets/global_widget/g_button.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_bloc.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_event.dart';

@@ -4,9 +4,9 @@
 // Uses a single scroll view for the entire content.
 
 import 'package:flutter/material.dart';
-import 'package:learning_english/core/widgets/g_gap.dart';
-import 'package:learning_english/core/widgets/g_text.dart';
-import 'package:learning_english/core/widgets/g_button.dart';
+import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
+import 'package:learning_english/core/widgets/global_widget/g_text.dart';
+import 'package:learning_english/core/widgets/global_widget/g_button.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/features/history/presentation/bloc/vocabulary_history_state.dart';
 import 'package:learning_english/features/history/presentation/widgets/history_request_card.dart';

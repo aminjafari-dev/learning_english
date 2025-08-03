@@ -5,8 +5,8 @@
 // Now uses shimmer loading animation for better user experience during loading states.
 
 import 'package:flutter/material.dart';
-import 'package:learning_english/core/widgets/g_text.dart';
-import 'package:learning_english/core/widgets/g_gap.dart';
+import 'package:learning_english/core/widgets/global_widget/g_text.dart';
+import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
 import 'package:learning_english/features/daily_lessons/presentation/widgets/phrase_card.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';
 import 'package:learning_english/features/daily_lessons/domain/entities/phrase.dart';

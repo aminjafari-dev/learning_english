@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learning_english/core/widgets/g_gap.dart';
-import 'package:learning_english/core/widgets/g_text.dart';
+import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
+import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 
 /// A reusable card widget for displaying a learning focus option.

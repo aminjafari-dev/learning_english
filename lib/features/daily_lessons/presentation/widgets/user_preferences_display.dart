@@ -11,6 +11,7 @@ import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import '../bloc/daily_lessons_bloc.dart';
 import '../bloc/daily_lessons_state.dart';
+import '../bloc/daily_lessons_event.dart';
 import '../../domain/entities/user_preferences.dart';
 import '../../data/models/level_type.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -82,6 +83,19 @@ class UserPreferencesDisplay extends StatelessWidget {
               // Focus Areas
             ],
           ),
+          // Debug button for testing conversation mode
+          if (const bool.fromEnvironment('DEBUG_MODE', defaultValue: false))
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Test conversation mode
+                  final bloc = context.read<DailyLessonsBloc>();
+                  bloc.add(const DailyLessonsEvent.fetchLessons());
+                },
+                child: const Text('Test Conversation Mode'),
+              ),
+            ),
         ],
       ),
     );

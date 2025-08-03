@@ -57,6 +57,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
 
   /// Fetches lessons through conversation mode to avoid repetitive content
   /// This method uses AI conversation to suggest new vocabularies and phrases
+  /// Generated content is automatically saved to local storage for tracking
   Future<void> _onFetchConversationLessons(
     Emitter<DailyLessonsState> emit,
   ) async {

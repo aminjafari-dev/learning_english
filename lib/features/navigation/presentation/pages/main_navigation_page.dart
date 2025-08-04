@@ -49,7 +49,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
             _currentIndex = index;
           });
         },
-        // backgroundColor: AppTheme.backgroundColor,
         selectedItemColor: AppTheme.primary(context),
         unselectedItemColor: AppTheme.accent(context).withValues(alpha: 0.7),
         selectedLabelStyle: TextStyle(

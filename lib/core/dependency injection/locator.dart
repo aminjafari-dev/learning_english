@@ -13,7 +13,7 @@ import 'package:learning_english/core/dependency%20injection/splash_di.dart';
 import 'package:learning_english/core/dependency%20injection/profile_di.dart';
 import 'package:learning_english/core/dependency%20injection/vocabulary_history_di.dart';
 import 'package:learning_english/core/dependency%20injection/localization_di.dart';
-import 'package:learning_english/core/theme/theme_cubit.dart';
+import 'package:learning_english/core/theme/cubit/theme_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -21,9 +21,6 @@ final getIt = GetIt.instance;
 /// This function should be called before the app starts
 Future<void> initDependencies() async {
   try {
-    // Theme Manager
-    setupThemeManager(getIt);
-
     // Initialize Hive for local storage
     await Hive.initFlutter();
 
@@ -32,6 +29,8 @@ Future<void> initDependencies() async {
     final prefs = await SharedPreferences.getInstance();
     getIt.registerSingleton<SharedPreferences>(prefs);
 
+    // Theme Manager
+    setupThemeManager(getIt);
     // Core Dependencies (must be first as other features depend on them)
     setupCoreDI(getIt);
 
@@ -68,5 +67,7 @@ Future<void> initDependencies() async {
 }
 
 void setupThemeManager(GetIt getIt) {
-  getIt.registerSingleton<ThemeCubit>(ThemeCubit());
+  getIt.registerSingleton<ThemeCubit>(
+    ThemeCubit(prefs: getIt<SharedPreferences>()),
+  );
 }

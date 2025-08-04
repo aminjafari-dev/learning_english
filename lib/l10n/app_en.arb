@@ -241,5 +241,17 @@
   "levelAdvancedShort": "Advanced",
   "@levelAdvancedShort": {
     "description": "Short text for advanced level."
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Label for theme setting."
+  },
+  "goldTheme": "Gold Theme",
+  "@goldTheme": {
+    "description": "Gold theme option."
+  },
+  "blueTheme": "Blue Theme",
+  "@blueTheme": {
+    "description": "Blue theme option."
   }
 } 

@@ -205,5 +205,17 @@
   "levelAdvancedShort": "پیشرفته",
   "@levelAdvancedShort": {
     "description": "متن کوتاه برای سطح پیشرفته."
+  },
+  "theme": "تم",
+  "@theme": {
+    "description": "برچسب تنظیم تم."
+  },
+  "goldTheme": "تم طلایی",
+  "@goldTheme": {
+    "description": "گزینه تم طلایی."
+  },
+  "blueTheme": "تم آبی",
+  "@blueTheme": {
+    "description": "گزینه تم آبی."
   }
 } 

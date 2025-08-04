@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
-import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/core/theme/app_themes.dart';
-import 'package:learning_english/core/theme/theme_cubit.dart';
+import 'package:learning_english/core/theme/cubit/theme_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:learning_english/core/router/page_name.dart';
@@ -47,33 +46,42 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LocalizationBloc, LocalizationState>(
       bloc: getIt<LocalizationBloc>(),
-      builder: (context, state) {
-        // Check both loadCurrentLocale and setLocale states
-        Locale currentLocale = const Locale('en');
+      builder: (context, localizationState) {
+        return BlocBuilder<ThemeCubit, ThemeState>(
+          bloc: getIt<ThemeCubit>(),
+          builder: (context, themeState) {
+            // Check both loadCurrentLocale and setLocale states
+            Locale currentLocale = const Locale('en');
 
-        if (state.loadCurrentLocale is LoadCurrentLocaleCompleted) {
-          currentLocale =
-              (state.loadCurrentLocale as LoadCurrentLocaleCompleted).locale
-                  .toLocale();
-        } else if (state.setLocale is SetLocaleCompleted) {
-          currentLocale =
-              (state.setLocale as SetLocaleCompleted).locale.toLocale();
-        }
+            if (localizationState.loadCurrentLocale
+                is LoadCurrentLocaleCompleted) {
+              currentLocale =
+                  (localizationState.loadCurrentLocale
+                          as LoadCurrentLocaleCompleted)
+                      .locale
+                      .toLocale();
+            } else if (localizationState.setLocale is SetLocaleCompleted) {
+              currentLocale =
+                  (localizationState.setLocale as SetLocaleCompleted).locale
+                      .toLocale();
+            }
 
-        return MaterialApp(
-          title: 'Lingo',
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [Locale('en'), Locale('fa')],
-          locale: currentLocale,
-          theme: AppThemes.createThemeData(getIt<ThemeCubit>().currentTheme),
-          initialRoute: PageName.splash,
-          routes: PageRouter.routes,
+            return MaterialApp(
+              title: 'Lingo',
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [Locale('en'), Locale('fa')],
+              locale: currentLocale,
+              theme: AppThemes.createThemeData(themeState.themeType),
+              initialRoute: PageName.splash,
+              routes: PageRouter.routes,
+            );
+          },
         );
       },
     );

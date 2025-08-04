@@ -1,12 +1,3 @@
-/// ProfilePage displays the user's profile information and allows them to edit it.
-///
-/// This page provides a comprehensive interface for users to view and update
-/// their profile information including personal details, profile image,
-/// and app settings. It follows the established design patterns and uses
-/// the app's color scheme for visual harmony.
-///
-/// Usage Example:
-///   Navigator.of(context).pushNamed(PageName.profile);
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -23,6 +14,7 @@ import 'package:learning_english/features/profile/presentation/bloc/profile_stat
 import 'package:learning_english/features/profile/presentation/widgets/language_selector_widget.dart';
 import 'package:learning_english/features/profile/presentation/widgets/profile_image_widget.dart';
 import 'package:learning_english/features/profile/presentation/widgets/profile_info_form_widget.dart';
+import 'package:learning_english/features/profile/presentation/widgets/theme_selector_widget.dart';
 
 /// The main profile page for managing user profile information
 class ProfilePage extends StatefulWidget {
@@ -276,6 +268,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
             // Language Selector
             const LanguageSelectorWidget(),
+            GGap.g16,
+
+            // Theme Selector
+            const ThemeSelectorWidget(),
             GGap.g32,
 
             // Save Changes Button

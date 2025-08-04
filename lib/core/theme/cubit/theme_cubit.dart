@@ -7,6 +7,7 @@ enum ThemeType {
   gold, // Original gold theme
   blue, // New blue theme
   light, // New light theme
+  lightBlue, // New light blue theme
 }
 
 /// Theme state class
@@ -67,6 +68,8 @@ class ThemeCubit extends Cubit<ThemeState> {
         return ThemeType.blue;
       case 'light':
         return ThemeType.light;
+      case 'lightBlue':
+        return ThemeType.lightBlue;
       default:
         return null;
     }
@@ -78,7 +81,7 @@ class ThemeCubit extends Cubit<ThemeState> {
     await _saveTheme(themeType);
   }
 
-  /// Toggle between gold, blue, and light themes and save the selection
+  /// Toggle between gold, blue, light, and light blue themes and save the selection
   Future<void> toggleTheme() async {
     ThemeType newTheme;
     switch (state.themeType) {
@@ -89,6 +92,9 @@ class ThemeCubit extends Cubit<ThemeState> {
         newTheme = ThemeType.light;
         break;
       case ThemeType.light:
+        newTheme = ThemeType.lightBlue;
+        break;
+      case ThemeType.lightBlue:
         newTheme = ThemeType.gold;
         break;
     }

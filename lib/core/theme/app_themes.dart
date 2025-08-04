@@ -69,6 +69,23 @@ class AppThemes {
     secondaryBackground: Color(0xFFF5F2F0), // Very light cream
   );
 
+  // Light blue theme colors
+  static const ThemeDataColors lightBlueTheme = ThemeDataColors(
+    primary: Color(0xFF0D80F2), // Bright, vibrant blue
+    background: Color(0xFFFFFFFF), // Pure white
+    surface: Color(
+      0xFFF7FAFC,
+    ), // Very light, cool off-white with blue/gray tint
+    accent: Color(0xFF4A739C), // Medium, muted blue with grayish undertone
+    secondary: Color(0xFFCFDBE8), // Very light, desaturated blue-gray
+    text: Color(0xFF0D141C), // Very dark, desaturated blue (almost black)
+    hint: Color(0xFF4A739C), // Medium, muted blue with grayish undertone
+    error: Color(0xFF0D80F2), // Bright, vibrant blue
+    secondaryBackground: Color(
+      0xFFE8EDF5,
+    ), // Very light, cool off-white with purplish-gray tint
+  );
+
   /// Get theme colors based on theme type
   static ThemeDataColors getThemeColors(ThemeType themeType) {
     switch (themeType) {
@@ -78,6 +95,8 @@ class AppThemes {
         return blueTheme;
       case ThemeType.light:
         return lightTheme;
+      case ThemeType.lightBlue:
+        return lightBlueTheme;
     }
   }
 

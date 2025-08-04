@@ -72,9 +72,19 @@ class ThemeSelectorWidget extends StatelessWidget {
                     context,
                     l10n,
                     ThemeType.light,
-                    'Light Theme',
+                    'Yellow Light Theme',
                     state.themeType == ThemeType.light,
                     () async => await themeCubit.switchTheme(ThemeType.light),
+                  ),
+                  GGap.g12,
+                  _buildThemeOption(
+                    context,
+                    l10n,
+                    ThemeType.lightBlue,
+                    'Light Blue Theme',
+                    state.themeType == ThemeType.lightBlue,
+                    () async =>
+                        await themeCubit.switchTheme(ThemeType.lightBlue),
                   ),
                 ],
               ),
@@ -162,6 +172,8 @@ class ThemeSelectorWidget extends StatelessWidget {
         return const Color(0xFF0D80F2); // Blue
       case ThemeType.light:
         return const Color(0xFFD1A317); // Golden yellow for light theme
+      case ThemeType.lightBlue:
+        return const Color(0xFF0D80F2); // Bright, vibrant blue
     }
   }
 }

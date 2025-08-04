@@ -56,6 +56,19 @@ class AppThemes {
     secondaryBackground: Color(0xFF21364A), // Dark Greenish Blue
   );
 
+  // Light theme colors
+  static const ThemeDataColors lightTheme = ThemeDataColors(
+    primary: Color(0xFFD1A317), // Golden yellow/mustard
+    background: Color(0xFFFFFFFF), // Pure white
+    surface: Color(0xFFF5F2F0), // Very light cream
+    accent: Color(0xFF878063), // Muted olive green
+    secondary: Color(0xFFE5E3DB), // Light beige
+    text: Color(0xFF171712), // Very dark brown/off-black
+    hint: Color(0xFF878063), // Muted olive green
+    error: Color(0xFFD1A317), // Golden yellow
+    secondaryBackground: Color(0xFFF5F2F0), // Very light cream
+  );
+
   /// Get theme colors based on theme type
   static ThemeDataColors getThemeColors(ThemeType themeType) {
     switch (themeType) {
@@ -63,6 +76,8 @@ class AppThemes {
         return goldTheme;
       case ThemeType.blue:
         return blueTheme;
+      case ThemeType.light:
+        return lightTheme;
     }
   }
 

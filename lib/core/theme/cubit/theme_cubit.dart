@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum ThemeType {
   gold, // Original gold theme
   blue, // New blue theme
+  light, // New light theme
 }
 
 /// Theme state class
@@ -64,6 +65,8 @@ class ThemeCubit extends Cubit<ThemeState> {
         return ThemeType.gold;
       case 'blue':
         return ThemeType.blue;
+      case 'light':
+        return ThemeType.light;
       default:
         return null;
     }
@@ -75,10 +78,20 @@ class ThemeCubit extends Cubit<ThemeState> {
     await _saveTheme(themeType);
   }
 
-  /// Toggle between gold and blue themes and save the selection
+  /// Toggle between gold, blue, and light themes and save the selection
   Future<void> toggleTheme() async {
-    final newTheme =
-        state.themeType == ThemeType.gold ? ThemeType.blue : ThemeType.gold;
+    ThemeType newTheme;
+    switch (state.themeType) {
+      case ThemeType.gold:
+        newTheme = ThemeType.blue;
+        break;
+      case ThemeType.blue:
+        newTheme = ThemeType.light;
+        break;
+      case ThemeType.light:
+        newTheme = ThemeType.gold;
+        break;
+    }
     await switchTheme(newTheme);
   }
 

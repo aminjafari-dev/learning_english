@@ -48,6 +48,7 @@ class ProfileInfoFormWidget extends StatelessWidget {
       children: [
         // Full Name Field
         _buildTextField(
+          context,
           controller: fullNameController,
           label: l10n.fullName,
           icon: Icons.person,
@@ -62,6 +63,7 @@ class ProfileInfoFormWidget extends StatelessWidget {
 
         // Email Field
         _buildTextField(
+          context,
           controller: emailController,
           label: l10n.email,
           icon: Icons.email,
@@ -80,6 +82,7 @@ class ProfileInfoFormWidget extends StatelessWidget {
 
         // Phone Number Field
         _buildTextField(
+          context,
           controller: phoneController,
           label: l10n.phoneNumber,
           icon: Icons.phone,
@@ -97,6 +100,7 @@ class ProfileInfoFormWidget extends StatelessWidget {
 
         // Date of Birth Field
         _buildTextField(
+          context,
           controller: dateOfBirthController,
           label: l10n.dateOfBirth,
           icon: Icons.calendar_today,
@@ -120,7 +124,8 @@ class ProfileInfoFormWidget extends StatelessWidget {
   }
 
   /// Builds a text field with consistent styling
-  Widget _buildTextField({
+  Widget _buildTextField(
+    BuildContext context, {
     required TextEditingController controller,
     required String label,
     required IconData icon,
@@ -135,34 +140,34 @@ class ProfileInfoFormWidget extends StatelessWidget {
       readOnly: readOnly,
       onTap: onTap,
       validator: validator,
-      style: TextStyle(color: AppTheme.text),
+      style: TextStyle(color: AppTheme.text(context)),
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: AppTheme.accent),
+        prefixIcon: Icon(icon, color: AppTheme.accent(context)),
         filled: true,
-        fillColor: AppTheme.secondaryBackground,
+        fillColor: AppTheme.secondaryBackground(context),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppTheme.secondary),
+          borderSide: BorderSide(color: AppTheme.secondary(context)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppTheme.secondary),
+          borderSide: BorderSide(color: AppTheme.secondary(context)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppTheme.gold, width: 2),
+          borderSide: BorderSide(color: AppTheme.primary(context), width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppTheme.error),
+          borderSide: BorderSide(color: AppTheme.error(context)),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppTheme.error, width: 2),
+          borderSide: BorderSide(color: AppTheme.error(context), width: 2),
         ),
-        labelStyle: TextStyle(color: AppTheme.accent),
-        errorStyle: TextStyle(color: AppTheme.error),
+        labelStyle: TextStyle(color: AppTheme.accent(context)),
+        errorStyle: TextStyle(color: AppTheme.error(context)),
       ),
     );
   }
@@ -180,12 +185,12 @@ class ProfileInfoFormWidget extends StatelessWidget {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.dark(
-              primary: AppTheme.gold,
-              onPrimary: AppTheme.background,
-              surface: AppTheme.surface,
-              onSurface: AppTheme.text,
+              primary: AppTheme.primary(context),
+              onPrimary: AppTheme.background(context),
+              surface: AppTheme.surface(context),
+              onSurface: AppTheme.text(context),
             ),
-            dialogBackgroundColor: AppTheme.surface,
+            dialogBackgroundColor: AppTheme.surface(context),
           ),
           child: child!,
         );

@@ -31,7 +31,7 @@ class HistoryRequestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppTheme.surface,
+      color: AppTheme.surface(context),
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
@@ -50,7 +50,7 @@ class HistoryRequestCard extends StatelessWidget {
                     child: GText(
                       _formatFocusAreas(request.focusAreas, context),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AppTheme.text,
+                        color: AppTheme.text(context),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -65,19 +65,23 @@ class HistoryRequestCard extends StatelessWidget {
               GGap.g12,
               Row(
                 children: [
-                  Icon(Icons.access_time, color: AppTheme.accent, size: 16),
+                  Icon(
+                    Icons.access_time,
+                    color: AppTheme.accent(context),
+                    size: 16,
+                  ),
                   GGap.g4,
                   GText(
                     _formatDate(request.createdAt, context),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   Spacer(),
-                  Icon(Icons.school, color: AppTheme.accent, size: 16),
+                  Icon(Icons.school, color: AppTheme.accent(context), size: 16),
                   GGap.g4,
                   GText(
                     _formatUserLevel(request.userLevel, context),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppTheme.accent,
+                      color: AppTheme.accent(context),
                       fontWeight: FontWeight.w500,
                     ),
                   ),

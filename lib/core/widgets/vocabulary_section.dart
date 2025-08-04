@@ -34,8 +34,8 @@ class VocabularySection extends StatelessWidget {
   /// Provides better user experience compared to circular progress indicator
   Widget _buildShimmerLoading(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppTheme.surface,
-      highlightColor: AppTheme.hint.withOpacity(0.3),
+      baseColor: AppTheme.surface(context),
+      highlightColor: AppTheme.hint(context).withValues(alpha: 0.3),
       child: Column(
         children: List.generate(
           5, // Show 5 shimmer vocabulary rows during loading
@@ -146,7 +146,9 @@ class VocabularySection extends StatelessWidget {
                             context,
                           ).textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
-                            decorationColor: AppTheme.gold.withOpacity(0.7),
+                            decorationColor: AppTheme.primary(
+                              context,
+                            ).withValues(alpha: 0.7),
                           ),
                         ),
                       ),
@@ -159,7 +161,7 @@ class VocabularySection extends StatelessWidget {
                             child: GText(
                               vocab.persian,
                               style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(color: AppTheme.hint),
+                                  ?.copyWith(color: AppTheme.hint(context)),
                             ),
                           ),
                         ),

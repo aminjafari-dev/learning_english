@@ -13,6 +13,7 @@ import 'package:learning_english/core/dependency%20injection/splash_di.dart';
 import 'package:learning_english/core/dependency%20injection/profile_di.dart';
 import 'package:learning_english/core/dependency%20injection/vocabulary_history_di.dart';
 import 'package:learning_english/core/dependency%20injection/localization_di.dart';
+import 'package:learning_english/core/theme/theme_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -20,6 +21,9 @@ final getIt = GetIt.instance;
 /// This function should be called before the app starts
 Future<void> initDependencies() async {
   try {
+    // Theme Manager
+    setupThemeManager(getIt);
+
     // Initialize Hive for local storage
     await Hive.initFlutter();
 
@@ -61,4 +65,8 @@ Future<void> initDependencies() async {
     print('❌ [DI] Error initializing dependencies: $e');
     rethrow; // Re-throw to let the caller handle the error
   }
+}
+
+void setupThemeManager(GetIt getIt) {
+  getIt.registerSingleton<ThemeCubit>(ThemeCubit());
 }

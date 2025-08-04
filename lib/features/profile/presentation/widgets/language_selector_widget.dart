@@ -48,9 +48,9 @@ class LanguageSelectorWidget extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppTheme.surface,
+            color: AppTheme.surface(context),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppTheme.secondary),
+            border: Border.all(color: AppTheme.secondary(context)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +58,11 @@ class LanguageSelectorWidget extends StatelessWidget {
               // Language Label
               Row(
                 children: [
-                  Icon(Icons.language, color: AppTheme.accent, size: 20),
+                  Icon(
+                    Icons.language,
+                    color: AppTheme.accent(context),
+                    size: 20,
+                  ),
                   GGap.g8,
                   GText(
                     l10n.language,
@@ -113,10 +117,16 @@ class LanguageSelectorWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         decoration: BoxDecoration(
-          color: isSelected ? AppTheme.gold : AppTheme.secondaryBackground,
+          color:
+              isSelected
+                  ? AppTheme.primary(context)
+                  : AppTheme.secondaryBackground(context),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? AppTheme.gold : AppTheme.secondary,
+            color:
+                isSelected
+                    ? AppTheme.primary(context)
+                    : AppTheme.secondary(context),
             width: 2,
           ),
         ),
@@ -124,12 +134,19 @@ class LanguageSelectorWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (isSelected)
-              Icon(Icons.check_circle, color: AppTheme.background, size: 16),
+              Icon(
+                Icons.check_circle,
+                color: AppTheme.background(context),
+                size: 16,
+              ),
             if (isSelected) GGap.g8,
             GText(
               languageName,
               style: TextStyle(
-                color: isSelected ? AppTheme.background : AppTheme.text,
+                color:
+                    isSelected
+                        ? AppTheme.background(context)
+                        : AppTheme.text(context),
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
             ),

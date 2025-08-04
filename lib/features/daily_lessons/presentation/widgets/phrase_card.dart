@@ -44,7 +44,7 @@ class PhraseCard extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       width: double.maxFinite,
       decoration: BoxDecoration(
-        color: AppTheme.surface,
+        color: AppTheme.surface(context),
         borderRadius: BorderRadius.circular(8),
       ),
       child:
@@ -58,8 +58,8 @@ class PhraseCard extends StatelessWidget {
   /// Creates placeholder rectangles that mimic the actual content structure
   Widget _buildShimmerContent(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppTheme.surface,
-      highlightColor: AppTheme.hint.withOpacity(0.3),
+      baseColor: AppTheme.surface(context),
+      highlightColor: AppTheme.hint(context).withValues(alpha: 0.3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -165,7 +165,9 @@ class PhraseCard extends StatelessWidget {
                       phrase!.english,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        decorationColor: AppTheme.gold.withValues(alpha: 0.7),
+                        decorationColor: AppTheme.primary(
+                          context,
+                        ).withValues(alpha: 0.7),
                       ),
                     ),
                   ),
@@ -184,9 +186,9 @@ class PhraseCard extends StatelessWidget {
                   textDirection: TextDirection.rtl,
                   child: GText(
                     phrase!.persian,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(color: AppTheme.hint),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppTheme.hint(context),
+                    ),
                     textAlign: TextAlign.start,
                   ),
                 ),

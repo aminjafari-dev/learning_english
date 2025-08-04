@@ -57,8 +57,8 @@ class LevelSelectionPage extends StatelessWidget {
               AppLocalizations.of(context)!.levelSelectionTitle,
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            backgroundColor: AppTheme.surface,
-            foregroundColor: AppTheme.text,
+            backgroundColor: AppTheme.surface(context),
+            foregroundColor: AppTheme.text(context),
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),

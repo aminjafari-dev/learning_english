@@ -143,11 +143,11 @@ class _ProfilePageState extends State<ProfilePage> {
     return GScaffold(
       appBar: AppBar(
         title: GText(l10n.profileTitle),
-        backgroundColor: AppTheme.surface,
-        foregroundColor: AppTheme.text,
+        backgroundColor: AppTheme.surface(context),
+        foregroundColor: AppTheme.text(context),
         elevation: 0,
       ),
-      backgroundColor: AppTheme.background,
+      backgroundColor: AppTheme.background(context),
       body: BlocListener<ProfileBloc, ProfileState>(
         bloc: getIt<ProfileBloc>(),
         listener: (context, state) {
@@ -159,7 +159,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: GText(l10n.changesSaved),
-                  backgroundColor: AppTheme.gold,
+                  backgroundColor: AppTheme.primary(context),
                 ),
               );
             },
@@ -167,7 +167,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: GText(l10n.errorSavingChanges),
-                  backgroundColor: AppTheme.error,
+                  backgroundColor: AppTheme.error(context),
                 ),
               );
             },
@@ -198,7 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(color: AppTheme.gold),
+          CircularProgressIndicator(color: AppTheme.primary(context)),
           GGap.g16,
           GText(
             l10n.loadingProfile,
@@ -215,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, size: 64, color: AppTheme.error),
+          Icon(Icons.error_outline, size: 64, color: AppTheme.error(context)),
           GGap.g16,
           GText(
             message,

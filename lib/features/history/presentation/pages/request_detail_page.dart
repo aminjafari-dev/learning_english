@@ -37,7 +37,7 @@ class RequestDetailPage extends StatelessWidget {
 
     return GScaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.background,
+        backgroundColor: AppTheme.background(context),
         elevation: 0,
         title: GText(
           AppLocalizations.of(context)!.requestDetails,
@@ -49,7 +49,7 @@ class RequestDetailPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      backgroundColor: AppTheme.background,
+      backgroundColor: AppTheme.background(context),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(

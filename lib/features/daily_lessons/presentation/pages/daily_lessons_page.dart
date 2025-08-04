@@ -28,7 +28,7 @@ class DailyLessonsPage extends StatelessWidget {
 
     return GScaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.background,
+        backgroundColor: AppTheme.background(context),
         elevation: 0,
         title: const DailyLessonsHeader(),
         leading:
@@ -39,7 +39,7 @@ class DailyLessonsPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      backgroundColor: AppTheme.background,
+      backgroundColor: AppTheme.background(context),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: BlocBuilder<DailyLessonsBloc, DailyLessonsState>(

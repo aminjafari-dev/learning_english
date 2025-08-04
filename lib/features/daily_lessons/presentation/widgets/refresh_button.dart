@@ -29,7 +29,7 @@ class RefreshButton extends StatelessWidget {
         final bloc = getIt<DailyLessonsBloc>();
         bloc.add(const DailyLessonsEvent.refreshLessons());
       },
-      color: AppTheme.gold,
+      color: AppTheme.primary(context),
     );
   }
 }

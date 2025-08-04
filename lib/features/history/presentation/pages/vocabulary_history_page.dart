@@ -33,8 +33,8 @@ class VocabularyHistoryPage extends StatelessWidget {
           AppLocalizations.of(context)!.history,
           style: Theme.of(context).textTheme.titleLarge,
         ),
-        backgroundColor: AppTheme.surface,
-        foregroundColor: AppTheme.text,
+        backgroundColor: AppTheme.surface(context),
+        foregroundColor: AppTheme.text(context),
         actions: [
           BlocBuilder<VocabularyHistoryBloc, VocabularyHistoryState>(
             bloc:
@@ -65,12 +65,16 @@ class VocabularyHistoryPage extends StatelessWidget {
                 );
               });
               return Center(
-                child: CircularProgressIndicator(color: AppTheme.gold),
+                child: CircularProgressIndicator(
+                  color: AppTheme.primary(context),
+                ),
               );
             },
             loading:
                 () => Center(
-                  child: CircularProgressIndicator(color: AppTheme.gold),
+                  child: CircularProgressIndicator(
+                    color: AppTheme.primary(context),
+                  ),
                 ),
             completed: (requests) {
               return _buildHistoryList(context, requests);
@@ -91,7 +95,7 @@ class VocabularyHistoryPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.history, size: 64, color: AppTheme.accent),
+            Icon(Icons.history, size: 64, color: AppTheme.accent(context)),
             GGap.g16,
             GText(
               AppLocalizations.of(context)!.noHistoryFound,
@@ -134,7 +138,7 @@ class VocabularyHistoryPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, size: 64, color: AppTheme.error),
+          Icon(Icons.error_outline, size: 64, color: AppTheme.error(context)),
           GGap.g16,
           GText(
             AppLocalizations.of(context)!.errorLoadingHistory,

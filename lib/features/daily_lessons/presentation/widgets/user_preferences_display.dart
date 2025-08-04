@@ -56,10 +56,10 @@ class UserPreferencesDisplay extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.gold.withValues(alpha: 0.05),
+        color: AppTheme.primary(context).withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppTheme.gold.withValues(alpha: 0.2),
+          color: AppTheme.primary(context).withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -71,11 +71,13 @@ class UserPreferencesDisplay extends StatelessWidget {
             children: [
               // Level Badge
               _buildPreferenceInfo(
+                context,
                 title: AppLocalizations.of(context)!.levelSelection,
                 value: _getLevelDisplayText(preferences.level, context),
               ),
               GGap.g12,
               _buildPreferenceInfo(
+                context,
                 title: AppLocalizations.of(context)!.focusAreasSelection,
                 value: preferences.focusAreas.join(', '),
               ),
@@ -108,10 +110,10 @@ class UserPreferencesDisplay extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.gold.withValues(alpha: 0.05),
+        color: AppTheme.primary(context).withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppTheme.gold.withValues(alpha: 0.2),
+          color: AppTheme.primary(context).withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -122,14 +124,16 @@ class UserPreferencesDisplay extends StatelessWidget {
             height: 16,
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(AppTheme.gold),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                AppTheme.primary(context),
+              ),
             ),
           ),
           const SizedBox(width: 12),
           GText(
             'Loading your preferences...',
             style: TextStyle(
-              color: AppTheme.gold,
+              color: AppTheme.primary(context),
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
@@ -146,22 +150,22 @@ class UserPreferencesDisplay extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.error.withValues(alpha: 0.05),
+        color: AppTheme.error(context).withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppTheme.error.withValues(alpha: 0.2),
+          color: AppTheme.error(context).withValues(alpha: 0.2),
           width: 1,
         ),
       ),
       child: Row(
         children: [
-          Icon(Icons.error_outline, color: AppTheme.error, size: 16),
+          Icon(Icons.error_outline, color: AppTheme.error(context), size: 16),
           const SizedBox(width: 8),
           Expanded(
             child: GText(
               'Could not load preferences',
               style: TextStyle(
-                color: AppTheme.error,
+                color: AppTheme.error(context),
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
@@ -186,7 +190,11 @@ class UserPreferencesDisplay extends StatelessWidget {
     }
   }
 
-  Widget _buildPreferenceInfo({required String? title, required String value}) {
+  Widget _buildPreferenceInfo(
+    BuildContext context, {
+    required String? title,
+    required String value,
+  }) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,7 +202,7 @@ class UserPreferencesDisplay extends StatelessWidget {
           GText(
             "$title:",
             style: TextStyle(
-              color: AppTheme.gold.withValues(alpha: 0.8),
+              color: AppTheme.primary(context).withValues(alpha: 0.8),
               fontSize: 12,
               fontWeight: FontWeight.w500,
             ),
@@ -203,7 +211,7 @@ class UserPreferencesDisplay extends StatelessWidget {
           GText(
             value,
             style: TextStyle(
-              color: AppTheme.gold,
+              color: AppTheme.primary(context),
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),

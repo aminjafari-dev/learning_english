@@ -15,7 +15,7 @@ class SectionHeader extends StatelessWidget {
       title,
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
         fontWeight: FontWeight.bold,
-        color: AppTheme.gold,
+        color: AppTheme.primary(context),
       ),
     );
   }

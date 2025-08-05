@@ -24,7 +24,7 @@ class RefreshButton extends StatelessWidget {
     }
 
     return GButton(
-      text: AppLocalizations.of(context)!.refreshLessons,
+      text: AppLocalizations.of(context)!.nextLessons,
       onPressed: () {
         final bloc = getIt<DailyLessonsBloc>();
         bloc.add(const DailyLessonsEvent.refreshLessons());

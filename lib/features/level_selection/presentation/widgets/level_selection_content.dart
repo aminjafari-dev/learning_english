@@ -22,13 +22,15 @@ class LevelSelectionContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        LevelOptionsList(selectedLevel: selectedLevel, state: state),
-        // Continue button removed - level selection now happens immediately
-        // when user taps on any level option
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          LevelOptionsList(selectedLevel: selectedLevel, state: state),
+          // Continue button removed - level selection now happens immediately
+          // when user taps on any level option
+        ],
+      ),
     );
   }
 }

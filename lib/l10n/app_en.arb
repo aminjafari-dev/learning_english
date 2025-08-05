@@ -44,10 +44,7 @@
   "@phrases": {
     "description": "Section header for phrases."
   },
-  "refreshLessons": "Refresh Lessons",
-  "@refreshLessons": {
-    "description": "Button text for refreshing daily lessons."
-  },
+  "nextLessons": "Next Lessons",
   "errorFirebaseAuth": "Authentication failed. Please try again.",
   "@errorFirebaseAuth": {
     "description": "Generic Firebase authentication error message."
@@ -253,5 +250,13 @@
   "blueTheme": "Blue Theme",
   "@blueTheme": {
     "description": "Blue theme option."
+  },
+  "yellowLightTheme": "Yellow Light Theme",
+  "@yellowLightTheme": {
+    "description": "Yellow light theme option."
+  },
+  "lightBlueTheme": "Light Blue Theme",
+  "@lightBlueTheme": {
+    "description": "Light blue theme option."
   }
 } 

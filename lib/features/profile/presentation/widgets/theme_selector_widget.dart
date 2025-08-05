@@ -72,7 +72,7 @@ class ThemeSelectorWidget extends StatelessWidget {
                     context,
                     l10n,
                     ThemeType.light,
-                    'Yellow Light Theme',
+                    l10n.yellowLightTheme,
                     state.themeType == ThemeType.light,
                     () async => await themeCubit.switchTheme(ThemeType.light),
                   ),
@@ -81,7 +81,7 @@ class ThemeSelectorWidget extends StatelessWidget {
                     context,
                     l10n,
                     ThemeType.lightBlue,
-                    'Light Blue Theme',
+                    l10n.lightBlueTheme,
                     state.themeType == ThemeType.lightBlue,
                     () async =>
                         await themeCubit.switchTheme(ThemeType.lightBlue),

@@ -24,23 +24,8 @@ class LevelSelectionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LevelBloc, LevelState>(
+    return BlocBuilder<LevelBloc, LevelState>(
       bloc: getIt<LevelBloc>(),
-      listener: (context, state) {
-        state.when(
-          initial: () {},
-          selectionMade: (_) {},
-          loading: (_) {},
-          success: (_) {
-            // Navigate to the learning focus selection page immediately when level is selected
-            Navigator.of(context).pushNamed(PageName.learningFocusSelection);
-          },
-          error: (message, _) {
-            // Errors are handled silently - no UI feedback to user
-            // Firebase operations happen in background and errors are logged only
-          },
-        );
-      },
       builder: (context, state) {
         // Extract selected level from any state that has it
         Level? selectedLevel = state.when(
@@ -61,7 +46,7 @@ class LevelSelectionPage extends StatelessWidget {
             foregroundColor: AppTheme.text(context),
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: LevelSelectionContent(
               state: state,
               selectedLevel: selectedLevel,

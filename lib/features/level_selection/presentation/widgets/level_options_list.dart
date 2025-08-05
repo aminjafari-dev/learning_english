@@ -11,6 +11,7 @@ import 'package:learning_english/features/level_selection/presentation/blocs/lev
 import 'package:learning_english/features/level_selection/presentation/blocs/level_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
+import 'package:learning_english/core/constants/image_path.dart';
 
 /// Widget that displays all level option cards
 /// Handles level selection and displays selected state
@@ -20,7 +21,7 @@ class LevelOptionsList extends StatelessWidget {
   final LevelState state;
 
   const LevelOptionsList({
-    super.key, 
+    super.key,
     required this.selectedLevel,
     required this.state,
   });
@@ -38,20 +39,26 @@ class LevelOptionsList extends StatelessWidget {
           subtitle: l10n.levelBeginnerDesc,
           selected: selectedLevel == Level.beginner,
           onTap: () => bloc.add(const LevelEvent.levelSelected(Level.beginner)),
+          imagePath: ImagePath.beginnerImage,
         ),
         // Elementary
         LevelOptionCard(
           title: l10n.levelElementary,
           subtitle: l10n.levelElementaryDesc,
           selected: selectedLevel == Level.elementary,
-          onTap: () => bloc.add(const LevelEvent.levelSelected(Level.elementary)),
+          onTap:
+              () => bloc.add(const LevelEvent.levelSelected(Level.elementary)),
+          imagePath: ImagePath.elementaryImage,
         ),
         // Intermediate
         LevelOptionCard(
           title: l10n.levelIntermediate,
           subtitle: l10n.levelIntermediateDesc,
           selected: selectedLevel == Level.intermediate,
-          onTap: () => bloc.add(const LevelEvent.levelSelected(Level.intermediate)),
+          onTap:
+              () =>
+                  bloc.add(const LevelEvent.levelSelected(Level.intermediate)),
+          imagePath: ImagePath.intermediateImage,
         ),
         // Advanced
         LevelOptionCard(
@@ -59,6 +66,7 @@ class LevelOptionsList extends StatelessWidget {
           subtitle: l10n.levelAdvancedDesc,
           selected: selectedLevel == Level.advanced,
           onTap: () => bloc.add(const LevelEvent.levelSelected(Level.advanced)),
+          imagePath: ImagePath.advancedImage,
         ),
       ],
     );

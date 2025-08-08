@@ -9,10 +9,6 @@ import 'daily_lessons_event.dart';
 import 'daily_lessons_state.dart';
 import '../../domain/usecases/get_conversation_lessons_usecase.dart';
 import '../../domain/usecases/get_user_preferences_usecase.dart';
-import '../../domain/usecases/send_conversation_message_usecase.dart';
-import '../../domain/entities/user_preferences.dart';
-import '../../data/models/conversation_thread_model.dart';
-import '../../data/models/level_type.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
 
 /// Bloc for managing daily lessons (vocabularies and phrases)
@@ -23,12 +19,10 @@ import 'package:learning_english/core/usecase/usecase.dart';
 class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
   final GetConversationLessonsUseCase getConversationLessonsUseCase;
   final GetUserPreferencesUseCase getUserPreferencesUseCase;
-  final SendConversationMessageUseCase sendConversationMessageUseCase;
 
   DailyLessonsBloc({
     required this.getConversationLessonsUseCase,
     required this.getUserPreferencesUseCase,
-    required this.sendConversationMessageUseCase,
   }) : super(
          const DailyLessonsState(
            vocabularies: VocabulariesState.initial(),
@@ -48,9 +42,6 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
             ), // New conversation-based method
         refreshLessons: () => _onRefreshLessons(emit),
         getUserPreferences: () => _onGetUserPreferences(emit),
-        sendConversationMessage:
-            (preferences, message) =>
-                _onSendConversationMessage(preferences, message, emit),
       );
     });
   }
@@ -197,87 +188,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
     add(const DailyLessonsEvent.fetchLessons());
   }
 
-  // ===== CONVERSATION EVENT HANDLERS =====
 
-  /// Send a message in conversation mode
-  /// Uses existing thread or creates new one based on preferences
-  Future<void> _onSendConversationMessage(
-    UserPreferences preferences,
-    String message,
-    Emitter<DailyLessonsState> emit,
-  ) async {
-    try {
-      emit(state.copyWith(conversation: const ConversationState.loading()));
-
-      final result = await sendConversationMessageUseCase((
-        preferences: preferences,
-        message: message,
-      ));
-
-      result.fold(
-        (failure) {
-          if (!emit.isDone) {
-            emit(
-              state.copyWith(
-                conversation: ConversationState.error(failure.message),
-              ),
-            );
-          }
-        },
-        (response) {
-          if (!emit.isDone) {
-            // Get current conversation state
-            final currentState = state.conversation;
-            if (currentState is ConversationLoaded) {
-              // Add user message and AI response to messages
-              final userMessage = ConversationMessageModel.user(message);
-              final aiMessage = ConversationMessageModel.model(response);
-              final updatedMessages = [
-                ...currentState.messages,
-                userMessage,
-                aiMessage,
-              ];
-
-              emit(
-                state.copyWith(
-                  conversation: ConversationState.loaded(
-                    currentThread: currentState.currentThread,
-                    messages: updatedMessages,
-                    userThreads: currentState.userThreads,
-                  ),
-                ),
-              );
-            } else {
-              // Create new conversation state
-              final thread = ConversationThreadModel.create(
-                userId: 'current_user',
-                context: 'conversation',
-                userLevel: UserLevel.intermediate,
-                focusAreas: preferences.focusAreas,
-              );
-
-              final userMessage = ConversationMessageModel.user(message);
-              final aiMessage = ConversationMessageModel.model(response);
-
-              emit(
-                state.copyWith(
-                  conversation: ConversationState.loaded(
-                    currentThread: thread,
-                    messages: [userMessage, aiMessage],
-                    userThreads: [],
-                  ),
-                ),
-              );
-            }
-          }
-        },
-      );
-    } catch (e) {
-      if (!emit.isDone) {
-        emit(
-          state.copyWith(conversation: ConversationState.error(e.toString())),
-        );
-      }
-    }
-  }
 }
+
+

@@ -20,7 +20,6 @@ import 'package:learning_english/core/usecase/usecase.dart';
 import '../entities/vocabulary.dart';
 import '../entities/phrase.dart';
 import '../entities/user_preferences.dart';
-import '../entities/ai_usage_metadata.dart';
 import '../repositories/conversation_repository.dart';
 import '../../data/datasources/remote/conversation_prompts.dart';
 import '../../data/datasources/local/daily_lessons_local_data_source.dart';
@@ -72,18 +71,11 @@ class GetConversationLessonsUseCase
       // Get user ID for tracking
       final userId = await coreUserRepository.getUserId() ?? 'current_user';
 
-      // Get user's learning history to avoid repetitive content
-      final usedVocabularies = await localDataSource.getUserVocabularies(
-        userId,
-      );
-      final usedPhrases = await localDataSource.getUserPhrases(userId);
 
       // Create a conversation prompt that asks for new vocabularies and phrases
       // This prompt considers user's learning history to avoid repetition
       final conversationPrompt = ConversationPrompts.getLessonPrompt(
         preferences,
-        usedVocabularies,
-        usedPhrases,
       );
 
       // Send conversation message to get personalized lessons

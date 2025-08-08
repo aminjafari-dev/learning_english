@@ -4,6 +4,7 @@
 // Manages conversation state, thread creation, and message processing with AI services.
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:learning_english/core/error/failure.dart';
 import 'package:learning_english/core/repositories/user_repository.dart';
 import '../../domain/entities/user_preferences.dart';
@@ -12,10 +13,8 @@ import '../datasources/local/daily_lessons_local_data_source.dart';
 import '../datasources/remote/gemini_conversation_service.dart';
 import '../models/conversation_thread_model.dart';
 import '../models/level_type.dart';
-import '../models/learning_request_model.dart';
 import '../models/vocabulary_model.dart';
 import '../models/phrase_model.dart';
-import '../models/ai_provider_type.dart';
 import 'dart:convert';
 
 /// Implementation of ConversationRepository
@@ -41,15 +40,15 @@ class ConversationRepositoryImpl implements ConversationRepository {
     String message,
   ) async {
     try {
-      print('💬 [CONVERSATION] Starting conversation message processing');
-      print(
+      debugPrint('💬 [CONVERSATION] Starting conversation message processing');
+      debugPrint(
         '📋 [CONVERSATION] User preferences: level=${preferences.level}, areas=${preferences.focusAreas}',
       );
-      print('📝 [CONVERSATION] User message: $message');
+      debugPrint('📝 [CONVERSATION] User message: $message');
 
       // Get user ID for conversation tracking
       final userId = await coreUserRepository.getUserId() ?? 'current_user';
-      print('👤 [CONVERSATION] User ID: $userId');
+      debugPrint('👤 [CONVERSATION] User ID: $userId');
 
       // Convert UserLevel to the model's UserLevel
       final userLevel = _convertToModelUserLevel(preferences.level);
@@ -60,7 +59,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
       if (conversationThread == null) {
         // Create new thread if none exists
-        print('🆕 [CONVERSATION] Creating new conversation thread');
+        debugPrint('🆕 [CONVERSATION] Creating new conversation thread');
         conversationThread = ConversationThreadModel.create(
           userId: userId,
           context: _generateContext(preferences),
@@ -70,15 +69,15 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
         // Save the new thread
         await localDataSource.saveConversationThread(conversationThread);
-        print('💾 [CONVERSATION] Saved new thread to storage');
+        debugPrint('💾 [CONVERSATION] Saved new thread to storage');
       } else {
-        print(
+        debugPrint(
           '✅ [CONVERSATION] Retrieved existing thread with ${conversationThread.messages.length} messages',
         );
       }
 
       // Send to AI service (Gemini) and get response
-      print('🤖 [CONVERSATION] Sending to Gemini AI service');
+      debugPrint('🤖 [CONVERSATION] Sending to Gemini AI service');
       try {
         final aiResponse = await geminiConversationService.sendMessage(
           userId,
@@ -87,7 +86,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
           focusAreas: preferences.focusAreas,
         );
 
-        print(
+        debugPrint(
           '✅ [CONVERSATION] Received AI response: ${aiResponse.substring(0, 50)}...',
         );
 
@@ -95,21 +94,21 @@ class ConversationRepositoryImpl implements ConversationRepository {
         final extractedContent = _extractVocabulariesAndPhrases(aiResponse);
         if (extractedContent.vocabularies.isNotEmpty ||
             extractedContent.phrases.isNotEmpty) {
-          print(
+          debugPrint(
             '💾 [CONVERSATION] Found vocabularies and phrases in response, saving to local storage',
           );
         }
 
-        print('✅ [CONVERSATION] Conversation message processed successfully');
+        debugPrint('✅ [CONVERSATION] Conversation message processed successfully');
         return right(aiResponse);
       } catch (e) {
-        print('❌ [CONVERSATION] Gemini service error: $e');
+        debugPrint('❌ [CONVERSATION] Gemini service error: $e');
         return left(
           ServerFailure('Failed to get AI response: ${e.toString()}'),
         );
       }
     } catch (e) {
-      print('❌ [CONVERSATION] Unexpected error in conversation processing: $e');
+      debugPrint('❌ [CONVERSATION] Unexpected error in conversation processing: $e');
       return left(
         ServerFailure(
           'Failed to process conversation message: ${e.toString()}',
@@ -187,70 +186,11 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
       return (vocabularies: vocabularies, phrases: phrases);
     } catch (e) {
-      print('❌ [CONVERSATION] Failed to parse AI response: $e');
+      debugPrint('❌ [CONVERSATION] Failed to parse AI response: $e');
       return (vocabularies: <VocabularyModel>[], phrases: <PhraseModel>[]);
     }
   }
 
-  /// Saves conversation-generated content to local storage
-  /// Creates a learning request with conversation context for proper tracking
-  Future<void> _saveConversationGeneratedContent(
-    String userId,
-    UserPreferences preferences,
-    List<VocabularyModel> vocabularies,
-    List<PhraseModel> phrases,
-    String aiResponse,
-  ) async {
-    try {
-      print('💾 [CONVERSATION] Saving generated content to local storage');
-      print(
-        '💾 [CONVERSATION] Vocabularies: ${vocabularies.length}, Phrases: ${phrases.length}',
-      );
-
-      // Create learning request with conversation context
-      final learningRequest = LearningRequestModel(
-        requestId: 'conversation_${DateTime.now().millisecondsSinceEpoch}',
-        userId: userId,
-        userLevel: _convertToModelUserLevel(preferences.level),
-        focusAreas: preferences.focusAreas,
-        aiProvider: AiProviderType.gemini, // Conversation uses Gemini
-        aiModel: 'gemini-1.5-flash',
-        totalTokensUsed: 0, // Will be updated if available
-        estimatedCost: 0.0, // Will be updated if available
-        requestTimestamp: DateTime.now(),
-        createdAt: DateTime.now(),
-        systemPrompt: 'Conversation mode lesson generation',
-        userPrompt: aiResponse.substring(
-          0,
-          aiResponse.length > 200 ? 200 : aiResponse.length,
-        ),
-        vocabularies: vocabularies,
-        phrases: phrases,
-        metadata: {
-          'source': 'conversation_mode',
-          'preferences': {
-            'level': preferences.level.name,
-            'focusAreas': preferences.focusAreas,
-          },
-          'conversationContext': aiResponse.substring(
-            0,
-            aiResponse.length > 200 ? 200 : aiResponse.length,
-          ),
-        },
-      );
-
-      // Save to local storage
-      await localDataSource.saveLearningRequest(learningRequest);
-      print(
-        '✅ [CONVERSATION] Successfully saved conversation-generated content',
-      );
-    } catch (e) {
-      print(
-        '❌ [CONVERSATION] Failed to save conversation-generated content: $e',
-      );
-      // Don't throw here to avoid breaking the main flow
-    }
-  }
 }
 
 // Example usage:

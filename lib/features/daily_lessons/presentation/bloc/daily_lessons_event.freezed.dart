@@ -21,8 +21,6 @@ mixin _$DailyLessonsEvent {
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
-    required TResult Function(UserPreferences preferences, String message)
-        sendConversationMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,8 +28,6 @@ mixin _$DailyLessonsEvent {
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
-    TResult? Function(UserPreferences preferences, String message)?
-        sendConversationMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,8 +35,6 @@ mixin _$DailyLessonsEvent {
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
-    TResult Function(UserPreferences preferences, String message)?
-        sendConversationMessage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -49,8 +43,6 @@ mixin _$DailyLessonsEvent {
     required TResult Function(FetchLessons value) fetchLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
-    required TResult Function(SendConversationMessage value)
-        sendConversationMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,7 +50,6 @@ mixin _$DailyLessonsEvent {
     TResult? Function(FetchLessons value)? fetchLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
-    TResult? Function(SendConversationMessage value)? sendConversationMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,7 +57,6 @@ mixin _$DailyLessonsEvent {
     TResult Function(FetchLessons value)? fetchLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
-    TResult Function(SendConversationMessage value)? sendConversationMessage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -137,8 +127,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
-    required TResult Function(UserPreferences preferences, String message)
-        sendConversationMessage,
   }) {
     return fetchLessons();
   }
@@ -149,8 +137,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
-    TResult? Function(UserPreferences preferences, String message)?
-        sendConversationMessage,
   }) {
     return fetchLessons?.call();
   }
@@ -161,8 +147,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
-    TResult Function(UserPreferences preferences, String message)?
-        sendConversationMessage,
     required TResult orElse(),
   }) {
     if (fetchLessons != null) {
@@ -177,8 +161,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     required TResult Function(FetchLessons value) fetchLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
-    required TResult Function(SendConversationMessage value)
-        sendConversationMessage,
   }) {
     return fetchLessons(this);
   }
@@ -189,7 +171,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult? Function(FetchLessons value)? fetchLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
-    TResult? Function(SendConversationMessage value)? sendConversationMessage,
   }) {
     return fetchLessons?.call(this);
   }
@@ -200,7 +181,6 @@ class _$FetchLessonsImpl implements FetchLessons {
     TResult Function(FetchLessons value)? fetchLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
-    TResult Function(SendConversationMessage value)? sendConversationMessage,
     required TResult orElse(),
   }) {
     if (fetchLessons != null) {
@@ -258,8 +238,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
-    required TResult Function(UserPreferences preferences, String message)
-        sendConversationMessage,
   }) {
     return refreshLessons();
   }
@@ -270,8 +248,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
-    TResult? Function(UserPreferences preferences, String message)?
-        sendConversationMessage,
   }) {
     return refreshLessons?.call();
   }
@@ -282,8 +258,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
-    TResult Function(UserPreferences preferences, String message)?
-        sendConversationMessage,
     required TResult orElse(),
   }) {
     if (refreshLessons != null) {
@@ -298,8 +272,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     required TResult Function(FetchLessons value) fetchLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
-    required TResult Function(SendConversationMessage value)
-        sendConversationMessage,
   }) {
     return refreshLessons(this);
   }
@@ -310,7 +282,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult? Function(FetchLessons value)? fetchLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
-    TResult? Function(SendConversationMessage value)? sendConversationMessage,
   }) {
     return refreshLessons?.call(this);
   }
@@ -321,7 +292,6 @@ class _$RefreshLessonsImpl implements RefreshLessons {
     TResult Function(FetchLessons value)? fetchLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
-    TResult Function(SendConversationMessage value)? sendConversationMessage,
     required TResult orElse(),
   }) {
     if (refreshLessons != null) {
@@ -379,8 +349,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     required TResult Function() fetchLessons,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
-    required TResult Function(UserPreferences preferences, String message)
-        sendConversationMessage,
   }) {
     return getUserPreferences();
   }
@@ -391,8 +359,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     TResult? Function()? fetchLessons,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
-    TResult? Function(UserPreferences preferences, String message)?
-        sendConversationMessage,
   }) {
     return getUserPreferences?.call();
   }
@@ -403,8 +369,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     TResult Function()? fetchLessons,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
-    TResult Function(UserPreferences preferences, String message)?
-        sendConversationMessage,
     required TResult orElse(),
   }) {
     if (getUserPreferences != null) {
@@ -419,8 +383,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     required TResult Function(FetchLessons value) fetchLessons,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
-    required TResult Function(SendConversationMessage value)
-        sendConversationMessage,
   }) {
     return getUserPreferences(this);
   }
@@ -431,7 +393,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     TResult? Function(FetchLessons value)? fetchLessons,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
-    TResult? Function(SendConversationMessage value)? sendConversationMessage,
   }) {
     return getUserPreferences?.call(this);
   }
@@ -442,7 +403,6 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
     TResult Function(FetchLessons value)? fetchLessons,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
-    TResult Function(SendConversationMessage value)? sendConversationMessage,
     required TResult orElse(),
   }) {
     if (getUserPreferences != null) {
@@ -454,176 +414,4 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
 
 abstract class GetUserPreferences implements DailyLessonsEvent {
   const factory GetUserPreferences() = _$GetUserPreferencesImpl;
-}
-
-/// @nodoc
-abstract class _$$SendConversationMessageImplCopyWith<$Res> {
-  factory _$$SendConversationMessageImplCopyWith(
-          _$SendConversationMessageImpl value,
-          $Res Function(_$SendConversationMessageImpl) then) =
-      __$$SendConversationMessageImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({UserPreferences preferences, String message});
-}
-
-/// @nodoc
-class __$$SendConversationMessageImplCopyWithImpl<$Res>
-    extends _$DailyLessonsEventCopyWithImpl<$Res, _$SendConversationMessageImpl>
-    implements _$$SendConversationMessageImplCopyWith<$Res> {
-  __$$SendConversationMessageImplCopyWithImpl(
-      _$SendConversationMessageImpl _value,
-      $Res Function(_$SendConversationMessageImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? preferences = null,
-    Object? message = null,
-  }) {
-    return _then(_$SendConversationMessageImpl(
-      preferences: null == preferences
-          ? _value.preferences
-          : preferences // ignore: cast_nullable_to_non_nullable
-              as UserPreferences,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$SendConversationMessageImpl implements SendConversationMessage {
-  const _$SendConversationMessageImpl(
-      {required this.preferences, required this.message});
-
-  @override
-  final UserPreferences preferences;
-  @override
-  final String message;
-
-  @override
-  String toString() {
-    return 'DailyLessonsEvent.sendConversationMessage(preferences: $preferences, message: $message)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SendConversationMessageImpl &&
-            (identical(other.preferences, preferences) ||
-                other.preferences == preferences) &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, preferences, message);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SendConversationMessageImplCopyWith<_$SendConversationMessageImpl>
-      get copyWith => __$$SendConversationMessageImplCopyWithImpl<
-          _$SendConversationMessageImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() fetchLessons,
-    required TResult Function() refreshLessons,
-    required TResult Function() getUserPreferences,
-    required TResult Function(UserPreferences preferences, String message)
-        sendConversationMessage,
-  }) {
-    return sendConversationMessage(preferences, message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchLessons,
-    TResult? Function()? refreshLessons,
-    TResult? Function()? getUserPreferences,
-    TResult? Function(UserPreferences preferences, String message)?
-        sendConversationMessage,
-  }) {
-    return sendConversationMessage?.call(preferences, message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchLessons,
-    TResult Function()? refreshLessons,
-    TResult Function()? getUserPreferences,
-    TResult Function(UserPreferences preferences, String message)?
-        sendConversationMessage,
-    required TResult orElse(),
-  }) {
-    if (sendConversationMessage != null) {
-      return sendConversationMessage(preferences, message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FetchLessons value) fetchLessons,
-    required TResult Function(RefreshLessons value) refreshLessons,
-    required TResult Function(GetUserPreferences value) getUserPreferences,
-    required TResult Function(SendConversationMessage value)
-        sendConversationMessage,
-  }) {
-    return sendConversationMessage(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FetchLessons value)? fetchLessons,
-    TResult? Function(RefreshLessons value)? refreshLessons,
-    TResult? Function(GetUserPreferences value)? getUserPreferences,
-    TResult? Function(SendConversationMessage value)? sendConversationMessage,
-  }) {
-    return sendConversationMessage?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FetchLessons value)? fetchLessons,
-    TResult Function(RefreshLessons value)? refreshLessons,
-    TResult Function(GetUserPreferences value)? getUserPreferences,
-    TResult Function(SendConversationMessage value)? sendConversationMessage,
-    required TResult orElse(),
-  }) {
-    if (sendConversationMessage != null) {
-      return sendConversationMessage(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class SendConversationMessage implements DailyLessonsEvent {
-  const factory SendConversationMessage(
-      {required final UserPreferences preferences,
-      required final String message}) = _$SendConversationMessageImpl;
-
-  UserPreferences get preferences;
-  String get message;
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SendConversationMessageImplCopyWith<_$SendConversationMessageImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }

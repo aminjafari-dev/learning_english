@@ -5,7 +5,6 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../domain/entities/user_preferences.dart';
-import '../../data/models/conversation_thread_model.dart';
 
 part 'daily_lessons_event.freezed.dart';
 
@@ -28,12 +27,6 @@ class DailyLessonsEvent with _$DailyLessonsEvent {
   const factory DailyLessonsEvent.getUserPreferences() = GetUserPreferences;
 
 
-  /// Event to send a message in conversation mode
-  /// Uses existing thread or creates new one based on preferences
-  const factory DailyLessonsEvent.sendConversationMessage({
-    required UserPreferences preferences,
-    required String message,
-  }) = SendConversationMessage;
 
 }
 

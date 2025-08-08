@@ -9,8 +9,6 @@
 //   final conversationPrompt = prompts.getConversationPrompt(preferences, context);
 
 import '../../../domain/entities/user_preferences.dart';
-import '../../models/vocabulary_model.dart';
-import '../../models/phrase_model.dart';
 
 /// Conversation prompts for Daily Lessons feature
 /// This class provides prompts that help avoid repetitive content
@@ -27,25 +25,11 @@ class ConversationPrompts {
   ///
   /// Returns: Prompt that asks for fresh learning material
   static String getLessonPrompt(
-    UserPreferences preferences,
-    List<VocabularyModel> usedVocabularies,
-    List<PhraseModel> usedPhrases,
+    UserPreferences preferences
   ) {
     final levelDesc = preferences.levelDescription;
     final focusAreas = preferences.focusAreasString;
 
-    // Create list of already learned words to avoid repetition
-    final learnedWords =
-        usedVocabularies.map((v) => v.english.toLowerCase()).toSet() ?? {};
-    final learnedPhrases =
-        usedPhrases.map((p) => p.english.toLowerCase()).toSet() ?? {};
-
-    final learnedWordsList = learnedWords
-        .take(20)
-        .join(', '); // Show last 20 words
-    final learnedPhrasesList = learnedPhrases
-        .take(10)
-        .join(', '); // Show last 10 phrases
 
     return '''You are an English teacher helping me learn new vocabulary and phrases. 
 I'm at $levelDesc level and I want to focus on $focusAreas.

@@ -10,7 +10,6 @@ import '../../models/learning_request_model.dart';
 import '../../models/vocabulary_model.dart';
 import '../../models/phrase_model.dart';
 import '../../models/conversation_thread_model.dart';
-import '../../../domain/entities/user_preferences.dart';
 
 /// Gemini conversation service for maintaining message threads
 /// Integrates with Hive database to provide context-aware responses
@@ -246,109 +245,6 @@ Please respond with new, diverse content that builds upon previous learning with
     }
   }
 
-  /// Get personalized vocabulary based on conversation context
-  /// Uses preference-based thread management
-  Future<List<VocabularyModel>> getPersonalizedVocabularies(
-    String userId,
-    UserPreferences preferences,
-  ) async {
-    final prompt = '''
-Generate exactly 5 new English vocabulary words for ${preferences.levelDescription} level 
-focused on ${preferences.focusAreasString}.
-
-Requirements:
-- Choose words that are practical and commonly used
-- Ensure variety (mix of nouns, verbs, adjectives, adverbs)
-- Avoid any words from previous learning sessions
-- Provide Persian translations without English transliterations
-
-Respond in JSON format: [{"english": "...", "persian": "..."}]
-''';
-
-    final response = await sendMessage(
-      userId,
-      prompt,
-      userLevel: preferences.level,
-      focusAreas: preferences.focusAreas,
-    );
-    return _parseVocabulariesFromResponse(response);
-  }
-
-  /// Get personalized phrases based on conversation context
-  /// Uses preference-based thread management
-  Future<List<PhraseModel>> getPersonalizedPhrases(
-    String userId,
-    UserPreferences preferences,
-  ) async {
-    final prompt = '''
-Generate exactly 3 new English phrases for ${preferences.levelDescription} level 
-focused on ${preferences.focusAreasString}.
-
-Requirements:
-- Choose practical, commonly used phrases
-- Vary complexity and length
-- Avoid any phrases from previous learning sessions
-- Provide Persian translations without English transliterations
-
-Respond in JSON format: [{"english": "...", "persian": "..."}]
-''';
-
-    final response = await sendMessage(
-      userId,
-      prompt,
-      userLevel: preferences.level,
-      focusAreas: preferences.focusAreas,
-    );
-    return _parsePhrasesFromResponse(response);
-  }
-
-  /// Parse vocabulary from Gemini response
-  List<VocabularyModel> _parseVocabulariesFromResponse(String response) {
-    try {
-      final jsonMatch = RegExp(r'\[.*\]').firstMatch(response);
-      if (jsonMatch == null) {
-        throw Exception('No JSON array found in response');
-      }
-
-      final jsonString = jsonMatch.group(0)!;
-      final List<dynamic> jsonList = jsonDecode(jsonString);
-
-      return jsonList.map((item) {
-        return VocabularyModel(
-          english: item['english'] as String,
-          persian: item['persian'] as String,
-          isUsed: false,
-        );
-      }).toList();
-    } catch (e) {
-      throw Exception(
-        'Failed to parse vocabularies from response: ${e.toString()}',
-      );
-    }
-  }
-
-  /// Parse phrases from Gemini response
-  List<PhraseModel> _parsePhrasesFromResponse(String response) {
-    try {
-      final jsonMatch = RegExp(r'\[.*\]').firstMatch(response);
-      if (jsonMatch == null) {
-        throw Exception('No JSON array found in response');
-      }
-
-      final jsonString = jsonMatch.group(0)!;
-      final List<dynamic> jsonList = jsonDecode(jsonString);
-
-      return jsonList.map((item) {
-        return PhraseModel(
-          english: item['english'] as String,
-          persian: item['persian'] as String,
-          isUsed: false,
-        );
-      }).toList();
-    } catch (e) {
-      throw Exception('Failed to parse phrases from response: ${e.toString()}');
-    }
-  }
 
   /// Get conversation thread for a user
   Future<ConversationThreadModel?> getConversationThread(String userId) async {

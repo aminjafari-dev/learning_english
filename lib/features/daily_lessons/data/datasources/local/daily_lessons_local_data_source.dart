@@ -11,7 +11,6 @@ import '../../models/ai_provider_type.dart';
 import '../../models/conversation_thread_model.dart';
 import 'learning_requests_local_data_source.dart';
 import 'conversation_threads_local_data_source.dart';
-import 'analytics_local_data_source.dart';
 
 /// Main coordinator local data source for daily lessons using composition pattern
 /// This class delegates operations to specialized data sources for better maintainability
@@ -19,7 +18,6 @@ import 'analytics_local_data_source.dart';
 class DailyLessonsLocalDataSource {
   late LearningRequestsLocalDataSource _learningRequestsDataSource;
   late ConversationThreadsLocalDataSource _conversationThreadsDataSource;
-  late AnalyticsLocalDataSource _analyticsDataSource;
 
   /// Initialize all specialized data sources
   /// This method should be called before using any other methods
@@ -34,9 +32,6 @@ class DailyLessonsLocalDataSource {
       _conversationThreadsDataSource = ConversationThreadsLocalDataSource();
       await _conversationThreadsDataSource.initialize();
 
-      // Initialize analytics data source
-      _analyticsDataSource = AnalyticsLocalDataSource();
-      await _analyticsDataSource.initialize();
     } catch (e) {
       throw Exception(
         'Failed to initialize daily lessons data sources: ${e.toString()}',
@@ -208,39 +203,6 @@ class DailyLessonsLocalDataSource {
     return _conversationThreadsDataSource.getConversationAnalytics(userId);
   }
 
-  // ===== ANALYTICS DELEGATION =====
-
-  /// Gets comprehensive analytics data for the current user
-  /// Delegates to specialized analytics data source
-  /// Example: final analytics = await dataSource.getUserAnalytics('user123');
-  Future<Map<String, dynamic>> getUserAnalytics(String userId) async {
-    return _analyticsDataSource.getUserAnalytics(userId);
-  }
-
-  /// Gets learning progress analytics for a user
-  /// Delegates to specialized analytics data source
-  /// Example: final progress = await dataSource.getLearningProgressAnalytics('user123');
-  Future<Map<String, dynamic>> getLearningProgressAnalytics(
-    String userId,
-  ) async {
-    return _analyticsDataSource.getLearningProgressAnalytics(userId);
-  }
-
-  /// Closes all specialized data sources to free up resources
-  /// Should be called when the main data source is no longer needed
-  /// Example: await dataSource.dispose();
-  Future<void> dispose() async {
-    try {
-      // Dispose all specialized data sources
-      await _learningRequestsDataSource.dispose();
-      await _conversationThreadsDataSource.dispose();
-      await _analyticsDataSource.dispose();
-    } catch (e) {
-      throw Exception(
-        'Failed to dispose daily lessons data sources: ${e.toString()}',
-      );
-    }
-  }
 }
 
 // Example usage:

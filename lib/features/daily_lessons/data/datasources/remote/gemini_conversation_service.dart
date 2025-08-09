@@ -301,8 +301,4 @@ Please respond with new, diverse content that builds upon previous learning with
     return await _localDataSource.getConversationAnalytics(userId);
   }
 
-  /// Dispose resources
-  Future<void> dispose() async {
-    await _localDataSource.dispose();
-  }
 }

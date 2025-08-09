@@ -16,7 +16,6 @@ import 'package:learning_english/features/daily_lessons/data/models/ai_provider_
 import 'package:learning_english/features/daily_lessons/data/datasources/local/daily_lessons_local_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/local/learning_requests_local_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/local/conversation_threads_local_data_source.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/local/analytics_local_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/repositories/user_preferences_repository_impl.dart';
 import 'package:learning_english/features/daily_lessons/data/repositories/conversation_repository_impl.dart';
 import 'package:learning_english/features/daily_lessons/domain/repositories/conversation_repository.dart';
@@ -72,10 +71,6 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
       () => ConversationThreadsLocalDataSource(),
     );
 
-    // Analytics Local Data Source - handles analytics and statistics calculation
-    getIt.registerLazySingleton<AnalyticsLocalDataSource>(
-      () => AnalyticsLocalDataSource(),
-    );
 
     // ===== MAIN COORDINATOR LOCAL DATA SOURCE =====
 

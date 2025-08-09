@@ -3,8 +3,6 @@ import 'package:learning_english/features/daily_lessons/data/models/level_type.d
 import 'vocabulary_history_item.dart';
 import 'phrase_history_item.dart';
 import '../../../daily_lessons/data/models/ai_provider_type.dart';
-import '../../../daily_lessons/domain/entities/learning_request.dart'
-    show Level, RequestStatus;
 
 /// HistoryRequest represents a complete learning request made by the user.
 /// This entity groups vocabulary and phrase items by their request ID and creation date,

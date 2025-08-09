@@ -245,7 +245,6 @@ Please respond with new, diverse content that builds upon previous learning with
     }
   }
 
-
   /// Get conversation thread for a user
   Future<ConversationThreadModel?> getConversationThread(String userId) async {
     return _activeThreads[userId];

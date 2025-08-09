@@ -41,7 +41,7 @@ abstract class ConversationRepository {
   /// ```
   Future<Either<Failure, String>> sendConversationMessage(
     UserPreferences preferences,
-    String message,
+    String prompt,
   );
 
 }

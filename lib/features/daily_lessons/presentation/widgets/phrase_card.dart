@@ -129,49 +129,11 @@ class PhraseCard extends StatelessWidget {
               },
             ),
             GGap.g8,
-            // Clickable English text for audio playback
+            // English text where each word is individually tappable for audio playback
             Expanded(
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(8),
-                  splashColor: Theme.of(
-                    context,
-                  ).primaryColor.withValues(alpha: .4),
-                  highlightColor: Theme.of(
-                    context,
-                  ).primaryColor.withValues(alpha: .4),
-                  onTap: () async {
-                    try {
-                      // Get TTS service from dependency injection
-                      final ttsService = getIt<TTSService>();
-
-                      // Play phrase audio
-                      await ttsService.speakText(phrase!.english);
-                    } catch (e) {
-                      // Show error feedback
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: GText('❌ Error playing audio: $e'),
-                          duration: const Duration(seconds: 2),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  },
-                  child: Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: GText(
-                      phrase!.english,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        decorationColor: AppTheme.primary(
-                          context,
-                        ).withValues(alpha: 0.7),
-                      ),
-                    ),
-                  ),
-                ),
+              child: Directionality(
+                textDirection: TextDirection.ltr,
+                child: _buildInteractiveEnglishText(context),
               ),
             ),
           ],
@@ -198,6 +160,89 @@ class PhraseCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  /// Builds a RichText where each English word is individually tappable.
+  /// Spaces and punctuation are preserved as non-tappable text.
+  Widget _buildInteractiveEnglishText(BuildContext context) {
+    final TextStyle effectiveStyle =
+        Theme.of(context).textTheme.bodyLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+          decorationColor: AppTheme.primary(context).withValues(alpha: 0.7),
+        ) ??
+        const TextStyle(fontWeight: FontWeight.bold);
+
+    final String text = phrase!.english;
+    final List<InlineSpan> spans = _buildWordAndSeparatorSpans(
+      context: context,
+      text: text,
+      style: effectiveStyle,
+    );
+
+    return RichText(
+      text: TextSpan(children: spans, style: effectiveStyle),
+      textDirection: TextDirection.ltr,
+    );
+  }
+
+  /// Tokenizes [text] into words and separators and returns spans where
+  /// words are wrapped in tappable widgets to trigger TTS for that word.
+  List<InlineSpan> _buildWordAndSeparatorSpans({
+    required BuildContext context,
+    required String text,
+    required TextStyle style,
+  }) {
+    final List<InlineSpan> spans = <InlineSpan>[];
+    final RegExp wordExp = RegExp(r"[A-Za-z]+(?:[-'][A-Za-z]+)*");
+    int index = 0;
+
+    for (final RegExpMatch match in wordExp.allMatches(text)) {
+      if (match.start > index) {
+        final String separator = text.substring(index, match.start);
+        spans.add(TextSpan(text: separator, style: style));
+      }
+
+      final String word = match.group(0)!;
+      spans.add(
+        WidgetSpan(
+          alignment: PlaceholderAlignment.baseline,
+          baseline: TextBaseline.alphabetic,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(4),
+              splashColor: Theme.of(context).primaryColor.withValues(alpha: .2),
+              highlightColor: Theme.of(
+                context,
+              ).primaryColor.withValues(alpha: .2),
+              onTap: () async {
+                try {
+                  final ttsService = getIt<TTSService>();
+                  await ttsService.speakText(word);
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: GText('❌ Error playing audio: $e'),
+                      duration: const Duration(seconds: 2),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+              child: Text(word, style: style, textDirection: TextDirection.ltr),
+            ),
+          ),
+        ),
+      );
+
+      index = match.end;
+    }
+
+    if (index < text.length) {
+      spans.add(TextSpan(text: text.substring(index), style: style));
+    }
+
+    return spans;
   }
 }
 

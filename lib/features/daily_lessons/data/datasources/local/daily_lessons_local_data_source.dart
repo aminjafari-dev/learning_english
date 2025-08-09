@@ -3,20 +3,16 @@
 // This class combines specialized data sources for learning requests, conversation threads, and analytics.
 // Usage: Use this class as the main entry point for all daily lessons local data operations.
 
-import 'package:learning_english/features/daily_lessons/data/models/level_type.dart';
 import '../../models/learning_request_model.dart';
 import '../../models/vocabulary_model.dart';
 import '../../models/phrase_model.dart';
-import '../../models/conversation_thread_model.dart';
 import 'learning_requests_local_data_source.dart';
-import 'conversation_threads_local_data_source.dart';
 
 /// Main coordinator local data source for daily lessons using composition pattern
 /// This class delegates operations to specialized data sources for better maintainability
 /// Usage: Use this as the main interface for all daily lessons local data operations
 class DailyLessonsLocalDataSource {
   late LearningRequestsLocalDataSource _learningRequestsDataSource;
-  late ConversationThreadsLocalDataSource _conversationThreadsDataSource;
 
   /// Initialize all specialized data sources
   /// This method should be called before using any other methods
@@ -26,11 +22,6 @@ class DailyLessonsLocalDataSource {
       // Initialize learning requests data source
       _learningRequestsDataSource = LearningRequestsLocalDataSource();
       await _learningRequestsDataSource.initialize();
-
-      // Initialize conversation threads data source
-      _conversationThreadsDataSource = ConversationThreadsLocalDataSource();
-      await _conversationThreadsDataSource.initialize();
-
     } catch (e) {
       throw Exception(
         'Failed to initialize daily lessons data sources: ${e.toString()}',
@@ -74,91 +65,6 @@ class DailyLessonsLocalDataSource {
   Future<List<PhraseModel>> getUserPhrases(String userId) async {
     return _learningRequestsDataSource.getUserPhrases(userId);
   }
-
-
-  // ===== CONVERSATION THREAD DELEGATION =====
-
-  /// Saves a conversation thread to Hive
-  /// Delegates to specialized conversation threads data source
-  /// Example: await dataSource.saveConversationThread(threadModel);
-  Future<void> saveConversationThread(ConversationThreadModel thread) async {
-    return _conversationThreadsDataSource.saveConversationThread(thread);
-  }
-
-  /// Retrieves all conversation threads for a specific user
-  /// Delegates to specialized conversation threads data source
-  /// Example: final threads = await dataSource.getUserConversationThreads('user123');
-  Future<List<ConversationThreadModel>> getUserConversationThreads(
-    String userId,
-  ) async {
-    return _conversationThreadsDataSource.getUserConversationThreads(userId);
-  }
-
-  /// Retrieves a specific conversation thread by ID
-  /// Delegates to specialized conversation threads data source
-  /// Example: final thread = await dataSource.getConversationThreadById('thread123');
-  Future<ConversationThreadModel?> getConversationThreadById(
-    String threadId,
-  ) async {
-    return _conversationThreadsDataSource.getConversationThreadById(threadId);
-  }
-
-  /// Updates a conversation thread with new messages
-  /// Delegates to specialized conversation threads data source
-  /// Example: await dataSource.updateConversationThread(updatedThread);
-  Future<void> updateConversationThread(
-    ConversationThreadModel updatedThread,
-  ) async {
-    return _conversationThreadsDataSource.updateConversationThread(
-      updatedThread,
-    );
-  }
-
-  /// Deletes a conversation thread
-  /// Delegates to specialized conversation threads data source
-  /// Example: await dataSource.deleteConversationThread('thread123');
-  Future<void> deleteConversationThread(String threadId) async {
-    return _conversationThreadsDataSource.deleteConversationThread(threadId);
-  }
-
-  /// Clears all conversation threads for a user
-  /// Delegates to specialized conversation threads data source
-  /// Example: await dataSource.clearUserConversationThreads('user123');
-  Future<void> clearUserConversationThreads(String userId) async {
-    return _conversationThreadsDataSource.clearUserConversationThreads(userId);
-  }
-
-  /// Find conversation thread by user preferences
-  /// Delegates to specialized conversation threads data source
-  /// Example: final thread = await dataSource.findThreadByPreferences('user123', UserLevel.intermediate, ['vocabulary']);
-  Future<ConversationThreadModel?> findThreadByPreferences(
-    String userId,
-    UserLevel level,
-    List<String> focusAreas,
-  ) async {
-    return _conversationThreadsDataSource.findThreadByPreferences(
-      userId,
-      level,
-      focusAreas,
-    );
-  }
-
-  /// Get all threads for a user with their preference descriptions
-  /// Delegates to specialized conversation threads data source
-  /// Example: final threadsInfo = await dataSource.getUserThreadsWithPreferences('user123');
-  Future<List<Map<String, dynamic>>> getUserThreadsWithPreferences(
-    String userId,
-  ) async {
-    return _conversationThreadsDataSource.getUserThreadsWithPreferences(userId);
-  }
-
-  /// Gets conversation analytics for a user
-  /// Delegates to specialized conversation threads data source
-  /// Example: final analytics = await dataSource.getConversationAnalytics('user123');
-  Future<Map<String, dynamic>> getConversationAnalytics(String userId) async {
-    return _conversationThreadsDataSource.getConversationAnalytics(userId);
-  }
-
 }
 
 // Example usage:
@@ -168,13 +74,5 @@ class DailyLessonsLocalDataSource {
 // // Learning requests operations
 // await localDataSource.saveLearningRequest(learningRequestModel);
 // final userRequests = await localDataSource.getUserRequests('user123');
-// 
-// // Conversation thread operations
-// await localDataSource.saveConversationThread(threadModel);
-// final threads = await localDataSource.getUserConversationThreads('user123');
-// 
-// // Analytics operations
-// final analytics = await localDataSource.getUserAnalytics('user123');
-// final progress = await localDataSource.getLearningProgressAnalytics('user123');
 // 
 // await localDataSource.dispose();

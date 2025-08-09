@@ -7,7 +7,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:learning_english/features/daily_lessons/data/models/conversation_thread_model.dart';
+
 import 'package:learning_english/features/daily_lessons/data/models/learning_request_model.dart';
 import 'package:learning_english/features/daily_lessons/data/models/level_type.dart';
 import 'package:learning_english/features/daily_lessons/data/models/vocabulary_model.dart';
@@ -15,7 +15,7 @@ import 'package:learning_english/features/daily_lessons/data/models/phrase_model
 import 'package:learning_english/features/daily_lessons/data/models/ai_provider_type.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/local/daily_lessons_local_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/local/learning_requests_local_data_source.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/local/conversation_threads_local_data_source.dart';
+
 import 'package:learning_english/features/daily_lessons/data/repositories/user_preferences_repository_impl.dart';
 import 'package:learning_english/features/daily_lessons/data/repositories/conversation_repository_impl.dart';
 import 'package:learning_english/features/daily_lessons/domain/repositories/conversation_repository.dart';
@@ -52,12 +52,6 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     if (!Hive.isAdapterRegistered(5)) {
       Hive.registerAdapter(UserLevelAdapter());
     }
-    if (!Hive.isAdapterRegistered(6)) {
-      Hive.registerAdapter(ConversationThreadModelAdapter());
-    }
-    if (!Hive.isAdapterRegistered(7)) {
-      Hive.registerAdapter(ConversationMessageModelAdapter());
-    }
 
     // ===== SPECIALIZED LOCAL DATA SOURCES =====
 
@@ -65,12 +59,6 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     getIt.registerLazySingleton<LearningRequestsLocalDataSource>(
       () => LearningRequestsLocalDataSource(),
     );
-
-    // Conversation Threads Local Data Source - handles conversation thread management
-    getIt.registerLazySingleton<ConversationThreadsLocalDataSource>(
-      () => ConversationThreadsLocalDataSource(),
-    );
-
 
     // ===== MAIN COORDINATOR LOCAL DATA SOURCE =====
 

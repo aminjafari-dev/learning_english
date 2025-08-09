@@ -71,7 +71,6 @@ class GetConversationLessonsUseCase
       // Get user ID for tracking
       final userId = await coreUserRepository.getUserId() ?? 'current_user';
 
-
       // Create a conversation prompt that asks for new vocabularies and phrases
       // This prompt considers user's learning history to avoid repetition
       final conversationPrompt = ConversationPrompts.getLessonPrompt(
@@ -244,8 +243,8 @@ class GetConversationLessonsUseCase
   }
 
   /// Converts domain UserLevel to model UserLevel for storage
-  UserLevel _convertToModelUserLevel(dynamic preferences_level) {
-    switch (preferences_level.toString()) {
+  UserLevel _convertToModelUserLevel(dynamic preferencesLevel) {
+    switch (preferencesLevel.toString()) {
       case 'UserLevel.beginner':
         return UserLevel.beginner;
       case 'UserLevel.elementary':

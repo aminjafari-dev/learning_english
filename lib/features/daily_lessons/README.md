@@ -36,12 +36,12 @@ The daily lessons feature is structured according to Clean Architecture principl
   - `local/` - Specialized local storage (composition pattern):
     - `daily_lessons_local_data_source.dart` - Main coordinator using composition
     - `learning_requests_local_data_source.dart` - Learning request CRUD operations
-    - `conversation_threads_local_data_source.dart` - Conversation thread management
+    
     - `analytics_local_data_source.dart` - Analytics and statistics calculation
 - `models/` - Data models:
   - `vocabulary_model.dart` - Vocabulary data model
   - `phrase_model.dart` - Phrase data model
-  - `conversation_thread_model.dart` - Conversation thread data model
+  
   - `learning_request_model.dart` - Learning request data model
 - `repositories/` - Repository implementations:
   - `daily_lessons_repository_impl.dart` - Core lesson generation

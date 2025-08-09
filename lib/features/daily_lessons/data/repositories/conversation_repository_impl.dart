@@ -11,7 +11,7 @@ import '../../domain/entities/user_preferences.dart';
 import '../../domain/repositories/conversation_repository.dart';
 import '../datasources/local/daily_lessons_local_data_source.dart';
 import '../datasources/remote/gemini_conversation_service.dart';
-import '../models/conversation_thread_model.dart';
+
 import '../models/level_type.dart';
 import '../models/vocabulary_model.dart';
 import '../models/phrase_model.dart';
@@ -53,28 +53,10 @@ class ConversationRepositoryImpl implements ConversationRepository {
       // Convert UserLevel to the model's UserLevel
       final userLevel = _convertToModelUserLevel(preferences.level);
 
-      // Get or create conversation thread based on user preferences
-      ConversationThreadModel? conversationThread = await localDataSource
-          .findThreadByPreferences(userId, userLevel, preferences.focusAreas);
-
-      if (conversationThread == null) {
-        // Create new thread if none exists
-        debugPrint('🆕 [CONVERSATION] Creating new conversation thread');
-        conversationThread = ConversationThreadModel.create(
-          userId: userId,
-          context: _generateContext(preferences),
-          userLevel: userLevel,
-          focusAreas: preferences.focusAreas,
-        );
-
-        // Save the new thread
-        await localDataSource.saveConversationThread(conversationThread);
-        debugPrint('💾 [CONVERSATION] Saved new thread to storage');
-      } else {
-        debugPrint(
-          '✅ [CONVERSATION] Retrieved existing thread with ${conversationThread.messages.length} messages',
-        );
-      }
+      // No thread storage - each conversation is independent
+      debugPrint(
+        '💬 [CONVERSATION] Processing message without thread persistence',
+      );
 
       // Send to AI service (Gemini) and get response
       debugPrint('🤖 [CONVERSATION] Sending to Gemini AI service');
@@ -99,7 +81,9 @@ class ConversationRepositoryImpl implements ConversationRepository {
           );
         }
 
-        debugPrint('✅ [CONVERSATION] Conversation message processed successfully');
+        debugPrint(
+          '✅ [CONVERSATION] Conversation message processed successfully',
+        );
         return right(aiResponse);
       } catch (e) {
         debugPrint('❌ [CONVERSATION] Gemini service error: $e');
@@ -108,7 +92,9 @@ class ConversationRepositoryImpl implements ConversationRepository {
         );
       }
     } catch (e) {
-      debugPrint('❌ [CONVERSATION] Unexpected error in conversation processing: $e');
+      debugPrint(
+        '❌ [CONVERSATION] Unexpected error in conversation processing: $e',
+      );
       return left(
         ServerFailure(
           'Failed to process conversation message: ${e.toString()}',
@@ -117,16 +103,10 @@ class ConversationRepositoryImpl implements ConversationRepository {
     }
   }
 
-  /// Generates conversation context based on user preferences
-  /// Creates a descriptive context for the conversation thread
-  String _generateContext(UserPreferences preferences) {
-    return 'AI conversation for ${preferences.level.name} level focusing on ${preferences.focusAreas.join(", ")}';
-  }
-
   /// Converts domain UserLevel to model UserLevel
   /// Maps between different level representations in the system
-  UserLevel _convertToModelUserLevel(dynamic preferences_level) {
-    switch (preferences_level.toString()) {
+  UserLevel _convertToModelUserLevel(dynamic preferencesLevel) {
+    switch (preferencesLevel.toString()) {
       case 'UserLevel.beginner':
         return UserLevel.beginner;
       case 'UserLevel.elementary':
@@ -190,7 +170,6 @@ class ConversationRepositoryImpl implements ConversationRepository {
       return (vocabularies: <VocabularyModel>[], phrases: <PhraseModel>[]);
     }
   }
-
 }
 
 // Example usage:

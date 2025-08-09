@@ -3119,11 +3119,7 @@ mixin _$ConversationState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)
-        loaded,
+    required TResult Function(String? lastResponse) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -3131,11 +3127,7 @@ mixin _$ConversationState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)?
-        loaded,
+    TResult? Function(String? lastResponse)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -3143,11 +3135,7 @@ mixin _$ConversationState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)?
-        loaded,
+    TResult Function(String? lastResponse)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -3244,11 +3232,7 @@ class _$ConversationInitialImpl implements ConversationInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)
-        loaded,
+    required TResult Function(String? lastResponse) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -3259,11 +3243,7 @@ class _$ConversationInitialImpl implements ConversationInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)?
-        loaded,
+    TResult? Function(String? lastResponse)? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -3274,11 +3254,7 @@ class _$ConversationInitialImpl implements ConversationInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)?
-        loaded,
+    TResult Function(String? lastResponse)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -3374,11 +3350,7 @@ class _$ConversationLoadingImpl implements ConversationLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)
-        loaded,
+    required TResult Function(String? lastResponse) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -3389,11 +3361,7 @@ class _$ConversationLoadingImpl implements ConversationLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)?
-        loaded,
+    TResult? Function(String? lastResponse)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -3404,11 +3372,7 @@ class _$ConversationLoadingImpl implements ConversationLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)?
-        loaded,
+    TResult Function(String? lastResponse)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -3466,10 +3430,7 @@ abstract class _$$ConversationLoadedImplCopyWith<$Res> {
           $Res Function(_$ConversationLoadedImpl) then) =
       __$$ConversationLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call(
-      {ConversationThreadModel? currentThread,
-      List<ConversationMessageModel> messages,
-      List<ConversationThreadModel> userThreads});
+  $Res call({String? lastResponse});
 }
 
 /// @nodoc
@@ -3485,23 +3446,13 @@ class __$$ConversationLoadedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentThread = freezed,
-    Object? messages = null,
-    Object? userThreads = null,
+    Object? lastResponse = freezed,
   }) {
     return _then(_$ConversationLoadedImpl(
-      currentThread: freezed == currentThread
-          ? _value.currentThread
-          : currentThread // ignore: cast_nullable_to_non_nullable
-              as ConversationThreadModel?,
-      messages: null == messages
-          ? _value._messages
-          : messages // ignore: cast_nullable_to_non_nullable
-              as List<ConversationMessageModel>,
-      userThreads: null == userThreads
-          ? _value._userThreads
-          : userThreads // ignore: cast_nullable_to_non_nullable
-              as List<ConversationThreadModel>,
+      lastResponse: freezed == lastResponse
+          ? _value.lastResponse
+          : lastResponse // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -3509,34 +3460,14 @@ class __$$ConversationLoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ConversationLoadedImpl implements ConversationLoaded {
-  const _$ConversationLoadedImpl(
-      {required this.currentThread,
-      required final List<ConversationMessageModel> messages,
-      required final List<ConversationThreadModel> userThreads})
-      : _messages = messages,
-        _userThreads = userThreads;
+  const _$ConversationLoadedImpl({required this.lastResponse});
 
   @override
-  final ConversationThreadModel? currentThread;
-  final List<ConversationMessageModel> _messages;
-  @override
-  List<ConversationMessageModel> get messages {
-    if (_messages is EqualUnmodifiableListView) return _messages;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_messages);
-  }
-
-  final List<ConversationThreadModel> _userThreads;
-  @override
-  List<ConversationThreadModel> get userThreads {
-    if (_userThreads is EqualUnmodifiableListView) return _userThreads;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_userThreads);
-  }
+  final String? lastResponse;
 
   @override
   String toString() {
-    return 'ConversationState.loaded(currentThread: $currentThread, messages: $messages, userThreads: $userThreads)';
+    return 'ConversationState.loaded(lastResponse: $lastResponse)';
   }
 
   @override
@@ -3544,19 +3475,12 @@ class _$ConversationLoadedImpl implements ConversationLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ConversationLoadedImpl &&
-            (identical(other.currentThread, currentThread) ||
-                other.currentThread == currentThread) &&
-            const DeepCollectionEquality().equals(other._messages, _messages) &&
-            const DeepCollectionEquality()
-                .equals(other._userThreads, _userThreads));
+            (identical(other.lastResponse, lastResponse) ||
+                other.lastResponse == lastResponse));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      currentThread,
-      const DeepCollectionEquality().hash(_messages),
-      const DeepCollectionEquality().hash(_userThreads));
+  int get hashCode => Object.hash(runtimeType, lastResponse);
 
   /// Create a copy of ConversationState
   /// with the given fields replaced by the non-null parameter values.
@@ -3572,14 +3496,10 @@ class _$ConversationLoadedImpl implements ConversationLoaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)
-        loaded,
+    required TResult Function(String? lastResponse) loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(currentThread, messages, userThreads);
+    return loaded(lastResponse);
   }
 
   @override
@@ -3587,14 +3507,10 @@ class _$ConversationLoadedImpl implements ConversationLoaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)?
-        loaded,
+    TResult? Function(String? lastResponse)? loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(currentThread, messages, userThreads);
+    return loaded?.call(lastResponse);
   }
 
   @override
@@ -3602,16 +3518,12 @@ class _$ConversationLoadedImpl implements ConversationLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)?
-        loaded,
+    TResult Function(String? lastResponse)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(currentThread, messages, userThreads);
+      return loaded(lastResponse);
     }
     return orElse();
   }
@@ -3655,15 +3567,10 @@ class _$ConversationLoadedImpl implements ConversationLoaded {
 }
 
 abstract class ConversationLoaded implements ConversationState {
-  const factory ConversationLoaded(
-          {required final ConversationThreadModel? currentThread,
-          required final List<ConversationMessageModel> messages,
-          required final List<ConversationThreadModel> userThreads}) =
+  const factory ConversationLoaded({required final String? lastResponse}) =
       _$ConversationLoadedImpl;
 
-  ConversationThreadModel? get currentThread;
-  List<ConversationMessageModel> get messages;
-  List<ConversationThreadModel> get userThreads;
+  String? get lastResponse;
 
   /// Create a copy of ConversationState
   /// with the given fields replaced by the non-null parameter values.
@@ -3743,11 +3650,7 @@ class _$ConversationErrorImpl implements ConversationError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)
-        loaded,
+    required TResult Function(String? lastResponse) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -3758,11 +3661,7 @@ class _$ConversationErrorImpl implements ConversationError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)?
-        loaded,
+    TResult? Function(String? lastResponse)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -3773,11 +3672,7 @@ class _$ConversationErrorImpl implements ConversationError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            ConversationThreadModel? currentThread,
-            List<ConversationMessageModel> messages,
-            List<ConversationThreadModel> userThreads)?
-        loaded,
+    TResult Function(String? lastResponse)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

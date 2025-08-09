@@ -7,7 +7,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../models/learning_request_model.dart';
 import '../../models/vocabulary_model.dart';
 import '../../models/phrase_model.dart';
-import '../../models/ai_provider_type.dart';
 
 /// Specialized local data source for learning requests storage using Hive
 /// This class focuses solely on learning request CRUD operations
@@ -99,112 +98,6 @@ class LearningRequestsLocalDataSource {
       return allPhrases;
     } catch (e) {
       throw Exception('Failed to get user phrases: ${e.toString()}');
-    }
-  }
-
-  /// Retrieves unused vocabulary for the current user
-  /// Used to avoid suggesting previously used content in new lessons
-  /// Example: final unused = await dataSource.getUnusedVocabularies('user123');
-  Future<List<VocabularyModel>> getUnusedVocabularies(String userId) async {
-    try {
-      final allVocabularies = await getUserVocabularies(userId);
-      return allVocabularies.where((vocab) => !vocab.isUsed).toList();
-    } catch (e) {
-      throw Exception('Failed to get unused vocabularies: ${e.toString()}');
-    }
-  }
-
-  /// Retrieves unused phrases for the current user
-  /// Used to avoid suggesting previously used content in new lessons
-  /// Example: final unused = await dataSource.getUnusedPhrases('user123');
-  Future<List<PhraseModel>> getUnusedPhrases(String userId) async {
-    try {
-      final allPhrases = await getUserPhrases(userId);
-      return allPhrases.where((phrase) => !phrase.isUsed).toList();
-    } catch (e) {
-      throw Exception('Failed to get unused phrases: ${e.toString()}');
-    }
-  }
-
-  /// Marks vocabulary as used for the current user
-  /// Updates the usage status in the specific request to track learning progress
-  /// Example: await dataSource.markVocabularyAsUsed('req123', 'hello');
-  Future<void> markVocabularyAsUsed(String requestId, String english) async {
-    try {
-      final request = _box.get(requestId);
-      if (request != null) {
-        // Update vocabulary usage status
-        final updatedVocabularies =
-            request.vocabularies.map((vocab) {
-              if (vocab.english == english) {
-                return vocab.copyWith(isUsed: true);
-              }
-              return vocab;
-            }).toList();
-
-        // Save updated request with new vocabulary status
-        final updatedRequest = request.copyWith(
-          vocabularies: updatedVocabularies,
-        );
-        await _box.put(requestId, updatedRequest);
-      }
-    } catch (e) {
-      throw Exception('Failed to mark vocabulary as used: ${e.toString()}');
-    }
-  }
-
-  /// Marks phrase as used for the current user
-  /// Updates the usage status in the specific request to track learning progress
-  /// Example: await dataSource.markPhraseAsUsed('req123', 'Good morning');
-  Future<void> markPhraseAsUsed(String requestId, String english) async {
-    try {
-      final request = _box.get(requestId);
-      if (request != null) {
-        // Update phrase usage status
-        final updatedPhrases =
-            request.phrases.map((phrase) {
-              if (phrase.english == english) {
-                return phrase.copyWith(isUsed: true);
-              }
-              return phrase;
-            }).toList();
-
-        // Save updated request with new phrase status
-        final updatedRequest = request.copyWith(phrases: updatedPhrases);
-        await _box.put(requestId, updatedRequest);
-      }
-    } catch (e) {
-      throw Exception('Failed to mark phrase as used: ${e.toString()}');
-    }
-  }
-
-  /// Retrieves request data by AI provider for analytics
-  /// Used for analyzing performance and cost by specific AI provider
-  /// Example: final requests = await dataSource.getRequestsByProvider(AiProviderType.openai);
-  Future<List<LearningRequestModel>> getRequestsByProvider(
-    AiProviderType provider,
-  ) async {
-    try {
-      return _box.values
-          .where((request) => request.aiProvider == provider)
-          .toList();
-    } catch (e) {
-      throw Exception('Failed to get requests by provider: ${e.toString()}');
-    }
-  }
-
-  /// Clears all learning request data for the current user
-  /// Used when user wants to reset their learning progress completely
-  /// Example: await dataSource.clearUserData('user123');
-  Future<void> clearUserData(String userId) async {
-    try {
-      final userRequests = await getUserRequests(userId);
-      // Delete each user request from storage
-      for (final request in userRequests) {
-        await _box.delete(request.requestId);
-      }
-    } catch (e) {
-      throw Exception('Failed to clear user data: ${e.toString()}');
     }
   }
 

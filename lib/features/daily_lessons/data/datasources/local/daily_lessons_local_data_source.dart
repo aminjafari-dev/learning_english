@@ -7,7 +7,6 @@ import 'package:learning_english/features/daily_lessons/data/models/level_type.d
 import '../../models/learning_request_model.dart';
 import '../../models/vocabulary_model.dart';
 import '../../models/phrase_model.dart';
-import '../../models/ai_provider_type.dart';
 import '../../models/conversation_thread_model.dart';
 import 'learning_requests_local_data_source.dart';
 import 'conversation_threads_local_data_source.dart';
@@ -76,49 +75,6 @@ class DailyLessonsLocalDataSource {
     return _learningRequestsDataSource.getUserPhrases(userId);
   }
 
-  /// Retrieves unused vocabulary for the current user
-  /// Delegates to specialized learning requests data source
-  /// Example: final unused = await dataSource.getUnusedVocabularies('user123');
-  Future<List<VocabularyModel>> getUnusedVocabularies(String userId) async {
-    return _learningRequestsDataSource.getUnusedVocabularies(userId);
-  }
-
-  /// Retrieves unused phrases for the current user
-  /// Delegates to specialized learning requests data source
-  /// Example: final unused = await dataSource.getUnusedPhrases('user123');
-  Future<List<PhraseModel>> getUnusedPhrases(String userId) async {
-    return _learningRequestsDataSource.getUnusedPhrases(userId);
-  }
-
-  /// Marks vocabulary as used for the current user
-  /// Delegates to specialized learning requests data source
-  /// Example: await dataSource.markVocabularyAsUsed('req123', 'hello');
-  Future<void> markVocabularyAsUsed(String requestId, String english) async {
-    return _learningRequestsDataSource.markVocabularyAsUsed(requestId, english);
-  }
-
-  /// Marks phrase as used for the current user
-  /// Delegates to specialized learning requests data source
-  /// Example: await dataSource.markPhraseAsUsed('req123', 'Good morning');
-  Future<void> markPhraseAsUsed(String requestId, String english) async {
-    return _learningRequestsDataSource.markPhraseAsUsed(requestId, english);
-  }
-
-  /// Retrieves request data by AI provider for analytics
-  /// Delegates to specialized learning requests data source
-  /// Example: final requests = await dataSource.getRequestsByProvider(AiProviderType.openai);
-  Future<List<LearningRequestModel>> getRequestsByProvider(
-    AiProviderType provider,
-  ) async {
-    return _learningRequestsDataSource.getRequestsByProvider(provider);
-  }
-
-  /// Clears all learning request data for the current user
-  /// Delegates to specialized learning requests data source
-  /// Example: await dataSource.clearUserData('user123');
-  Future<void> clearUserData(String userId) async {
-    return _learningRequestsDataSource.clearUserData(userId);
-  }
 
   // ===== CONVERSATION THREAD DELEGATION =====
 

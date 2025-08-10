@@ -3,7 +3,7 @@ import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/core/widgets/global_widget/g_scaffold.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text_form_field.dart';
 import 'package:learning_english/features/learning_focus_selection/presentation/widgets/continue_button.dart';
 import 'package:learning_english/features/learning_focus_selection/presentation/widgets/learnin_focus_option_grid.dart';

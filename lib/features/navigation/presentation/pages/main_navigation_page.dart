@@ -8,7 +8,7 @@ import 'package:learning_english/core/constants/font_constants.dart';
 import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
 import 'package:learning_english/features/profile/presentation/pages/profile_page.dart';
 import 'package:learning_english/features/history/presentation/pages/vocabulary_history_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 
 /// Main navigation page with bottom navigation bar
 class MainNavigationPage extends StatefulWidget {

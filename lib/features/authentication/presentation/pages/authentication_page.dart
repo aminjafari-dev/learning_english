@@ -17,7 +17,7 @@ import 'package:learning_english/features/authentication/presentation/widgets/go
 import 'package:learning_english/core/widgets/global_widget/g_scaffold.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 import 'package:learning_english/core/constants/image_path.dart';
 import 'package:learning_english/features/authentication/presentation/widgets/language_toggle_button.dart';
 

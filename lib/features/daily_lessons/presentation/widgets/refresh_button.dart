@@ -7,7 +7,7 @@ import 'package:learning_english/core/widgets/global_widget/g_button.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_bloc.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_event.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
 
 /// Refresh button widget for the Daily Lessons page

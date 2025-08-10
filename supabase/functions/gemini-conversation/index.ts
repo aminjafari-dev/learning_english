@@ -5,15 +5,10 @@
 import { handleCorsRequest } from './utils/http.ts';
 import { handleConversationRequest } from './handlers/conversation.ts';
 
-// Deno global declarations for TypeScript
+// Deno global declaration for TypeScript
 declare const Deno: {
-  env: {
-    get(key: string): string | undefined;
-  };
   serve: (handler: (req: Request) => Promise<Response> | Response) => void;
 };
-
-declare function serve(handler: (req: Request) => Promise<Response> | Response): void;
 
 /**
  * Main request handler for the Gemini conversation function
@@ -21,6 +16,8 @@ declare function serve(handler: (req: Request) => Promise<Response> | Response):
  */
 async function requestHandler(request: Request): Promise<Response> {
   try {
+    // TEMPORARY: Log request for debugging
+    console.log('Request received:', request.method, request.url);
     // Handle CORS preflight requests
     if (request.method === 'OPTIONS') {
       return handleCorsRequest();
@@ -60,5 +57,5 @@ async function requestHandler(request: Request): Promise<Response> {
   }
 }
 
-// Start the Edge Function server
-serve(requestHandler);
+// Start the Edge Function server using Deno.serve
+Deno.serve(requestHandler);

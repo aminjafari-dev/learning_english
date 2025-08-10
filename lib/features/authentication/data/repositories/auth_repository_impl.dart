@@ -9,17 +9,20 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:learning_english/core/error/failure.dart';
-import 'package:learning_english/core/error/firebase_failure.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_data_source.dart';
 import '../datasources/user_local_data_source.dart';
 
+/// Authentication repository implementation using Google Sign-In
+/// Handles user authentication operations with proper error handling
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
   final UserLocalDataSource localDataSource;
 
   /// Inject both remote and local data sources
+  /// @param remoteDataSource For Google Sign-In operations
+  /// @param localDataSource For local user data persistence
   AuthRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
@@ -30,16 +33,6 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final userModel = await remoteDataSource.signInWithGoogle();
       return Right(userModel.toEntity());
-    } on FirebaseAuthFailure catch (e) {
-      return Left(ServerFailure(e.userFriendlyMessage));
-    } on FirebaseNetworkFailure catch (e) {
-      return Left(ServerFailure(e.userFriendlyMessage));
-    } on FirebaseRegionalFailure catch (e) {
-      return Left(ServerFailure(e.userFriendlyMessage));
-    } on FirebaseFirestoreFailure catch (e) {
-      return Left(ServerFailure(e.userFriendlyMessage));
-    } on FirebaseGenericFailure catch (e) {
-      return Left(ServerFailure(e.userFriendlyMessage));
     } catch (e) {
       return Left(ServerFailure('An unexpected error occurred during sign-in'));
     }
@@ -50,20 +43,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final userModel = await remoteDataSource.getCurrentUser();
       return userModel?.toEntity();
-    } on FirebaseAuthFailure catch (e) {
-      // Log the error but return null for current user
-      print(
-        'Firebase Auth Error getting current user: ${e.userFriendlyMessage}',
-      );
-      return null;
-    } on FirebaseNetworkFailure catch (e) {
-      print('Network Error getting current user: ${e.userFriendlyMessage}');
-      return null;
-    } on FirebaseGenericFailure catch (e) {
-      print('Generic Error getting current user: ${e.userFriendlyMessage}');
-      return null;
     } catch (e) {
-      print('Unexpected error getting current user: $e');
+      print('Error getting current user: $e');
       return null;
     }
   }
@@ -72,15 +53,8 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signOut() async {
     try {
       await remoteDataSource.signOut();
-    } on FirebaseAuthFailure catch (e) {
-      // Log the error but don't throw for sign out
-      print('Firebase Auth Error during sign out: ${e.userFriendlyMessage}');
-    } on FirebaseNetworkFailure catch (e) {
-      print('Network Error during sign out: ${e.userFriendlyMessage}');
-    } on FirebaseGenericFailure catch (e) {
-      print('Generic Error during sign out: ${e.userFriendlyMessage}');
     } catch (e) {
-      print('Unexpected error during sign out: $e');
+      print('Error during sign out: $e');
     }
   }
 }

@@ -9,7 +9,6 @@
 ///   final entity = model.toDomain();
 ///   final json = model.toJson();
 import 'package:learning_english/features/profile/domain/entities/user_profile.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Data model for user profile information
 class UserProfileModel extends UserProfileEntity {
@@ -39,11 +38,9 @@ class UserProfileModel extends UserProfileEntity {
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
     DateTime? parsedDateOfBirth;
 
-    // Handle Firestore Timestamp conversion
+    // Handle date conversion
     if (json['dateOfBirth'] != null) {
-      if (json['dateOfBirth'] is Timestamp) {
-        parsedDateOfBirth = (json['dateOfBirth'] as Timestamp).toDate();
-      } else if (json['dateOfBirth'] is String) {
+      if (json['dateOfBirth'] is String) {
         try {
           parsedDateOfBirth = DateTime.parse(json['dateOfBirth'] as String);
         } catch (e) {

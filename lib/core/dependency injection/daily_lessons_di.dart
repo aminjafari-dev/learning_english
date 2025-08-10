@@ -28,10 +28,7 @@ import 'package:learning_english/features/daily_lessons/domain/usecases/get_conv
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_user_preferences_usecase.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/gemini_conversation_service.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_bloc.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/remote/firebase_lessons_remote_data_source.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/supabase_learning_requests_remote_data_source.dart';
-import 'package:learning_english/features/daily_lessons/data/services/content_sync_service_factory.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Call this function to register all dependencies for Daily Lessons
@@ -72,28 +69,10 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     // Initialize the main local data source (which initializes all specialized data sources)
     await getIt<DailyLessonsLocalDataSource>().initialize();
 
-    // Firebase Remote Data Source for background content sync
-    getIt.registerLazySingleton<FirebaseLessonsRemoteDataSource>(
-      () => FirebaseLessonsRemoteDataSource(
-        firestore: FirebaseFirestore.instance,
-      ),
-    );
-
     // Supabase Remote Data Source for learning requests cloud storage
     getIt.registerLazySingleton<SupabaseLearningRequestsRemoteDataSource>(
       () => SupabaseLearningRequestsRemoteDataSource(Supabase.instance.client),
     );
-
-    // Content Sync Service Factory
-    getIt.registerLazySingleton<ContentSyncServiceFactory>(
-      () => ContentSyncServiceFactory(
-        firebaseDataSource: getIt<FirebaseLessonsRemoteDataSource>(),
-      ),
-    );
-
-    // Initialize content sync services
-    final contentSyncFactory = getIt<ContentSyncServiceFactory>();
-    contentSyncFactory.initialize();
 
     // Gemini Conversation Service
     getIt.registerLazySingleton<GeminiConversationService>(

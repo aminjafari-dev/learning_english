@@ -5,7 +5,7 @@
 //   setupLevelSelectionDI(getIt);
 
 import 'package:get_it/get_it.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:learning_english/features/level_selection/data/datasources/user_remote_data_source.dart';
 import 'package:learning_english/features/level_selection/data/repositories/user_repository_impl.dart';
 import 'package:learning_english/features/level_selection/domain/repositories/user_repository.dart';
@@ -13,20 +13,22 @@ import 'package:learning_english/features/level_selection/domain/usecases/save_u
 import 'package:learning_english/features/level_selection/presentation/blocs/level_bloc.dart';
 import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
 
-/// Registers all dependencies for the level selection feature.
-/// Call this in your main locator file.
+/// Registers all dependencies for the level selection feature using Supabase.
+/// Call this in your main locator file to setup level selection DI.
+/// Example:
+///   setupLevelSelectionDI(getIt);
 void setupLevelSelectionDI(GetIt getIt) {
   try {
-    // Register FirebaseFirestore if not already registered
-    if (!getIt.isRegistered<FirebaseFirestore>()) {
-      getIt.registerLazySingleton<FirebaseFirestore>(
-        () => FirebaseFirestore.instance,
+    // Register SupabaseClient if not already registered
+    if (!getIt.isRegistered<SupabaseClient>()) {
+      getIt.registerLazySingleton<SupabaseClient>(
+        () => Supabase.instance.client,
       );
     }
 
     // Data source
     getIt.registerLazySingleton<UserRemoteDataSource>(
-      () => UserRemoteDataSource(getIt<FirebaseFirestore>()),
+      () => UserRemoteDataSource(getIt<SupabaseClient>()),
     );
 
     // Repository

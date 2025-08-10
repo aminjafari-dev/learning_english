@@ -9,14 +9,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/core/theme/app_themes.dart';
 import 'package:learning_english/core/theme/cubit/theme_cubit.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/core/router/page_router.dart';
 import 'package:learning_english/features/localization/presentation/bloc/localization_state.dart';
 import 'package:learning_english/features/localization/presentation/bloc/localization_bloc.dart';
 import 'package:learning_english/features/localization/presentation/bloc/localization_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -26,9 +26,6 @@ void main() async {
   // Load environment variables from .env file
   await dotenv.load(fileName: ".env");
 
-  // Initialize Firebase before using any Firebase service or dependency injection
-  await Firebase.initializeApp();
-
   // Initialize Supabase
   await Supabase.initialize(
     url: 'https://secsedrlvpifggleixfk.supabase.co',
@@ -36,7 +33,7 @@ void main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlY3NlZHJsdnBpZmdnbGVpeGZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2NDAzNjAsImV4cCI6MjA3MDIxNjM2MH0.7URWr5FVNrBAWkzATAAqSwPEnmX7Btk-rH5ZuznlOy4',
   );
 
-  // Register all dependencies after Firebase is ready
+  // Register all dependencies
   await initDependencies();
 
   // Initialize localization BLoC

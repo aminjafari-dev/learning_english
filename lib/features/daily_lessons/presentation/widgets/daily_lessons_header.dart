@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 
 /// Header widget for the Daily Lessons page
 /// Displays the main title and settings button

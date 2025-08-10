@@ -15,8 +15,8 @@ import 'package:learning_english/features/daily_lessons/domain/entities/phrase.d
 import 'package:learning_english/features/daily_lessons/domain/entities/vocabulary.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';
 import 'package:learning_english/features/history/presentation/bloc/vocabulary_history_state.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:learning_english/l10n/app_localizations.dart';
+  
 /// Main content widget for the Request Detail page
 /// Combines vocabulary history section, phrase history section, and request info
 /// Uses a single scroll view for unified scrolling experience

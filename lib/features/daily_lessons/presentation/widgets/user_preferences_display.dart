@@ -14,7 +14,7 @@ import '../bloc/daily_lessons_state.dart';
 import '../bloc/daily_lessons_event.dart';
 import '../../domain/entities/user_preferences.dart';
 import '../../data/models/level_type.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 
 /// Widget to display user preferences in the daily lessons page
 /// Shows the user's selected level and learning focus areas

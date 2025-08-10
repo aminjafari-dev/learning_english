@@ -1,73 +1,67 @@
-// This file defines the UserRemoteDataSource for saving user level to Firestore.
+// This file defines the UserRemoteDataSource for saving user level to Supabase.
 // Usage: Called by the repository to persist the selected level.
 // Example:
 //   await dataSource.saveUserLevel('user123', Level.beginner);
 //   final level = await dataSource.getUserLevel('user123');
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:learning_english/core/error/firebase_error_handler.dart';
-import 'package:learning_english/core/error/firebase_failure.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/entities/user_profile.dart';
 
+/// Remote data source for user level operations using Supabase
+/// Handles saving and retrieving user English proficiency levels
 class UserRemoteDataSource {
-  final FirebaseFirestore firestore;
+  final SupabaseClient supabase;
 
-  UserRemoteDataSource(this.firestore);
+  /// Constructor requiring Supabase client instance
+  /// @param supabase The Supabase client for database operations
+  UserRemoteDataSource(this.supabase);
 
-  /// Saves the user's selected English level to Firestore
-  /// This method now includes comprehensive Firebase error handling
-  /// for regional restrictions, network issues, and other Firebase errors
+  /// Saves the user's selected English level to Supabase
+  /// Creates or updates the user profile with the selected level
+  /// @param userId The unique identifier for the user
+  /// @param level The selected English proficiency level
+  /// @throws Exception when save operation fails
   Future<void> saveUserLevel(String userId, Level level) async {
     try {
-      // Use a shorter timeout to prevent hanging operations
-      await FirebaseErrorHandler.wrapFirebaseOperation(
-        () async {
-          await firestore.collection('users').doc(userId).set({
+      await supabase
+          .from('user_profiles')
+          .upsert({
+            'user_id': userId,
             'level': level.name,
-          }, SetOptions(merge: true));
-        },
-        context: 'save_user_level',
-        timeoutSeconds: 15, // Shorter timeout for better UX
-      );
+            'updated_at': DateTime.now().toIso8601String(),
+          })
+          .select()
+          .single();
+
+      print('✅ User level saved successfully: ${level.name} for user $userId');
     } catch (exception) {
-      // Log the error for debugging
-      FirebaseErrorHandler.logError(exception, context: 'save_user_level');
-
-      // Check if this is a hanging operation (like the INTERNAL errors you're seeing)
-      if (FirebaseErrorHandler.isHangingOperation(exception)) {
-        throw FirebaseErrorHandler.createHangingOperationFailure(
-          'save_user_level',
-        );
-      }
-
-      // Re-throw the exception (now a FirebaseFailure) for repository handling
+      print('❌ Error saving user level: $exception');
       rethrow;
     }
   }
 
-  /// Gets the user's selected English level from Firestore
+  /// Gets the user's selected English level from Supabase
   /// Returns the user's level or null if not found
+  /// @param userId The unique identifier for the user
+  /// @return The user's level or null if not found
+  /// @throws Exception when retrieval operation fails
   Future<Level?> getUserLevel(String userId) async {
     try {
-      // Use a shorter timeout to prevent hanging operations
-      final doc = await FirebaseErrorHandler.wrapFirebaseOperation(
-        () async {
-          return await firestore.collection('users').doc(userId).get();
-        },
-        context: 'get_user_level',
-        timeoutSeconds: 15, // Shorter timeout for better UX
-      );
+      final response =
+          await supabase
+              .from('user_profiles')
+              .select('level')
+              .eq('user_id', userId)
+              .maybeSingle();
 
-      if (!doc.exists) {
-        return null; // User document doesn't exist
+      if (response == null) {
+        return null; // User profile doesn't exist
       }
 
-      final data = doc.data() as Map<String, dynamic>?;
-      if (data == null || !data.containsKey('level')) {
-        return null; // No level field in document
+      final levelString = response['level'] as String?;
+      if (levelString == null) {
+        return null; // No level field in profile
       }
-
-      final levelString = data['level'] as String;
 
       // Convert string to Level enum
       switch (levelString.toLowerCase()) {
@@ -83,17 +77,7 @@ class UserRemoteDataSource {
           return null; // Invalid level string
       }
     } catch (exception) {
-      // Log the error for debugging
-      FirebaseErrorHandler.logError(exception, context: 'get_user_level');
-
-      // Check if this is a hanging operation
-      if (FirebaseErrorHandler.isHangingOperation(exception)) {
-        throw FirebaseErrorHandler.createHangingOperationFailure(
-          'get_user_level',
-        );
-      }
-
-      // Re-throw the exception for repository handling
+      print('❌ Error getting user level: $exception');
       rethrow;
     }
   }

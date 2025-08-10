@@ -45,25 +45,21 @@
     "description": "سربرگ بخش عبارات."
   },
   "nextLessons": "درس‌های بعدی",
-  "errorFirebaseAuth": "احراز هویت ناموفق بود. لطفاً دوباره تلاش کنید.",
-  "@errorFirebaseAuth": {
-    "description": "پیام خطای عمومی احراز هویت Firebase."
+  "errorAuth": "احراز هویت ناموفق بود. لطفاً دوباره تلاش کنید.",
+  "@errorAuth": {
+    "description": "پیام خطای عمومی احراز هویت."
   },
-  "errorFirebaseFirestore": "عملیات پایگاه داده ناموفق بود. لطفاً دوباره تلاش کنید.",
-  "@errorFirebaseFirestore": {
-    "description": "پیام خطای عمومی Firebase Firestore."
+  "errorDatabase": "عملیات پایگاه داده ناموفق بود. لطفاً دوباره تلاش کنید.",
+  "@errorDatabase": {
+    "description": "پیام خطای عمومی پایگاه داده."
   },
-  "errorFirebaseNetwork": "اتصال شبکه ناموفق بود. لطفاً اتصال اینترنت خود را بررسی کرده و دوباره تلاش کنید.",
-  "@errorFirebaseNetwork": {
-    "description": "پیام خطای شبکه Firebase."
+  "errorNetwork": "اتصال شبکه ناموفق بود. لطفاً اتصال اینترنت خود را بررسی کرده و دوباره تلاش کنید.",
+  "@errorNetwork": {
+    "description": "پیام خطای شبکه."
   },
-  "errorFirebaseRegional": "سرویس‌های Firebase در منطقه شما محدود شده‌اند. لطفاً از VPN استفاده کنید یا با پشتیبانی تماس بگیرید.",
-  "@errorFirebaseRegional": {
-    "description": "پیام خطای محدودیت منطقه‌ای Firebase."
-  },
-  "errorFirebaseGeneric": "خطای غیرمنتظره‌ای رخ داد. لطفاً دوباره تلاش کنید.",
-  "@errorFirebaseGeneric": {
-    "description": "پیام خطای عمومی Firebase."
+  "errorGeneric": "خطای غیرمنتظره‌ای رخ داد. لطفاً دوباره تلاش کنید.",
+  "@errorGeneric": {
+    "description": "پیام خطای عمومی."
   },
   "errorRetry": "تلاش مجدد",
   "@errorRetry": {

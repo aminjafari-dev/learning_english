@@ -11,7 +11,7 @@ import 'package:learning_english/core/widgets/phrases_list_section.dart';
 import 'package:learning_english/features/daily_lessons/presentation/widgets/refresh_button.dart';
 import 'package:learning_english/features/daily_lessons/presentation/widgets/user_preferences_display.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 
 /// Main content widget for the Daily Lessons page
 /// Combines vocabularies section, phrases section, and refresh button

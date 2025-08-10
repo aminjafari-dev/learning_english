@@ -45,25 +45,21 @@
     "description": "Section header for phrases."
   },
   "nextLessons": "Next Lessons",
-  "errorFirebaseAuth": "Authentication failed. Please try again.",
-  "@errorFirebaseAuth": {
-    "description": "Generic Firebase authentication error message."
+  "errorAuth": "Authentication failed. Please try again.",
+  "@errorAuth": {
+    "description": "Generic authentication error message."
   },
-  "errorFirebaseFirestore": "Database operation failed. Please try again.",
-  "@errorFirebaseFirestore": {
-    "description": "Generic Firebase Firestore error message."
+  "errorDatabase": "Database operation failed. Please try again.",
+  "@errorDatabase": {
+    "description": "Generic database error message."
   },
-  "errorFirebaseNetwork": "Network connection failed. Please check your internet connection and try again.",
-  "@errorFirebaseNetwork": {
-    "description": "Firebase network error message."
+  "errorNetwork": "Network connection failed. Please check your internet connection and try again.",
+  "@errorNetwork": {
+    "description": "Network error message."
   },
-  "errorFirebaseRegional": "Firebase services are restricted in your region. Please try using a VPN or contact support.",
-  "@errorFirebaseRegional": {
-    "description": "Firebase regional restriction error message."
-  },
-  "errorFirebaseGeneric": "An unexpected error occurred. Please try again.",
-  "@errorFirebaseGeneric": {
-    "description": "Generic Firebase error message."
+  "errorGeneric": "An unexpected error occurred. Please try again.",
+  "@errorGeneric": {
+    "description": "Generic error message."
   },
   "errorRetry": "Retry",
   "@errorRetry": {

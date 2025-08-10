@@ -12,7 +12,7 @@
 ///     dateOfBirthController: dateOfBirthController,
 ///   );
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text.dart';

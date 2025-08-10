@@ -10,7 +10,7 @@ import 'package:learning_english/core/widgets/global_widget/g_button.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/features/history/presentation/bloc/vocabulary_history_state.dart';
 import 'package:learning_english/features/history/presentation/widgets/history_request_card.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 
 /// Main content widget for the Vocabulary History page
 /// Combines history requests list, empty state, and error handling

@@ -3,7 +3,7 @@ import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/features/learning_focus_selection/presentation/bloc/learning_focus_selection_cubit.dart';
 import 'package:learning_english/features/learning_focus_selection/presentation/widgets/learning_focus_option_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 
 class LearningFocusOptionsGrid extends StatelessWidget {
   const LearningFocusOptionsGrid({super.key});

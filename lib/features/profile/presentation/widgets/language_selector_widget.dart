@@ -11,7 +11,6 @@
 ///   );
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
@@ -20,6 +19,7 @@ import 'package:learning_english/features/localization/domain/entities/locale_en
 import 'package:learning_english/features/localization/presentation/bloc/localization_bloc.dart';
 import 'package:learning_english/features/localization/presentation/bloc/localization_event.dart';
 import 'package:learning_english/features/localization/presentation/bloc/localization_state.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 
 /// Widget for selecting app language
 class LanguageSelectorWidget extends StatelessWidget {

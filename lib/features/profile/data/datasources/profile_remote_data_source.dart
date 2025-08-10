@@ -1,8 +1,8 @@
 /// ProfileRemoteDataSource handles remote data operations for user profiles.
 ///
 /// This abstract class defines the contract for remote profile operations
-/// such as fetching and updating profile data from Firebase Firestore
-/// and uploading images to Firebase Storage.
+/// such as fetching and updating profile data from Supabase
+/// and uploading images to Supabase Storage.
 ///
 /// Usage Example:
 ///   class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -17,7 +17,7 @@ import 'package:learning_english/features/profile/data/models/user_profile_model
 abstract class ProfileRemoteDataSource {
   /// Retrieves user profile data from remote storage
   ///
-  /// This method fetches the user's profile information from Firebase Firestore
+  /// This method fetches the user's profile information from Supabase
   /// and returns it as a UserProfileModel.
   ///
   /// Parameters:
@@ -32,7 +32,7 @@ abstract class ProfileRemoteDataSource {
 
   /// Updates user profile data in remote storage
   ///
-  /// This method updates the user's profile information in Firebase Firestore
+  /// This method updates the user's profile information in Supabase
   /// and returns the updated profile data.
   ///
   /// Parameters:
@@ -43,11 +43,14 @@ abstract class ProfileRemoteDataSource {
   ///
   /// Throws:
   ///   - ServerException: If the remote operation fails
-  Future<UserProfileModel> updateUserProfile({required UserProfileModel userProfile, required String userId});
+  Future<UserProfileModel> updateUserProfile({
+    required UserProfileModel userProfile,
+    required String userId,
+  });
 
   /// Uploads a profile image to remote storage
   ///
-  /// This method uploads an image file to Firebase Storage and returns
+  /// This method uploads an image file to Supabase Storage and returns
   /// the public URL of the uploaded image.
   ///
   /// Parameters:
@@ -63,7 +66,7 @@ abstract class ProfileRemoteDataSource {
 
   /// Deletes a profile image from remote storage
   ///
-  /// This method removes an image file from Firebase Storage.
+  /// This method removes an image file from Supabase Storage.
   ///
   /// Parameters:
   ///   - imageUrl: The URL of the image to delete

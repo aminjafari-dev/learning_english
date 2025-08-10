@@ -42,13 +42,13 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     // Immediately emit success to trigger navigation
     emit(LevelState.success(event.level));
 
-    // Handle Firebase operations in the background without affecting UI
-    _handleFirebaseOperation(event.level);
+    // Handle backend operations in the background without affecting UI
+    _handleBackgroundOperation(event.level);
   }
 
-  /// Handles Firebase operations in the background without affecting UI
+  /// Handles backend operations in the background without affecting UI
   /// Errors are logged but not shown to the user
-  Future<void> _handleFirebaseOperation(Level level) async {
+  Future<void> _handleBackgroundOperation(Level level) async {
     try {
       // Retrieve userId from local storage using the use case
       final userIdResult = await getUserIdUseCase(NoParams());
@@ -60,11 +60,11 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
           (failure) {
             // Log error silently without showing to user
             // In production, use proper logging framework
-            debugPrint('Level selection Firebase error: ${failure.message}');
+            debugPrint('Level selection error: ${failure.message}');
           },
           (_) {
             // Success - no action needed since navigation already happened
-            debugPrint('Level selection saved successfully to Firebase');
+            debugPrint('Level selection saved successfully to backend');
           },
         );
       } else {
@@ -104,16 +104,11 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     }
     final result = await saveUserLevelUseCase(userId, _selectedLevel!);
     result.fold((failure) {
-      // Handle different types of Firebase failures with user-friendly messages
+      // Handle different types of backend failures with user-friendly messages
       String errorMessage;
 
-      // Check if this is a Firebase-related error by examining the message
-      if (failure.message.contains('regional') ||
-          failure.message.contains('restricted') ||
-          failure.message.contains('VPN')) {
-        errorMessage =
-            'Firebase services are restricted in your region. Please try using a VPN or contact support.';
-      } else if (failure.message.contains('network') ||
+      // Check if this is a network-related error by examining the message
+      if (failure.message.contains('network') ||
           failure.message.contains('connection')) {
         errorMessage =
             'Network connection failed. Please check your internet connection and try again.';

@@ -9,7 +9,7 @@ import 'package:learning_english/features/level_selection/domain/entities/user_p
 import 'package:learning_english/features/level_selection/presentation/blocs/level_bloc.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_event.dart';
 import 'package:learning_english/features/level_selection/presentation/blocs/level_state.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learning_english/l10n/app_localizations.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/core/constants/image_path.dart';
 

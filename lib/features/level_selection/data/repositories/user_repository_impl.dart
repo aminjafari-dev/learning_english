@@ -1,5 +1,5 @@
 // This file implements the UserRepository interface for saving user level.
-// Usage: Used in the data layer to interact with Firestore via UserRemoteDataSource.
+// Usage: Used in the data layer to interact with Supabase via UserRemoteDataSource.
 // Example:
 //   final repo = UserRepositoryImpl(remoteDataSource: ...);
 //   await repo.saveUserLevel('user123', Level.beginner);
@@ -10,12 +10,14 @@ import '../../domain/entities/user_profile.dart';
 import '../../domain/repositories/user_repository.dart';
 import '../datasources/user_remote_data_source.dart';
 import 'package:learning_english/core/error/failure.dart';
-import 'package:learning_english/core/error/firebase_failure.dart';
-import 'package:learning_english/core/error/firebase_error_handler.dart';
 
+/// Repository implementation for user level operations using Supabase
+/// Implements the UserRepository interface and handles error conversion
 class UserRepositoryImpl implements UserRepository {
   final UserRemoteDataSource remoteDataSource;
 
+  /// Constructor requiring the remote data source
+  /// @param remoteDataSource The data source for remote operations
   UserRepositoryImpl({required this.remoteDataSource});
 
   @override
@@ -27,15 +29,12 @@ class UserRepositoryImpl implements UserRepository {
       await remoteDataSource.saveUserLevel(userId, level);
       return const Right(null);
     } catch (exception) {
-      // Convert the exception to appropriate FirebaseFailure
-      final failure = FirebaseErrorHandler.handleException(
-        exception,
-        context: 'user_repository_save_level',
+      // Convert any exception to a ServerFailure with user-friendly message
+      return Left(
+        ServerFailure(
+          'Failed to save user level. Please check your internet connection and try again.',
+        ),
       );
-
-      // Return the FirebaseFailure as a generic Failure
-      // You can also create a custom failure type if needed
-      return Left(ServerFailure(failure.userFriendlyMessage));
     }
   }
 
@@ -45,14 +44,12 @@ class UserRepositoryImpl implements UserRepository {
       final level = await remoteDataSource.getUserLevel(userId);
       return Right(level);
     } catch (exception) {
-      // Convert the exception to appropriate FirebaseFailure
-      final failure = FirebaseErrorHandler.handleException(
-        exception,
-        context: 'user_repository_get_level',
+      // Convert any exception to a ServerFailure with user-friendly message
+      return Left(
+        ServerFailure(
+          'Failed to retrieve user level. Please check your internet connection and try again.',
+        ),
       );
-
-      // Return the FirebaseFailure as a generic Failure
-      return Left(ServerFailure(failure.userFriendlyMessage));
     }
   }
 }

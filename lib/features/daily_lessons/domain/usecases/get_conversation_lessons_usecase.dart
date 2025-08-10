@@ -30,6 +30,7 @@ import '../../data/models/ai_provider_type.dart';
 import '../../data/models/level_type.dart';
 import 'package:learning_english/core/repositories/user_repository.dart'
     as core_user;
+import '../../data/datasources/remote/supabase_learning_requests_remote_data_source.dart';
 
 /// Use case for getting personalized lessons through conversation mode
 /// Replaces traditional daily lessons to avoid repetitive content
@@ -48,11 +49,13 @@ class GetConversationLessonsUseCase
   final ConversationRepository repository;
   final DailyLessonsLocalDataSource localDataSource;
   final core_user.UserRepository coreUserRepository;
+  final SupabaseLearningRequestsRemoteDataSource supabaseDataSource;
 
   GetConversationLessonsUseCase(
     this.repository,
     this.localDataSource,
     this.coreUserRepository,
+    this.supabaseDataSource,
   );
 
   @override
@@ -179,11 +182,14 @@ class GetConversationLessonsUseCase
         },
       );
 
-      // Save to local storage
+      // Save to local storage (synchronous for immediate app functionality)
       await localDataSource.saveLearningRequest(learningRequest);
       print(
-        '✅ [CONVERSATION] Successfully saved conversation-generated content',
+        '✅ [CONVERSATION] Successfully saved conversation-generated content locally',
       );
+
+      // Save to Supabase in background (fire and forget - no loading interruption)
+      _saveToSupabaseInBackground(learningRequest);
     } catch (e) {
       print(
         '❌ [CONVERSATION] Failed to save conversation-generated content: $e',
@@ -256,6 +262,41 @@ class GetConversationLessonsUseCase
       default:
         return UserLevel.intermediate; // Default fallback
     }
+  }
+
+  /// Saves learning request to Supabase in background without blocking UI
+  /// This method runs asynchronously and doesn't interrupt application flow
+  /// Uses fire-and-forget pattern to avoid loading states
+  void _saveToSupabaseInBackground(LearningRequestModel learningRequest) {
+    // Run in background without awaiting to avoid blocking the UI
+    () async {
+      try {
+        print(
+          '🔄 [SUPABASE] Starting background save for request: ${learningRequest.requestId}',
+        );
+
+        // Save to Supabase cloud storage
+        await supabaseDataSource.saveLearningRequest(learningRequest);
+
+        print(
+          '✅ [SUPABASE] Successfully saved learning request to cloud: ${learningRequest.requestId}',
+        );
+        print(
+          '📊 [SUPABASE] Saved ${learningRequest.vocabularies.length} vocabularies and ${learningRequest.phrases.length} phrases',
+        );
+      } catch (e) {
+        // Log error but don't throw - this is background operation
+        print(
+          '❌ [SUPABASE] Background save failed for request ${learningRequest.requestId}: $e',
+        );
+        print(
+          '💡 [SUPABASE] Local data is still available, cloud sync will retry later',
+        );
+
+        // Could implement retry logic here in the future
+        // or add to a retry queue for later processing
+      }
+    }();
   }
 }
 

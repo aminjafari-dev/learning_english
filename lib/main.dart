@@ -17,6 +17,7 @@ import 'package:learning_english/features/localization/presentation/bloc/localiz
 import 'package:learning_english/features/localization/presentation/bloc/localization_bloc.dart';
 import 'package:learning_english/features/localization/presentation/bloc/localization_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   // Ensure Flutter bindings are initialized before any async work
@@ -27,6 +28,13 @@ void main() async {
 
   // Initialize Firebase before using any Firebase service or dependency injection
   await Firebase.initializeApp();
+
+  // Initialize Supabase
+  await Supabase.initialize(
+    url: 'https://secsedrlvpifggleixfk.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlY3NlZHJsdnBpZmdnbGVpeGZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2NDAzNjAsImV4cCI6MjA3MDIxNjM2MH0.7URWr5FVNrBAWkzATAAqSwPEnmX7Btk-rH5ZuznlOy4',
+  );
 
   // Register all dependencies after Firebase is ready
   await initDependencies();

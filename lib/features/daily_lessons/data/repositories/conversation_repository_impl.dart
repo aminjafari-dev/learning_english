@@ -62,7 +62,6 @@ class ConversationRepositoryImpl implements ConversationRepository {
       debugPrint('🤖 [CONVERSATION] Sending to Gemini AI service');
       try {
         final aiResponse = await geminiConversationService.sendMessage(
-          userId,
           message,
           userLevel: userLevel,
           focusAreas: preferences.focusAreas,

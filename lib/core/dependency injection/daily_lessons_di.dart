@@ -28,8 +28,6 @@ import 'package:learning_english/features/daily_lessons/domain/usecases/get_conv
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_user_preferences_usecase.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/gemini_conversation_service.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_bloc.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/remote/supabase_learning_requests_remote_data_source.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Call this function to register all dependencies for Daily Lessons
 /// @param getIt The GetIt instance for dependency injection
@@ -69,10 +67,8 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     // Initialize the main local data source (which initializes all specialized data sources)
     await getIt<DailyLessonsLocalDataSource>().initialize();
 
-    // Supabase Remote Data Source for learning requests cloud storage
-    getIt.registerLazySingleton<SupabaseLearningRequestsRemoteDataSource>(
-      () => SupabaseLearningRequestsRemoteDataSource(Supabase.instance.client),
-    );
+    // Note: Learning requests cloud storage is now handled by Supabase functions
+    // No need for remote data source registration
 
     // Gemini Conversation Service
     getIt.registerLazySingleton<GeminiConversationService>(
@@ -105,7 +101,6 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
         getIt<ConversationRepository>(),
         getIt<DailyLessonsLocalDataSource>(),
         getIt<core_user.UserRepository>(),
-        getIt<SupabaseLearningRequestsRemoteDataSource>(),
       ),
     );
 

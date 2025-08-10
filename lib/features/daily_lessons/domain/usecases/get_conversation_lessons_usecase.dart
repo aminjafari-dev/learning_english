@@ -30,7 +30,6 @@ import '../../data/models/ai_provider_type.dart';
 import '../../data/models/level_type.dart';
 import 'package:learning_english/core/repositories/user_repository.dart'
     as core_user;
-import '../../data/datasources/remote/supabase_learning_requests_remote_data_source.dart';
 
 /// Use case for getting personalized lessons through conversation mode
 /// Replaces traditional daily lessons to avoid repetitive content
@@ -49,13 +48,10 @@ class GetConversationLessonsUseCase
   final ConversationRepository repository;
   final DailyLessonsLocalDataSource localDataSource;
   final core_user.UserRepository coreUserRepository;
-  final SupabaseLearningRequestsRemoteDataSource supabaseDataSource;
-
   GetConversationLessonsUseCase(
     this.repository,
     this.localDataSource,
     this.coreUserRepository,
-    this.supabaseDataSource,
   );
 
   @override
@@ -272,17 +268,10 @@ class GetConversationLessonsUseCase
     () async {
       try {
         print(
-          '🔄 [SUPABASE] Starting background save for request: ${learningRequest.requestId}',
-        );
-
-        // Save to Supabase cloud storage
-        await supabaseDataSource.saveLearningRequest(learningRequest);
-
-        print(
-          '✅ [SUPABASE] Successfully saved learning request to cloud: ${learningRequest.requestId}',
+          '🔄 [SUPABASE] Learning request storage now handled by Supabase function: ${learningRequest.requestId}',
         );
         print(
-          '📊 [SUPABASE] Saved ${learningRequest.vocabularies.length} vocabularies and ${learningRequest.phrases.length} phrases',
+          '📊 [LOCAL] Saved ${learningRequest.vocabularies.length} vocabularies and ${learningRequest.phrases.length} phrases to local storage',
         );
       } catch (e) {
         // Log error but don't throw - this is background operation

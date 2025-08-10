@@ -27,7 +27,7 @@ class UserRemoteDataSource {
           .from('user_profiles')
           .upsert({
             'user_id': userId,
-            'level': level.name,
+            'user_level': level.name,
             'updated_at': DateTime.now().toIso8601String(),
           })
           .select()
@@ -50,7 +50,7 @@ class UserRemoteDataSource {
       final response =
           await supabase
               .from('user_profiles')
-              .select('level')
+              .select('user_level')
               .eq('user_id', userId)
               .maybeSingle();
 
@@ -58,7 +58,7 @@ class UserRemoteDataSource {
         return null; // User profile doesn't exist
       }
 
-      final levelString = response['level'] as String?;
+      final levelString = response['user_level'] as String?;
       if (levelString == null) {
         return null; // No level field in profile
       }

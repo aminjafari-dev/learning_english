@@ -1,13 +1,13 @@
 // gemini_conversation_service.dart
-// Supabase Edge Function conversation service for generating educational content.
-// Uses the deployed Edge Function instead of calling Gemini directly for better security and performance.
+// Learning Conversation service for generating educational content with data storage.
+// Uses the deployed learning-conversation Edge Function for AI responses and automatic data persistence.
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:learning_english/features/daily_lessons/data/models/level_type.dart';
 import '../local/daily_lessons_local_data_source.dart';
 
-/// Supabase Edge Function conversation service for generating educational content
-/// Uses deployed Edge Function instead of direct Gemini API calls
+/// Learning Conversation service for generating educational content with automatic data storage
+/// Uses deployed learning-conversation Edge Function for AI responses and data persistence
 class GeminiConversationService {
   final DailyLessonsLocalDataSource _localDataSource;
   final SupabaseClient _supabaseClient;
@@ -20,10 +20,9 @@ class GeminiConversationService {
     await _localDataSource.initialize();
   }
 
-  /// Send a message to Supabase Edge Function for educational content generation
-  /// Each call is independent - no conversation history is maintained
+  /// Send a message to Learning Conversation Edge Function for educational content generation
+  /// Automatically stores conversation data with user separation and vocabulary/phrase extraction
   Future<String> sendMessage(
-    String userId,
     String message, {
     UserLevel? userLevel,
     List<String>? focusAreas,
@@ -32,16 +31,21 @@ class GeminiConversationService {
       // Convert UserLevel enum to string
       final levelString = userLevel?.name ?? 'intermediate';
 
+      // Get current user ID for data storage
+      final userId =
+          Supabase.instance.client.auth.currentUser?.id ?? 'anonymous_user';
+
       // Prepare request body for Edge Function
       final requestBody = {
         'message': message,
+        'userId': userId,
         'userLevel': levelString,
         'focusAreas': focusAreas ?? ['general'],
       };
 
-      // Call Supabase Edge Function
+      // Call Supabase Edge Function (updated to new learning-conversation function)
       final response = await _supabaseClient.functions.invoke(
-        'gemini-conversation',
+        'learning-conversation',
         body: requestBody,
       );
 

@@ -77,6 +77,9 @@ async function processLearningConversation(
   console.log(`🎯 [LEARNING] Processing conversation for user: ${request.userId}`);
   console.log(`📊 [LEARNING] Level: ${userLevel}, Focus: ${focusAreas.join(', ')}`);
 
+  // Create database service to fetch dynamic prompts (outside try block for error handling access)
+  const databaseService = createDatabaseService(envConfig);
+
   try {
     // Create prompt configuration
     const promptConfig: PromptConfig = {
@@ -84,9 +87,9 @@ async function processLearningConversation(
       userLevel,
       focusAreas,
     };
-
-    // Generate educational prompt
-    const systemPrompt = createLearningPrompt(promptConfig);
+    
+    // Generate educational prompt from database
+    const systemPrompt = await createLearningPrompt(promptConfig, databaseService);
     
     // Create Gemini service and generate response
     const geminiService = createGeminiService(envConfig);
@@ -126,8 +129,7 @@ async function processLearningConversation(
       },
     };
 
-    // Save to database
-    const databaseService = createDatabaseService(envConfig);
+    // Save to database (reuse the same database service instance)
     await databaseService.saveLearningConversation(learningRequestData);
 
     console.log(`✅ [LEARNING] Complete learning conversation saved with ID: ${requestId}`);
@@ -166,7 +168,6 @@ async function processLearningConversation(
         },
       };
 
-      const databaseService = createDatabaseService(envConfig);
       await databaseService.saveLearningConversation(errorRequestData);
       
     } catch (dbError) {

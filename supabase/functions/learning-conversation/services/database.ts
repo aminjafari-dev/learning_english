@@ -81,6 +81,7 @@ export class DatabaseService {
 
   /**
    * Saves vocabularies related to a learning request
+   * Uses upsert to handle duplicate words gracefully
    * @private
    */
   private async saveVocabularies(
@@ -88,27 +89,67 @@ export class DatabaseService {
     vocabularies: VocabularyData[],
     userId: string
   ): Promise<void> {
-    const vocabularyData = vocabularies.map(vocab => ({
-      request_id: learningRequestId,
-      user_id: userId,
-      english: vocab.english,
-      persian: vocab.persian,
-      is_used: vocab.isUsed,
-    }));
+    console.log(`💾 [DATABASE] Saving ${vocabularies.length} vocabularies for user: ${userId}`);
+    
+    let savedCount = 0;
+    let skippedCount = 0;
 
-    const { error } = await this.supabase
-      .from('vocabularies')
-      .insert(vocabularyData);
+    // Process vocabularies one by one to handle duplicates gracefully
+    for (const vocab of vocabularies) {
+      const vocabularyData = {
+        request_id: learningRequestId,
+        user_id: userId,
+        english: vocab.english.toLowerCase().trim(), // Normalize to avoid case-sensitive duplicates
+        persian: vocab.persian,
+        is_used: vocab.isUsed,
+      };
 
-    if (error) {
-      throw new Error(`Failed to save vocabularies: ${error.message}`);
+      try {
+        // Use upsert (INSERT ... ON CONFLICT) to handle duplicates
+        const { error } = await this.supabase
+          .from('vocabularies')
+          .upsert(vocabularyData, {
+            onConflict: 'user_id,english',
+            ignoreDuplicates: false // Update existing records
+          });
+
+        if (error) {
+          // If it's a duplicate key error, try to update the existing record
+          if (error.message.includes('duplicate key') || error.code === '23505') {
+            console.log(`🔄 [DATABASE] Vocabulary "${vocab.english}" already exists, updating Persian translation`);
+            
+            // Update the existing vocabulary with new Persian translation if it's better
+            const { error: updateError } = await this.supabase
+              .from('vocabularies')
+              .update({ 
+                persian: vocab.persian,
+                request_id: learningRequestId // Link to current request
+              })
+              .eq('user_id', userId)
+              .eq('english', vocabularyData.english);
+
+            if (updateError) {
+              console.error(`❌ [DATABASE] Failed to update vocabulary "${vocab.english}":`, updateError.message);
+            } else {
+              skippedCount++;
+            }
+          } else {
+            console.error(`❌ [DATABASE] Failed to save vocabulary "${vocab.english}":`, error.message);
+          }
+        } else {
+          savedCount++;
+        }
+      } catch (err) {
+        console.error(`❌ [DATABASE] Unexpected error saving vocabulary "${vocab.english}":`, err);
+      }
     }
 
-    console.log('✅ [DATABASE] Saved', vocabularies.length, 'vocabularies');
+    console.log(`✅ [DATABASE] Vocabulary summary: ${savedCount} new, ${skippedCount} updated/skipped`);
   }
 
   /**
    * Saves phrases related to a learning request
+   * Uses upsert to handle duplicate phrases gracefully
    * @private
    */
   private async savePhrases(
@@ -116,23 +157,62 @@ export class DatabaseService {
     phrases: PhraseData[],
     userId: string
   ): Promise<void> {
-    const phraseData = phrases.map(phrase => ({
-      request_id: learningRequestId,
-      user_id: userId,
-      english: phrase.english,
-      persian: phrase.persian,
-      is_used: phrase.isUsed,
-    }));
+    console.log(`💾 [DATABASE] Saving ${phrases.length} phrases for user: ${userId}`);
+    
+    let savedCount = 0;
+    let skippedCount = 0;
 
-    const { error } = await this.supabase
-      .from('phrases')
-      .insert(phraseData);
+    // Process phrases one by one to handle duplicates gracefully
+    for (const phrase of phrases) {
+      const phraseData = {
+        request_id: learningRequestId,
+        user_id: userId,
+        english: phrase.english.trim(), // Normalize to avoid whitespace issues
+        persian: phrase.persian,
+        is_used: phrase.isUsed,
+      };
 
-    if (error) {
-      throw new Error(`Failed to save phrases: ${error.message}`);
+      try {
+        // Use upsert (INSERT ... ON CONFLICT) to handle duplicates
+        const { error } = await this.supabase
+          .from('phrases')
+          .upsert(phraseData, {
+            onConflict: 'user_id,english',
+            ignoreDuplicates: false // Update existing records
+          });
+
+        if (error) {
+          // If it's a duplicate key error, try to update the existing record
+          if (error.message.includes('duplicate key') || error.code === '23505') {
+            console.log(`🔄 [DATABASE] Phrase "${phrase.english}" already exists, updating Persian translation`);
+            
+            // Update the existing phrase with new Persian translation if it's better
+            const { error: updateError } = await this.supabase
+              .from('phrases')
+              .update({ 
+                persian: phrase.persian,
+                request_id: learningRequestId // Link to current request
+              })
+              .eq('user_id', userId)
+              .eq('english', phraseData.english);
+
+            if (updateError) {
+              console.error(`❌ [DATABASE] Failed to update phrase "${phrase.english}":`, updateError.message);
+            } else {
+              skippedCount++;
+            }
+          } else {
+            console.error(`❌ [DATABASE] Failed to save phrase "${phrase.english}":`, error.message);
+          }
+        } else {
+          savedCount++;
+        }
+      } catch (err) {
+        console.error(`❌ [DATABASE] Unexpected error saving phrase "${phrase.english}":`, err);
+      }
     }
 
-    console.log('✅ [DATABASE] Saved', phrases.length, 'phrases');
+    console.log(`✅ [DATABASE] Phrase summary: ${savedCount} new, ${skippedCount} updated/skipped`);
   }
 
   /**
@@ -195,6 +275,64 @@ export class DatabaseService {
       console.error('❌ [DATABASE] Failed to fetch learning conversations:', error);
       throw new Error(`Database fetch failed: ${error.message}`);
     }
+  }
+
+  /**
+   * Gets the latest prompt for a specific type from the database
+   * @param promptType - Type of prompt to fetch (educational, conversation, practice, assessment)
+   * @returns Promise with prompt data or null if not found
+   */
+  async getLatestPrompt(promptType: string): Promise<{
+    id: number;
+    promptType: string;
+    promptName: string;
+    version: number;
+    content: string;
+    variables: Record<string, any>;
+    createdAt: string;
+  } | null> {
+    console.log(`💾 [DATABASE] Fetching latest prompt for type: ${promptType}`);
+    
+    try {
+      const { data, error } = await this.supabase.rpc('get_latest_prompt', {
+        p_prompt_type: promptType
+      });
+
+      if (error) {
+        console.error('❌ [DATABASE] Error fetching latest prompt:', error);
+        throw new Error(`Failed to fetch latest prompt: ${error.message}`);
+      }
+
+      if (!data || data.error) {
+        console.log(`⚠️ [DATABASE] No active prompt found for type: ${promptType}`);
+        return null;
+      }
+
+      console.log(`✅ [DATABASE] Latest prompt fetched: ${data.promptName} v${data.version}`);
+      return data;
+    } catch (error) {
+      console.error(`❌ [DATABASE] Failed to fetch latest prompt for ${promptType}:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Applies variables to a prompt template
+   * @param promptTemplate - The prompt template with placeholders
+   * @param variables - Variables to substitute in the template
+   * @returns Processed prompt with variables substituted
+   */
+  processPromptTemplate(promptTemplate: string, variables: Record<string, any>): string {
+    let processedPrompt = promptTemplate;
+    
+    // Replace variables in the format {variableName}
+    Object.entries(variables).forEach(([key, value]) => {
+      const placeholder = `{${key}}`;
+      const valueStr = Array.isArray(value) ? value.join(', ') : String(value);
+      processedPrompt = processedPrompt.replace(new RegExp(placeholder, 'g'), valueStr);
+    });
+    
+    return processedPrompt;
   }
 
   /**

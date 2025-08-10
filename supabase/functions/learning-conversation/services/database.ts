@@ -30,7 +30,7 @@ export class DatabaseService {
 
       // Save main learning request
       const { data: requestData, error: requestError } = await this.supabase
-        .from('learning_requests')
+        .from('requests')
         .insert({
           request_id: learningData.requestId,
           user_id: learningData.userId,
@@ -89,14 +89,15 @@ export class DatabaseService {
     userId: string
   ): Promise<void> {
     const vocabularyData = vocabularies.map(vocab => ({
-      learning_request_id: learningRequestId,
+      request_id: learningRequestId,
+      user_id: userId,
       english: vocab.english,
       persian: vocab.persian,
       is_used: vocab.isUsed,
     }));
 
     const { error } = await this.supabase
-      .from('learning_request_vocabularies')
+      .from('vocabularies')
       .insert(vocabularyData);
 
     if (error) {
@@ -116,14 +117,15 @@ export class DatabaseService {
     userId: string
   ): Promise<void> {
     const phraseData = phrases.map(phrase => ({
-      learning_request_id: learningRequestId,
+      request_id: learningRequestId,
+      user_id: userId,
       english: phrase.english,
       persian: phrase.persian,
       is_used: phrase.isUsed,
     }));
 
     const { error } = await this.supabase
-      .from('learning_request_phrases')
+      .from('phrases')
       .insert(phraseData);
 
     if (error) {
@@ -144,11 +146,11 @@ export class DatabaseService {
       console.log('📥 [DATABASE] Fetching learning conversations for user:', userId);
 
       const { data, error } = await this.supabase
-        .from('learning_requests')
+        .from('requests')
         .select(`
           *,
-          learning_request_vocabularies(*),
-          learning_request_phrases(*)
+          vocabularies(*),
+          phrases(*)
         `)
         .eq('user_id', userId)
         .order('created_at', { ascending: false })
@@ -174,12 +176,12 @@ export class DatabaseService {
         aiResponse: record.ai_response,
         errorMessage: record.error_message,
         metadata: record.metadata,
-        vocabularies: record.learning_request_vocabularies?.map((v: any) => ({
+        vocabularies: record.vocabularies?.map((v: any) => ({
           english: v.english,
           persian: v.persian,
           isUsed: v.is_used,
         })) || [],
-        phrases: record.learning_request_phrases?.map((p: any) => ({
+        phrases: record.phrases?.map((p: any) => ({
           english: p.english,
           persian: p.persian,
           isUsed: p.is_used,
@@ -206,7 +208,7 @@ export class DatabaseService {
 
       // Get basic statistics
       const { data: requestStats, error: statsError } = await this.supabase
-        .from('learning_requests')
+        .from('requests')
         .select('id, total_tokens_used, estimated_cost, ai_provider, created_at')
         .eq('user_id', userId);
 
@@ -216,9 +218,9 @@ export class DatabaseService {
 
       // Get vocabulary count
       const { count: vocabCount, error: vocabError } = await this.supabase
-        .from('learning_request_vocabularies')
-        .select('learning_request_id', { count: 'exact' })
-        .in('learning_request_id', requestStats.map(r => r.id) || []);
+        .from('vocabularies')
+        .select('request_id', { count: 'exact' })
+        .in('request_id', requestStats.map(r => r.id) || []);
 
       if (vocabError) {
         throw new Error(`Failed to fetch vocabulary count: ${vocabError.message}`);
@@ -226,9 +228,9 @@ export class DatabaseService {
 
       // Get phrase count
       const { count: phraseCount, error: phraseError } = await this.supabase
-        .from('learning_request_phrases')
-        .select('learning_request_id', { count: 'exact' })
-        .in('learning_request_id', requestStats.map(r => r.id) || []);
+        .from('phrases')
+        .select('request_id', { count: 'exact' })
+        .in('request_id', requestStats.map(r => r.id) || []);
 
       if (phraseError) {
         throw new Error(`Failed to fetch phrase count: ${phraseError.message}`);

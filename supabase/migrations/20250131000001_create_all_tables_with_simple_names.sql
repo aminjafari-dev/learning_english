@@ -1,6 +1,22 @@
--- schema.sql
--- Database schema for learning conversation system
--- Creates tables for storing learning requests, vocabularies, and phrases
+-- Create all tables for learning English app with simplified names
+-- This migration creates user profiles, requests, vocabularies, and phrases tables
+
+-- ===== USER PROFILES TABLE =====
+-- Stores user profile information including preferences and settings
+CREATE TABLE IF NOT EXISTS user_profiles (
+  id BIGSERIAL PRIMARY KEY,
+  user_id TEXT UNIQUE NOT NULL,
+  full_name TEXT,
+  email TEXT,
+  phone_number TEXT,
+  date_of_birth DATE,
+  language TEXT DEFAULT 'en',
+  level TEXT,
+  profile_image_url TEXT,
+  theme TEXT DEFAULT 'goldTheme',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
 
 -- ===== MAIN REQUESTS TABLE =====
 -- Stores complete learning conversation data with user separation
@@ -70,6 +86,11 @@ CREATE TABLE IF NOT EXISTS phrases (
 
 -- ===== INDEXES FOR PERFORMANCE =====
 
+-- User profiles indexes
+CREATE INDEX IF NOT EXISTS idx_user_profiles_user_id ON user_profiles(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_profiles_level ON user_profiles(level);
+CREATE INDEX IF NOT EXISTS idx_user_profiles_language ON user_profiles(language);
+
 -- Requests indexes
 CREATE INDEX IF NOT EXISTS idx_requests_user_id ON requests(user_id);
 CREATE INDEX IF NOT EXISTS idx_requests_request_id ON requests(request_id);
@@ -92,11 +113,25 @@ CREATE INDEX IF NOT EXISTS idx_phrases_is_used ON phrases(is_used);
 -- ===== ROW LEVEL SECURITY (RLS) =====
 
 -- Enable RLS on all tables
+ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE requests ENABLE ROW LEVEL SECURITY;
 ALTER TABLE vocabularies ENABLE ROW LEVEL SECURITY;
 ALTER TABLE phrases ENABLE ROW LEVEL SECURITY;
 
 -- ===== RLS POLICIES =====
+
+-- User profiles policies
+DROP POLICY IF EXISTS "Users can view their own profile" ON user_profiles;
+CREATE POLICY "Users can view their own profile" ON user_profiles
+  FOR SELECT USING (auth.uid()::text = user_id);
+
+DROP POLICY IF EXISTS "Users can insert their own profile" ON user_profiles;
+CREATE POLICY "Users can insert their own profile" ON user_profiles
+  FOR INSERT WITH CHECK (auth.uid()::text = user_id);
+
+DROP POLICY IF EXISTS "Users can update their own profile" ON user_profiles;
+CREATE POLICY "Users can update their own profile" ON user_profiles
+  FOR UPDATE USING (auth.uid()::text = user_id);
 
 -- Requests policies
 DROP POLICY IF EXISTS "Users can access their own requests" ON requests;
@@ -115,6 +150,11 @@ CREATE POLICY "Users can access their own phrases" ON phrases
 
 -- ===== SERVICE ROLE POLICIES =====
 -- Allow the service role to access all data (for Edge Functions)
+
+-- User profiles service role policy
+DROP POLICY IF EXISTS "Service role can access all user profiles" ON user_profiles;
+CREATE POLICY "Service role can access all user profiles" ON user_profiles
+  FOR ALL USING (auth.role() = 'service_role');
 
 -- Requests service role policy
 DROP POLICY IF EXISTS "Service role can access all requests" ON requests;
@@ -228,60 +268,32 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- ===== EXAMPLE DATA (FOR TESTING) =====
--- Uncomment to insert sample data for testing
-
-/*
--- Sample learning request
-INSERT INTO requests (
-  request_id, user_id, user_level, focus_areas, ai_provider, ai_model,
-  total_tokens_used, estimated_cost, request_timestamp, system_prompt,
-  user_prompt, ai_response, metadata
-) VALUES (
-  'req_test_user_' || extract(epoch from now()),
-  'test_user_123',
-  'intermediate',
-  ARRAY['conversation', 'vocabulary'],
-  'gemini',
-  'gemini-1.5-flash',
-  150,
-  0.000225,
-  NOW(),
-  'You are an English learning assistant...',
-  'Hello, can you help me practice English?',
-  'Hello! I''d be happy to help you practice English. What would you like to focus on today?',
-  '{"messageType": "conversation", "extractedContentCount": {"vocabularies": 2, "phrases": 1}}'::jsonb
-);
-
--- Sample vocabulary
-INSERT INTO vocabularies (
-  request_id, user_id, english, persian, is_used
-) VALUES (
-  (SELECT id FROM requests WHERE user_id = 'test_user_123' LIMIT 1),
-  'test_user_123',
-  'practice',
-  'تمرین',
-  false
-);
-
--- Sample phrase
-INSERT INTO phrases (
-  request_id, user_id, english, persian, is_used
-) VALUES (
-  (SELECT id FROM requests WHERE user_id = 'test_user_123' LIMIT 1),
-  'test_user_123',
-  'I''d be happy to help',
-  'خوشحال می‌شوم کمک کنم',
-  false
-);
-*/
-
 -- ===== GRANTS =====
--- Grant necessary permissions for the service role
+-- Grant necessary permissions
 
+-- User profiles grants
+GRANT SELECT, INSERT, UPDATE ON user_profiles TO authenticated;
+GRANT USAGE, SELECT ON SEQUENCE user_profiles_id_seq TO authenticated;
+GRANT ALL ON user_profiles TO service_role;
+GRANT USAGE ON SEQUENCE user_profiles_id_seq TO service_role;
+
+-- Learning data grants for service role
 GRANT ALL ON requests TO service_role;
 GRANT ALL ON vocabularies TO service_role;
 GRANT ALL ON phrases TO service_role;
 GRANT USAGE ON SEQUENCE requests_id_seq TO service_role;
 GRANT USAGE ON SEQUENCE vocabularies_id_seq TO service_role;
 GRANT USAGE ON SEQUENCE phrases_id_seq TO service_role;
+
+-- ===== COMMENTS =====
+-- Add comments for documentation
+
+COMMENT ON TABLE user_profiles IS 'Stores user profile information including preferences and settings';
+COMMENT ON COLUMN user_profiles.user_id IS 'Unique identifier from authentication system';
+COMMENT ON COLUMN user_profiles.level IS 'English proficiency level (beginner, elementary, intermediate, advanced)';
+COMMENT ON COLUMN user_profiles.language IS 'User interface language preference (en, fa)';
+COMMENT ON COLUMN user_profiles.theme IS 'User interface theme preference';
+
+COMMENT ON TABLE requests IS 'Stores learning conversation requests and AI responses';
+COMMENT ON TABLE vocabularies IS 'Stores vocabulary words extracted from learning conversations';
+COMMENT ON TABLE phrases IS 'Stores phrases extracted from learning conversations';

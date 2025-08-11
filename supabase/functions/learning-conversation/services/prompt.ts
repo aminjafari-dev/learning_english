@@ -1,113 +1,135 @@
 // services/prompt.ts
-// Dynamic prompt generation service using database prompts with vocabulary and phrase extraction
+// Simplified prompt service with dynamic variable replacement
 
 import type { PromptConfig, VocabularyData, PhraseData } from '../types.ts';
 import type { DatabaseService } from './database.ts';
 
 /**
- * Determines the appropriate prompt type based on focus areas
- * @param focusAreas - User's learning focus areas
- * @returns Prompt type identifier
+ * Interface for dynamic prompt variables
  */
-export function determinePromptType(focusAreas: string[]): 'educational' | 'conversation' | 'practice' | 'assessment' {
-  const focusAreasText = focusAreas.join(' ').toLowerCase();
-  
-  // Educational focus areas - direct learning content
-  const educationalFocusAreas = [
-    'grammar', 'vocabulary', 'pronunciation', 'spelling', 'writing', 'reading',
-    'tenses', 'prepositions', 'articles', 'syntax', 'phonetics'
-  ];
-  
-  // Practice focus areas - exercise and drilling
-  const practiceFocusAreas = [
-    'practice', 'exercise', 'drill', 'quiz', 'test', 'challenge',
-    'repetition', 'training', 'workout'
-  ];
-  
-  // Assessment focus areas - evaluation and feedback
-  const assessmentFocusAreas = [
-    'assessment', 'evaluation', 'feedback', 'review', 'check', 'correct',
-    'analyze', 'score', 'rate'
-  ];
-  
-  // Check for specific types based on focus areas
-  if (educationalFocusAreas.some(area => focusAreasText.includes(area))) {
-    return 'educational';
-  }
-  
-  if (practiceFocusAreas.some(area => focusAreasText.includes(area))) {
-    return 'practice';
-  }
-  
-  if (assessmentFocusAreas.some(area => focusAreasText.includes(area))) {
-    return 'assessment';
-  }
-  
-  // Default to conversation for general learning
-  return 'conversation';
+interface PromptVariables {
+  user_level: string;
+  focus_areas: string;
+  used_vocabularies: string;
+  used_phrases: string;
 }
 
 /**
- * Creates a learning prompt by fetching the latest version from database
+ * Fallback prompt template for when database prompt is not available
+ */
+const FALLBACK_PROMPT = `Generate exactly 3 new English vocabulary words and 5 useful English phrases for {user_level} level I want to focus on {focus_areas}.
+
+- Previously used vocabulary words: {used_vocabularies}
+- Previously used phrases: {used_phrases}
+
+Requirements:
+- Ensure variety (mix of nouns, verbs, adjectives, adverbs)
+- Avoid any words from previous learning sessions
+
+Format your response exactly like this:
+{
+  "vocabularies": [
+    {"english": "new_word1", "persian": "ترجمه1"},
+    {"english": "new_word2", "persian": "ترجمه2"}
+  ],
+  "phrases": [
+    {"english": "new_phrase1", "persian": "ترجمه1"},
+    {"english": "new_phrase2", "persian": "ترجمه2"}
+  ]
+}
+
+IMPORTANT INSTRUCTIONS:
+1. Avoid suggesting any of the previously used words or phrases listed above
+2. Provide Persian translations without English transliterations (Finglish)
+3. Return only the JSON format above, no additional text
+4. Ensure all vocabulary and phrases are appropriate for {user_level} level`;
+
+/**
+ * Creates a learning prompt with dynamic variables replacement
  * @param config - Prompt configuration with user level and focus areas
- * @param databaseService - Database service instance for fetching prompts
- * @returns Formatted prompt string for AI API
+ * @param databaseService - Database service for fetching prompts
+ * @param usedVocabularies - Previously used vocabulary words
+ * @param usedPhrases - Previously used phrases
+ * @returns Promise with formatted prompt string
  */
 export async function createLearningPrompt(
   config: PromptConfig, 
-  databaseService: DatabaseService
+  databaseService: DatabaseService,
+  usedVocabularies: string[] = [],
+  usedPhrases: string[] = []
 ): Promise<string> {
-  const { userLevel, focusAreas } = config;
-  
-  // Determine the appropriate prompt type based on focus areas
-  const promptType = determinePromptType(focusAreas);
-  console.log(`🎯 [PROMPT] Determined prompt type: ${promptType} for focus areas: ${focusAreas.join(', ')}`);
+  console.log('🎯 [PROMPT] Creating learning prompt for:', config);
+  console.log('📚 [PROMPT] Used vocabularies count:', usedVocabularies.length);
+  console.log('💬 [PROMPT] Used phrases count:', usedPhrases.length);
   
   try {
-    // Fetch the latest prompt from database
-    let promptData = await databaseService.getLatestPrompt(promptType);
+    // Try to fetch prompt from database
+    const promptData = await databaseService.getLatestPrompt();
     
-    if (!promptData) {
-      console.log(`⚠️ [PROMPT] No prompt found for type ${promptType}, falling back to conversation`);
-      // Fallback to conversation prompt if specific type not found
-      const fallbackPrompt = await databaseService.getLatestPrompt('conversation');
-      
-      if (!fallbackPrompt) {
-        throw new Error('No prompts available in database');
-      }
-      
-      promptData = fallbackPrompt;
+    let promptTemplate: string;
+    
+    if (promptData && promptData.content) {
+      console.log(`✅ [PROMPT] Using database prompt version: ${promptData.version}`);
+      promptTemplate = promptData.content;
+    } else {
+      console.log('⚠️ [PROMPT] No database prompt found, using fallback');
+      promptTemplate = FALLBACK_PROMPT;
     }
     
-    console.log(`✅ [PROMPT] Using prompt: ${promptData.promptName} v${promptData.version}`);
-    
-    // Prepare variables for template substitution
-    const variables = {
-      userLevel,
-      focusAreas: focusAreas.join(', '),
-      learningObjective: `Generate personalized English learning content for ${userLevel} level focusing on ${focusAreas.join(', ')}`,
+    // Prepare variables for replacement
+    const variables: PromptVariables = {
+      user_level: config.userLevel,
+      focus_areas: config.focusAreas.join(', '),
+      used_vocabularies: usedVocabularies.length > 0 ? usedVocabularies.join(', ') : 'None',
+      used_phrases: usedPhrases.length > 0 ? usedPhrases.join(', ') : 'None'
     };
     
-    // Process the prompt template with variables
-    const processedPrompt = databaseService.processPromptTemplate(promptData.content, variables);
+    // Replace variables in the prompt template
+    const processedPrompt = replacePromptVariables(promptTemplate, variables);
+    
+    console.log('✅ [PROMPT] Learning prompt created successfully');
+    console.log('📝 [PROMPT] Variables replaced:', Object.keys(variables).join(', '));
     
     return processedPrompt;
     
   } catch (error) {
-    console.error('❌ [PROMPT] Failed to fetch prompt from database:', error);
+    console.error('❌ [PROMPT] Error creating learning prompt:', error);
     
-    // Ultimate fallback - use a basic hardcoded prompt
-    console.log('🔄 [PROMPT] Using emergency fallback prompt');
-    return `You are an English learning assistant. Generate personalized learning content for a ${userLevel} level learner focusing on ${focusAreas.join(', ')}. 
-
-Create educational content including vocabulary, phrases, and explanations appropriate for their level. Include both English content and Persian translations where helpful.`;
+    // Use fallback prompt on error with variables
+    console.log('🔄 [PROMPT] Using fallback prompt due to error');
+    const variables: PromptVariables = {
+      user_level: config.userLevel,
+      focus_areas: config.focusAreas.join(', '),
+      used_vocabularies: usedVocabularies.length > 0 ? usedVocabularies.join(', ') : 'None',
+      used_phrases: usedPhrases.length > 0 ? usedPhrases.join(', ') : 'None'
+    };
+    
+    return replacePromptVariables(FALLBACK_PROMPT, variables);
   }
 }
 
 /**
- * Extracts vocabulary and phrases from AI response text
- * Supports parsing AI-generated content with Persian translations
- * @param responseText - The AI response text
+ * Replaces variables in a prompt template with actual values
+ * @param template - The prompt template with {variable} placeholders
+ * @param variables - Object containing variable values
+ * @returns Processed prompt with variables replaced
+ */
+function replacePromptVariables(template: string, variables: PromptVariables): string {
+  let processedPrompt = template;
+  
+  // Replace each variable in the template
+  Object.entries(variables).forEach(([key, value]) => {
+    const placeholder = `{${key}}`;
+    processedPrompt = processedPrompt.replace(new RegExp(placeholder, 'g'), value);
+  });
+  
+  return processedPrompt;
+}
+
+/**
+ * Extracts vocabulary and phrases from AI response JSON
+ * Expects structured JSON response with vocabularies and phrases arrays
+ * @param responseText - The AI response text (should be JSON)
  * @param userLevel - User's English level for appropriate difficulty
  * @returns Object with extracted vocabularies and phrases with Persian translations
  */
@@ -115,176 +137,113 @@ export function extractLearningContent(
   responseText: string, 
   userLevel: string
 ): { vocabularies: VocabularyData[]; phrases: PhraseData[] } {
+  console.log(`🔍 [EXTRACTION] Starting JSON content extraction for ${userLevel} level`);
+  
+  try {
+    // Try to parse as JSON first
+    const cleanedResponse = responseText.trim();
+    
+    // Extract JSON from response if it's wrapped in other text
+    let jsonMatch = cleanedResponse.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.log('⚠️ [EXTRACTION] No JSON found in response, trying fallback extraction');
+      return extractFallbackContent(responseText, userLevel);
+    }
+    
+    const jsonText = jsonMatch[0];
+    const parsedResponse = JSON.parse(jsonText);
+    
+    const vocabularies: VocabularyData[] = [];
+    const phrases: PhraseData[] = [];
+    
+    // Extract vocabularies from JSON
+    if (parsedResponse.vocabularies && Array.isArray(parsedResponse.vocabularies)) {
+      for (const vocab of parsedResponse.vocabularies) {
+        if (vocab.english && vocab.persian) {
+          vocabularies.push({
+            english: vocab.english.toLowerCase().trim(),
+            persian: vocab.persian.trim(),
+            isUsed: false
+          });
+        }
+      }
+    }
+    
+    // Extract phrases from JSON
+    if (parsedResponse.phrases && Array.isArray(parsedResponse.phrases)) {
+      for (const phrase of parsedResponse.phrases) {
+        if (phrase.english && phrase.persian) {
+          phrases.push({
+            english: phrase.english.trim(),
+            persian: phrase.persian.trim(),
+            isUsed: false
+          });
+        }
+      }
+    }
+    
+    console.log(`✅ [EXTRACTION] Extracted ${vocabularies.length} vocabularies, ${phrases.length} phrases from JSON`);
+    return { vocabularies, phrases };
+    
+  } catch (error) {
+    console.error('❌ [EXTRACTION] Failed to parse JSON response:', error);
+    console.log('🔄 [EXTRACTION] Falling back to pattern-based extraction');
+    return extractFallbackContent(responseText, userLevel);
+  }
+}
+
+/**
+ * Fallback content extraction when JSON parsing fails
+ * @private
+ */
+function extractFallbackContent(responseText: string, userLevel: string): { vocabularies: VocabularyData[]; phrases: PhraseData[] } {
   const vocabularies: VocabularyData[] = [];
   const phrases: PhraseData[] = [];
-
-  console.log(`🔍 [EXTRACTION] Starting content extraction for ${userLevel} level`);
-
-  // First, try to extract structured vocabulary from AI response
-  const structuredVocab = extractStructuredVocabulary(responseText);
-  vocabularies.push(...structuredVocab);
   
-  // Extract structured phrases from AI response
-  const structuredPhrases = extractStructuredPhrases(responseText);
-  phrases.push(...structuredPhrases);
-
-  // If no structured content found, fall back to pattern-based extraction
+  // Try to extract structured vocabulary patterns
+  const vocabMatches = responseText.match(/"english":\s*"([^"]+)"[^}]*"persian":\s*"([^"]+)"/g);
+  if (vocabMatches) {
+    for (const match of vocabMatches.slice(0, 5)) { // Limit to 5
+      const englishMatch = match.match(/"english":\s*"([^"]+)"/);
+      const persianMatch = match.match(/"persian":\s*"([^"]+)"/);
+      
+      if (englishMatch && persianMatch) {
+        vocabularies.push({
+          english: englishMatch[1].toLowerCase().trim(),
+          persian: persianMatch[1].trim(),
+          isUsed: false
+        });
+      }
+    }
+  }
+  
+  // If still no content, use basic word extraction
   if (vocabularies.length === 0) {
-    const fallbackVocab = extractFallbackVocabulary(responseText, userLevel);
-    vocabularies.push(...fallbackVocab);
+    const words = responseText.toLowerCase()
+      .replace(/[^\w\s]/g, ' ')
+      .split(/\s+/)
+      .filter(word => word.length > 4 && !isCommonWord(word))
+      .slice(0, 3);
+    
+    for (const word of words) {
+      vocabularies.push({
+        english: word,
+        persian: generateBasicTranslation(word),
+        isUsed: false
+      });
+    }
   }
-
-  if (phrases.length === 0) {
-    const fallbackPhrases = extractFallbackPhrases(responseText);
-    phrases.push(...fallbackPhrases);
-  }
-
-  console.log(`✅ [EXTRACTION] Extracted ${vocabularies.length} vocabularies, ${phrases.length} phrases`);
+  
+  console.log(`⚠️ [EXTRACTION] Fallback extraction: ${vocabularies.length} vocabularies, ${phrases.length} phrases`);
   return { vocabularies, phrases };
 }
 
 /**
- * Extracts vocabulary from structured AI response patterns
- * Looks for patterns like: "Vocabulary: word - Persian translation"
- * @private
- */
-function extractStructuredVocabulary(responseText: string): VocabularyData[] {
-  const vocabularies: VocabularyData[] = [];
-  
-  // Pattern 1: "Vocabulary: word - translation" or "• word - translation"
-  const vocabPatterns = [
-    /(?:Vocabulary|vocabulary):\s*([a-zA-Z\s]+?)\s*-\s*([^\n\r,;]+)/gi,
-    /•\s*([a-zA-Z\s]+?)\s*-\s*([^\n\r,;]+)/gi,
-    /\*\s*([a-zA-Z\s]+?)\s*-\s*([^\n\r,;]+)/gi,
-    /(\w+)\s*\(([^)]+)\)/gi, // word (translation)
-  ];
-
-  for (const pattern of vocabPatterns) {
-    let match;
-    while ((match = pattern.exec(responseText)) !== null && vocabularies.length < 15) {
-      const english = match[1].trim().toLowerCase();
-      const persian = match[2].trim();
-      
-      // Skip if already exists or is too short
-      if (english.length > 2 && persian.length > 0 && 
-          !vocabularies.some(v => v.english === english)) {
-        vocabularies.push({
-          english,
-          persian,
-          isUsed: false,
-        });
-      }
-    }
-  }
-
-  return vocabularies;
-}
-
-/**
- * Extracts phrases from structured AI response patterns
- * Looks for patterns like: "Phrases: "phrase" - Persian translation"
- * @private
- */
-function extractStructuredPhrases(responseText: string): PhraseData[] {
-  const phrases: PhraseData[] = [];
-  
-  // Pattern for structured phrases: "phrase" - translation
-  const phrasePatterns = [
-    /(?:Phrases?|phrase):\s*"([^"]+)"\s*-\s*([^\n\r,;]+)/gi,
-    /"([^"]+)"\s*-\s*([^\n\r,;]+)/gi,
-    /•\s*"([^"]+)"\s*-\s*([^\n\r,;]+)/gi,
-    /\*\s*"([^"]+)"\s*-\s*([^\n\r,;]+)/gi,
-  ];
-
-  for (const pattern of phrasePatterns) {
-    let match;
-    while ((match = pattern.exec(responseText)) !== null && phrases.length < 10) {
-      const english = match[1].trim();
-      const persian = match[2].trim();
-      
-      // Skip if already exists or is too short
-      if (english.length > 4 && persian.length > 0 && 
-          !phrases.some(p => p.english === english)) {
-        phrases.push({
-          english,
-          persian,
-          isUsed: false,
-        });
-      }
-    }
-  }
-
-  return phrases;
-}
-
-/**
- * Fallback vocabulary extraction when no structured content is found
- * @private
- */
-function extractFallbackVocabulary(responseText: string, userLevel: string): VocabularyData[] {
-  const vocabularies: VocabularyData[] = [];
-  
-  // Look for words that might be new vocabulary (longer words, less common)
-  const words = responseText.toLowerCase()
-    .replace(/[^\w\s]/g, ' ')
-    .split(/\s+/)
-    .filter(word => word.length > 4 && !isCommonWord(word));
-
-  // Extract unique vocabulary words
-  const uniqueWords = [...new Set(words)].slice(0, 8); // Limit to 8 words
-  
-  for (const word of uniqueWords) {
-    vocabularies.push({
-      english: word,
-      persian: generateBasicTranslation(word), // Basic translation attempt
-      isUsed: false,
-    });
-  }
-
-  return vocabularies;
-}
-
-/**
- * Fallback phrase extraction when no structured content is found
- * @private
- */
-function extractFallbackPhrases(responseText: string): PhraseData[] {
-  const phrases: PhraseData[] = [];
-  
-  // Extract phrases (pattern matching for quoted text or common phrase patterns)
-  const phrasePatterns = [
-    /"([^"]+)"/g, // Quoted phrases
-    /\b(how to [^.!?]+)/gi, // "how to" phrases
-    /\b(would you like to [^.!?]+)/gi, // Polite phrases
-    /\b(let me [^.!?]+)/gi, // Helpful phrases
-    /\b(i would [^.!?]+)/gi, // Common expressions
-  ];
-
-  for (const pattern of phrasePatterns) {
-    let match;
-    while ((match = pattern.exec(responseText)) !== null && phrases.length < 6) {
-      const phrase = match[1].trim();
-      if (phrase.length > 5 && phrase.split(' ').length >= 2) {
-        phrases.push({
-          english: phrase,
-          persian: generateBasicTranslation(phrase), // Basic translation attempt
-          isUsed: false,
-        });
-      }
-    }
-  }
-
-  return phrases;
-}
-
-/**
- * Generates basic Persian translations for common words/phrases
- * This is a simple dictionary lookup for common terms
+ * Generates basic Persian translations for common words
  * @private
  */
 function generateBasicTranslation(text: string): string {
   const translations: Record<string, string> = {
-    // Common vocabulary
     'practice': 'تمرین',
     'learn': 'یاد گرفتن',
     'understand': 'درک کردن',
@@ -295,54 +254,15 @@ function generateBasicTranslation(text: string): string {
     'vocabulary': 'واژگان',
     'grammar': 'گرامر',
     'pronunciation': 'تلفظ',
-    'fluent': 'روان',
-    'beginner': 'مبتدی',
-    'intermediate': 'متوسط',
-    'advanced': 'پیشرفته',
     'education': 'آموزش',
     'student': 'دانش آموز',
     'teacher': 'معلم',
     'lesson': 'درس',
-    'exercise': 'تمرین',
-    'example': 'مثال',
-    'question': 'سوال',
-    'answer': 'پاسخ',
-    'correct': 'درست',
-    'mistake': 'اشتباه',
-    'improvement': 'بهبود',
-    
-    // Common phrases
-    'how to': 'چگونه',
-    'would you like': 'آیا دوست داری',
-    'let me': 'اجازه بده',
-    'i would': 'من می‌خواهم',
-    'please help': 'لطفا کمک کن',
-    'thank you': 'متشکرم',
-    'you\'re welcome': 'خواهش می‌کنم',
-    'excuse me': 'ببخشید',
-    'i\'m sorry': 'متأسفم',
-    'good morning': 'صبح بخیر',
-    'good evening': 'عصر بخیر',
-    'how are you': 'حال شما چطور است',
-    'nice to meet you': 'از ملاقات شما خوشحالم',
+    'exercise': 'تمرین'
   };
   
   const lowerText = text.toLowerCase().trim();
-  
-  // Check for exact matches first
-  if (translations[lowerText]) {
-    return translations[lowerText];
-  }
-  
-  // Check for partial matches
-  for (const [english, persian] of Object.entries(translations)) {
-    if (lowerText.includes(english)) {
-      return persian;
-    }
-  }
-  
-  // If no translation found, return a placeholder
-  return 'ترجمه در دسترس نیست';
+  return translations[lowerText] || 'ترجمه در دسترس نیست';
 }
 
 /**
@@ -356,12 +276,8 @@ function isCommonWord(word: string): boolean {
     'see', 'two', 'who', 'boy', 'did', 'man', 'men', 'put', 'say', 'she', 'too', 'use', 'that',
     'with', 'have', 'this', 'will', 'your', 'from', 'they', 'know', 'want', 'been', 'good',
     'much', 'some', 'time', 'very', 'when', 'come', 'here', 'just', 'like', 'long', 'make',
-    'many', 'over', 'such', 'take', 'than', 'them', 'well', 'were', 'what', 'would', 'more',
-    'said', 'each', 'which', 'their', 'called', 'other', 'after', 'first', 'also', 'back',
-    'being', 'before', 'where', 'little', 'only', 'right', 'think', 'work', 'life', 'way',
-    'even', 'place', 'well', 'such', 'because', 'turn', 'here', 'why', 'ask', 'went', 'look'
+    'many', 'over', 'such', 'take', 'than', 'them', 'well', 'were', 'what', 'would', 'more'
   ]);
   
   return commonWords.has(word.toLowerCase());
 }
-

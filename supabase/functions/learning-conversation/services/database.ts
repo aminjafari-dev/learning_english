@@ -278,61 +278,108 @@ export class DatabaseService {
   }
 
   /**
-   * Gets the latest prompt for a specific type from the database
-   * @param promptType - Type of prompt to fetch (educational, conversation, practice, assessment)
+   * Gets the latest active prompt from the simplified prompts table
    * @returns Promise with prompt data or null if not found
    */
-  async getLatestPrompt(promptType: string): Promise<{
+  async getLatestPrompt(): Promise<{
     id: number;
-    promptType: string;
-    promptName: string;
     version: number;
     content: string;
-    variables: Record<string, any>;
     createdAt: string;
   } | null> {
-    console.log(`💾 [DATABASE] Fetching latest prompt for type: ${promptType}`);
+    console.log('💾 [DATABASE] Fetching latest active prompt');
     
     try {
-      const { data, error } = await this.supabase.rpc('get_latest_prompt', {
-        p_prompt_type: promptType
-      });
+      const { data, error } = await this.supabase.rpc('get_latest_prompt');
 
       if (error) {
         console.error('❌ [DATABASE] Error fetching latest prompt:', error);
         throw new Error(`Failed to fetch latest prompt: ${error.message}`);
       }
 
-      if (!data || data.error) {
-        console.log(`⚠️ [DATABASE] No active prompt found for type: ${promptType}`);
+      if (!data || data.length === 0) {
+        console.log('⚠️ [DATABASE] No active prompt found');
         return null;
       }
 
-      console.log(`✅ [DATABASE] Latest prompt fetched: ${data.promptName} v${data.version}`);
-      return data;
+      // Get the first result from the function
+      const promptData = Array.isArray(data) ? data[0] : data;
+      
+      console.log(`✅ [DATABASE] Latest prompt fetched: version ${promptData.version}`);
+      return {
+        id: promptData.id,
+        version: promptData.version,
+        content: promptData.content,
+        createdAt: promptData.created_at
+      };
     } catch (error) {
-      console.error(`❌ [DATABASE] Failed to fetch latest prompt for ${promptType}:`, error);
+      console.error('❌ [DATABASE] Failed to fetch latest prompt:', error);
       throw error;
     }
   }
 
   /**
-   * Applies variables to a prompt template
-   * @param promptTemplate - The prompt template with placeholders
-   * @param variables - Variables to substitute in the template
-   * @returns Processed prompt with variables substituted
+   * Gets user's previously used vocabularies for avoiding duplicates
+   * @param userId - User ID
+   * @param limit - Maximum number of vocabularies to fetch
+   * @returns Promise with array of used vocabulary words
    */
-  processPromptTemplate(promptTemplate: string, variables: Record<string, any>): string {
-    let processedPrompt = promptTemplate;
-    
-    // Replace variables in the format {variableName}
-    Object.entries(variables).forEach(([key, value]) => {
-      const placeholder = `{${key}}`;
-      const valueStr = Array.isArray(value) ? value.join(', ') : String(value);
-      processedPrompt = processedPrompt.replace(new RegExp(placeholder, 'g'), valueStr);
-    });
-    
-    return processedPrompt;
+  async getUserUsedVocabularies(userId: string, limit: number = 50): Promise<string[]> {
+    try {
+      console.log(`📚 [DATABASE] Fetching used vocabularies for user: ${userId}`);
+
+      const { data, error } = await this.supabase
+        .from('vocabularies')
+        .select('english')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(limit);
+
+      if (error) {
+        console.error('❌ [DATABASE] Error fetching used vocabularies:', error);
+        return [];
+      }
+
+      const vocabularies = data?.map(v => v.english) || [];
+      console.log(`✅ [DATABASE] Retrieved ${vocabularies.length} used vocabularies`);
+      return vocabularies;
+
+    } catch (error) {
+      console.error('❌ [DATABASE] Failed to fetch used vocabularies:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Gets user's previously used phrases for avoiding duplicates
+   * @param userId - User ID
+   * @param limit - Maximum number of phrases to fetch
+   * @returns Promise with array of used phrase texts
+   */
+  async getUserUsedPhrases(userId: string, limit: number = 50): Promise<string[]> {
+    try {
+      console.log(`💬 [DATABASE] Fetching used phrases for user: ${userId}`);
+
+      const { data, error } = await this.supabase
+        .from('phrases')
+        .select('english')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(limit);
+
+      if (error) {
+        console.error('❌ [DATABASE] Error fetching used phrases:', error);
+        return [];
+      }
+
+      const phrases = data?.map(p => p.english) || [];
+      console.log(`✅ [DATABASE] Retrieved ${phrases.length} used phrases`);
+      return phrases;
+
+    } catch (error) {
+      console.error('❌ [DATABASE] Failed to fetch used phrases:', error);
+      return [];
+    }
   }
 
   /**

@@ -87,8 +87,14 @@ async function processLearningConversation(
       focusAreas,
     };
     
-    // Generate educational prompt from database
-    const systemPrompt = await createLearningPrompt(promptConfig, databaseService);
+    // Get user's previously used vocabularies and phrases to avoid duplicates
+    const usedVocabularies = await databaseService.getUserUsedVocabularies(request.userId, 50);
+    const usedPhrases = await databaseService.getUserUsedPhrases(request.userId, 50);
+    
+    console.log(`📚 [LEARNING] User has ${usedVocabularies.length} used vocabularies, ${usedPhrases.length} used phrases`);
+    
+    // Generate educational prompt with user's history
+    const systemPrompt = await createLearningPrompt(promptConfig, databaseService, usedVocabularies, usedPhrases);
     
     // Create Gemini service and generate response
     const geminiService = createGeminiService(envConfig);

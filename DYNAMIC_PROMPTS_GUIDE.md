@@ -122,8 +122,7 @@ SELECT * FROM get_latest_prompt('conversation');
 
 ### **Step 3: Test with Flutter App**
 ```dart
-final response = await geminiService.sendMessage(
-  'Hello, help me practice English',
+final response = await geminiService.generateConversationResponse(
   userLevel: UserLevel.intermediate,
   focusAreas: ['conversation'],
 );

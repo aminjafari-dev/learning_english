@@ -69,7 +69,6 @@ curl -X POST https://your-project.supabase.co/functions/v1/learning-conversation
   -H "Authorization: Bearer YOUR_ANON_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "message": "Hello, can you help me practice English?",
     "userId": "test_user_123",
     "userLevel": "intermediate",
     "focusAreas": ["conversation", "vocabulary"]
@@ -82,11 +81,11 @@ curl -X POST https://your-project.supabase.co/functions/v1/learning-conversation
 
 ```typescript
 {
-  message: string;        // Required: User's message (max 2000 characters)
   userId: string;         // Required: Unique user identifier
   userLevel?: string;     // Optional: beginner|elementary|intermediate|advanced
   focusAreas?: string[];  // Optional: Array of learning focus areas
   requestId?: string;     // Optional: Custom request ID (auto-generated if not provided)
+  message?: string;       // Optional: Custom message (prompts come from database)
 }
 ```
 
@@ -111,7 +110,6 @@ const response = await fetch('https://your-project.supabase.co/functions/v1/lear
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    message: "What's the difference between 'make' and 'do'?",
     userId: "user_123",
     userLevel: "intermediate",
     focusAreas: ["grammar", "vocabulary"]
@@ -161,7 +159,6 @@ Instead of using the removed `SupabaseLearningRequestsRemoteDataSource`, call th
 final response = await Supabase.instance.client.functions.invoke(
   'learning-conversation',
   body: {
-    'message': userMessage,
     'userId': currentUserId,
     'userLevel': userLevel,
     'focusAreas': focusAreas,

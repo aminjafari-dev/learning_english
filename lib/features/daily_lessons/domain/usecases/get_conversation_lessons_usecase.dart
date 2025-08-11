@@ -21,7 +21,7 @@ import '../entities/vocabulary.dart';
 import '../entities/phrase.dart';
 import '../entities/user_preferences.dart';
 import '../repositories/conversation_repository.dart';
-import '../../data/datasources/remote/conversation_prompts.dart';
+
 import '../../data/datasources/local/daily_lessons_local_data_source.dart';
 import '../../data/models/learning_request_model.dart';
 import '../../data/models/vocabulary_model.dart';
@@ -70,17 +70,10 @@ class GetConversationLessonsUseCase
       // Get user ID for tracking
       final userId = await coreUserRepository.getUserId() ?? 'current_user';
 
-      // Create a conversation prompt that asks for new vocabularies and phrases
-      // This prompt considers user's learning history to avoid repetition
-      final conversationPrompt = ConversationPrompts.getLessonPrompt(
-        preferences,
-      );
-
-      // Send conversation message to get personalized lessons
-      final result = await repository.sendConversationMessage(
-        preferences,
-        conversationPrompt,
-      );
+      // Generate conversation lessons based on user preferences
+      // Edge Function will automatically select appropriate prompts from database
+      // This considers user's learning history to avoid repetition
+      final result = await repository.generateConversationResponse(preferences);
 
       return result.fold((failure) => left(failure), (aiResponse) async {
         // Parse the AI response to extract vocabularies and phrases

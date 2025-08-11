@@ -83,7 +83,6 @@ async function processLearningConversation(
   try {
     // Create prompt configuration
     const promptConfig: PromptConfig = {
-      message: request.message,
       userLevel,
       focusAreas,
     };

@@ -5,51 +5,51 @@ import type { PromptConfig, VocabularyData, PhraseData } from '../types.ts';
 import type { DatabaseService } from './database.ts';
 
 /**
- * Determines the appropriate prompt type based on message analysis
- * @param message - User's message
+ * Determines the appropriate prompt type based on focus areas
+ * @param focusAreas - User's learning focus areas
  * @returns Prompt type identifier
  */
-export function determinePromptType(message: string): 'educational' | 'conversation' | 'practice' | 'assessment' {
-  const messageText = message.toLowerCase();
+export function determinePromptType(focusAreas: string[]): 'educational' | 'conversation' | 'practice' | 'assessment' {
+  const focusAreasText = focusAreas.join(' ').toLowerCase();
   
-  // Educational keywords - direct learning requests
-  const educationalKeywords = [
-    'explain', 'what is', 'what does', 'how to', 'help me learn', 'teach me',
-    'grammar', 'vocabulary', 'meaning', 'definition', 'difference', 'rule'
+  // Educational focus areas - direct learning content
+  const educationalFocusAreas = [
+    'grammar', 'vocabulary', 'pronunciation', 'spelling', 'writing', 'reading',
+    'tenses', 'prepositions', 'articles', 'syntax', 'phonetics'
   ];
   
-  // Practice keywords - exercise requests
-  const practiceKeywords = [
-    'practice', 'exercise', 'quiz', 'test', 'challenge', 'drill',
-    'let\'s practice', 'give me', 'create'
+  // Practice focus areas - exercise and drilling
+  const practiceFocusAreas = [
+    'practice', 'exercise', 'drill', 'quiz', 'test', 'challenge',
+    'repetition', 'training', 'workout'
   ];
   
-  // Assessment keywords - feedback requests
-  const assessmentKeywords = [
-    'check', 'correct', 'review', 'feedback', 'evaluate', 'assess',
-    'how did i do', 'is this right', 'rate my'
+  // Assessment focus areas - evaluation and feedback
+  const assessmentFocusAreas = [
+    'assessment', 'evaluation', 'feedback', 'review', 'check', 'correct',
+    'analyze', 'score', 'rate'
   ];
   
-  // Check for specific types
-  if (educationalKeywords.some(keyword => messageText.includes(keyword))) {
+  // Check for specific types based on focus areas
+  if (educationalFocusAreas.some(area => focusAreasText.includes(area))) {
     return 'educational';
   }
   
-  if (practiceKeywords.some(keyword => messageText.includes(keyword))) {
+  if (practiceFocusAreas.some(area => focusAreasText.includes(area))) {
     return 'practice';
   }
   
-  if (assessmentKeywords.some(keyword => messageText.includes(keyword))) {
+  if (assessmentFocusAreas.some(area => focusAreasText.includes(area))) {
     return 'assessment';
   }
   
-  // Default to conversation for natural dialogue
+  // Default to conversation for general learning
   return 'conversation';
 }
 
 /**
  * Creates a learning prompt by fetching the latest version from database
- * @param config - Prompt configuration with user level, focus areas, and message
+ * @param config - Prompt configuration with user level and focus areas
  * @param databaseService - Database service instance for fetching prompts
  * @returns Formatted prompt string for AI API
  */
@@ -57,11 +57,11 @@ export async function createLearningPrompt(
   config: PromptConfig, 
   databaseService: DatabaseService
 ): Promise<string> {
-  const { userLevel, focusAreas, message } = config;
+  const { userLevel, focusAreas } = config;
   
-  // Determine the appropriate prompt type based on message content
-  const promptType = determinePromptType(message);
-  console.log(`🎯 [PROMPT] Determined prompt type: ${promptType} for message: "${message.substring(0, 50)}..."`);
+  // Determine the appropriate prompt type based on focus areas
+  const promptType = determinePromptType(focusAreas);
+  console.log(`🎯 [PROMPT] Determined prompt type: ${promptType} for focus areas: ${focusAreas.join(', ')}`);
   
   try {
     // Fetch the latest prompt from database
@@ -85,7 +85,7 @@ export async function createLearningPrompt(
     const variables = {
       userLevel,
       focusAreas: focusAreas.join(', '),
-      message,
+      learningObjective: `Generate personalized English learning content for ${userLevel} level focusing on ${focusAreas.join(', ')}`,
     };
     
     // Process the prompt template with variables
@@ -98,11 +98,9 @@ export async function createLearningPrompt(
     
     // Ultimate fallback - use a basic hardcoded prompt
     console.log('🔄 [PROMPT] Using emergency fallback prompt');
-    return `You are an English learning assistant. The user's level is ${userLevel} and they're focusing on ${focusAreas.join(', ')}. 
+    return `You are an English learning assistant. Generate personalized learning content for a ${userLevel} level learner focusing on ${focusAreas.join(', ')}. 
 
-User message: "${message}"
-
-Please provide a helpful response appropriate for their level.`;
+Create educational content including vocabulary, phrases, and explanations appropriate for their level. Include both English content and Persian translations where helpful.`;
   }
 }
 
@@ -367,30 +365,3 @@ function isCommonWord(word: string): boolean {
   return commonWords.has(word.toLowerCase());
 }
 
-/**
- * Determines if the message needs educational focus or conversational focus
- * @param message - User's message
- * @returns Message type for appropriate response
- */
-export function analyzeMessageType(message: string): 'educational' | 'conversational' | 'practice' {
-  const messageText = message.toLowerCase();
-  
-  const educationalKeywords = [
-    'explain', 'what is', 'how to', 'help me learn', 'teach me', 'what does',
-    'grammar', 'vocabulary', 'meaning', 'definition', 'difference', 'understand'
-  ];
-  
-  const practiceKeywords = [
-    'practice', 'exercise', 'quiz', 'test', 'review', 'repeat', 'again'
-  ];
-  
-  if (educationalKeywords.some(keyword => messageText.includes(keyword))) {
-    return 'educational';
-  }
-  
-  if (practiceKeywords.some(keyword => messageText.includes(keyword))) {
-    return 'practice';
-  }
-  
-  return 'conversational';
-}

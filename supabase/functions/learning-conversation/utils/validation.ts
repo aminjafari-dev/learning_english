@@ -15,16 +15,12 @@ export function validateLearningConversationRequest(body: unknown): LearningConv
 
   const request = body as Record<string, unknown>;
 
-  // Validate required fields
-  if (!request.message || typeof request.message !== 'string') {
-    throw new Error('Invalid request: message field is required and must be a string');
+  // Validate optional message field (now optional - prompts come from database)
+  if (request.message && typeof request.message !== 'string') {
+    throw new Error('Invalid request: message field must be a string if provided');
   }
 
-  if (request.message.trim().length === 0) {
-    throw new Error('Invalid request: message cannot be empty');
-  }
-
-  if (request.message.length > 2000) {
+  if (request.message && typeof request.message === 'string' && request.message.length > 2000) {
     throw new Error('Invalid request: message too long (max 2000 characters)');
   }
 
@@ -54,7 +50,7 @@ export function validateLearningConversationRequest(body: unknown): LearningConv
   }
 
   return {
-    message: request.message.trim(),
+    message: request.message && typeof request.message === 'string' ? request.message.trim() : 'Generate learning content based on user preferences',
     userId: request.userId.trim(),
     userLevel: request.userLevel as string | undefined,
     focusAreas: request.focusAreas as string[] | undefined,

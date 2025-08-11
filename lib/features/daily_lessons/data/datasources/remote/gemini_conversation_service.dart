@@ -20,10 +20,10 @@ class GeminiConversationService {
     await _localDataSource.initialize();
   }
 
-  /// Send a message to Learning Conversation Edge Function for educational content generation
-  /// Uses dynamic prompts from database and automatically stores conversation data
-  Future<String> sendMessage(
-    String message, {
+  /// Generate AI conversation response using dynamic prompts from database
+  /// Uses database prompts and user preferences for educational content generation
+  /// Automatically stores conversation data without requiring any message input
+  Future<String> generateConversationResponse({
     UserLevel? userLevel,
     List<String>? focusAreas,
   }) async {
@@ -35,9 +35,9 @@ class GeminiConversationService {
       final userId =
           Supabase.instance.client.auth.currentUser?.id ?? 'anonymous_user';
 
-      // Prepare request body for Edge Function (prompt is now fetched dynamically from database)
+      // Prepare request body for Edge Function (prompts are fetched dynamically from database)
+      // No message needed - Edge Function will determine appropriate prompts based on user preferences
       final requestBody = {
-        'message': message,
         'userId': userId,
         'userLevel': levelString,
         'focusAreas': focusAreas ?? ['general'],
@@ -73,9 +73,8 @@ class GeminiConversationService {
 // Example usage:
 // final geminiService = GeminiConversationService(localDataSource, ''); // API key not needed
 // await geminiService.initialize();
-// final response = await geminiService.sendMessage(
-//   'Help me practice English conversation',
+// final response = await geminiService.generateConversationResponse(
 //   userLevel: UserLevel.intermediate,
 //   focusAreas: ['conversation', 'vocabulary'],
 // );
-// Note: Prompts are now dynamically fetched from database based on message analysis
+// Note: Prompts are dynamically fetched from database based on user preferences and focus areas

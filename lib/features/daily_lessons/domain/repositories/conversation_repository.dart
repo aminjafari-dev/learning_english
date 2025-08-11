@@ -11,39 +11,32 @@ import '../entities/user_preferences.dart';
 /// Handles conversation threads, message sending, and conversation history
 /// Provides interactive AI conversation capabilities for enhanced learning
 abstract class ConversationRepository {
-
-  /// Sends a message in conversation mode
-  /// Uses the existing thread for the user's preferences or creates a new one
+  /// Generates AI conversation response using database-driven prompts
+  /// Uses dynamic prompts and user preferences for personalized educational content
   ///
   /// This method:
-  /// 1. Gets or creates conversation thread for user preferences
-  /// 2. Adds user message to the thread
-  /// 3. Sends message to AI conversation service
-  /// 4. Adds AI response to the thread
-  /// 5. Saves updated thread with complete conversation history
+  /// 1. Processes user preferences (level and focus areas)
+  /// 2. Edge Function automatically selects appropriate prompts from database
+  /// 3. Generates AI response with educational content
+  /// 4. Automatically extracts and stores vocabularies/phrases
+  /// 5. Returns personalized learning content
   ///
   /// Parameters:
   /// - preferences: User's level and focus areas for conversation context
-  /// - message: The user's message to send to the AI
   ///
-  /// Returns: Either Failure or String (AI response)
+  /// Returns: Either Failure or String (AI response with educational content)
   ///
   /// Example usage:
   /// ```dart
-  /// final response = await conversationRepository.sendConversationMessage(
-  ///   preferences,
-  ///   "Can you explain the difference between 'affect' and 'effect'?"
-  /// );
+  /// final response = await conversationRepository.generateConversationResponse(preferences);
   /// response.fold(
   ///   (failure) => print('Error: ${failure.message}'),
   ///   (aiResponse) => print('AI: $aiResponse'),
   /// );
   /// ```
-  Future<Either<Failure, String>> sendConversationMessage(
+  Future<Either<Failure, String>> generateConversationResponse(
     UserPreferences preferences,
-    String prompt,
   );
-
 }
 
 // Example usage:
@@ -53,11 +46,8 @@ abstract class ConversationRepository {
 // final preferences = UserPreferences(level: UserLevel.intermediate, focusAreas: ['technology']);
 // final thread = await repo.getConversationThread(preferences);
 // 
-// // Send message
-// final response = await repo.sendConversationMessage(
-//   preferences,
-//   "Explain machine learning in simple terms"
-// );
+// // Generate conversation response
+// final response = await repo.generateConversationResponse(preferences);
 // 
 // // Get conversation history
 // final threads = await repo.getUserConversationThreads();

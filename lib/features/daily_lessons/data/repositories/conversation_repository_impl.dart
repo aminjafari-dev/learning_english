@@ -35,16 +35,14 @@ class ConversationRepositoryImpl implements ConversationRepository {
   });
 
   @override
-  Future<Either<Failure, String>> sendConversationMessage(
+  Future<Either<Failure, String>> generateConversationResponse(
     UserPreferences preferences,
-    String message,
   ) async {
     try {
-      debugPrint('💬 [CONVERSATION] Starting conversation message processing');
+      debugPrint('💬 [CONVERSATION] Starting conversation generation');
       debugPrint(
         '📋 [CONVERSATION] User preferences: level=${preferences.level}, areas=${preferences.focusAreas}',
       );
-      debugPrint('📝 [CONVERSATION] User message: $message');
 
       // Get user ID for conversation tracking
       final userId = await coreUserRepository.getUserId() ?? 'current_user';
@@ -55,17 +53,19 @@ class ConversationRepositoryImpl implements ConversationRepository {
 
       // No thread storage - each conversation is independent
       debugPrint(
-        '💬 [CONVERSATION] Processing message without thread persistence',
+        '💬 [CONVERSATION] Processing conversation generation without thread persistence',
       );
 
-      // Send to AI service (Gemini) and get response
-      debugPrint('🤖 [CONVERSATION] Sending to Gemini AI service');
+      // Generate AI conversation response with pre-configured prompt
+      debugPrint(
+        '🤖 [CONVERSATION] Generating conversation with Gemini AI service',
+      );
       try {
-        final aiResponse = await geminiConversationService.sendMessage(
-          message,
-          userLevel: userLevel,
-          focusAreas: preferences.focusAreas,
-        );
+        final aiResponse = await geminiConversationService
+            .generateConversationResponse(
+              userLevel: userLevel,
+              focusAreas: preferences.focusAreas,
+            );
 
         debugPrint(
           '✅ [CONVERSATION] Received AI response: ${aiResponse.substring(0, 50)}...',
@@ -81,7 +81,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
         }
 
         debugPrint(
-          '✅ [CONVERSATION] Conversation message processed successfully',
+          '✅ [CONVERSATION] Conversation generation processed successfully',
         );
         return right(aiResponse);
       } catch (e) {
@@ -96,7 +96,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
       );
       return left(
         ServerFailure(
-          'Failed to process conversation message: ${e.toString()}',
+          'Failed to generate conversation response: ${e.toString()}',
         ),
       );
     }
@@ -178,12 +178,9 @@ class ConversationRepositoryImpl implements ConversationRepository {
 //   coreUserRepository: getIt<UserRepository>(),
 // );
 // 
-// // Send conversation message
+// // Generate conversation response based on user preferences
 // final preferences = UserPreferences(level: UserLevel.intermediate, focusAreas: ['technology']);
-// final response = await conversationRepo.sendConversationMessage(
-//   preferences,
-//   "Explain machine learning in simple terms"
-// );
+// final response = await conversationRepo.generateConversationResponse(preferences);
 // response.fold(
 //   (failure) => print('Error: ${failure.message}'),
 //   (aiResponse) => print('AI: $aiResponse'),

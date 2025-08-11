@@ -36,7 +36,6 @@ export interface EnvironmentConfig {
 export interface PromptConfig {
   userLevel: string;
   focusAreas: string[];
-  message: string;
 }
 
 export interface LearningRequestData {

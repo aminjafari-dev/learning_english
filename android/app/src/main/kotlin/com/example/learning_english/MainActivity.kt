@@ -1,4 +1,4 @@
-package com.example.learning_english
+package com.ajo.lingo
 
 import io.flutter.embedding.android.FlutterActivity
 

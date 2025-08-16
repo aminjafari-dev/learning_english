@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/features/authentication/data/datasources/auth_remote_data_source.dart';
 import 'package:learning_english/features/authentication/data/datasources/user_local_data_source.dart';

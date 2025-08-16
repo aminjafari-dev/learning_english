@@ -2,82 +2,125 @@
 
 ## Description
 
-This feature handles user authentication using Google Sign-In and manages user session data locally. It follows a Clean Architecture approach, separating concerns into domain, data, and presentation layers.
+The Authentication feature provides secure user authentication using Google Sign-In integrated with Supabase authentication. This feature allows users to sign in with their Google accounts and maintains secure session management through Supabase's authentication system.
 
 ## Architecture
 
-The authentication feature is structured according to Clean Architecture principles:
+### Domain Layer
+- **entities/user.dart** - User domain entity representing authenticated users
+- **repositories/auth_repository.dart** - Abstract repository interface for authentication operations
+- **usecases/sign_in_with_google_usecase.dart** - Business logic for Google Sign-In authentication
 
-*   **Domain Layer:** Contains the core business logic and entities.
-    *   `lib/features/authentication/domain/entities/user.dart`: Defines the `User` entity.
-    *   `lib/features/authentication/domain/repositories/auth_repository.dart`: Defines the `AuthRepository` interface for authentication operations.
-    *   `lib/features/authentication/domain/usecases/`: Contains use cases for authentication actions:
-        *   `get_user_id_usecase.dart`: Retrieves the user ID locally.
-        *   `save_user_id_usecase.dart`: Saves the user ID locally.
-        *   `sign_in_with_google_usecase.dart`: Signs in the user with Google.
-*   **Data Layer:** Handles data retrieval and storage.
-    *   `lib/features/authentication/data/models/user_model.dart`: Defines the `UserModel` for mapping Firebase user data.
-    *   `lib/features/authentication/data/datasources/`: Contains data sources:
-        *   `auth_remote_data_source.dart`: Handles remote authentication via Firebase/Google Sign-In.
-        *   `user_local_data_source.dart`: Manages local storage of the user ID using shared preferences.
-    *   `lib/features/authentication/data/repositories/auth_repository_impl.dart`: Implements the `AuthRepository` using the data sources.
-*   **Presentation Layer:** Contains the UI and logic for user interaction.
-    *   `lib/features/authentication/presentation/bloc/`: Contains the BLoC (Business Logic Component) for managing authentication state:
-        *   `authentication_bloc.dart`: Manages authentication state and events.
-        *   `authentication_event.dart`: Defines authentication events.
-        *   `authentication_state.dart`: Defines authentication states.
-    *   `lib/features/authentication/presentation/pages/authentication_page.dart`: Implements the authentication page UI.
-    *   `lib/features/authentication/presentation/widgets/google_sign_in_button.dart`: Defines the Google Sign-In button widget.
+### Data Layer
+- **models/user_model.dart** - Data model for mapping Google Sign-In and Supabase user data
+- **datasources/auth_remote_data_source.dart** - Remote data source implementing Supabase authentication with Google Sign-In
+- **datasources/user_local_data_source.dart** - Local data source for storing user preferences
+- **repositories/auth_repository_impl.dart** - Repository implementation coordinating remote and local data sources
+
+### Presentation Layer
+- **bloc/authentication_bloc.dart** - BLoC for managing authentication state and events
+- **bloc/authentication_event.dart** - Events for authentication operations (sign in, sign out, check auth state)
+- **bloc/authentication_state.dart** - States representing authentication status (initial, loading, authenticated, error)
+- **pages/login_page.dart** - UI page for user authentication
+- **widgets/** - Reusable authentication-related UI components
 
 ## Use Cases
 
-1.  **Google Sign-In:**
-    *   Use Case: `SignInWithGoogleUseCase`
-    *   Description: Signs in the user using Google authentication.
-    *   Data Flow: `AuthenticationPage` -> `AuthenticationBloc` -> `SignInWithGoogleUseCase` -> `AuthRepositoryImpl` -> `AuthRemoteDataSourceImpl`
-2.  **Check Login Status:**
-    *   Use Case: (Implicitly within `AuthenticationBloc`)
-    *   Description: Checks if the user is already logged in (currently a TODO).
-    *   Data Flow: `AuthenticationPage` -> `AuthenticationBloc`
-3.  **Saving User ID:**
-    *   Use Case: `SaveUserIdUseCase`
-    *   Description: Saves the user ID to local storage.
-    *   Data Flow: (To be implemented in the future) -> `SaveUserIdUseCase` -> `AuthRepositoryImpl` -> `UserLocalDataSourceImpl`
-4.  **Retrieving User ID:**
-    *   Use Case: `GetUserIdUseCase`
-    *   Description: Retrieves the user ID from local storage.
-    *   Data Flow: (To be implemented in the future) -> `GetUserIdUseCase` -> `AuthRepositoryImpl` -> `UserLocalDataSourceImpl`
+1. **Sign In with Google**
+   - **Use Case**: `SignInWithGoogleUseCase`
+   - **Description**: Authenticates users using Google Sign-In and creates/updates their Supabase user account
+   - **Data Flow**: Page -> Bloc -> UseCase -> Repository -> RemoteDataSource (Google Sign-In + Supabase)
 
 ## Data Flow
 
-1.  The `AuthenticationPage` initiates the Google Sign-In process by dispatching a `GoogleSignIn` event to the `AuthenticationBloc`.
-2.  The `AuthenticationBloc` calls the `SignInWithGoogleUseCase`.
-3.  The `SignInWithGoogleUseCase` calls the `AuthRepository`.
-4.  The `AuthRepositoryImpl` uses the `AuthRemoteDataSourceImpl` to authenticate with Google/Firebase.
-5.  Upon successful authentication, the `AuthRemoteDataSourceImpl` returns a `UserModel`, which is converted to a `User` entity.
-6.  The `AuthenticationBloc` emits an `Authenticated` state with the `User` entity, triggering navigation to the next page.
+1. **User initiates Google Sign-In**: User taps the Google Sign-In button on the login page
+2. **BLoC processes event**: `AuthenticationBloc` receives `SignInWithGoogle` event
+3. **Use Case executes**: `SignInWithGoogleUseCase` calls the repository
+4. **Repository coordinates**: `AuthRepositoryImpl` calls the remote data source
+5. **Google Sign-In**: `AuthRemoteDataSourceImpl` authenticates with Google and gets user credentials
+6. **Supabase authentication**: User credentials are used to sign in to Supabase via OAuth
+7. **User data mapping**: Google user data is mapped to `UserModel` and then to domain `User` entity
+8. **State update**: BLoC emits authenticated state with user data
+9. **UI update**: Login page shows authenticated user information
 
 ## Key Components
 
-*   **Firebase Authentication:** Used for handling Google Sign-In.
-*   **Shared Preferences:** Used for local storage of the user ID.
-*   **BLoC Pattern:** Used for managing the authentication state.
-*   **Clean Architecture:** Used for separation of concerns and testability.
+- **Supabase Authentication** - Secure backend authentication with session management
+- **Google Sign-In** - OAuth provider for user authentication
+- **BLoC Pattern** - State management for authentication flow
+- **Clean Architecture** - Separation of concerns with domain, data, and presentation layers
+- **Dependency Injection** - Centralized dependency management using GetIt
 
-## Future Enhancements
+## Configuration
 
-*   Implement the "Check Login Status" use case to persist user sessions across app restarts.
-*   Add error handling and UI feedback for different authentication scenarios.
-*   Implement use cases and UI components for signing out.
+### Supabase Setup
+1. Google OAuth is configured in Supabase dashboard
+2. Client ID: `25836737324-k6hi5ppgsi923ve3n115to3pocdv771u.apps.googleusercontent.com`
+3. Supabase project URL: `https://secsedrlvpifggleixfk.supabase.co`
+4. Callback URL: `https://secsedrlvpifggleixfk.supabase.co/auth/v1/callback`
 
-## Usage
+### Google Cloud Console
+1. OAuth 2.0 client IDs configured:
+   - **Web Client ID**: `25836737324-k6hi5ppgsi923ve3n115to3pocdv771u.apps.googleusercontent.com`
+   - **Android Client ID**: `25836737324-p62t9me933469elag764l3tnvcd98ref.apps.googleusercontent.com`
+   - **iOS Client ID**: `25836737324-3jqa1magg1tujgu57c59to8ho46nt4fr.apps.googleusercontent.com`
+2. Package name: `com.ajo.lingo`
+3. Authorized redirect URIs include Supabase callback URL
+4. Google Sign-In API enabled
 
-To use the authentication feature:
+## Security Features
 
-1.  Ensure Firebase is properly configured in your Flutter project.
-2.  Instantiate the `AuthenticationPage` and navigate to it.
-3.  The `AuthenticationPage` will handle the Google Sign-In process and navigate to the next screen upon successful authentication.
+- **OAuth 2.0 Flow** - Secure authentication using Google's OAuth 2.0
+- **Supabase Session Management** - Automatic token refresh and secure session handling
+- **User Data Protection** - User data is stored securely in Supabase with Row Level Security
+- **Error Handling** - Comprehensive error handling for authentication failures
 
+## Usage Examples
+
+### Sign In with Google
 ```dart
-Navigator.push(context, MaterialPageRoute(builder: (_) => AuthenticationPage()));
+// Get the authentication bloc
+final authBloc = getIt<AuthenticationBloc>();
+
+// Trigger Google Sign-In
+authBloc.add(const AuthenticationEvent.signInWithGoogle());
+
+// Listen to authentication state changes
+BlocBuilder<AuthenticationBloc, AuthenticationState>(
+  builder: (context, state) {
+    return state.when(
+      initial: () => LoginButton(),
+      loading: () => CircularProgressIndicator(),
+      authenticated: (user) => UserProfile(user: user),
+      error: (message) => ErrorWidget(message: message),
+    );
+  },
+);
 ```
+
+### Check Current User
+```dart
+// Get current authenticated user
+final user = await getIt<AuthRepository>().getCurrentUser();
+if (user != null) {
+  print('User is signed in: ${user.name}');
+} else {
+  print('No user signed in');
+}
+```
+
+### Sign Out
+```dart
+// Sign out user
+await getIt<AuthRepository>().signOut();
+```
+
+## Error Handling
+
+The authentication feature handles various error scenarios:
+- **Google Sign-In cancellation** - User cancels the sign-in process
+- **Network errors** - Connection issues during authentication
+- **Supabase authentication errors** - Backend authentication failures
+- **Token validation errors** - Invalid or expired authentication tokens
+
+All errors are properly caught and converted to user-friendly error messages through the BLoC pattern.

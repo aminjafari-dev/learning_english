@@ -43,10 +43,12 @@ class GeminiConversationService {
         'focusAreas': focusAreas ?? ['general'],
       };
 
-      // Call Supabase Edge Function (updated to new learning-conversation function)
+      // Call Supabase Edge Function with authentication
       final response = await _supabaseClient.functions.invoke(
         'learning-conversation',
         body: requestBody,
+        // The Supabase client automatically includes the user's JWT token
+        // This ensures the function can validate authentication
       );
 
       // Handle the response

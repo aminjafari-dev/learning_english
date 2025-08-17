@@ -13,6 +13,7 @@ import {
   createSuccessResponse, 
   createErrorResponse 
 } from '../utils/http.ts';
+import { validateLearningRequest } from '../utils/auth.ts';
 import { createLearningPrompt, extractLearningContent } from '../services/prompt.ts';
 import { createGeminiService } from '../services/gemini.ts';
 import { createDatabaseService } from '../services/database.ts';
@@ -41,6 +42,10 @@ export async function handleLearningConversationRequest(request: Request): Promi
     
     const validatedRequest = validateLearningConversationRequest(body);
     console.log('✅ [HANDLER] Request validation successful for user:', validatedRequest.userId);
+
+    // Validate authentication and user ownership
+    const authenticatedUserId = await validateLearningRequest(request, config, validatedRequest.userId);
+    console.log('🔐 [HANDLER] Authentication validated for user:', authenticatedUserId);
 
     // Process the learning conversation
     const result = await processLearningConversation(validatedRequest, config);

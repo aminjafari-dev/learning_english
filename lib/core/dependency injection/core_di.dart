@@ -12,6 +12,7 @@ import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
 import 'package:learning_english/features/authentication/data/datasources/user_local_data_source.dart';
 import 'package:learning_english/core/services/tts_service.dart';
 import 'package:learning_english/core/services/auth_service.dart';
+import 'package:learning_english/core/services/user_profile_service.dart';
 
 /// Sets up dependency injection for core dependencies
 ///
@@ -38,4 +39,8 @@ void setupCoreDI(GetIt locator) {
   // Register Auth Service as a singleton
   // This service provides centralized authentication management
   locator.registerLazySingleton<AuthService>(() => AuthService());
+
+  // Register User Profile Service as a singleton
+  // This service handles automatic profile creation and management
+  locator.registerLazySingleton<UserProfileService>(() => UserProfileService());
 }

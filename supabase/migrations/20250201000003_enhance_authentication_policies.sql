@@ -58,15 +58,15 @@ CREATE POLICY "Users can access their own phrases" ON phrases
 ALTER TABLE prompts ENABLE ROW LEVEL SECURITY;
 
 -- Prompts policies for authenticated users
--- Users can only access prompts that belong to them
-DROP POLICY IF EXISTS "Users can access their own prompts" ON prompts;
-CREATE POLICY "Users can access their own prompts" ON prompts
-  FOR ALL USING (
+-- Users can read active prompts (global system prompts)
+DROP POLICY IF EXISTS "Users can read active prompts" ON prompts;
+CREATE POLICY "Users can read active prompts" ON prompts
+  FOR SELECT USING (
     auth.uid() IS NOT NULL AND 
-    auth.uid()::text = user_id
+    is_active = TRUE
   );
 
--- Service role policy for prompts
+-- Service role policy for prompts (can manage all prompts)
 DROP POLICY IF EXISTS "Service role can access all prompts" ON prompts;
 CREATE POLICY "Service role can access all prompts" ON prompts
   FOR ALL USING (auth.role() = 'service_role');
@@ -74,8 +74,7 @@ CREATE POLICY "Service role can access all prompts" ON prompts
 -- ===== GRANTS FOR PROMPTS TABLE =====
 
 -- Grant necessary permissions for prompts table
-GRANT SELECT, INSERT, UPDATE, DELETE ON prompts TO authenticated;
-GRANT USAGE, SELECT ON SEQUENCE prompts_id_seq TO authenticated;
+GRANT SELECT ON prompts TO authenticated;
 GRANT ALL ON prompts TO service_role;
 GRANT USAGE ON SEQUENCE prompts_id_seq TO service_role;
 

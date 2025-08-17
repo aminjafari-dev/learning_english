@@ -40,7 +40,7 @@ class AuthenticationPage extends StatelessWidget {
             // Navigate to Level Selection page on success
             Navigator.pushReplacementNamed(
               context,
-              PageName.levelSelection,
+              PageName.mainNavigation,
               arguments: {'userId': user.id},
             );
           },

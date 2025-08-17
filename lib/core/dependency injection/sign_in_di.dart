@@ -9,6 +9,7 @@ import 'package:learning_english/features/authentication/domain/repositories/aut
 import 'package:learning_english/features/authentication/domain/usecases/sign_in_with_google_usecase.dart';
 import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
 import 'package:learning_english/core/repositories/user_repository.dart';
+import 'package:learning_english/core/services/user_profile_service.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_bloc.dart';
 
 void signInDi(GetIt locator) {
@@ -26,6 +27,7 @@ void signInDi(GetIt locator) {
     () => AuthRepositoryImpl(
       remoteDataSource: getIt<AuthRemoteDataSource>(),
       localDataSource: getIt<UserLocalDataSource>(),
+      userProfileService: getIt<UserProfileService>(),
     ),
   );
 

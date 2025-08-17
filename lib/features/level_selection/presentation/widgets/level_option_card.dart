@@ -33,7 +33,7 @@ class LevelOptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: InkWell(
         onTap: () {
           onTap?.call();
@@ -68,15 +68,6 @@ class LevelOptionCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Level category (smaller, lighter text)
-                    GText(
-                      title,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey[600],
-                        fontSize: 12,
-                      ),
-                    ),
-                    GGap.g4,
                     // Main level title (bold)
                     GText(
                       title,

@@ -47,12 +47,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<UserModel> signInWithGoogle() async {
     try {
       await signIn();
+      // Get the current user after successful sign-in
+      final currentUser = await getCurrentUser();
+      if (currentUser == null) {
+        throw ServerFailure('Failed to get user data after sign-in');
+      }
+      return currentUser;
     } catch (e) {
       print('Google Sign-In failed: ${e.toString()}');
       throw ServerFailure('Google Sign-In failed: ${e.toString()}');
     }
   }
-
 
   Future<void> signIn() async {
     String iosClientId =
@@ -70,7 +75,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final googleAuth = googleUser.authentication;
     final idToken = googleAuth.idToken;
 
-   final authResponse = await supabaseClient.auth.signInWithIdToken(
+    final authResponse = await supabaseClient.auth.signInWithIdToken(
       provider: OAuthProvider.google,
       idToken: idToken ?? '',
     );
@@ -85,11 +90,28 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return user != null ? UserModel.fromSupabaseUser(user) : null;
     });
   }
-  
-  
+
   @override
-  Future<void> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  Future<UserModel?> getCurrentUser() async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      return user != null ? UserModel.fromSupabaseUser(user) : null;
+    } catch (e) {
+      print('Failed to get current user: ${e.toString()}');
+      throw ServerFailure('Failed to get current user: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<void> signOut() async {
+    try {
+      // Sign out from Google
+      await googleSignIn.signOut();
+      // Sign out from Supabase
+      await supabaseClient.auth.signOut();
+    } catch (e) {
+      print('Sign out failed: ${e.toString()}');
+      throw ServerFailure('Sign out failed: ${e.toString()}');
+    }
   }
 }

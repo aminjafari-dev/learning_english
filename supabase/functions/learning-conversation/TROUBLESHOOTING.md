@@ -185,7 +185,7 @@ INSERT INTO learning_requests (
   'intermediate',
   ARRAY['conversation', 'vocabulary'],
   'gemini',
-  'gemini-1.5-flash',
+  'gemini-2.5-flash',
   150,
   0.000225,
   NOW(),

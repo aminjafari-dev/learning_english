@@ -35,7 +35,7 @@ export function loadEnvironmentConfig(): EnvironmentConfig {
 
   return {
     geminiApiKey,
-    geminiBaseUrl: 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent',
+    geminiBaseUrl: 'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent',
     supabaseUrl,
     supabaseServiceKey,
   };
@@ -51,6 +51,6 @@ export const DEFAULT_CONFIG = {
   maxOutputTokens: 1024,
   timeout: 30000, // 30 seconds
   aiProvider: 'gemini',
-  aiModel: 'gemini-1.5-flash',
+  aiModel: 'gemini-2.5-flash',
   estimatedCostPerToken: 0.0000015, // Approximate cost per token for Gemini
 } as const;

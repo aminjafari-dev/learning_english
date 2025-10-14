@@ -17,7 +17,6 @@ import 'package:learning_english/features/localization/presentation/bloc/localiz
 import 'package:learning_english/features/localization/presentation/bloc/localization_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_english/l10n/app_localizations.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   // Ensure Flutter bindings are initialized before any async work
@@ -25,13 +24,6 @@ void main() async {
 
   // Load environment variables from .env file
   await dotenv.load(fileName: ".env");
-
-  // Initialize Supabase
-  await Supabase.initialize(
-    url: 'https://secsedrlvpifggleixfk.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlY3NlZHJsdnBpZmdnbGVpeGZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2NDAzNjAsImV4cCI6MjA3MDIxNjM2MH0.7URWr5FVNrBAWkzATAAqSwPEnmX7Btk-rH5ZuznlOy4',
-  );
 
   // Register all dependencies
   await initDependencies();

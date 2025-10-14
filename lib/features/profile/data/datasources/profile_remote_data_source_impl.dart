@@ -1,12 +1,14 @@
 /// ProfileRemoteDataSourceImpl implements remote data operations for user profiles.
+/// This implementation uses local Hive storage instead of Supabase.
 ///
-/// This class provides concrete implementation of remote profile operations
-/// using Supabase for profile data storage and retrieval.
+/// This class provides concrete implementation of profile operations
+/// using Hive for profile data storage and retrieval.
 ///
 /// Usage Example:
 ///   final dataSource = ProfileRemoteDataSourceImpl();
 ///   final profile = await dataSource.getUserProfile(currentUserId);
-import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learning_english/features/profile/data/datasources/profile_remote_data_source.dart';
 import 'package:learning_english/features/profile/data/models/user_profile_model.dart';
 
@@ -16,21 +18,24 @@ class ServerException implements Exception {
   ServerException(this.message);
 }
 
-/// Implementation of ProfileRemoteDataSource using Supabase
+/// Implementation of ProfileRemoteDataSource using Hive local storage
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
-  /// Supabase client instance
-  final SupabaseClient _supabase;
+  static const String _boxName = 'user_profiles';
+  Box? _box;
 
   /// Constructor for ProfileRemoteDataSourceImpl
-  ///
-  /// Parameters:
-  ///   - supabase: Supabase client instance (optional, uses default if not provided)
-  ProfileRemoteDataSourceImpl({SupabaseClient? supabase})
-    : _supabase = supabase ?? Supabase.instance.client;
+  ProfileRemoteDataSourceImpl();
 
-  /// Retrieves user profile data from remote storage
+  /// Initialize the data source and open Hive box
+  Future<void> initialize() async {
+    if (_box == null || !_box!.isOpen) {
+      _box = await Hive.openBox(_boxName);
+    }
+  }
+
+  /// Retrieves user profile data from local storage
   ///
-  /// This method fetches the user's profile information from Supabase
+  /// This method fetches the user's profile information from Hive
   /// and returns it as a UserProfileModel.
   ///
   /// Parameters:
@@ -40,18 +45,15 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   ///   - UserProfileModel: The user's profile data
   ///
   /// Throws:
-  ///   - ServerException: If the remote operation fails
+  ///   - ServerException: If the operation fails
   @override
   Future<UserProfileModel> getUserProfile(String userId) async {
     try {
-      final response =
-          await _supabase
-              .from('user_profiles')
-              .select()
-              .eq('user_id', userId)
-              .maybeSingle();
+      await initialize();
 
-      if (response == null) {
+      final data = _box?.get(userId);
+
+      if (data == null || data is! Map) {
         // Create default profile if user doesn't exist
         final defaultProfile = UserProfileModel(
           fullName: '',
@@ -59,7 +61,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
           language: 'en',
         );
 
-        await _supabase.from('user_profiles').upsert({
+        await _box?.put(userId, {
           'user_id': userId,
           ...defaultProfile.toJson(),
           'created_at': DateTime.now().toIso8601String(),
@@ -69,32 +71,35 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         return defaultProfile;
       }
 
-      return UserProfileModel.fromJson(response);
+      return UserProfileModel.fromJson(Map<String, dynamic>.from(data));
     } catch (e) {
       throw ServerException('Failed to get user profile: ${e.toString()}');
     }
   }
 
-  /// Updates user profile data in remote storage
+  /// Updates user profile data in local storage
   ///
-  /// This method updates the user's profile information in Supabase
+  /// This method updates the user's profile information in Hive
   /// and returns the updated profile data.
   ///
   /// Parameters:
+  ///   - userId: The user ID
   ///   - userProfile: The updated profile data to save
   ///
   /// Returns:
   ///   - UserProfileModel: The updated profile data
   ///
   /// Throws:
-  ///   - ServerException: If the remote operation fails
+  ///   - ServerException: If the operation fails
   @override
   Future<UserProfileModel> updateUserProfile({
     required String userId,
     required UserProfileModel userProfile,
   }) async {
     try {
-      await _supabase.from('user_profiles').upsert({
+      await initialize();
+
+      await _box?.put(userId, {
         'user_id': userId,
         ...userProfile.toJson(),
         'updated_at': DateTime.now().toIso8601String(),
@@ -106,59 +111,79 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     }
   }
 
-  /// Uploads a profile image and returns the URL
+  /// Uploads a profile image and returns a placeholder URL
   ///
-  /// This method uploads an image file to Supabase Storage and returns
-  /// the public URL for the uploaded image.
+  /// Since we're using local storage, this method returns a placeholder URL.
+  /// In a production app, you might want to save the image locally and return a local path.
   ///
   /// Parameters:
   ///   - userId: The unique identifier of the user
   ///   - imagePath: The local path to the image file
   ///
   /// Returns:
-  ///   - String: The public URL of the uploaded image
+  ///   - String: The placeholder URL (or local path)
   ///
   /// Throws:
-  ///   - ServerException: If the upload operation fails
+  ///   - ServerException: If the operation fails
   @override
   Future<String> uploadProfileImage(String userId, String imagePath) async {
     try {
-      // For now, return a placeholder URL
-      // TODO: Implement Supabase Storage upload when dependency is properly configured
-      final placeholderUrl =
-          'https://via.placeholder.com/150x150.png?text=Profile';
+      // For local storage, we can save the image path
+      // In a real app, you might want to copy the image to app's documents directory
 
-      print('Profile image upload placeholder for user $userId');
+      await initialize();
+
+      final existingProfile = _box?.get(userId);
+      if (existingProfile != null && existingProfile is Map) {
+        final updatedProfile = Map<String, dynamic>.from(existingProfile);
+        updatedProfile['photo_url'] = imagePath;
+        updatedProfile['updated_at'] = DateTime.now().toIso8601String();
+        await _box?.put(userId, updatedProfile);
+      }
+
+      print('Profile image saved locally for user $userId');
       print('Image path: $imagePath');
-      print('Placeholder URL: $placeholderUrl');
 
-      return placeholderUrl;
+      return imagePath;
     } catch (e) {
-      throw ServerException('Failed to upload profile image: ${e.toString()}');
+      throw ServerException('Failed to save profile image: ${e.toString()}');
     }
   }
 
   /// Removes a profile image from storage
   ///
-  /// This method removes an image file from Supabase Storage.
+  /// This method removes the image reference from the user's profile.
   ///
   /// Parameters:
-  ///   - imageUrl: The URL of the image to remove
+  ///   - imageUrl: The URL/path of the image to remove
   ///
   /// Returns:
-  ///   - void
+  ///   - bool: True if successful
   ///
   /// Throws:
-  ///   - ServerException: If the removal operation fails
+  ///   - ServerException: If the operation fails
   @override
   Future<bool> deleteProfileImage(String imageUrl) async {
     try {
-      // For now, just log the operation
-      // TODO: Implement Supabase Storage deletion when dependency is properly configured
+      await initialize();
 
-      print('Profile image removal placeholder');
+      // Find the user profile that has this image URL
+      // For simplicity, we'll just clear photo_url from all profiles that match
+      final allKeys = _box?.keys.toList() ?? [];
+
+      for (final key in allKeys) {
+        final profile = _box?.get(key);
+        if (profile is Map && profile['photo_url'] == imageUrl) {
+          final updatedProfile = Map<String, dynamic>.from(profile);
+          updatedProfile.remove('photo_url');
+          updatedProfile['updated_at'] = DateTime.now().toIso8601String();
+          await _box?.put(key, updatedProfile);
+        }
+      }
+
+      print('Profile image removed');
       print('Image URL: $imageUrl');
-      return true; // Return success for placeholder implementation
+      return true;
     } catch (e) {
       throw ServerException('Failed to remove profile image: ${e.toString()}');
     }

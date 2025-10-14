@@ -1,25 +1,32 @@
 // user_profile_service.dart
 // Service for managing user profiles with automatic creation on sign-in
+// This implementation uses local Hive storage instead of Supabase
 //
 // Usage Example:
 //   final profileService = getIt<UserProfileService>();
-//   await profileService.createOrGetProfile(userId, userData);
+//   await profileService.createOrGetProfile(user);
 //
 // This service automatically creates user profiles when users sign in
 // and provides methods to update profile information.
 
-import 'package:supabase_flutter/supabase_flutter.dart' hide User;
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learning_english/features/authentication/domain/entities/user.dart';
 
 /// Service for managing user profiles with automatic creation
-/// Handles profile creation, updates, and retrieval
+/// Handles profile creation, updates, and retrieval using local Hive storage
 class UserProfileService {
-  final SupabaseClient _supabaseClient;
+  static const String _boxName = 'user_profiles';
+  Box? _box;
 
-  /// Constructor that injects Supabase client
-  /// @param supabaseClient The Supabase client instance for database operations
-  UserProfileService({SupabaseClient? supabaseClient})
-    : _supabaseClient = supabaseClient ?? Supabase.instance.client;
+  /// Constructor
+  UserProfileService();
+
+  /// Initialize the service and open Hive box
+  Future<void> initialize() async {
+    if (_box == null || !_box!.isOpen) {
+      _box = await Hive.openBox(_boxName);
+    }
+  }
 
   /// Creates or gets a user profile automatically when user signs in
   /// This method should be called after successful authentication
@@ -27,15 +34,12 @@ class UserProfileService {
   /// @returns Future<void> - Profile is created/retrieved automatically
   Future<void> createOrGetProfile(User user) async {
     try {
-      // Check if profile already exists
-      final response =
-          await _supabaseClient
-              .from('user_profiles')
-              .select('*')
-              .eq('user_id', user.id)
-              .maybeSingle();
+      await initialize();
 
-      if (response == null) {
+      // Check if profile already exists
+      final existingProfile = _box?.get(user.id);
+
+      if (existingProfile == null) {
         // Profile doesn't exist, create one with default values
         await _createDefaultProfile(user);
         print('✅ [PROFILE] Created new profile for user: ${user.id}');
@@ -54,17 +58,22 @@ class UserProfileService {
   /// @returns Future<void>
   Future<void> _createDefaultProfile(User user) async {
     try {
-      await _supabaseClient.from('user_profiles').insert({
+      await initialize();
+
+      final profileData = {
         'user_id': user.id,
         'full_name': user.name,
         'email': user.email,
+        'photo_url': user.photoUrl,
         'level': 'beginner', // Default level
         'focus_areas': [], // Default empty focus areas
         'language': 'en', // Default language
         'theme': 'goldTheme', // Default theme
         'created_at': DateTime.now().toIso8601String(),
         'updated_at': DateTime.now().toIso8601String(),
-      });
+      };
+
+      await _box?.put(user.id, profileData);
     } catch (e) {
       throw Exception('Failed to create profile: $e');
     }
@@ -75,14 +84,15 @@ class UserProfileService {
   /// @returns Future<Map<String, dynamic>?> The profile data or null if not found
   Future<Map<String, dynamic>?> getProfile(String userId) async {
     try {
-      final response =
-          await _supabaseClient
-              .from('user_profiles')
-              .select('*')
-              .eq('user_id', userId)
-              .maybeSingle();
+      await initialize();
 
-      return response;
+      final data = _box?.get(userId);
+
+      if (data != null && data is Map) {
+        return Map<String, dynamic>.from(data);
+      }
+
+      return null;
     } catch (e) {
       print('❌ [PROFILE] Error getting profile: $e');
       return null;
@@ -98,12 +108,30 @@ class UserProfileService {
     Map<String, dynamic> updates,
   ) async {
     try {
-      await _supabaseClient
-          .from('user_profiles')
-          .update({...updates, 'updated_at': DateTime.now().toIso8601String()})
-          .eq('user_id', userId);
+      await initialize();
 
-      print('✅ [PROFILE] Updated profile for user: $userId');
+      // Get existing profile
+      final existingProfile = _box?.get(userId);
+
+      if (existingProfile != null && existingProfile is Map) {
+        // Merge updates with existing profile
+        final updatedProfile = Map<String, dynamic>.from(existingProfile);
+        updatedProfile.addAll(updates);
+        updatedProfile['updated_at'] = DateTime.now().toIso8601String();
+
+        await _box?.put(userId, updatedProfile);
+        print('✅ [PROFILE] Updated profile for user: $userId');
+      } else {
+        // Create new profile if it doesn't exist
+        final newProfile = {
+          'user_id': userId,
+          ...updates,
+          'created_at': DateTime.now().toIso8601String(),
+          'updated_at': DateTime.now().toIso8601String(),
+        };
+        await _box?.put(userId, newProfile);
+        print('✅ [PROFILE] Created new profile for user: $userId');
+      }
     } catch (e) {
       print('❌ [PROFILE] Error updating profile: $e');
       rethrow;

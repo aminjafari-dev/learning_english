@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/features/authentication/data/datasources/auth_remote_data_source.dart';
 import 'package:learning_english/features/authentication/data/datasources/user_local_data_source.dart';
@@ -12,14 +12,14 @@ import 'package:learning_english/core/repositories/user_repository.dart';
 import 'package:learning_english/core/services/user_profile_service.dart';
 import 'package:learning_english/features/authentication/presentation/bloc/authentication_bloc.dart';
 
-void signInDi(GetIt locator) {
+Future<void> signInDi(GetIt locator) async {
+  // Open Hive box for user authentication
+  final userBox = await Hive.openBox('auth_users');
+
   // Data sources
+  // Note: UserLocalDataSource is now registered in core_di.dart since it's needed by core UserRepository
   getIt.registerLazySingleton<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImpl(),
-  );
-  // Local data source for userId
-  getIt.registerLazySingleton<UserLocalDataSource>(
-    () => UserLocalDataSourceImpl(getIt<SharedPreferences>()),
+    () => AuthRemoteDataSourceImpl(userBox: userBox),
   );
 
   // Repository

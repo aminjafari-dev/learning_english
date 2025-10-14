@@ -38,7 +38,7 @@ Future<void> initDependencies() async {
     await setupSplashLocator(getIt);
 
     // Sign in Dependencies
-    signInDi(getIt);
+    await signInDi(getIt);
 
     // Level Selection Feature
     setupLevelSelectionDI(getIt);

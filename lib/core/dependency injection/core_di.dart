@@ -6,6 +6,7 @@
 /// Usage Example:
 ///   setupCoreDI(getIt);
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:learning_english/core/repositories/user_repository.dart';
 import 'package:learning_english/core/repositories/user_repository_impl.dart';
 import 'package:learning_english/core/usecase/get_user_id_usecase.dart';
@@ -22,6 +23,12 @@ import 'package:learning_english/core/services/user_profile_service.dart';
 /// Parameters:
 ///   - locator: The GetIt instance to register dependencies with
 void setupCoreDI(GetIt locator) {
+  // Register User Local Data Source (needed by UserRepository)
+  // This is registered here because it's used by core UserRepository
+  locator.registerLazySingleton<UserLocalDataSource>(
+    () => UserLocalDataSourceImpl(locator<SharedPreferences>()),
+  );
+
   // Register Core Repository
   locator.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(locator<UserLocalDataSource>()),

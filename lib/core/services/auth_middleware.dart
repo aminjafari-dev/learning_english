@@ -26,7 +26,7 @@ class AuthMiddleware {
     await _authService.validateAuthentication();
 
     // Refresh session if needed to ensure valid authentication
-    await _authService.refreshSessionIfNeeded();
+    // await _authService.refreshSessionIfNeeded();
 
     try {
       return await operation();

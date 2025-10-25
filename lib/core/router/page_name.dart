@@ -30,4 +30,10 @@ class PageName {
 
   /// Route for the request details page
   static const String requestDetails = '/requestDetails';
+
+  /// Route for the learning paths home page
+  static const String learningPathsHome = '/learningPathsHome';
+
+  /// Route for the sub-category selection page
+  static const String subCategorySelection = '/subCategorySelection';
 }

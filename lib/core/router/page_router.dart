@@ -14,6 +14,8 @@ import 'package:learning_english/features/profile/presentation/pages/profile_pag
 import 'package:learning_english/features/navigation/presentation/pages/main_navigation_page.dart';
 import 'package:learning_english/features/history/presentation/pages/vocabulary_history_page.dart';
 import 'package:learning_english/features/history/presentation/pages/request_detail_page.dart';
+import 'package:learning_english/features/learning_paths/presentation/pages/learning_paths_home_page.dart';
+import 'package:learning_english/features/learning_paths/presentation/pages/sub_category_selection_page.dart';
 
 class PageRouter {
   /// Map of all named routes in the app
@@ -36,5 +38,10 @@ class PageRouter {
       final requestId = ModalRoute.of(context)!.settings.arguments as String;
       return RequestDetailPage(requestId: requestId);
     },
+    // Learning paths home page
+    PageName.learningPathsHome: (context) => const LearningPathsHomePage(),
+    // Sub-category selection page
+    PageName.subCategorySelection:
+        (context) => const SubCategorySelectionPage(),
   };
 }

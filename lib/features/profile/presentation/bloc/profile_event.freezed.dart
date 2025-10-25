@@ -97,9 +97,6 @@ class _$ProfileEventCopyWithImpl<$Res, $Val extends ProfileEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -116,9 +113,6 @@ class __$$LoadProfileImplCopyWithImpl<$Res>
   __$$LoadProfileImplCopyWithImpl(
       _$LoadProfileImpl _value, $Res Function(_$LoadProfileImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -249,8 +243,6 @@ class __$$UpdateProfileImplCopyWithImpl<$Res>
       _$UpdateProfileImpl _value, $Res Function(_$UpdateProfileImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -289,9 +281,7 @@ class _$UpdateProfileImpl implements UpdateProfile {
   @override
   int get hashCode => Object.hash(runtimeType, profile);
 
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateProfileImplCopyWith<_$UpdateProfileImpl> get copyWith =>
@@ -390,10 +380,7 @@ abstract class UpdateProfile implements ProfileEvent {
       _$UpdateProfileImpl;
 
   UserProfileEntity get profile;
-
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$UpdateProfileImplCopyWith<_$UpdateProfileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -415,8 +402,6 @@ class __$$UpdateProfileImageImplCopyWithImpl<$Res>
       $Res Function(_$UpdateProfileImageImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -465,9 +450,7 @@ class _$UpdateProfileImageImpl implements UpdateProfileImage {
   @override
   int get hashCode => Object.hash(runtimeType, userId, imagePath);
 
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateProfileImageImplCopyWith<_$UpdateProfileImageImpl> get copyWith =>
@@ -569,10 +552,7 @@ abstract class UpdateProfileImage implements ProfileEvent {
 
   String get userId;
   String get imagePath;
-
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$UpdateProfileImageImplCopyWith<_$UpdateProfileImageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -594,8 +574,6 @@ class __$$UpdateAppLanguageImplCopyWithImpl<$Res>
       $Res Function(_$UpdateAppLanguageImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -643,9 +621,7 @@ class _$UpdateAppLanguageImpl implements UpdateAppLanguage {
   @override
   int get hashCode => Object.hash(runtimeType, userId, language);
 
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateAppLanguageImplCopyWith<_$UpdateAppLanguageImpl> get copyWith =>
@@ -747,10 +723,7 @@ abstract class UpdateAppLanguage implements ProfileEvent {
 
   String get userId;
   String get language;
-
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$UpdateAppLanguageImplCopyWith<_$UpdateAppLanguageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -772,8 +745,6 @@ class __$$SaveChangesImplCopyWithImpl<$Res>
       _$SaveChangesImpl _value, $Res Function(_$SaveChangesImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -812,9 +783,7 @@ class _$SaveChangesImpl implements SaveChanges {
   @override
   int get hashCode => Object.hash(runtimeType, profile);
 
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SaveChangesImplCopyWith<_$SaveChangesImpl> get copyWith =>
@@ -913,10 +882,7 @@ abstract class SaveChanges implements ProfileEvent {
       _$SaveChangesImpl;
 
   UserProfileEntity get profile;
-
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SaveChangesImplCopyWith<_$SaveChangesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -935,9 +901,6 @@ class __$$ResetImplCopyWithImpl<$Res>
   __$$ResetImplCopyWithImpl(
       _$ResetImpl _value, $Res Function(_$ResetImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of ProfileEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

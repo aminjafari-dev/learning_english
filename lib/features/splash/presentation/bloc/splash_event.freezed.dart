@@ -69,9 +69,6 @@ class _$SplashEventCopyWithImpl<$Res, $Val extends SplashEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of SplashEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -90,9 +87,6 @@ class __$$CheckAuthenticationStatusImplCopyWithImpl<$Res>
       _$CheckAuthenticationStatusImpl _value,
       $Res Function(_$CheckAuthenticationStatusImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of SplashEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

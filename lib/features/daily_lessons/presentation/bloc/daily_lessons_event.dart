@@ -4,9 +4,7 @@
 // Now supports personalized content generation based on user preferences.
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 part 'daily_lessons_event.freezed.dart';
-
 /// Sealed class for daily lessons events
 @freezed
 class DailyLessonsEvent with _$DailyLessonsEvent {

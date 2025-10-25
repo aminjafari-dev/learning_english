@@ -78,9 +78,6 @@ class _$DailyLessonsEventCopyWithImpl<$Res, $Val extends DailyLessonsEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -97,9 +94,6 @@ class __$$FetchLessonsImplCopyWithImpl<$Res>
   __$$FetchLessonsImplCopyWithImpl(
       _$FetchLessonsImpl _value, $Res Function(_$FetchLessonsImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -208,9 +202,6 @@ class __$$RefreshLessonsImplCopyWithImpl<$Res>
   __$$RefreshLessonsImplCopyWithImpl(
       _$RefreshLessonsImpl _value, $Res Function(_$RefreshLessonsImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -319,9 +310,6 @@ class __$$GetUserPreferencesImplCopyWithImpl<$Res>
   __$$GetUserPreferencesImplCopyWithImpl(_$GetUserPreferencesImpl _value,
       $Res Function(_$GetUserPreferencesImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of DailyLessonsEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

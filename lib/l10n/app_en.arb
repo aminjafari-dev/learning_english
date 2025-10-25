@@ -254,5 +254,67 @@
   "lightBlueTheme": "Light Blue Theme",
   "@lightBlueTheme": {
     "description": "Light blue theme option."
+  },
+  "learningPaths": "Learning Paths",
+  "@learningPaths": {
+    "description": "Title for the learning paths feature."
+  },
+  "addLearningPath": "Add Learning Path",
+  "@addLearningPath": {
+    "description": "Button text for adding a new learning path."
+  },
+  "addLearningPathDescription": "Choose a focus area to begin your structured learning journey",
+  "@addLearningPathDescription": {
+    "description": "Description text for the empty learning path state."
+  },
+  "startLearning": "Start Learning",
+  "@startLearning": {
+    "description": "Button text to start learning."
+  },
+  "selectSubCategory": "Select Sub-Category",
+  "@selectSubCategory": {
+    "description": "Title for the sub-category selection page."
+  },
+  "continueText": "Continue",
+  "@continueText": {
+    "description": "Button text for continuing to the next step."
+  },
+  "courseProgress": "Course Progress",
+  "@courseProgress": {
+    "description": "Label for course progress display."
+  },
+  "courseCompleted": "Course Completed",
+  "@courseCompleted": {
+    "description": "Text shown when a course is completed."
+  },
+  "courseN": "Course {number}",
+  "@courseN": {
+    "description": "Text for course number display.",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "progress": "Progress",
+  "@progress": {
+    "description": "Label for progress indicator."
+  },
+  "deleteLearningPath": "Delete Learning Path",
+  "@deleteLearningPath": {
+    "description": "Title for delete learning path dialog."
+  },
+  "deleteLearningPathMessage": "Are you sure you want to delete your current learning path? This action cannot be undone.",
+  "@deleteLearningPathMessage": {
+    "description": "Message for delete learning path confirmation."
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Button text for delete action."
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Button text for retry action."
   }
 } 

@@ -72,9 +72,6 @@ class _$LevelEventCopyWithImpl<$Res, $Val extends LevelEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of LevelEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -94,8 +91,6 @@ class __$$LevelSelectedImplCopyWithImpl<$Res>
       _$LevelSelectedImpl _value, $Res Function(_$LevelSelectedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LevelEvent
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -134,9 +129,7 @@ class _$LevelSelectedImpl implements LevelSelected {
   @override
   int get hashCode => Object.hash(runtimeType, level);
 
-  /// Create a copy of LevelEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LevelSelectedImplCopyWith<_$LevelSelectedImpl> get copyWith =>
@@ -209,10 +202,7 @@ abstract class LevelSelected implements LevelEvent {
   const factory LevelSelected(final Level level) = _$LevelSelectedImpl;
 
   Level get level;
-
-  /// Create a copy of LevelEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LevelSelectedImplCopyWith<_$LevelSelectedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -231,9 +221,6 @@ class __$$LevelSubmittedImplCopyWithImpl<$Res>
   __$$LevelSubmittedImplCopyWithImpl(
       _$LevelSubmittedImpl _value, $Res Function(_$LevelSubmittedImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of LevelEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

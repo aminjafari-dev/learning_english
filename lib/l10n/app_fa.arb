@@ -218,5 +218,67 @@
   "lightBlueTheme": "تم آبی روشن",
   "@lightBlueTheme": {
     "description": "گزینه تم آبی روشن."
+  },
+  "learningPaths": "مسیرهای یادگیری",
+  "@learningPaths": {
+    "description": "عنوان ویژگی مسیرهای یادگیری."
+  },
+  "addLearningPath": "افزودن مسیر یادگیری",
+  "@addLearningPath": {
+    "description": "متن دکمه برای افزودن مسیر یادگیری جدید."
+  },
+  "addLearningPathDescription": "یک تمرکز یادگیری انتخاب کنید تا سفر یادگیری ساختاریافته خود را آغاز کنید",
+  "@addLearningPathDescription": {
+    "description": "متن توضیحی برای حالت خالی مسیر یادگیری."
+  },
+  "startLearning": "شروع یادگیری",
+  "@startLearning": {
+    "description": "متن دکمه برای شروع یادگیری."
+  },
+  "selectSubCategory": "انتخاب زیردسته",
+  "@selectSubCategory": {
+    "description": "عنوان صفحه انتخاب زیردسته."
+  },
+  "continueText": "ادامه",
+  "@continueText": {
+    "description": "متن دکمه برای ادامه به مرحله بعد."
+  },
+  "courseProgress": "پیشرفت دوره",
+  "@courseProgress": {
+    "description": "برچسب نمایش پیشرفت دوره."
+  },
+  "courseCompleted": "دوره تکمیل شد",
+  "@courseCompleted": {
+    "description": "متن نمایش داده شده هنگام تکمیل دوره."
+  },
+  "courseN": "دوره {number}",
+  "@courseN": {
+    "description": "متن نمایش شماره دوره.",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "progress": "پیشرفت",
+  "@progress": {
+    "description": "برچسب نشانگر پیشرفت."
+  },
+  "deleteLearningPath": "حذف مسیر یادگیری",
+  "@deleteLearningPath": {
+    "description": "عنوان دیالوگ حذف مسیر یادگیری."
+  },
+  "deleteLearningPathMessage": "آیا مطمئن هستید که می‌خواهید مسیر یادگیری فعلی خود را حذف کنید؟ این عمل قابل بازگشت نیست.",
+  "@deleteLearningPathMessage": {
+    "description": "پیام تأیید حذف مسیر یادگیری."
+  },
+  "delete": "حذف",
+  "@delete": {
+    "description": "متن دکمه برای عمل حذف."
+  },
+  "retry": "تلاش مجدد",
+  "@retry": {
+    "description": "متن دکمه برای عمل تلاش مجدد."
   }
 } 

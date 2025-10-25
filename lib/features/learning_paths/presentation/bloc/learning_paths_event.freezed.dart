@@ -1,0 +1,1077 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'learning_paths_event.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+
+/// @nodoc
+mixin _$LearningPathsEvent {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Level level, List<String> focusAreas)
+        generateSubCategories,
+    required TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)
+        selectSubCategory,
+    required TResult Function() loadActivePath,
+    required TResult Function(int courseNumber) completeCourse,
+    required TResult Function() deletePath,
+    required TResult Function() refresh,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult? Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult? Function()? loadActivePath,
+    TResult? Function(int courseNumber)? completeCourse,
+    TResult? Function()? deletePath,
+    TResult? Function()? refresh,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult Function()? loadActivePath,
+    TResult Function(int courseNumber)? completeCourse,
+    TResult Function()? deletePath,
+    TResult Function()? refresh,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GenerateSubCategories value)
+        generateSubCategories,
+    required TResult Function(SelectSubCategory value) selectSubCategory,
+    required TResult Function(LoadActivePath value) loadActivePath,
+    required TResult Function(CompleteCourse value) completeCourse,
+    required TResult Function(DeletePath value) deletePath,
+    required TResult Function(Refresh value) refresh,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GenerateSubCategories value)? generateSubCategories,
+    TResult? Function(SelectSubCategory value)? selectSubCategory,
+    TResult? Function(LoadActivePath value)? loadActivePath,
+    TResult? Function(CompleteCourse value)? completeCourse,
+    TResult? Function(DeletePath value)? deletePath,
+    TResult? Function(Refresh value)? refresh,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GenerateSubCategories value)? generateSubCategories,
+    TResult Function(SelectSubCategory value)? selectSubCategory,
+    TResult Function(LoadActivePath value)? loadActivePath,
+    TResult Function(CompleteCourse value)? completeCourse,
+    TResult Function(DeletePath value)? deletePath,
+    TResult Function(Refresh value)? refresh,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LearningPathsEventCopyWith<$Res> {
+  factory $LearningPathsEventCopyWith(
+          LearningPathsEvent value, $Res Function(LearningPathsEvent) then) =
+      _$LearningPathsEventCopyWithImpl<$Res, LearningPathsEvent>;
+}
+
+/// @nodoc
+class _$LearningPathsEventCopyWithImpl<$Res, $Val extends LearningPathsEvent>
+    implements $LearningPathsEventCopyWith<$Res> {
+  _$LearningPathsEventCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$GenerateSubCategoriesImplCopyWith<$Res> {
+  factory _$$GenerateSubCategoriesImplCopyWith(
+          _$GenerateSubCategoriesImpl value,
+          $Res Function(_$GenerateSubCategoriesImpl) then) =
+      __$$GenerateSubCategoriesImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Level level, List<String> focusAreas});
+}
+
+/// @nodoc
+class __$$GenerateSubCategoriesImplCopyWithImpl<$Res>
+    extends _$LearningPathsEventCopyWithImpl<$Res, _$GenerateSubCategoriesImpl>
+    implements _$$GenerateSubCategoriesImplCopyWith<$Res> {
+  __$$GenerateSubCategoriesImplCopyWithImpl(_$GenerateSubCategoriesImpl _value,
+      $Res Function(_$GenerateSubCategoriesImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? level = null,
+    Object? focusAreas = null,
+  }) {
+    return _then(_$GenerateSubCategoriesImpl(
+      level: null == level
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as Level,
+      focusAreas: null == focusAreas
+          ? _value._focusAreas
+          : focusAreas // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GenerateSubCategoriesImpl implements GenerateSubCategories {
+  const _$GenerateSubCategoriesImpl(
+      {required this.level, required final List<String> focusAreas})
+      : _focusAreas = focusAreas;
+
+  @override
+  final Level level;
+  final List<String> _focusAreas;
+  @override
+  List<String> get focusAreas {
+    if (_focusAreas is EqualUnmodifiableListView) return _focusAreas;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_focusAreas);
+  }
+
+  @override
+  String toString() {
+    return 'LearningPathsEvent.generateSubCategories(level: $level, focusAreas: $focusAreas)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GenerateSubCategoriesImpl &&
+            (identical(other.level, level) || other.level == level) &&
+            const DeepCollectionEquality()
+                .equals(other._focusAreas, _focusAreas));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, level, const DeepCollectionEquality().hash(_focusAreas));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GenerateSubCategoriesImplCopyWith<_$GenerateSubCategoriesImpl>
+      get copyWith => __$$GenerateSubCategoriesImplCopyWithImpl<
+          _$GenerateSubCategoriesImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Level level, List<String> focusAreas)
+        generateSubCategories,
+    required TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)
+        selectSubCategory,
+    required TResult Function() loadActivePath,
+    required TResult Function(int courseNumber) completeCourse,
+    required TResult Function() deletePath,
+    required TResult Function() refresh,
+  }) {
+    return generateSubCategories(level, focusAreas);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult? Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult? Function()? loadActivePath,
+    TResult? Function(int courseNumber)? completeCourse,
+    TResult? Function()? deletePath,
+    TResult? Function()? refresh,
+  }) {
+    return generateSubCategories?.call(level, focusAreas);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult Function()? loadActivePath,
+    TResult Function(int courseNumber)? completeCourse,
+    TResult Function()? deletePath,
+    TResult Function()? refresh,
+    required TResult orElse(),
+  }) {
+    if (generateSubCategories != null) {
+      return generateSubCategories(level, focusAreas);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GenerateSubCategories value)
+        generateSubCategories,
+    required TResult Function(SelectSubCategory value) selectSubCategory,
+    required TResult Function(LoadActivePath value) loadActivePath,
+    required TResult Function(CompleteCourse value) completeCourse,
+    required TResult Function(DeletePath value) deletePath,
+    required TResult Function(Refresh value) refresh,
+  }) {
+    return generateSubCategories(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GenerateSubCategories value)? generateSubCategories,
+    TResult? Function(SelectSubCategory value)? selectSubCategory,
+    TResult? Function(LoadActivePath value)? loadActivePath,
+    TResult? Function(CompleteCourse value)? completeCourse,
+    TResult? Function(DeletePath value)? deletePath,
+    TResult? Function(Refresh value)? refresh,
+  }) {
+    return generateSubCategories?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GenerateSubCategories value)? generateSubCategories,
+    TResult Function(SelectSubCategory value)? selectSubCategory,
+    TResult Function(LoadActivePath value)? loadActivePath,
+    TResult Function(CompleteCourse value)? completeCourse,
+    TResult Function(DeletePath value)? deletePath,
+    TResult Function(Refresh value)? refresh,
+    required TResult orElse(),
+  }) {
+    if (generateSubCategories != null) {
+      return generateSubCategories(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GenerateSubCategories implements LearningPathsEvent {
+  const factory GenerateSubCategories(
+      {required final Level level,
+      required final List<String> focusAreas}) = _$GenerateSubCategoriesImpl;
+
+  Level get level;
+  List<String> get focusAreas;
+  @JsonKey(ignore: true)
+  _$$GenerateSubCategoriesImplCopyWith<_$GenerateSubCategoriesImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SelectSubCategoryImplCopyWith<$Res> {
+  factory _$$SelectSubCategoryImplCopyWith(_$SelectSubCategoryImpl value,
+          $Res Function(_$SelectSubCategoryImpl) then) =
+      __$$SelectSubCategoryImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({SubCategory subCategory, Level level, List<String> focusAreas});
+}
+
+/// @nodoc
+class __$$SelectSubCategoryImplCopyWithImpl<$Res>
+    extends _$LearningPathsEventCopyWithImpl<$Res, _$SelectSubCategoryImpl>
+    implements _$$SelectSubCategoryImplCopyWith<$Res> {
+  __$$SelectSubCategoryImplCopyWithImpl(_$SelectSubCategoryImpl _value,
+      $Res Function(_$SelectSubCategoryImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? subCategory = null,
+    Object? level = null,
+    Object? focusAreas = null,
+  }) {
+    return _then(_$SelectSubCategoryImpl(
+      subCategory: null == subCategory
+          ? _value.subCategory
+          : subCategory // ignore: cast_nullable_to_non_nullable
+              as SubCategory,
+      level: null == level
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as Level,
+      focusAreas: null == focusAreas
+          ? _value._focusAreas
+          : focusAreas // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SelectSubCategoryImpl implements SelectSubCategory {
+  const _$SelectSubCategoryImpl(
+      {required this.subCategory,
+      required this.level,
+      required final List<String> focusAreas})
+      : _focusAreas = focusAreas;
+
+  @override
+  final SubCategory subCategory;
+  @override
+  final Level level;
+  final List<String> _focusAreas;
+  @override
+  List<String> get focusAreas {
+    if (_focusAreas is EqualUnmodifiableListView) return _focusAreas;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_focusAreas);
+  }
+
+  @override
+  String toString() {
+    return 'LearningPathsEvent.selectSubCategory(subCategory: $subCategory, level: $level, focusAreas: $focusAreas)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SelectSubCategoryImpl &&
+            (identical(other.subCategory, subCategory) ||
+                other.subCategory == subCategory) &&
+            (identical(other.level, level) || other.level == level) &&
+            const DeepCollectionEquality()
+                .equals(other._focusAreas, _focusAreas));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, subCategory, level,
+      const DeepCollectionEquality().hash(_focusAreas));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SelectSubCategoryImplCopyWith<_$SelectSubCategoryImpl> get copyWith =>
+      __$$SelectSubCategoryImplCopyWithImpl<_$SelectSubCategoryImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Level level, List<String> focusAreas)
+        generateSubCategories,
+    required TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)
+        selectSubCategory,
+    required TResult Function() loadActivePath,
+    required TResult Function(int courseNumber) completeCourse,
+    required TResult Function() deletePath,
+    required TResult Function() refresh,
+  }) {
+    return selectSubCategory(subCategory, level, focusAreas);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult? Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult? Function()? loadActivePath,
+    TResult? Function(int courseNumber)? completeCourse,
+    TResult? Function()? deletePath,
+    TResult? Function()? refresh,
+  }) {
+    return selectSubCategory?.call(subCategory, level, focusAreas);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult Function()? loadActivePath,
+    TResult Function(int courseNumber)? completeCourse,
+    TResult Function()? deletePath,
+    TResult Function()? refresh,
+    required TResult orElse(),
+  }) {
+    if (selectSubCategory != null) {
+      return selectSubCategory(subCategory, level, focusAreas);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GenerateSubCategories value)
+        generateSubCategories,
+    required TResult Function(SelectSubCategory value) selectSubCategory,
+    required TResult Function(LoadActivePath value) loadActivePath,
+    required TResult Function(CompleteCourse value) completeCourse,
+    required TResult Function(DeletePath value) deletePath,
+    required TResult Function(Refresh value) refresh,
+  }) {
+    return selectSubCategory(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GenerateSubCategories value)? generateSubCategories,
+    TResult? Function(SelectSubCategory value)? selectSubCategory,
+    TResult? Function(LoadActivePath value)? loadActivePath,
+    TResult? Function(CompleteCourse value)? completeCourse,
+    TResult? Function(DeletePath value)? deletePath,
+    TResult? Function(Refresh value)? refresh,
+  }) {
+    return selectSubCategory?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GenerateSubCategories value)? generateSubCategories,
+    TResult Function(SelectSubCategory value)? selectSubCategory,
+    TResult Function(LoadActivePath value)? loadActivePath,
+    TResult Function(CompleteCourse value)? completeCourse,
+    TResult Function(DeletePath value)? deletePath,
+    TResult Function(Refresh value)? refresh,
+    required TResult orElse(),
+  }) {
+    if (selectSubCategory != null) {
+      return selectSubCategory(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SelectSubCategory implements LearningPathsEvent {
+  const factory SelectSubCategory(
+      {required final SubCategory subCategory,
+      required final Level level,
+      required final List<String> focusAreas}) = _$SelectSubCategoryImpl;
+
+  SubCategory get subCategory;
+  Level get level;
+  List<String> get focusAreas;
+  @JsonKey(ignore: true)
+  _$$SelectSubCategoryImplCopyWith<_$SelectSubCategoryImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoadActivePathImplCopyWith<$Res> {
+  factory _$$LoadActivePathImplCopyWith(_$LoadActivePathImpl value,
+          $Res Function(_$LoadActivePathImpl) then) =
+      __$$LoadActivePathImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoadActivePathImplCopyWithImpl<$Res>
+    extends _$LearningPathsEventCopyWithImpl<$Res, _$LoadActivePathImpl>
+    implements _$$LoadActivePathImplCopyWith<$Res> {
+  __$$LoadActivePathImplCopyWithImpl(
+      _$LoadActivePathImpl _value, $Res Function(_$LoadActivePathImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LoadActivePathImpl implements LoadActivePath {
+  const _$LoadActivePathImpl();
+
+  @override
+  String toString() {
+    return 'LearningPathsEvent.loadActivePath()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadActivePathImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Level level, List<String> focusAreas)
+        generateSubCategories,
+    required TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)
+        selectSubCategory,
+    required TResult Function() loadActivePath,
+    required TResult Function(int courseNumber) completeCourse,
+    required TResult Function() deletePath,
+    required TResult Function() refresh,
+  }) {
+    return loadActivePath();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult? Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult? Function()? loadActivePath,
+    TResult? Function(int courseNumber)? completeCourse,
+    TResult? Function()? deletePath,
+    TResult? Function()? refresh,
+  }) {
+    return loadActivePath?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult Function()? loadActivePath,
+    TResult Function(int courseNumber)? completeCourse,
+    TResult Function()? deletePath,
+    TResult Function()? refresh,
+    required TResult orElse(),
+  }) {
+    if (loadActivePath != null) {
+      return loadActivePath();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GenerateSubCategories value)
+        generateSubCategories,
+    required TResult Function(SelectSubCategory value) selectSubCategory,
+    required TResult Function(LoadActivePath value) loadActivePath,
+    required TResult Function(CompleteCourse value) completeCourse,
+    required TResult Function(DeletePath value) deletePath,
+    required TResult Function(Refresh value) refresh,
+  }) {
+    return loadActivePath(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GenerateSubCategories value)? generateSubCategories,
+    TResult? Function(SelectSubCategory value)? selectSubCategory,
+    TResult? Function(LoadActivePath value)? loadActivePath,
+    TResult? Function(CompleteCourse value)? completeCourse,
+    TResult? Function(DeletePath value)? deletePath,
+    TResult? Function(Refresh value)? refresh,
+  }) {
+    return loadActivePath?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GenerateSubCategories value)? generateSubCategories,
+    TResult Function(SelectSubCategory value)? selectSubCategory,
+    TResult Function(LoadActivePath value)? loadActivePath,
+    TResult Function(CompleteCourse value)? completeCourse,
+    TResult Function(DeletePath value)? deletePath,
+    TResult Function(Refresh value)? refresh,
+    required TResult orElse(),
+  }) {
+    if (loadActivePath != null) {
+      return loadActivePath(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LoadActivePath implements LearningPathsEvent {
+  const factory LoadActivePath() = _$LoadActivePathImpl;
+}
+
+/// @nodoc
+abstract class _$$CompleteCourseImplCopyWith<$Res> {
+  factory _$$CompleteCourseImplCopyWith(_$CompleteCourseImpl value,
+          $Res Function(_$CompleteCourseImpl) then) =
+      __$$CompleteCourseImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int courseNumber});
+}
+
+/// @nodoc
+class __$$CompleteCourseImplCopyWithImpl<$Res>
+    extends _$LearningPathsEventCopyWithImpl<$Res, _$CompleteCourseImpl>
+    implements _$$CompleteCourseImplCopyWith<$Res> {
+  __$$CompleteCourseImplCopyWithImpl(
+      _$CompleteCourseImpl _value, $Res Function(_$CompleteCourseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? courseNumber = null,
+  }) {
+    return _then(_$CompleteCourseImpl(
+      courseNumber: null == courseNumber
+          ? _value.courseNumber
+          : courseNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CompleteCourseImpl implements CompleteCourse {
+  const _$CompleteCourseImpl({required this.courseNumber});
+
+  @override
+  final int courseNumber;
+
+  @override
+  String toString() {
+    return 'LearningPathsEvent.completeCourse(courseNumber: $courseNumber)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CompleteCourseImpl &&
+            (identical(other.courseNumber, courseNumber) ||
+                other.courseNumber == courseNumber));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, courseNumber);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CompleteCourseImplCopyWith<_$CompleteCourseImpl> get copyWith =>
+      __$$CompleteCourseImplCopyWithImpl<_$CompleteCourseImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Level level, List<String> focusAreas)
+        generateSubCategories,
+    required TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)
+        selectSubCategory,
+    required TResult Function() loadActivePath,
+    required TResult Function(int courseNumber) completeCourse,
+    required TResult Function() deletePath,
+    required TResult Function() refresh,
+  }) {
+    return completeCourse(courseNumber);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult? Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult? Function()? loadActivePath,
+    TResult? Function(int courseNumber)? completeCourse,
+    TResult? Function()? deletePath,
+    TResult? Function()? refresh,
+  }) {
+    return completeCourse?.call(courseNumber);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult Function()? loadActivePath,
+    TResult Function(int courseNumber)? completeCourse,
+    TResult Function()? deletePath,
+    TResult Function()? refresh,
+    required TResult orElse(),
+  }) {
+    if (completeCourse != null) {
+      return completeCourse(courseNumber);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GenerateSubCategories value)
+        generateSubCategories,
+    required TResult Function(SelectSubCategory value) selectSubCategory,
+    required TResult Function(LoadActivePath value) loadActivePath,
+    required TResult Function(CompleteCourse value) completeCourse,
+    required TResult Function(DeletePath value) deletePath,
+    required TResult Function(Refresh value) refresh,
+  }) {
+    return completeCourse(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GenerateSubCategories value)? generateSubCategories,
+    TResult? Function(SelectSubCategory value)? selectSubCategory,
+    TResult? Function(LoadActivePath value)? loadActivePath,
+    TResult? Function(CompleteCourse value)? completeCourse,
+    TResult? Function(DeletePath value)? deletePath,
+    TResult? Function(Refresh value)? refresh,
+  }) {
+    return completeCourse?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GenerateSubCategories value)? generateSubCategories,
+    TResult Function(SelectSubCategory value)? selectSubCategory,
+    TResult Function(LoadActivePath value)? loadActivePath,
+    TResult Function(CompleteCourse value)? completeCourse,
+    TResult Function(DeletePath value)? deletePath,
+    TResult Function(Refresh value)? refresh,
+    required TResult orElse(),
+  }) {
+    if (completeCourse != null) {
+      return completeCourse(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CompleteCourse implements LearningPathsEvent {
+  const factory CompleteCourse({required final int courseNumber}) =
+      _$CompleteCourseImpl;
+
+  int get courseNumber;
+  @JsonKey(ignore: true)
+  _$$CompleteCourseImplCopyWith<_$CompleteCourseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DeletePathImplCopyWith<$Res> {
+  factory _$$DeletePathImplCopyWith(
+          _$DeletePathImpl value, $Res Function(_$DeletePathImpl) then) =
+      __$$DeletePathImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$DeletePathImplCopyWithImpl<$Res>
+    extends _$LearningPathsEventCopyWithImpl<$Res, _$DeletePathImpl>
+    implements _$$DeletePathImplCopyWith<$Res> {
+  __$$DeletePathImplCopyWithImpl(
+      _$DeletePathImpl _value, $Res Function(_$DeletePathImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$DeletePathImpl implements DeletePath {
+  const _$DeletePathImpl();
+
+  @override
+  String toString() {
+    return 'LearningPathsEvent.deletePath()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$DeletePathImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Level level, List<String> focusAreas)
+        generateSubCategories,
+    required TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)
+        selectSubCategory,
+    required TResult Function() loadActivePath,
+    required TResult Function(int courseNumber) completeCourse,
+    required TResult Function() deletePath,
+    required TResult Function() refresh,
+  }) {
+    return deletePath();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult? Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult? Function()? loadActivePath,
+    TResult? Function(int courseNumber)? completeCourse,
+    TResult? Function()? deletePath,
+    TResult? Function()? refresh,
+  }) {
+    return deletePath?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult Function()? loadActivePath,
+    TResult Function(int courseNumber)? completeCourse,
+    TResult Function()? deletePath,
+    TResult Function()? refresh,
+    required TResult orElse(),
+  }) {
+    if (deletePath != null) {
+      return deletePath();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GenerateSubCategories value)
+        generateSubCategories,
+    required TResult Function(SelectSubCategory value) selectSubCategory,
+    required TResult Function(LoadActivePath value) loadActivePath,
+    required TResult Function(CompleteCourse value) completeCourse,
+    required TResult Function(DeletePath value) deletePath,
+    required TResult Function(Refresh value) refresh,
+  }) {
+    return deletePath(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GenerateSubCategories value)? generateSubCategories,
+    TResult? Function(SelectSubCategory value)? selectSubCategory,
+    TResult? Function(LoadActivePath value)? loadActivePath,
+    TResult? Function(CompleteCourse value)? completeCourse,
+    TResult? Function(DeletePath value)? deletePath,
+    TResult? Function(Refresh value)? refresh,
+  }) {
+    return deletePath?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GenerateSubCategories value)? generateSubCategories,
+    TResult Function(SelectSubCategory value)? selectSubCategory,
+    TResult Function(LoadActivePath value)? loadActivePath,
+    TResult Function(CompleteCourse value)? completeCourse,
+    TResult Function(DeletePath value)? deletePath,
+    TResult Function(Refresh value)? refresh,
+    required TResult orElse(),
+  }) {
+    if (deletePath != null) {
+      return deletePath(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DeletePath implements LearningPathsEvent {
+  const factory DeletePath() = _$DeletePathImpl;
+}
+
+/// @nodoc
+abstract class _$$RefreshImplCopyWith<$Res> {
+  factory _$$RefreshImplCopyWith(
+          _$RefreshImpl value, $Res Function(_$RefreshImpl) then) =
+      __$$RefreshImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$RefreshImplCopyWithImpl<$Res>
+    extends _$LearningPathsEventCopyWithImpl<$Res, _$RefreshImpl>
+    implements _$$RefreshImplCopyWith<$Res> {
+  __$$RefreshImplCopyWithImpl(
+      _$RefreshImpl _value, $Res Function(_$RefreshImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$RefreshImpl implements Refresh {
+  const _$RefreshImpl();
+
+  @override
+  String toString() {
+    return 'LearningPathsEvent.refresh()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$RefreshImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Level level, List<String> focusAreas)
+        generateSubCategories,
+    required TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)
+        selectSubCategory,
+    required TResult Function() loadActivePath,
+    required TResult Function(int courseNumber) completeCourse,
+    required TResult Function() deletePath,
+    required TResult Function() refresh,
+  }) {
+    return refresh();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult? Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult? Function()? loadActivePath,
+    TResult? Function(int courseNumber)? completeCourse,
+    TResult? Function()? deletePath,
+    TResult? Function()? refresh,
+  }) {
+    return refresh?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Level level, List<String> focusAreas)?
+        generateSubCategories,
+    TResult Function(
+            SubCategory subCategory, Level level, List<String> focusAreas)?
+        selectSubCategory,
+    TResult Function()? loadActivePath,
+    TResult Function(int courseNumber)? completeCourse,
+    TResult Function()? deletePath,
+    TResult Function()? refresh,
+    required TResult orElse(),
+  }) {
+    if (refresh != null) {
+      return refresh();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GenerateSubCategories value)
+        generateSubCategories,
+    required TResult Function(SelectSubCategory value) selectSubCategory,
+    required TResult Function(LoadActivePath value) loadActivePath,
+    required TResult Function(CompleteCourse value) completeCourse,
+    required TResult Function(DeletePath value) deletePath,
+    required TResult Function(Refresh value) refresh,
+  }) {
+    return refresh(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GenerateSubCategories value)? generateSubCategories,
+    TResult? Function(SelectSubCategory value)? selectSubCategory,
+    TResult? Function(LoadActivePath value)? loadActivePath,
+    TResult? Function(CompleteCourse value)? completeCourse,
+    TResult? Function(DeletePath value)? deletePath,
+    TResult? Function(Refresh value)? refresh,
+  }) {
+    return refresh?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GenerateSubCategories value)? generateSubCategories,
+    TResult Function(SelectSubCategory value)? selectSubCategory,
+    TResult Function(LoadActivePath value)? loadActivePath,
+    TResult Function(CompleteCourse value)? completeCourse,
+    TResult Function(DeletePath value)? deletePath,
+    TResult Function(Refresh value)? refresh,
+    required TResult orElse(),
+  }) {
+    if (refresh != null) {
+      return refresh(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Refresh implements LearningPathsEvent {
+  const factory Refresh() = _$RefreshImpl;
+}

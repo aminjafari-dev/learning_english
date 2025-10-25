@@ -84,9 +84,6 @@ class _$VocabulariesStateCopyWithImpl<$Res, $Val extends VocabulariesState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of VocabulariesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -103,9 +100,6 @@ class __$$VocabulariesInitialImplCopyWithImpl<$Res>
   __$$VocabulariesInitialImplCopyWithImpl(_$VocabulariesInitialImpl _value,
       $Res Function(_$VocabulariesInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of VocabulariesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -221,9 +215,6 @@ class __$$VocabulariesLoadingImplCopyWithImpl<$Res>
   __$$VocabulariesLoadingImplCopyWithImpl(_$VocabulariesLoadingImpl _value,
       $Res Function(_$VocabulariesLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of VocabulariesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -342,8 +333,6 @@ class __$$VocabulariesLoadedImplCopyWithImpl<$Res>
       $Res Function(_$VocabulariesLoadedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of VocabulariesState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -390,9 +379,7 @@ class _$VocabulariesLoadedImpl implements VocabulariesLoaded {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_vocabularies));
 
-  /// Create a copy of VocabulariesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$VocabulariesLoadedImplCopyWith<_$VocabulariesLoadedImpl> get copyWith =>
@@ -479,10 +466,7 @@ abstract class VocabulariesLoaded implements VocabulariesState {
       _$VocabulariesLoadedImpl;
 
   List<Vocabulary> get vocabularies;
-
-  /// Create a copy of VocabulariesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$VocabulariesLoadedImplCopyWith<_$VocabulariesLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -504,8 +488,6 @@ class __$$VocabulariesErrorImplCopyWithImpl<$Res>
       $Res Function(_$VocabulariesErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of VocabulariesState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -544,9 +526,7 @@ class _$VocabulariesErrorImpl implements VocabulariesError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of VocabulariesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$VocabulariesErrorImplCopyWith<_$VocabulariesErrorImpl> get copyWith =>
@@ -633,10 +613,7 @@ abstract class VocabulariesError implements VocabulariesState {
       _$VocabulariesErrorImpl;
 
   String get message;
-
-  /// Create a copy of VocabulariesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$VocabulariesErrorImplCopyWith<_$VocabulariesErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -711,9 +688,6 @@ class _$PhrasesStateCopyWithImpl<$Res, $Val extends PhrasesState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of PhrasesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -730,9 +704,6 @@ class __$$PhrasesInitialImplCopyWithImpl<$Res>
   __$$PhrasesInitialImplCopyWithImpl(
       _$PhrasesInitialImpl _value, $Res Function(_$PhrasesInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of PhrasesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -847,9 +818,6 @@ class __$$PhrasesLoadingImplCopyWithImpl<$Res>
   __$$PhrasesLoadingImplCopyWithImpl(
       _$PhrasesLoadingImpl _value, $Res Function(_$PhrasesLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of PhrasesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -967,8 +935,6 @@ class __$$PhrasesLoadedImplCopyWithImpl<$Res>
       _$PhrasesLoadedImpl _value, $Res Function(_$PhrasesLoadedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of PhrasesState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1013,9 +979,7 @@ class _$PhrasesLoadedImpl implements PhrasesLoaded {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_phrases));
 
-  /// Create a copy of PhrasesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PhrasesLoadedImplCopyWith<_$PhrasesLoadedImpl> get copyWith =>
@@ -1100,10 +1064,7 @@ abstract class PhrasesLoaded implements PhrasesState {
   const factory PhrasesLoaded(final List<Phrase> phrases) = _$PhrasesLoadedImpl;
 
   List<Phrase> get phrases;
-
-  /// Create a copy of PhrasesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$PhrasesLoadedImplCopyWith<_$PhrasesLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1125,8 +1086,6 @@ class __$$PhrasesErrorImplCopyWithImpl<$Res>
       _$PhrasesErrorImpl _value, $Res Function(_$PhrasesErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of PhrasesState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1165,9 +1124,7 @@ class _$PhrasesErrorImpl implements PhrasesError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of PhrasesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PhrasesErrorImplCopyWith<_$PhrasesErrorImpl> get copyWith =>
@@ -1252,10 +1209,7 @@ abstract class PhrasesError implements PhrasesState {
   const factory PhrasesError(final String message) = _$PhrasesErrorImpl;
 
   String get message;
-
-  /// Create a copy of PhrasesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$PhrasesErrorImplCopyWith<_$PhrasesErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1331,9 +1285,6 @@ class _$UserPreferencesStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of UserPreferencesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1353,9 +1304,6 @@ class __$$UserPreferencesInitialImplCopyWithImpl<$Res>
       _$UserPreferencesInitialImpl _value,
       $Res Function(_$UserPreferencesInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of UserPreferencesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1474,9 +1422,6 @@ class __$$UserPreferencesLoadingImplCopyWithImpl<$Res>
       _$UserPreferencesLoadingImpl _value,
       $Res Function(_$UserPreferencesLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of UserPreferencesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1597,8 +1542,6 @@ class __$$UserPreferencesLoadedImplCopyWithImpl<$Res>
       $Res Function(_$UserPreferencesLoadedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of UserPreferencesState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1638,9 +1581,7 @@ class _$UserPreferencesLoadedImpl implements UserPreferencesLoaded {
   @override
   int get hashCode => Object.hash(runtimeType, preferences);
 
-  /// Create a copy of UserPreferencesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UserPreferencesLoadedImplCopyWith<_$UserPreferencesLoadedImpl>
@@ -1727,10 +1668,7 @@ abstract class UserPreferencesLoaded implements UserPreferencesState {
       _$UserPreferencesLoadedImpl;
 
   UserPreferences get preferences;
-
-  /// Create a copy of UserPreferencesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$UserPreferencesLoadedImplCopyWith<_$UserPreferencesLoadedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1752,8 +1690,6 @@ class __$$UserPreferencesErrorImplCopyWithImpl<$Res>
       $Res Function(_$UserPreferencesErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of UserPreferencesState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1792,9 +1728,7 @@ class _$UserPreferencesErrorImpl implements UserPreferencesError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of UserPreferencesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UserPreferencesErrorImplCopyWith<_$UserPreferencesErrorImpl>
@@ -1882,10 +1816,7 @@ abstract class UserPreferencesError implements UserPreferencesState {
       _$UserPreferencesErrorImpl;
 
   String get message;
-
-  /// Create a copy of UserPreferencesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$UserPreferencesErrorImplCopyWith<_$UserPreferencesErrorImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1960,9 +1891,6 @@ class _$UserAnalyticsStateCopyWithImpl<$Res, $Val extends UserAnalyticsState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of UserAnalyticsState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1979,9 +1907,6 @@ class __$$UserAnalyticsInitialImplCopyWithImpl<$Res>
   __$$UserAnalyticsInitialImplCopyWithImpl(_$UserAnalyticsInitialImpl _value,
       $Res Function(_$UserAnalyticsInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of UserAnalyticsState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -2097,9 +2022,6 @@ class __$$UserAnalyticsLoadingImplCopyWithImpl<$Res>
   __$$UserAnalyticsLoadingImplCopyWithImpl(_$UserAnalyticsLoadingImpl _value,
       $Res Function(_$UserAnalyticsLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of UserAnalyticsState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -2218,8 +2140,6 @@ class __$$UserAnalyticsLoadedImplCopyWithImpl<$Res>
       $Res Function(_$UserAnalyticsLoadedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of UserAnalyticsState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2266,9 +2186,7 @@ class _$UserAnalyticsLoadedImpl implements UserAnalyticsLoaded {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_analytics));
 
-  /// Create a copy of UserAnalyticsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UserAnalyticsLoadedImplCopyWith<_$UserAnalyticsLoadedImpl> get copyWith =>
@@ -2355,10 +2273,7 @@ abstract class UserAnalyticsLoaded implements UserAnalyticsState {
       _$UserAnalyticsLoadedImpl;
 
   Map<String, dynamic> get analytics;
-
-  /// Create a copy of UserAnalyticsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$UserAnalyticsLoadedImplCopyWith<_$UserAnalyticsLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2380,8 +2295,6 @@ class __$$UserAnalyticsErrorImplCopyWithImpl<$Res>
       $Res Function(_$UserAnalyticsErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of UserAnalyticsState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2420,9 +2333,7 @@ class _$UserAnalyticsErrorImpl implements UserAnalyticsError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of UserAnalyticsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UserAnalyticsErrorImplCopyWith<_$UserAnalyticsErrorImpl> get copyWith =>
@@ -2509,10 +2420,7 @@ abstract class UserAnalyticsError implements UserAnalyticsState {
       _$UserAnalyticsErrorImpl;
 
   String get message;
-
-  /// Create a copy of UserAnalyticsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$UserAnalyticsErrorImplCopyWith<_$UserAnalyticsErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2588,9 +2496,6 @@ class _$UserDataManagementStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of UserDataManagementState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -2610,9 +2515,6 @@ class __$$UserDataManagementInitialImplCopyWithImpl<$Res>
       _$UserDataManagementInitialImpl _value,
       $Res Function(_$UserDataManagementInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of UserDataManagementState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -2731,9 +2633,6 @@ class __$$UserDataManagementLoadingImplCopyWithImpl<$Res>
       _$UserDataManagementLoadingImpl _value,
       $Res Function(_$UserDataManagementLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of UserDataManagementState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -2852,9 +2751,6 @@ class __$$UserDataManagementSuccessImplCopyWithImpl<$Res>
       _$UserDataManagementSuccessImpl _value,
       $Res Function(_$UserDataManagementSuccessImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of UserDataManagementState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -2976,8 +2872,6 @@ class __$$UserDataManagementErrorImplCopyWithImpl<$Res>
       $Res Function(_$UserDataManagementErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of UserDataManagementState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3016,9 +2910,7 @@ class _$UserDataManagementErrorImpl implements UserDataManagementError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of UserDataManagementState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UserDataManagementErrorImplCopyWith<_$UserDataManagementErrorImpl>
@@ -3105,10 +2997,7 @@ abstract class UserDataManagementError implements UserDataManagementState {
       _$UserDataManagementErrorImpl;
 
   String get message;
-
-  /// Create a copy of UserDataManagementState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$UserDataManagementErrorImplCopyWith<_$UserDataManagementErrorImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -3183,9 +3072,6 @@ class _$ConversationStateCopyWithImpl<$Res, $Val extends ConversationState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of ConversationState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -3202,9 +3088,6 @@ class __$$ConversationInitialImplCopyWithImpl<$Res>
   __$$ConversationInitialImplCopyWithImpl(_$ConversationInitialImpl _value,
       $Res Function(_$ConversationInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of ConversationState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -3320,9 +3203,6 @@ class __$$ConversationLoadingImplCopyWithImpl<$Res>
   __$$ConversationLoadingImplCopyWithImpl(_$ConversationLoadingImpl _value,
       $Res Function(_$ConversationLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of ConversationState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -3441,8 +3321,6 @@ class __$$ConversationLoadedImplCopyWithImpl<$Res>
       $Res Function(_$ConversationLoadedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ConversationState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3482,9 +3360,7 @@ class _$ConversationLoadedImpl implements ConversationLoaded {
   @override
   int get hashCode => Object.hash(runtimeType, lastResponse);
 
-  /// Create a copy of ConversationState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ConversationLoadedImplCopyWith<_$ConversationLoadedImpl> get copyWith =>
@@ -3571,10 +3447,7 @@ abstract class ConversationLoaded implements ConversationState {
       _$ConversationLoadedImpl;
 
   String? get lastResponse;
-
-  /// Create a copy of ConversationState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ConversationLoadedImplCopyWith<_$ConversationLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3596,8 +3469,6 @@ class __$$ConversationErrorImplCopyWithImpl<$Res>
       $Res Function(_$ConversationErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ConversationState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3636,9 +3507,7 @@ class _$ConversationErrorImpl implements ConversationError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of ConversationState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ConversationErrorImplCopyWith<_$ConversationErrorImpl> get copyWith =>
@@ -3725,10 +3594,7 @@ abstract class ConversationError implements ConversationState {
       _$ConversationErrorImpl;
 
   String get message;
-
-  /// Create a copy of ConversationState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ConversationErrorImplCopyWith<_$ConversationErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3745,9 +3611,7 @@ mixin _$DailyLessonsState {
   ConversationState get conversation => throw _privateConstructorUsedError;
   bool get isRefreshing => throw _privateConstructorUsedError;
 
-  /// Create a copy of DailyLessonsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $DailyLessonsStateCopyWith<DailyLessonsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3785,8 +3649,6 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of DailyLessonsState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3830,8 +3692,6 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
     ) as $Val);
   }
 
-  /// Create a copy of DailyLessonsState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $VocabulariesStateCopyWith<$Res> get vocabularies {
@@ -3840,8 +3700,6 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
     });
   }
 
-  /// Create a copy of DailyLessonsState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PhrasesStateCopyWith<$Res> get phrases {
@@ -3850,8 +3708,6 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
     });
   }
 
-  /// Create a copy of DailyLessonsState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserPreferencesStateCopyWith<$Res> get userPreferences {
@@ -3860,8 +3716,6 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
     });
   }
 
-  /// Create a copy of DailyLessonsState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserAnalyticsStateCopyWith<$Res> get analytics {
@@ -3870,8 +3724,6 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
     });
   }
 
-  /// Create a copy of DailyLessonsState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserDataManagementStateCopyWith<$Res> get dataManagement {
@@ -3881,8 +3733,6 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
     });
   }
 
-  /// Create a copy of DailyLessonsState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ConversationStateCopyWith<$Res> get conversation {
@@ -3931,8 +3781,6 @@ class __$$DailyLessonsStateImplCopyWithImpl<$Res>
       $Res Function(_$DailyLessonsStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of DailyLessonsState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -4034,9 +3882,7 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
   int get hashCode => Object.hash(runtimeType, vocabularies, phrases,
       userPreferences, analytics, dataManagement, conversation, isRefreshing);
 
-  /// Create a copy of DailyLessonsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$DailyLessonsStateImplCopyWith<_$DailyLessonsStateImpl> get copyWith =>
@@ -4068,11 +3914,8 @@ abstract class _DailyLessonsState implements DailyLessonsState {
   ConversationState get conversation;
   @override
   bool get isRefreshing;
-
-  /// Create a copy of DailyLessonsState
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$DailyLessonsStateImplCopyWith<_$DailyLessonsStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -79,9 +79,6 @@ class _$VocabularyHistoryEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of VocabularyHistoryEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -99,9 +96,6 @@ class __$$LoadHistoryRequestsImplCopyWithImpl<$Res>
   __$$LoadHistoryRequestsImplCopyWithImpl(_$LoadHistoryRequestsImpl _value,
       $Res Function(_$LoadHistoryRequestsImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of VocabularyHistoryEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -214,8 +208,6 @@ class __$$LoadRequestDetailsImplCopyWithImpl<$Res>
       $Res Function(_$LoadRequestDetailsImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of VocabularyHistoryEvent
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -255,9 +247,7 @@ class _$LoadRequestDetailsImpl implements LoadRequestDetails {
   @override
   int get hashCode => Object.hash(runtimeType, requestId);
 
-  /// Create a copy of VocabularyHistoryEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadRequestDetailsImplCopyWith<_$LoadRequestDetailsImpl> get copyWith =>
@@ -338,10 +328,7 @@ abstract class LoadRequestDetails implements VocabularyHistoryEvent {
       _$LoadRequestDetailsImpl;
 
   String get requestId;
-
-  /// Create a copy of VocabularyHistoryEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LoadRequestDetailsImplCopyWith<_$LoadRequestDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -360,9 +347,6 @@ class __$$RefreshHistoryImplCopyWithImpl<$Res>
   __$$RefreshHistoryImplCopyWithImpl(
       _$RefreshHistoryImpl _value, $Res Function(_$RefreshHistoryImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of VocabularyHistoryEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

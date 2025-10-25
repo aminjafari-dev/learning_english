@@ -78,9 +78,6 @@ class _$AuthenticationEventCopyWithImpl<$Res, $Val extends AuthenticationEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of AuthenticationEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -97,9 +94,6 @@ class __$$GoogleSignInImplCopyWithImpl<$Res>
   __$$GoogleSignInImplCopyWithImpl(
       _$GoogleSignInImpl _value, $Res Function(_$GoogleSignInImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of AuthenticationEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -208,9 +202,6 @@ class __$$CheckLoginStatusImplCopyWithImpl<$Res>
   __$$CheckLoginStatusImplCopyWithImpl(_$CheckLoginStatusImpl _value,
       $Res Function(_$CheckLoginStatusImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of AuthenticationEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -319,9 +310,6 @@ class __$$SignOutImplCopyWithImpl<$Res>
   __$$SignOutImplCopyWithImpl(
       _$SignOutImpl _value, $Res Function(_$SignOutImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of AuthenticationEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

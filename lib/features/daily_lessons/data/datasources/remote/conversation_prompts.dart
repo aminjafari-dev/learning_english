@@ -20,30 +20,35 @@ class ConversationPrompts {
   ///
   /// Parameters:
   /// - preferences: User's level and focus areas
+  /// - subCategory: Optional sub-category for targeted content generation
   /// - usedVocabularies: List of vocabularies the user has already learned
   /// - usedPhrases: List of phrases the user has already learned
   ///
   /// Returns: Prompt that asks for fresh learning material
   static String getLessonPrompt(
-    UserPreferences preferences
-  ) {
+    UserPreferences preferences, {
+    String? subCategory,
+  }) {
     final levelDesc = preferences.levelDescription;
     final focusAreas = preferences.focusAreasString;
 
+    final subCategoryContext =
+        subCategory != null ? '\nSPECIFIC SUB-CATEGORY: $subCategory' : '';
 
     return '''You are an English teacher helping me learn new vocabulary and phrases. 
-I'm at $levelDesc level and I want to focus on $focusAreas.
+I'm at $levelDesc level and I want to focus on $focusAreas.$subCategoryContext
 
 IMPORTANT REQUIREMENTS:
 1. Suggest ONLY NEW words and phrases that I haven't learned before
-4. Make suggestions practical and useful for my level
-5. Include Persian translations
-6. Format response as JSON with "vocabularies" and "phrases" arrays
+2. Make suggestions practical and useful for my level
+3. Include Persian translations
+4. Format response as JSON with "vocabularies" and "phrases" arrays
+${subCategory != null ? '5. Focus specifically on vocabulary and phrases related to $subCategory' : ''}
 
 Please suggest 5 new vocabulary words and 3 new phrases that are:
 - Different from what I've already learned
 - Appropriate for my $levelDesc level
-- Focused on $focusAreas
+- Focused on $focusAreas${subCategory != null ? ' and specifically $subCategory' : ''}
 - Practical and commonly used
 
 Format your response exactly like this:
@@ -110,8 +115,6 @@ Please:
 
 Let's start with a simple question about $topic.''';
   }
-
-
 }
 
 // Example usage:

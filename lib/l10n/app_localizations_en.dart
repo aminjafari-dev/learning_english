@@ -270,4 +270,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lightBlueTheme => 'Light Blue Theme';
+
+  @override
+  String get learningPaths => 'Learning Paths';
+
+  @override
+  String get addLearningPath => 'Add Learning Path';
+
+  @override
+  String get addLearningPathDescription => 'Choose a focus area to begin your structured learning journey';
+
+  @override
+  String get startLearning => 'Start Learning';
+
+  @override
+  String get selectSubCategory => 'Select Sub-Category';
+
+  @override
+  String get continueText => 'Continue';
+
+  @override
+  String get courseProgress => 'Course Progress';
+
+  @override
+  String get courseCompleted => 'Course Completed';
+
+  @override
+  String courseN(int number) {
+    return 'Course $number';
+  }
+
+  @override
+  String get progress => 'Progress';
+
+  @override
+  String get deleteLearningPath => 'Delete Learning Path';
+
+  @override
+  String get deleteLearningPathMessage => 'Are you sure you want to delete your current learning path? This action cannot be undone.';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get retry => 'Retry';
 }

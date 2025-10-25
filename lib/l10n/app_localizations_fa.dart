@@ -270,4 +270,48 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get lightBlueTheme => 'تم آبی روشن';
+
+  @override
+  String get learningPaths => 'مسیرهای یادگیری';
+
+  @override
+  String get addLearningPath => 'افزودن مسیر یادگیری';
+
+  @override
+  String get addLearningPathDescription => 'یک تمرکز یادگیری انتخاب کنید تا سفر یادگیری ساختاریافته خود را آغاز کنید';
+
+  @override
+  String get startLearning => 'شروع یادگیری';
+
+  @override
+  String get selectSubCategory => 'انتخاب زیردسته';
+
+  @override
+  String get continueText => 'ادامه';
+
+  @override
+  String get courseProgress => 'پیشرفت دوره';
+
+  @override
+  String get courseCompleted => 'دوره تکمیل شد';
+
+  @override
+  String courseN(int number) {
+    return 'دوره $number';
+  }
+
+  @override
+  String get progress => 'پیشرفت';
+
+  @override
+  String get deleteLearningPath => 'حذف مسیر یادگیری';
+
+  @override
+  String get deleteLearningPathMessage => 'آیا مطمئن هستید که می‌خواهید مسیر یادگیری فعلی خود را حذف کنید؟ این عمل قابل بازگشت نیست.';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get retry => 'تلاش مجدد';
 }

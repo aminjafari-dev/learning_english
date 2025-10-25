@@ -45,6 +45,7 @@ class AuthenticationPage extends StatelessWidget {
             );
           },
           error: (msg) {
+            
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: GText(msg)));

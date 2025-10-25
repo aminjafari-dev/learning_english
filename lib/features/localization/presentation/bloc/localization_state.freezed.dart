@@ -85,9 +85,6 @@ class _$LoadCurrentLocaleStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of LoadCurrentLocaleState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -107,9 +104,6 @@ class __$$LoadCurrentLocaleInitialImplCopyWithImpl<$Res>
       _$LoadCurrentLocaleInitialImpl _value,
       $Res Function(_$LoadCurrentLocaleInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of LoadCurrentLocaleState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -228,9 +222,6 @@ class __$$LoadCurrentLocaleLoadingImplCopyWithImpl<$Res>
       _$LoadCurrentLocaleLoadingImpl _value,
       $Res Function(_$LoadCurrentLocaleLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of LoadCurrentLocaleState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -352,8 +343,6 @@ class __$$LoadCurrentLocaleCompletedImplCopyWithImpl<$Res>
       $Res Function(_$LoadCurrentLocaleCompletedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LoadCurrentLocaleState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -392,9 +381,7 @@ class _$LoadCurrentLocaleCompletedImpl implements LoadCurrentLocaleCompleted {
   @override
   int get hashCode => Object.hash(runtimeType, locale);
 
-  /// Create a copy of LoadCurrentLocaleState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadCurrentLocaleCompletedImplCopyWith<_$LoadCurrentLocaleCompletedImpl>
@@ -481,10 +468,7 @@ abstract class LoadCurrentLocaleCompleted implements LoadCurrentLocaleState {
       _$LoadCurrentLocaleCompletedImpl;
 
   LocaleEntity get locale;
-
-  /// Create a copy of LoadCurrentLocaleState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LoadCurrentLocaleCompletedImplCopyWith<_$LoadCurrentLocaleCompletedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -509,8 +493,6 @@ class __$$LoadCurrentLocaleErrorImplCopyWithImpl<$Res>
       $Res Function(_$LoadCurrentLocaleErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LoadCurrentLocaleState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -549,9 +531,7 @@ class _$LoadCurrentLocaleErrorImpl implements LoadCurrentLocaleError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of LoadCurrentLocaleState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadCurrentLocaleErrorImplCopyWith<_$LoadCurrentLocaleErrorImpl>
@@ -638,10 +618,7 @@ abstract class LoadCurrentLocaleError implements LoadCurrentLocaleState {
       _$LoadCurrentLocaleErrorImpl;
 
   String get message;
-
-  /// Create a copy of LoadCurrentLocaleState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LoadCurrentLocaleErrorImplCopyWith<_$LoadCurrentLocaleErrorImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -716,9 +693,6 @@ class _$SetLocaleStateCopyWithImpl<$Res, $Val extends SetLocaleState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of SetLocaleState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -735,9 +709,6 @@ class __$$SetLocaleInitialImplCopyWithImpl<$Res>
   __$$SetLocaleInitialImplCopyWithImpl(_$SetLocaleInitialImpl _value,
       $Res Function(_$SetLocaleInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of SetLocaleState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -852,9 +823,6 @@ class __$$SetLocaleLoadingImplCopyWithImpl<$Res>
   __$$SetLocaleLoadingImplCopyWithImpl(_$SetLocaleLoadingImpl _value,
       $Res Function(_$SetLocaleLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of SetLocaleState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -972,8 +940,6 @@ class __$$SetLocaleCompletedImplCopyWithImpl<$Res>
       $Res Function(_$SetLocaleCompletedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SetLocaleState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1012,9 +978,7 @@ class _$SetLocaleCompletedImpl implements SetLocaleCompleted {
   @override
   int get hashCode => Object.hash(runtimeType, locale);
 
-  /// Create a copy of SetLocaleState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SetLocaleCompletedImplCopyWith<_$SetLocaleCompletedImpl> get copyWith =>
@@ -1101,10 +1065,7 @@ abstract class SetLocaleCompleted implements SetLocaleState {
       _$SetLocaleCompletedImpl;
 
   LocaleEntity get locale;
-
-  /// Create a copy of SetLocaleState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SetLocaleCompletedImplCopyWith<_$SetLocaleCompletedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1126,8 +1087,6 @@ class __$$SetLocaleErrorImplCopyWithImpl<$Res>
       _$SetLocaleErrorImpl _value, $Res Function(_$SetLocaleErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SetLocaleState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1166,9 +1125,7 @@ class _$SetLocaleErrorImpl implements SetLocaleError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of SetLocaleState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SetLocaleErrorImplCopyWith<_$SetLocaleErrorImpl> get copyWith =>
@@ -1254,10 +1211,7 @@ abstract class SetLocaleError implements SetLocaleState {
   const factory SetLocaleError(final String message) = _$SetLocaleErrorImpl;
 
   String get message;
-
-  /// Create a copy of SetLocaleState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SetLocaleErrorImplCopyWith<_$SetLocaleErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1333,9 +1287,6 @@ class _$GetSupportedLocalesStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of GetSupportedLocalesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1355,9 +1306,6 @@ class __$$GetSupportedLocalesInitialImplCopyWithImpl<$Res>
       _$GetSupportedLocalesInitialImpl _value,
       $Res Function(_$GetSupportedLocalesInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of GetSupportedLocalesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1476,9 +1424,6 @@ class __$$GetSupportedLocalesLoadingImplCopyWithImpl<$Res>
       _$GetSupportedLocalesLoadingImpl _value,
       $Res Function(_$GetSupportedLocalesLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of GetSupportedLocalesState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1600,8 +1545,6 @@ class __$$GetSupportedLocalesCompletedImplCopyWithImpl<$Res>
       $Res Function(_$GetSupportedLocalesCompletedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetSupportedLocalesState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1648,9 +1591,7 @@ class _$GetSupportedLocalesCompletedImpl
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_locales));
 
-  /// Create a copy of GetSupportedLocalesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GetSupportedLocalesCompletedImplCopyWith<
@@ -1739,10 +1680,7 @@ abstract class GetSupportedLocalesCompleted
       _$GetSupportedLocalesCompletedImpl;
 
   List<LocaleEntity> get locales;
-
-  /// Create a copy of GetSupportedLocalesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GetSupportedLocalesCompletedImplCopyWith<
           _$GetSupportedLocalesCompletedImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1768,8 +1706,6 @@ class __$$GetSupportedLocalesErrorImplCopyWithImpl<$Res>
       $Res Function(_$GetSupportedLocalesErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetSupportedLocalesState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1808,9 +1744,7 @@ class _$GetSupportedLocalesErrorImpl implements GetSupportedLocalesError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of GetSupportedLocalesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GetSupportedLocalesErrorImplCopyWith<_$GetSupportedLocalesErrorImpl>
@@ -1897,10 +1831,7 @@ abstract class GetSupportedLocalesError implements GetSupportedLocalesState {
       _$GetSupportedLocalesErrorImpl;
 
   String get message;
-
-  /// Create a copy of GetSupportedLocalesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GetSupportedLocalesErrorImplCopyWith<_$GetSupportedLocalesErrorImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1913,9 +1844,7 @@ mixin _$LocalizationState {
   GetSupportedLocalesState get getSupportedLocales =>
       throw _privateConstructorUsedError;
 
-  /// Create a copy of LocalizationState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $LocalizationStateCopyWith<LocalizationState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1946,8 +1875,6 @@ class _$LocalizationStateCopyWithImpl<$Res, $Val extends LocalizationState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of LocalizationState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1971,8 +1898,6 @@ class _$LocalizationStateCopyWithImpl<$Res, $Val extends LocalizationState>
     ) as $Val);
   }
 
-  /// Create a copy of LocalizationState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $LoadCurrentLocaleStateCopyWith<$Res> get loadCurrentLocale {
@@ -1982,8 +1907,6 @@ class _$LocalizationStateCopyWithImpl<$Res, $Val extends LocalizationState>
     });
   }
 
-  /// Create a copy of LocalizationState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $SetLocaleStateCopyWith<$Res> get setLocale {
@@ -1992,8 +1915,6 @@ class _$LocalizationStateCopyWithImpl<$Res, $Val extends LocalizationState>
     });
   }
 
-  /// Create a copy of LocalizationState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $GetSupportedLocalesStateCopyWith<$Res> get getSupportedLocales {
@@ -2033,8 +1954,6 @@ class __$$LocalizationStateImplCopyWithImpl<$Res>
       $Res Function(_$LocalizationStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LocalizationState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2096,9 +2015,7 @@ class _$LocalizationStateImpl implements _LocalizationState {
   int get hashCode => Object.hash(
       runtimeType, loadCurrentLocale, setLocale, getSupportedLocales);
 
-  /// Create a copy of LocalizationState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LocalizationStateImplCopyWith<_$LocalizationStateImpl> get copyWith =>
@@ -2119,11 +2036,8 @@ abstract class _LocalizationState implements LocalizationState {
   SetLocaleState get setLocale;
   @override
   GetSupportedLocalesState get getSupportedLocales;
-
-  /// Create a copy of LocalizationState
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LocalizationStateImplCopyWith<_$LocalizationStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

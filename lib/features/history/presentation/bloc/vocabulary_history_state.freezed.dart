@@ -85,9 +85,6 @@ class _$HistoryRequestsStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of HistoryRequestsState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -107,9 +104,6 @@ class __$$HistoryRequestsInitialImplCopyWithImpl<$Res>
       _$HistoryRequestsInitialImpl _value,
       $Res Function(_$HistoryRequestsInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of HistoryRequestsState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -228,9 +222,6 @@ class __$$HistoryRequestsLoadingImplCopyWithImpl<$Res>
       _$HistoryRequestsLoadingImpl _value,
       $Res Function(_$HistoryRequestsLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of HistoryRequestsState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -352,8 +343,6 @@ class __$$HistoryRequestsCompletedImplCopyWithImpl<$Res>
       $Res Function(_$HistoryRequestsCompletedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of HistoryRequestsState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -399,9 +388,7 @@ class _$HistoryRequestsCompletedImpl implements HistoryRequestsCompleted {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_requests));
 
-  /// Create a copy of HistoryRequestsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$HistoryRequestsCompletedImplCopyWith<_$HistoryRequestsCompletedImpl>
@@ -488,10 +475,7 @@ abstract class HistoryRequestsCompleted implements HistoryRequestsState {
       _$HistoryRequestsCompletedImpl;
 
   List<HistoryRequest> get requests;
-
-  /// Create a copy of HistoryRequestsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$HistoryRequestsCompletedImplCopyWith<_$HistoryRequestsCompletedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -513,8 +497,6 @@ class __$$HistoryRequestsErrorImplCopyWithImpl<$Res>
       $Res Function(_$HistoryRequestsErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of HistoryRequestsState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -553,9 +535,7 @@ class _$HistoryRequestsErrorImpl implements HistoryRequestsError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of HistoryRequestsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$HistoryRequestsErrorImplCopyWith<_$HistoryRequestsErrorImpl>
@@ -643,10 +623,7 @@ abstract class HistoryRequestsError implements HistoryRequestsState {
       _$HistoryRequestsErrorImpl;
 
   String get message;
-
-  /// Create a copy of HistoryRequestsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$HistoryRequestsErrorImplCopyWith<_$HistoryRequestsErrorImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -721,9 +698,6 @@ class _$RequestDetailsStateCopyWithImpl<$Res, $Val extends RequestDetailsState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of RequestDetailsState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -741,9 +715,6 @@ class __$$RequestDetailsInitialImplCopyWithImpl<$Res>
   __$$RequestDetailsInitialImplCopyWithImpl(_$RequestDetailsInitialImpl _value,
       $Res Function(_$RequestDetailsInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of RequestDetailsState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -860,9 +831,6 @@ class __$$RequestDetailsLoadingImplCopyWithImpl<$Res>
   __$$RequestDetailsLoadingImplCopyWithImpl(_$RequestDetailsLoadingImpl _value,
       $Res Function(_$RequestDetailsLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of RequestDetailsState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -984,8 +952,6 @@ class __$$RequestDetailsCompletedImplCopyWithImpl<$Res>
       $Res Function(_$RequestDetailsCompletedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of RequestDetailsState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1024,9 +990,7 @@ class _$RequestDetailsCompletedImpl implements RequestDetailsCompleted {
   @override
   int get hashCode => Object.hash(runtimeType, request);
 
-  /// Create a copy of RequestDetailsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$RequestDetailsCompletedImplCopyWith<_$RequestDetailsCompletedImpl>
@@ -1113,10 +1077,7 @@ abstract class RequestDetailsCompleted implements RequestDetailsState {
       _$RequestDetailsCompletedImpl;
 
   HistoryRequest get request;
-
-  /// Create a copy of RequestDetailsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$RequestDetailsCompletedImplCopyWith<_$RequestDetailsCompletedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1138,8 +1099,6 @@ class __$$RequestDetailsErrorImplCopyWithImpl<$Res>
       $Res Function(_$RequestDetailsErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of RequestDetailsState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1178,9 +1137,7 @@ class _$RequestDetailsErrorImpl implements RequestDetailsError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of RequestDetailsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$RequestDetailsErrorImplCopyWith<_$RequestDetailsErrorImpl> get copyWith =>
@@ -1267,10 +1224,7 @@ abstract class RequestDetailsError implements RequestDetailsState {
       _$RequestDetailsErrorImpl;
 
   String get message;
-
-  /// Create a copy of RequestDetailsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$RequestDetailsErrorImplCopyWith<_$RequestDetailsErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1281,9 +1235,7 @@ mixin _$VocabularyHistoryState {
       throw _privateConstructorUsedError;
   RequestDetailsState get requestDetails => throw _privateConstructorUsedError;
 
-  /// Create a copy of VocabularyHistoryState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $VocabularyHistoryStateCopyWith<VocabularyHistoryState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1313,8 +1265,6 @@ class _$VocabularyHistoryStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of VocabularyHistoryState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1333,8 +1283,6 @@ class _$VocabularyHistoryStateCopyWithImpl<$Res,
     ) as $Val);
   }
 
-  /// Create a copy of VocabularyHistoryState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $HistoryRequestsStateCopyWith<$Res> get historyRequests {
@@ -1343,8 +1291,6 @@ class _$VocabularyHistoryStateCopyWithImpl<$Res,
     });
   }
 
-  /// Create a copy of VocabularyHistoryState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $RequestDetailsStateCopyWith<$Res> get requestDetails {
@@ -1383,8 +1329,6 @@ class __$$VocabularyHistoryStateImplCopyWithImpl<$Res>
       $Res Function(_$VocabularyHistoryStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of VocabularyHistoryState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1434,9 +1378,7 @@ class _$VocabularyHistoryStateImpl implements _VocabularyHistoryState {
   @override
   int get hashCode => Object.hash(runtimeType, historyRequests, requestDetails);
 
-  /// Create a copy of VocabularyHistoryState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$VocabularyHistoryStateImplCopyWith<_$VocabularyHistoryStateImpl>
@@ -1454,11 +1396,8 @@ abstract class _VocabularyHistoryState implements VocabularyHistoryState {
   HistoryRequestsState get historyRequests;
   @override
   RequestDetailsState get requestDetails;
-
-  /// Create a copy of VocabularyHistoryState
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$VocabularyHistoryStateImplCopyWith<_$VocabularyHistoryStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

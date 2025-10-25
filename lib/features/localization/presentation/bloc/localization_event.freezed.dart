@@ -84,9 +84,6 @@ class _$LocalizationEventCopyWithImpl<$Res, $Val extends LocalizationEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of LocalizationEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -103,9 +100,6 @@ class __$$LoadCurrentLocaleImplCopyWithImpl<$Res>
   __$$LoadCurrentLocaleImplCopyWithImpl(_$LoadCurrentLocaleImpl _value,
       $Res Function(_$LoadCurrentLocaleImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of LocalizationEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -223,8 +217,6 @@ class __$$SetLocaleImplCopyWithImpl<$Res>
       _$SetLocaleImpl _value, $Res Function(_$SetLocaleImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LocalizationEvent
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -263,9 +255,7 @@ class _$SetLocaleImpl implements SetLocale {
   @override
   int get hashCode => Object.hash(runtimeType, locale);
 
-  /// Create a copy of LocalizationEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SetLocaleImplCopyWith<_$SetLocaleImpl> get copyWith =>
@@ -351,10 +341,7 @@ abstract class SetLocale implements LocalizationEvent {
       _$SetLocaleImpl;
 
   LocaleEntity get locale;
-
-  /// Create a copy of LocalizationEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SetLocaleImplCopyWith<_$SetLocaleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -373,9 +360,6 @@ class __$$GetSupportedLocalesImplCopyWithImpl<$Res>
   __$$GetSupportedLocalesImplCopyWithImpl(_$GetSupportedLocalesImpl _value,
       $Res Function(_$GetSupportedLocalesImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of LocalizationEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -491,9 +475,6 @@ class __$$ResetImplCopyWithImpl<$Res>
   __$$ResetImplCopyWithImpl(
       _$ResetImpl _value, $Res Function(_$ResetImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of LocalizationEvent
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

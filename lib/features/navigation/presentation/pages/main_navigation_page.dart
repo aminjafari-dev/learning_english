@@ -5,7 +5,7 @@ import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/core/theme/cubit/theme_cubit.dart';
 import 'package:learning_english/core/widgets/global_widget/g_scaffold.dart';
 import 'package:learning_english/core/constants/font_constants.dart';
-import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
+import 'package:learning_english/features/learning_paths/presentation/pages/learning_paths_home_page.dart';
 import 'package:learning_english/features/profile/presentation/pages/profile_page.dart';
 import 'package:learning_english/features/history/presentation/pages/vocabulary_history_page.dart';
 import 'package:learning_english/l10n/app_localizations.dart';
@@ -25,7 +25,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
 
   /// List of pages to display
   final List<Widget> _pages = [
-    const LevelSelectionPage(),
+    const LearningPathsHomePage(),
     const VocabularyHistoryPage(),
     const ProfilePage(),
   ];
@@ -70,8 +70,8 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
             ),
             items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.school),
-                label: l10n.levelSelection,
+                icon: Icon(Icons.auto_stories),
+                label: l10n.learningPaths,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.history),

@@ -616,6 +616,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Light Blue Theme'**
   String get lightBlueTheme;
+
+  /// Title for the learning paths feature.
+  ///
+  /// In en, this message translates to:
+  /// **'Learning Paths'**
+  String get learningPaths;
+
+  /// Button text for adding a new learning path.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Learning Path'**
+  String get addLearningPath;
+
+  /// Description text for the empty learning path state.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a focus area to begin your structured learning journey'**
+  String get addLearningPathDescription;
+
+  /// Button text to start learning.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Learning'**
+  String get startLearning;
+
+  /// Title for the sub-category selection page.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Sub-Category'**
+  String get selectSubCategory;
+
+  /// Button text for continuing to the next step.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueText;
+
+  /// Label for course progress display.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Progress'**
+  String get courseProgress;
+
+  /// Text shown when a course is completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Completed'**
+  String get courseCompleted;
+
+  /// Text for course number display.
+  ///
+  /// In en, this message translates to:
+  /// **'Course {number}'**
+  String courseN(int number);
+
+  /// Label for progress indicator.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get progress;
+
+  /// Title for delete learning path dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Learning Path'**
+  String get deleteLearningPath;
+
+  /// Message for delete learning path confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your current learning path? This action cannot be undone.'**
+  String get deleteLearningPathMessage;
+
+  /// Button text for delete action.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// Button text for retry action.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -28,9 +28,25 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   }
 
   /// Handles the check authentication status event
+  /// Bypasses authentication check and goes directly to main navigation for offline mode
   Future<void> _onCheckAuthenticationStatus(Emitter<SplashState> emit) async {
     emit(const SplashState.loading());
 
+    // Bypass authentication check and go directly to main navigation
+    // This is useful when the app is offline or when you want to skip authentication
+    try {
+      // Add a small delay to show the splash screen briefly
+      await Future.delayed(const Duration(seconds: 2));
+
+      // Simulate authenticated user with a default user ID for offline mode
+      emit(const SplashState.authenticated(userId: 'offline_user'));
+    } catch (e) {
+      emit(SplashState.error(message: e.toString()));
+    }
+
+    // Original authentication logic is commented out for offline mode
+    // Uncomment the following code when you want to restore authentication:
+    /*
     try {
       final result = await checkAuthenticationStatusUseCase.call(NoParams());
 
@@ -51,5 +67,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     } catch (e) {
       emit(SplashState.error(message: e.toString()));
     }
+    */
   }
 }

@@ -90,9 +90,6 @@ class _$LevelStateCopyWithImpl<$Res, $Val extends LevelState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -109,9 +106,6 @@ class __$$LevelInitialImplCopyWithImpl<$Res>
   __$$LevelInitialImplCopyWithImpl(
       _$LevelInitialImpl _value, $Res Function(_$LevelInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -235,8 +229,6 @@ class __$$LevelSelectionMadeImplCopyWithImpl<$Res>
       $Res Function(_$LevelSelectionMadeImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -275,9 +267,7 @@ class _$LevelSelectionMadeImpl implements LevelSelectionMade {
   @override
   int get hashCode => Object.hash(runtimeType, level);
 
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LevelSelectionMadeImplCopyWith<_$LevelSelectionMadeImpl> get copyWith =>
@@ -370,10 +360,7 @@ abstract class LevelSelectionMade implements LevelState {
       _$LevelSelectionMadeImpl;
 
   Level get level;
-
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LevelSelectionMadeImplCopyWith<_$LevelSelectionMadeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -395,8 +382,6 @@ class __$$LevelLoadingImplCopyWithImpl<$Res>
       _$LevelLoadingImpl _value, $Res Function(_$LevelLoadingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -435,9 +420,7 @@ class _$LevelLoadingImpl implements LevelLoading {
   @override
   int get hashCode => Object.hash(runtimeType, level);
 
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LevelLoadingImplCopyWith<_$LevelLoadingImpl> get copyWith =>
@@ -528,10 +511,7 @@ abstract class LevelLoading implements LevelState {
   const factory LevelLoading(final Level level) = _$LevelLoadingImpl;
 
   Level get level;
-
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LevelLoadingImplCopyWith<_$LevelLoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -553,8 +533,6 @@ class __$$LevelSuccessImplCopyWithImpl<$Res>
       _$LevelSuccessImpl _value, $Res Function(_$LevelSuccessImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -593,9 +571,7 @@ class _$LevelSuccessImpl implements LevelSuccess {
   @override
   int get hashCode => Object.hash(runtimeType, level);
 
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LevelSuccessImplCopyWith<_$LevelSuccessImpl> get copyWith =>
@@ -686,10 +662,7 @@ abstract class LevelSuccess implements LevelState {
   const factory LevelSuccess(final Level level) = _$LevelSuccessImpl;
 
   Level get level;
-
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LevelSuccessImplCopyWith<_$LevelSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -711,8 +684,6 @@ class __$$LevelErrorImplCopyWithImpl<$Res>
       _$LevelErrorImpl _value, $Res Function(_$LevelErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -759,9 +730,7 @@ class _$LevelErrorImpl implements LevelError {
   @override
   int get hashCode => Object.hash(runtimeType, message, level);
 
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LevelErrorImplCopyWith<_$LevelErrorImpl> get copyWith =>
@@ -854,10 +823,7 @@ abstract class LevelError implements LevelState {
 
   String get message;
   Level? get level;
-
-  /// Create a copy of LevelState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LevelErrorImplCopyWith<_$LevelErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

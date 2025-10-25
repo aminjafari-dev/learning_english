@@ -90,9 +90,6 @@ class _$SplashStateCopyWithImpl<$Res, $Val extends SplashState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -109,9 +106,6 @@ class __$$SplashInitialImplCopyWithImpl<$Res>
   __$$SplashInitialImplCopyWithImpl(
       _$SplashInitialImpl _value, $Res Function(_$SplashInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -232,9 +226,6 @@ class __$$SplashLoadingImplCopyWithImpl<$Res>
   __$$SplashLoadingImplCopyWithImpl(
       _$SplashLoadingImpl _value, $Res Function(_$SplashLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -358,8 +349,6 @@ class __$$SplashAuthenticatedImplCopyWithImpl<$Res>
       $Res Function(_$SplashAuthenticatedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -398,9 +387,7 @@ class _$SplashAuthenticatedImpl implements SplashAuthenticated {
   @override
   int get hashCode => Object.hash(runtimeType, userId);
 
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SplashAuthenticatedImplCopyWith<_$SplashAuthenticatedImpl> get copyWith =>
@@ -493,10 +480,7 @@ abstract class SplashAuthenticated implements SplashState {
       _$SplashAuthenticatedImpl;
 
   String get userId;
-
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SplashAuthenticatedImplCopyWith<_$SplashAuthenticatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -516,9 +500,6 @@ class __$$SplashUnauthenticatedImplCopyWithImpl<$Res>
   __$$SplashUnauthenticatedImplCopyWithImpl(_$SplashUnauthenticatedImpl _value,
       $Res Function(_$SplashUnauthenticatedImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -643,8 +624,6 @@ class __$$SplashErrorImplCopyWithImpl<$Res>
       _$SplashErrorImpl _value, $Res Function(_$SplashErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -683,9 +662,7 @@ class _$SplashErrorImpl implements SplashError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SplashErrorImplCopyWith<_$SplashErrorImpl> get copyWith =>
@@ -777,10 +754,7 @@ abstract class SplashError implements SplashState {
       _$SplashErrorImpl;
 
   String get message;
-
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SplashErrorImplCopyWith<_$SplashErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

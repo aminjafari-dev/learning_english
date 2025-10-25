@@ -108,9 +108,6 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -127,9 +124,6 @@ class __$$ProfileInitialImplCopyWithImpl<$Res>
   __$$ProfileInitialImplCopyWithImpl(
       _$ProfileInitialImpl _value, $Res Function(_$ProfileInitialImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -268,9 +262,6 @@ class __$$ProfileLoadingImplCopyWithImpl<$Res>
   __$$ProfileLoadingImplCopyWithImpl(
       _$ProfileLoadingImpl _value, $Res Function(_$ProfileLoadingImpl) _then)
       : super(_value, _then);
-
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -412,8 +403,6 @@ class __$$ProfileLoadedImplCopyWithImpl<$Res>
       _$ProfileLoadedImpl _value, $Res Function(_$ProfileLoadedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -452,9 +441,7 @@ class _$ProfileLoadedImpl implements ProfileLoaded {
   @override
   int get hashCode => Object.hash(runtimeType, profile);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfileLoadedImplCopyWith<_$ProfileLoadedImpl> get copyWith =>
@@ -564,10 +551,7 @@ abstract class ProfileLoaded implements ProfileState {
       _$ProfileLoadedImpl;
 
   UserProfileEntity get profile;
-
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ProfileLoadedImplCopyWith<_$ProfileLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -589,8 +573,6 @@ class __$$ProfileUpdatingImplCopyWithImpl<$Res>
       _$ProfileUpdatingImpl _value, $Res Function(_$ProfileUpdatingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -629,9 +611,7 @@ class _$ProfileUpdatingImpl implements ProfileUpdating {
   @override
   int get hashCode => Object.hash(runtimeType, profile);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfileUpdatingImplCopyWith<_$ProfileUpdatingImpl> get copyWith =>
@@ -742,10 +722,7 @@ abstract class ProfileUpdating implements ProfileState {
       _$ProfileUpdatingImpl;
 
   UserProfileEntity get profile;
-
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ProfileUpdatingImplCopyWith<_$ProfileUpdatingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -767,8 +744,6 @@ class __$$ProfileUpdatedImplCopyWithImpl<$Res>
       _$ProfileUpdatedImpl _value, $Res Function(_$ProfileUpdatedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -807,9 +782,7 @@ class _$ProfileUpdatedImpl implements ProfileUpdated {
   @override
   int get hashCode => Object.hash(runtimeType, profile);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfileUpdatedImplCopyWith<_$ProfileUpdatedImpl> get copyWith =>
@@ -920,10 +893,7 @@ abstract class ProfileUpdated implements ProfileState {
       _$ProfileUpdatedImpl;
 
   UserProfileEntity get profile;
-
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ProfileUpdatedImplCopyWith<_$ProfileUpdatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -945,8 +915,6 @@ class __$$ProfileErrorImplCopyWithImpl<$Res>
       _$ProfileErrorImpl _value, $Res Function(_$ProfileErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -985,9 +953,7 @@ class _$ProfileErrorImpl implements ProfileError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfileErrorImplCopyWith<_$ProfileErrorImpl> get copyWith =>
@@ -1097,10 +1063,7 @@ abstract class ProfileError implements ProfileState {
       _$ProfileErrorImpl;
 
   String get message;
-
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ProfileErrorImplCopyWith<_$ProfileErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1122,8 +1085,6 @@ class __$$ProfileSavingImplCopyWithImpl<$Res>
       _$ProfileSavingImpl _value, $Res Function(_$ProfileSavingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1162,9 +1123,7 @@ class _$ProfileSavingImpl implements ProfileSaving {
   @override
   int get hashCode => Object.hash(runtimeType, profile);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfileSavingImplCopyWith<_$ProfileSavingImpl> get copyWith =>
@@ -1274,10 +1233,7 @@ abstract class ProfileSaving implements ProfileState {
       _$ProfileSavingImpl;
 
   UserProfileEntity get profile;
-
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ProfileSavingImplCopyWith<_$ProfileSavingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1299,8 +1255,6 @@ class __$$ProfileSavedImplCopyWithImpl<$Res>
       _$ProfileSavedImpl _value, $Res Function(_$ProfileSavedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1339,9 +1293,7 @@ class _$ProfileSavedImpl implements ProfileSaved {
   @override
   int get hashCode => Object.hash(runtimeType, profile);
 
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfileSavedImplCopyWith<_$ProfileSavedImpl> get copyWith =>
@@ -1451,10 +1403,7 @@ abstract class ProfileSaved implements ProfileState {
       _$ProfileSavedImpl;
 
   UserProfileEntity get profile;
-
-  /// Create a copy of ProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ProfileSavedImplCopyWith<_$ProfileSavedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -55,6 +55,48 @@ class LearningPathsRepositoryImpl implements LearningPathsRepository {
   }
 
   @override
+  Future<Either<Failure, List<LearningPath>>> getAllLearningPaths() async {
+    try {
+      final learningPaths = await _localDataSource.getAllLearningPaths();
+
+      print(
+        '✅ [LEARNING_PATHS_REPO] Retrieved ${learningPaths.length} learning paths',
+      );
+
+      return right(learningPaths);
+    } catch (e) {
+      print('❌ [LEARNING_PATHS_REPO] Error getting all learning paths: $e');
+      return left(
+        ServerFailure('Failed to get learning paths: ${e.toString()}'),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, LearningPath?>> getLearningPathById(
+    String pathId,
+  ) async {
+    try {
+      final learningPath = await _localDataSource.getLearningPathById(pathId);
+
+      if (learningPath != null) {
+        print(
+          '✅ [LEARNING_PATHS_REPO] Retrieved learning path: ${learningPath.title}',
+        );
+      } else {
+        print('ℹ️ [LEARNING_PATHS_REPO] Learning path not found: $pathId');
+      }
+
+      return right(learningPath);
+    } catch (e) {
+      print('❌ [LEARNING_PATHS_REPO] Error getting learning path by ID: $e');
+      return left(
+        ServerFailure('Failed to get learning path: ${e.toString()}'),
+      );
+    }
+  }
+
+  @override
   Future<Either<Failure, LearningPath?>> getActiveLearningPath() async {
     try {
       final learningPath = await _localDataSource.getActiveLearningPath();
@@ -77,13 +119,16 @@ class LearningPathsRepositoryImpl implements LearningPathsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> completeCourse(int courseNumber) async {
+  Future<Either<Failure, void>> completeCourse(
+    String pathId,
+    int courseNumber,
+  ) async {
     try {
       // Mark the course as completed
-      await _localDataSource.updateCourseProgress(courseNumber, true);
+      await _localDataSource.updateCourseProgress(pathId, courseNumber, true);
 
-      // Get the active learning path to check if we need to unlock the next course
-      final learningPathResult = await getActiveLearningPath();
+      // Get the learning path to check if we need to unlock the next course
+      final learningPathResult = await getLearningPathById(pathId);
 
       return learningPathResult.fold((failure) => left(failure), (
         learningPath,
@@ -92,7 +137,7 @@ class LearningPathsRepositoryImpl implements LearningPathsRepository {
           // Check if there's a next course to unlock
           final nextCourseNumber = learningPath.nextCourseToUnlock;
           if (nextCourseNumber != null && nextCourseNumber <= 20) {
-            await _localDataSource.unlockCourse(nextCourseNumber);
+            await _localDataSource.unlockCourse(pathId, nextCourseNumber);
             print(
               '✅ [LEARNING_PATHS_REPO] Course $courseNumber completed, unlocked course $nextCourseNumber',
             );
@@ -111,15 +156,28 @@ class LearningPathsRepositoryImpl implements LearningPathsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteLearningPath() async {
+  Future<Either<Failure, void>> deleteLearningPath(String pathId) async {
     try {
-      await _localDataSource.deleteActiveLearningPath();
-      print('✅ [LEARNING_PATHS_REPO] Learning path deleted');
+      await _localDataSource.deleteLearningPath(pathId);
+      print('✅ [LEARNING_PATHS_REPO] Learning path $pathId deleted');
       return right(null);
     } catch (e) {
       print('❌ [LEARNING_PATHS_REPO] Error deleting learning path: $e');
       return left(
         ServerFailure('Failed to delete learning path: ${e.toString()}'),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> hasLearningPaths() async {
+    try {
+      final hasPaths = await _localDataSource.hasLearningPaths();
+      return right(hasPaths);
+    } catch (e) {
+      print('❌ [LEARNING_PATHS_REPO] Error checking for learning paths: $e');
+      return left(
+        ServerFailure('Failed to check for learning paths: ${e.toString()}'),
       );
     }
   }
@@ -142,9 +200,11 @@ class LearningPathsRepositoryImpl implements LearningPathsRepository {
   }
 
   @override
-  Future<Either<Failure, Map<String, int>?>> getProgressStatistics() async {
+  Future<Either<Failure, Map<String, int>?>> getProgressStatistics(
+    String pathId,
+  ) async {
     try {
-      final statistics = await _localDataSource.getProgressStatistics();
+      final statistics = await _localDataSource.getProgressStatistics(pathId);
       return right(statistics);
     } catch (e) {
       print('❌ [LEARNING_PATHS_REPO] Error getting progress statistics: $e');

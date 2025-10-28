@@ -5,10 +5,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/error/failure.dart';
 import '../../domain/usecases/create_learning_path_usecase.dart';
+import '../../domain/usecases/get_all_learning_paths_usecase.dart';
+import '../../domain/usecases/get_learning_path_by_id_usecase.dart';
 import '../../domain/usecases/get_active_learning_path_usecase.dart';
 import '../../domain/usecases/complete_course_usecase.dart';
 import '../../domain/usecases/generate_sub_categories_usecase.dart';
-import '../../domain/usecases/delete_learning_path_usecase.dart';
+import '../../domain/usecases/delete_learning_path_by_id_usecase.dart';
 import 'learning_paths_event.dart';
 import 'learning_paths_state.dart';
 
@@ -17,26 +19,34 @@ import 'learning_paths_state.dart';
 class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
   final GenerateSubCategoriesUseCase _generateSubCategoriesUseCase;
   final CreateLearningPathUseCase _createLearningPathUseCase;
+  final GetAllLearningPathsUseCase _getAllLearningPathsUseCase;
+  final GetLearningPathByIdUseCase _getLearningPathByIdUseCase;
   final GetActiveLearningPathUseCase _getActiveLearningPathUseCase;
   final CompleteCourseUseCase _completeCourseUseCase;
-  final DeleteLearningPathUseCase _deleteLearningPathUseCase;
+  final DeleteLearningPathByIdUseCase _deleteLearningPathByIdUseCase;
 
   /// Constructor
   LearningPathsBloc({
     required GenerateSubCategoriesUseCase generateSubCategoriesUseCase,
     required CreateLearningPathUseCase createLearningPathUseCase,
+    required GetAllLearningPathsUseCase getAllLearningPathsUseCase,
+    required GetLearningPathByIdUseCase getLearningPathByIdUseCase,
     required GetActiveLearningPathUseCase getActiveLearningPathUseCase,
     required CompleteCourseUseCase completeCourseUseCase,
-    required DeleteLearningPathUseCase deleteLearningPathUseCase,
+    required DeleteLearningPathByIdUseCase deleteLearningPathByIdUseCase,
   }) : _generateSubCategoriesUseCase = generateSubCategoriesUseCase,
        _createLearningPathUseCase = createLearningPathUseCase,
+       _getAllLearningPathsUseCase = getAllLearningPathsUseCase,
+       _getLearningPathByIdUseCase = getLearningPathByIdUseCase,
        _getActiveLearningPathUseCase = getActiveLearningPathUseCase,
        _completeCourseUseCase = completeCourseUseCase,
-       _deleteLearningPathUseCase = deleteLearningPathUseCase,
+       _deleteLearningPathByIdUseCase = deleteLearningPathByIdUseCase,
        super(const LearningPathsState.initial()) {
     // Register event handlers
     on<GenerateSubCategories>(_onGenerateSubCategories);
     on<SelectSubCategory>(_onSelectSubCategory);
+    on<LoadAllPaths>(_onLoadAllPaths);
+    on<LoadPathById>(_onLoadPathById);
     on<LoadActivePath>(_onLoadActivePath);
     on<CompleteCourse>(_onCompleteCourse);
     on<DeletePath>(_onDeletePath);
@@ -87,7 +97,49 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
     );
   }
 
-  /// Handles loading the active learning path
+  /// Handles loading all learning paths
+  Future<void> _onLoadAllPaths(
+    LoadAllPaths event,
+    Emitter<LearningPathsState> emit,
+  ) async {
+    final result = await _getAllLearningPathsUseCase();
+
+    result.fold(
+      (failure) => emit(
+        LearningPathsState.error(message: _mapFailureToMessage(failure)),
+      ),
+      (learningPaths) {
+        if (learningPaths.isNotEmpty) {
+          emit(LearningPathsState.allPathsLoaded(learningPaths: learningPaths));
+        } else {
+          emit(const LearningPathsState.initial());
+        }
+      },
+    );
+  }
+
+  /// Handles loading a specific learning path by ID
+  Future<void> _onLoadPathById(
+    LoadPathById event,
+    Emitter<LearningPathsState> emit,
+  ) async {
+    final result = await _getLearningPathByIdUseCase(event.pathId);
+
+    result.fold(
+      (failure) => emit(
+        LearningPathsState.error(message: _mapFailureToMessage(failure)),
+      ),
+      (learningPath) {
+        if (learningPath != null) {
+          emit(LearningPathsState.pathLoaded(learningPath: learningPath));
+        } else {
+          emit(const LearningPathsState.initial());
+        }
+      },
+    );
+  }
+
+  /// Handles loading the active learning path (for backward compatibility)
   Future<void> _onLoadActivePath(
     LoadActivePath event,
     Emitter<LearningPathsState> emit,
@@ -113,7 +165,10 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
     CompleteCourse event,
     Emitter<LearningPathsState> emit,
   ) async {
-    final result = await _completeCourseUseCase(event.courseNumber);
+    final result = await _completeCourseUseCase(
+      event.pathId,
+      event.courseNumber,
+    );
 
     result.fold(
       (failure) => emit(
@@ -121,7 +176,7 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
       ),
       (_) async {
         // Reload the learning path to get updated state
-        final pathResult = await _getActiveLearningPathUseCase();
+        final pathResult = await _getLearningPathByIdUseCase(event.pathId);
         pathResult.fold(
           (failure) => emit(
             LearningPathsState.error(message: _mapFailureToMessage(failure)),
@@ -146,7 +201,7 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
     DeletePath event,
     Emitter<LearningPathsState> emit,
   ) async {
-    final result = await _deleteLearningPathUseCase();
+    final result = await _deleteLearningPathByIdUseCase(event.pathId);
 
     result.fold(
       (failure) => emit(
@@ -161,7 +216,7 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
     Refresh event,
     Emitter<LearningPathsState> emit,
   ) async {
-    add(const LearningPathsEvent.loadActivePath());
+    add(const LearningPathsEvent.loadAllPaths());
   }
 
   /// Maps failure to user-friendly message

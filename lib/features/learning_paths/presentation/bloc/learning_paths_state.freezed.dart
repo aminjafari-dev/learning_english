@@ -22,6 +22,7 @@ mixin _$LearningPathsState {
     required TResult Function() loadingSubCategories,
     required TResult Function(List<SubCategory> subCategories)
         subCategoriesLoaded,
+    required TResult Function(List<LearningPath> learningPaths) allPathsLoaded,
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
@@ -34,6 +35,7 @@ mixin _$LearningPathsState {
     TResult? Function()? initial,
     TResult? Function()? loadingSubCategories,
     TResult? Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult? Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -46,6 +48,7 @@ mixin _$LearningPathsState {
     TResult Function()? initial,
     TResult Function()? loadingSubCategories,
     TResult Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -59,6 +62,7 @@ mixin _$LearningPathsState {
     required TResult Function(Initial value) initial,
     required TResult Function(LoadingSubCategories value) loadingSubCategories,
     required TResult Function(SubCategoriesLoaded value) subCategoriesLoaded,
+    required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
     required TResult Function(PathDeleted value) pathDeleted,
@@ -70,6 +74,7 @@ mixin _$LearningPathsState {
     TResult? Function(Initial value)? initial,
     TResult? Function(LoadingSubCategories value)? loadingSubCategories,
     TResult? Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
     TResult? Function(PathDeleted value)? pathDeleted,
@@ -81,6 +86,7 @@ mixin _$LearningPathsState {
     TResult Function(Initial value)? initial,
     TResult Function(LoadingSubCategories value)? loadingSubCategories,
     TResult Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
     TResult Function(PathDeleted value)? pathDeleted,
@@ -150,6 +156,7 @@ class _$InitialImpl implements Initial {
     required TResult Function() loadingSubCategories,
     required TResult Function(List<SubCategory> subCategories)
         subCategoriesLoaded,
+    required TResult Function(List<LearningPath> learningPaths) allPathsLoaded,
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
@@ -165,6 +172,7 @@ class _$InitialImpl implements Initial {
     TResult? Function()? initial,
     TResult? Function()? loadingSubCategories,
     TResult? Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult? Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -180,6 +188,7 @@ class _$InitialImpl implements Initial {
     TResult Function()? initial,
     TResult Function()? loadingSubCategories,
     TResult Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -199,6 +208,7 @@ class _$InitialImpl implements Initial {
     required TResult Function(Initial value) initial,
     required TResult Function(LoadingSubCategories value) loadingSubCategories,
     required TResult Function(SubCategoriesLoaded value) subCategoriesLoaded,
+    required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
     required TResult Function(PathDeleted value) pathDeleted,
@@ -213,6 +223,7 @@ class _$InitialImpl implements Initial {
     TResult? Function(Initial value)? initial,
     TResult? Function(LoadingSubCategories value)? loadingSubCategories,
     TResult? Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
     TResult? Function(PathDeleted value)? pathDeleted,
@@ -227,6 +238,7 @@ class _$InitialImpl implements Initial {
     TResult Function(Initial value)? initial,
     TResult Function(LoadingSubCategories value)? loadingSubCategories,
     TResult Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
     TResult Function(PathDeleted value)? pathDeleted,
@@ -287,6 +299,7 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     required TResult Function() loadingSubCategories,
     required TResult Function(List<SubCategory> subCategories)
         subCategoriesLoaded,
+    required TResult Function(List<LearningPath> learningPaths) allPathsLoaded,
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
@@ -302,6 +315,7 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     TResult? Function()? initial,
     TResult? Function()? loadingSubCategories,
     TResult? Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult? Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -317,6 +331,7 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     TResult Function()? initial,
     TResult Function()? loadingSubCategories,
     TResult Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -336,6 +351,7 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     required TResult Function(Initial value) initial,
     required TResult Function(LoadingSubCategories value) loadingSubCategories,
     required TResult Function(SubCategoriesLoaded value) subCategoriesLoaded,
+    required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
     required TResult Function(PathDeleted value) pathDeleted,
@@ -350,6 +366,7 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     TResult? Function(Initial value)? initial,
     TResult? Function(LoadingSubCategories value)? loadingSubCategories,
     TResult? Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
     TResult? Function(PathDeleted value)? pathDeleted,
@@ -364,6 +381,7 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     TResult Function(Initial value)? initial,
     TResult Function(LoadingSubCategories value)? loadingSubCategories,
     TResult Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
     TResult Function(PathDeleted value)? pathDeleted,
@@ -459,6 +477,7 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     required TResult Function() loadingSubCategories,
     required TResult Function(List<SubCategory> subCategories)
         subCategoriesLoaded,
+    required TResult Function(List<LearningPath> learningPaths) allPathsLoaded,
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
@@ -474,6 +493,7 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     TResult? Function()? initial,
     TResult? Function()? loadingSubCategories,
     TResult? Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult? Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -489,6 +509,7 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     TResult Function()? initial,
     TResult Function()? loadingSubCategories,
     TResult Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -508,6 +529,7 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     required TResult Function(Initial value) initial,
     required TResult Function(LoadingSubCategories value) loadingSubCategories,
     required TResult Function(SubCategoriesLoaded value) subCategoriesLoaded,
+    required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
     required TResult Function(PathDeleted value) pathDeleted,
@@ -522,6 +544,7 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     TResult? Function(Initial value)? initial,
     TResult? Function(LoadingSubCategories value)? loadingSubCategories,
     TResult? Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
     TResult? Function(PathDeleted value)? pathDeleted,
@@ -536,6 +559,7 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     TResult Function(Initial value)? initial,
     TResult Function(LoadingSubCategories value)? loadingSubCategories,
     TResult Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
     TResult Function(PathDeleted value)? pathDeleted,
@@ -557,6 +581,189 @@ abstract class SubCategoriesLoaded implements LearningPathsState {
   List<SubCategory> get subCategories;
   @JsonKey(ignore: true)
   _$$SubCategoriesLoadedImplCopyWith<_$SubCategoriesLoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$AllPathsLoadedImplCopyWith<$Res> {
+  factory _$$AllPathsLoadedImplCopyWith(_$AllPathsLoadedImpl value,
+          $Res Function(_$AllPathsLoadedImpl) then) =
+      __$$AllPathsLoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<LearningPath> learningPaths});
+}
+
+/// @nodoc
+class __$$AllPathsLoadedImplCopyWithImpl<$Res>
+    extends _$LearningPathsStateCopyWithImpl<$Res, _$AllPathsLoadedImpl>
+    implements _$$AllPathsLoadedImplCopyWith<$Res> {
+  __$$AllPathsLoadedImplCopyWithImpl(
+      _$AllPathsLoadedImpl _value, $Res Function(_$AllPathsLoadedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? learningPaths = null,
+  }) {
+    return _then(_$AllPathsLoadedImpl(
+      learningPaths: null == learningPaths
+          ? _value._learningPaths
+          : learningPaths // ignore: cast_nullable_to_non_nullable
+              as List<LearningPath>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AllPathsLoadedImpl implements AllPathsLoaded {
+  const _$AllPathsLoadedImpl({required final List<LearningPath> learningPaths})
+      : _learningPaths = learningPaths;
+
+  final List<LearningPath> _learningPaths;
+  @override
+  List<LearningPath> get learningPaths {
+    if (_learningPaths is EqualUnmodifiableListView) return _learningPaths;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_learningPaths);
+  }
+
+  @override
+  String toString() {
+    return 'LearningPathsState.allPathsLoaded(learningPaths: $learningPaths)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AllPathsLoadedImpl &&
+            const DeepCollectionEquality()
+                .equals(other._learningPaths, _learningPaths));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_learningPaths));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AllPathsLoadedImplCopyWith<_$AllPathsLoadedImpl> get copyWith =>
+      __$$AllPathsLoadedImplCopyWithImpl<_$AllPathsLoadedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadingSubCategories,
+    required TResult Function(List<SubCategory> subCategories)
+        subCategoriesLoaded,
+    required TResult Function(List<LearningPath> learningPaths) allPathsLoaded,
+    required TResult Function(LearningPath learningPath) pathLoaded,
+    required TResult Function(int courseNumber, LearningPath updatedPath)
+        courseCompleted,
+    required TResult Function() pathDeleted,
+    required TResult Function(String message) error,
+  }) {
+    return allPathsLoaded(learningPaths);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loadingSubCategories,
+    TResult? Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult? Function(List<LearningPath> learningPaths)? allPathsLoaded,
+    TResult? Function(LearningPath learningPath)? pathLoaded,
+    TResult? Function(int courseNumber, LearningPath updatedPath)?
+        courseCompleted,
+    TResult? Function()? pathDeleted,
+    TResult? Function(String message)? error,
+  }) {
+    return allPathsLoaded?.call(learningPaths);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadingSubCategories,
+    TResult Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult Function(List<LearningPath> learningPaths)? allPathsLoaded,
+    TResult Function(LearningPath learningPath)? pathLoaded,
+    TResult Function(int courseNumber, LearningPath updatedPath)?
+        courseCompleted,
+    TResult Function()? pathDeleted,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (allPathsLoaded != null) {
+      return allPathsLoaded(learningPaths);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initial value) initial,
+    required TResult Function(LoadingSubCategories value) loadingSubCategories,
+    required TResult Function(SubCategoriesLoaded value) subCategoriesLoaded,
+    required TResult Function(AllPathsLoaded value) allPathsLoaded,
+    required TResult Function(PathLoaded value) pathLoaded,
+    required TResult Function(CourseCompleted value) courseCompleted,
+    required TResult Function(PathDeleted value) pathDeleted,
+    required TResult Function(Error value) error,
+  }) {
+    return allPathsLoaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Initial value)? initial,
+    TResult? Function(LoadingSubCategories value)? loadingSubCategories,
+    TResult? Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult? Function(AllPathsLoaded value)? allPathsLoaded,
+    TResult? Function(PathLoaded value)? pathLoaded,
+    TResult? Function(CourseCompleted value)? courseCompleted,
+    TResult? Function(PathDeleted value)? pathDeleted,
+    TResult? Function(Error value)? error,
+  }) {
+    return allPathsLoaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initial value)? initial,
+    TResult Function(LoadingSubCategories value)? loadingSubCategories,
+    TResult Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult Function(AllPathsLoaded value)? allPathsLoaded,
+    TResult Function(PathLoaded value)? pathLoaded,
+    TResult Function(CourseCompleted value)? courseCompleted,
+    TResult Function(PathDeleted value)? pathDeleted,
+    TResult Function(Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (allPathsLoaded != null) {
+      return allPathsLoaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class AllPathsLoaded implements LearningPathsState {
+  const factory AllPathsLoaded(
+      {required final List<LearningPath> learningPaths}) = _$AllPathsLoadedImpl;
+
+  List<LearningPath> get learningPaths;
+  @JsonKey(ignore: true)
+  _$$AllPathsLoadedImplCopyWith<_$AllPathsLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -629,6 +836,7 @@ class _$PathLoadedImpl implements PathLoaded {
     required TResult Function() loadingSubCategories,
     required TResult Function(List<SubCategory> subCategories)
         subCategoriesLoaded,
+    required TResult Function(List<LearningPath> learningPaths) allPathsLoaded,
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
@@ -644,6 +852,7 @@ class _$PathLoadedImpl implements PathLoaded {
     TResult? Function()? initial,
     TResult? Function()? loadingSubCategories,
     TResult? Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult? Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -659,6 +868,7 @@ class _$PathLoadedImpl implements PathLoaded {
     TResult Function()? initial,
     TResult Function()? loadingSubCategories,
     TResult Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -678,6 +888,7 @@ class _$PathLoadedImpl implements PathLoaded {
     required TResult Function(Initial value) initial,
     required TResult Function(LoadingSubCategories value) loadingSubCategories,
     required TResult Function(SubCategoriesLoaded value) subCategoriesLoaded,
+    required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
     required TResult Function(PathDeleted value) pathDeleted,
@@ -692,6 +903,7 @@ class _$PathLoadedImpl implements PathLoaded {
     TResult? Function(Initial value)? initial,
     TResult? Function(LoadingSubCategories value)? loadingSubCategories,
     TResult? Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
     TResult? Function(PathDeleted value)? pathDeleted,
@@ -706,6 +918,7 @@ class _$PathLoadedImpl implements PathLoaded {
     TResult Function(Initial value)? initial,
     TResult Function(LoadingSubCategories value)? loadingSubCategories,
     TResult Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
     TResult Function(PathDeleted value)? pathDeleted,
@@ -809,6 +1022,7 @@ class _$CourseCompletedImpl implements CourseCompleted {
     required TResult Function() loadingSubCategories,
     required TResult Function(List<SubCategory> subCategories)
         subCategoriesLoaded,
+    required TResult Function(List<LearningPath> learningPaths) allPathsLoaded,
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
@@ -824,6 +1038,7 @@ class _$CourseCompletedImpl implements CourseCompleted {
     TResult? Function()? initial,
     TResult? Function()? loadingSubCategories,
     TResult? Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult? Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -839,6 +1054,7 @@ class _$CourseCompletedImpl implements CourseCompleted {
     TResult Function()? initial,
     TResult Function()? loadingSubCategories,
     TResult Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -858,6 +1074,7 @@ class _$CourseCompletedImpl implements CourseCompleted {
     required TResult Function(Initial value) initial,
     required TResult Function(LoadingSubCategories value) loadingSubCategories,
     required TResult Function(SubCategoriesLoaded value) subCategoriesLoaded,
+    required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
     required TResult Function(PathDeleted value) pathDeleted,
@@ -872,6 +1089,7 @@ class _$CourseCompletedImpl implements CourseCompleted {
     TResult? Function(Initial value)? initial,
     TResult? Function(LoadingSubCategories value)? loadingSubCategories,
     TResult? Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
     TResult? Function(PathDeleted value)? pathDeleted,
@@ -886,6 +1104,7 @@ class _$CourseCompletedImpl implements CourseCompleted {
     TResult Function(Initial value)? initial,
     TResult Function(LoadingSubCategories value)? loadingSubCategories,
     TResult Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
     TResult Function(PathDeleted value)? pathDeleted,
@@ -953,6 +1172,7 @@ class _$PathDeletedImpl implements PathDeleted {
     required TResult Function() loadingSubCategories,
     required TResult Function(List<SubCategory> subCategories)
         subCategoriesLoaded,
+    required TResult Function(List<LearningPath> learningPaths) allPathsLoaded,
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
@@ -968,6 +1188,7 @@ class _$PathDeletedImpl implements PathDeleted {
     TResult? Function()? initial,
     TResult? Function()? loadingSubCategories,
     TResult? Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult? Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -983,6 +1204,7 @@ class _$PathDeletedImpl implements PathDeleted {
     TResult Function()? initial,
     TResult Function()? loadingSubCategories,
     TResult Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -1002,6 +1224,7 @@ class _$PathDeletedImpl implements PathDeleted {
     required TResult Function(Initial value) initial,
     required TResult Function(LoadingSubCategories value) loadingSubCategories,
     required TResult Function(SubCategoriesLoaded value) subCategoriesLoaded,
+    required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
     required TResult Function(PathDeleted value) pathDeleted,
@@ -1016,6 +1239,7 @@ class _$PathDeletedImpl implements PathDeleted {
     TResult? Function(Initial value)? initial,
     TResult? Function(LoadingSubCategories value)? loadingSubCategories,
     TResult? Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
     TResult? Function(PathDeleted value)? pathDeleted,
@@ -1030,6 +1254,7 @@ class _$PathDeletedImpl implements PathDeleted {
     TResult Function(Initial value)? initial,
     TResult Function(LoadingSubCategories value)? loadingSubCategories,
     TResult Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
     TResult Function(PathDeleted value)? pathDeleted,
@@ -1115,6 +1340,7 @@ class _$ErrorImpl implements Error {
     required TResult Function() loadingSubCategories,
     required TResult Function(List<SubCategory> subCategories)
         subCategoriesLoaded,
+    required TResult Function(List<LearningPath> learningPaths) allPathsLoaded,
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
@@ -1130,6 +1356,7 @@ class _$ErrorImpl implements Error {
     TResult? Function()? initial,
     TResult? Function()? loadingSubCategories,
     TResult? Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult? Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -1145,6 +1372,7 @@ class _$ErrorImpl implements Error {
     TResult Function()? initial,
     TResult Function()? loadingSubCategories,
     TResult Function(List<SubCategory> subCategories)? subCategoriesLoaded,
+    TResult Function(List<LearningPath> learningPaths)? allPathsLoaded,
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
@@ -1164,6 +1392,7 @@ class _$ErrorImpl implements Error {
     required TResult Function(Initial value) initial,
     required TResult Function(LoadingSubCategories value) loadingSubCategories,
     required TResult Function(SubCategoriesLoaded value) subCategoriesLoaded,
+    required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
     required TResult Function(PathDeleted value) pathDeleted,
@@ -1178,6 +1407,7 @@ class _$ErrorImpl implements Error {
     TResult? Function(Initial value)? initial,
     TResult? Function(LoadingSubCategories value)? loadingSubCategories,
     TResult? Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
     TResult? Function(PathDeleted value)? pathDeleted,
@@ -1192,6 +1422,7 @@ class _$ErrorImpl implements Error {
     TResult Function(Initial value)? initial,
     TResult Function(LoadingSubCategories value)? loadingSubCategories,
     TResult Function(SubCategoriesLoaded value)? subCategoriesLoaded,
+    TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
     TResult Function(PathDeleted value)? pathDeleted,

@@ -24,17 +24,26 @@ class LearningPathsEvent with _$LearningPathsEvent {
     required List<String> focusAreas,
   }) = SelectSubCategory;
 
-  /// Event to load the active learning path
+  /// Event to load all learning paths
+  const factory LearningPathsEvent.loadAllPaths() = LoadAllPaths;
+
+  /// Event to load a specific learning path by ID
+  const factory LearningPathsEvent.loadPathById({required String pathId}) =
+      LoadPathById;
+
+  /// Event to load the active learning path (for backward compatibility)
   const factory LearningPathsEvent.loadActivePath() = LoadActivePath;
 
-  /// Event to complete a course
-  const factory LearningPathsEvent.completeCourse({required int courseNumber}) =
-      CompleteCourse;
+  /// Event to complete a course in a specific learning path
+  const factory LearningPathsEvent.completeCourse({
+    required String pathId,
+    required int courseNumber,
+  }) = CompleteCourse;
 
-  /// Event to delete the active learning path
-  const factory LearningPathsEvent.deletePath() = DeletePath;
+  /// Event to delete a specific learning path by ID
+  const factory LearningPathsEvent.deletePath({required String pathId}) =
+      DeletePath;
 
   /// Event to refresh the current state
   const factory LearningPathsEvent.refresh() = Refresh;
 }
-

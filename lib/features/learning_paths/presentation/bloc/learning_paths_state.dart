@@ -23,7 +23,12 @@ class LearningPathsState with _$LearningPathsState {
     required List<SubCategory> subCategories,
   }) = SubCategoriesLoaded;
 
-  /// Learning path loaded successfully
+  /// All learning paths loaded successfully
+  const factory LearningPathsState.allPathsLoaded({
+    required List<LearningPath> learningPaths,
+  }) = AllPathsLoaded;
+
+  /// Single learning path loaded successfully
   const factory LearningPathsState.pathLoaded({
     required LearningPath learningPath,
   }) = PathLoaded;
@@ -40,4 +45,3 @@ class LearningPathsState with _$LearningPathsState {
   /// Error state
   const factory LearningPathsState.error({required String message}) = Error;
 }
-

@@ -19,6 +19,16 @@ class DeleteLearningPathUseCase {
   /// Deletes the active learning path
   /// @return Either Failure or void
   Future<Either<Failure, void>> call() async {
-    return await _repository.deleteLearningPath();
+    // Get the active learning path first
+    final activePathResult = await _repository.getActiveLearningPath();
+    return activePathResult.fold((failure) => left(failure), (
+      activePath,
+    ) async {
+      if (activePath != null) {
+        return await _repository.deleteLearningPath(activePath.id);
+      } else {
+        return left(ValidationFailure('No active learning path found'));
+      }
+    });
   }
 }

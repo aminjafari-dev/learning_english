@@ -22,24 +22,42 @@ abstract class LearningPathsRepository {
     required SubCategory subCategory,
   });
 
-  /// Gets the active learning path
+  /// Gets all learning paths
+  /// @return Either Failure or List of all LearningPaths
+  Future<Either<Failure, List<LearningPath>>> getAllLearningPaths();
+
+  /// Gets a specific learning path by ID
+  /// @param pathId The ID of the learning path to retrieve
+  /// @return Either Failure or the LearningPath (null if not found)
+  Future<Either<Failure, LearningPath?>> getLearningPathById(String pathId);
+
+  /// Gets the active learning path (for backward compatibility)
   /// @return Either Failure or the active LearningPath (null if none exists)
   Future<Either<Failure, LearningPath?>> getActiveLearningPath();
 
   /// Marks a course as completed and unlocks the next course
+  /// @param pathId The ID of the learning path
   /// @param courseNumber The course number to mark as completed
   /// @return Either Failure or void
-  Future<Either<Failure, void>> completeCourse(int courseNumber);
+  Future<Either<Failure, void>> completeCourse(String pathId, int courseNumber);
 
-  /// Deletes the active learning path
+  /// Deletes a specific learning path by ID
+  /// @param pathId The ID of the learning path to delete
   /// @return Either Failure or void
-  Future<Either<Failure, void>> deleteLearningPath();
+  Future<Either<Failure, void>> deleteLearningPath(String pathId);
 
-  /// Checks if there's an active learning path
+  /// Checks if there are any learning paths
+  /// @return Either Failure or boolean indicating if paths exist
+  Future<Either<Failure, bool>> hasLearningPaths();
+
+  /// Checks if there's an active learning path (for backward compatibility)
   /// @return Either Failure or boolean indicating if active path exists
   Future<Either<Failure, bool>> hasActiveLearningPath();
 
-  /// Gets progress statistics for the active learning path
+  /// Gets progress statistics for a specific learning path
+  /// @param pathId The ID of the learning path
   /// @return Either Failure or Map with progress statistics
-  Future<Either<Failure, Map<String, int>?>> getProgressStatistics();
+  Future<Either<Failure, Map<String, int>?>> getProgressStatistics(
+    String pathId,
+  );
 }

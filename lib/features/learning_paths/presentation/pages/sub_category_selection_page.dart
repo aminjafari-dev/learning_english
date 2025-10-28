@@ -70,6 +70,7 @@ class _SubCategorySelectionPageState extends State<SubCategorySelectionPage> {
             initial: () {},
             loadingSubCategories: () {},
             subCategoriesLoaded: (subCategories) {},
+            allPathsLoaded: (learningPaths) {},
             pathLoaded: (learningPath) {
               // Navigate back to home page when path is created
               Navigator.of(context).pop();
@@ -99,6 +100,7 @@ class _SubCategorySelectionPageState extends State<SubCategorySelectionPage> {
               loadingSubCategories: () => _buildLoadingState(),
               subCategoriesLoaded:
                   (subCategories) => _buildSubCategoriesList(subCategories),
+              allPathsLoaded: (learningPaths) => _buildLoadingState(),
               pathLoaded: (learningPath) => _buildLoadingState(),
               courseCompleted:
                   (courseNumber, updatedPath) => _buildLoadingState(),

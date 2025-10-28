@@ -12,10 +12,13 @@ import '../../features/learning_paths/data/repositories/sub_categories_repositor
 import '../../features/learning_paths/domain/repositories/learning_paths_repository.dart';
 import '../../features/learning_paths/domain/repositories/sub_categories_repository.dart';
 import '../../features/learning_paths/domain/usecases/create_learning_path_usecase.dart';
+import '../../features/learning_paths/domain/usecases/get_all_learning_paths_usecase.dart';
+import '../../features/learning_paths/domain/usecases/get_learning_path_by_id_usecase.dart';
 import '../../features/learning_paths/domain/usecases/get_active_learning_path_usecase.dart';
 import '../../features/learning_paths/domain/usecases/complete_course_usecase.dart';
 import '../../features/learning_paths/domain/usecases/generate_sub_categories_usecase.dart';
 import '../../features/learning_paths/domain/usecases/delete_learning_path_usecase.dart';
+import '../../features/learning_paths/domain/usecases/delete_learning_path_by_id_usecase.dart';
 import '../../features/learning_paths/presentation/bloc/learning_paths_bloc.dart';
 
 // Import the generated adapters
@@ -61,6 +64,14 @@ Future<void> initLearningPathsDependencies(GetIt getIt) async {
     () => CreateLearningPathUseCase(repository: getIt()),
   );
 
+  getIt.registerLazySingleton<GetAllLearningPathsUseCase>(
+    () => GetAllLearningPathsUseCase(repository: getIt()),
+  );
+
+  getIt.registerLazySingleton<GetLearningPathByIdUseCase>(
+    () => GetLearningPathByIdUseCase(repository: getIt()),
+  );
+
   getIt.registerLazySingleton<GetActiveLearningPathUseCase>(
     () => GetActiveLearningPathUseCase(repository: getIt()),
   );
@@ -77,14 +88,20 @@ Future<void> initLearningPathsDependencies(GetIt getIt) async {
     () => DeleteLearningPathUseCase(repository: getIt()),
   );
 
+  getIt.registerLazySingleton<DeleteLearningPathByIdUseCase>(
+    () => DeleteLearningPathByIdUseCase(repository: getIt()),
+  );
+
   // BLoC
   getIt.registerFactory<LearningPathsBloc>(
     () => LearningPathsBloc(
+      generateSubCategoriesUseCase: getIt(),
       createLearningPathUseCase: getIt(),
+      getAllLearningPathsUseCase: getIt(),
+      getLearningPathByIdUseCase: getIt(),
       getActiveLearningPathUseCase: getIt(),
       completeCourseUseCase: getIt(),
-      generateSubCategoriesUseCase: getIt(),
-      deleteLearningPathUseCase: getIt(),
+      deleteLearningPathByIdUseCase: getIt(),
     ),
   );
 

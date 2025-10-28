@@ -16,7 +16,7 @@ import '../bloc/learning_paths_state.dart';
 import '../widgets/empty_path_card.dart';
 import '../widgets/course_grid.dart';
 import '../widgets/learning_path_card.dart';
-import '../widgets/add_learning_path_card.dart';
+import '../widgets/small_add_learning_path_card.dart';
 import 'learning_path_detail_page.dart';
 
 /// Main page for the Learning Paths feature
@@ -50,13 +50,6 @@ class _LearningPathsHomePageState extends State<LearningPathsHomePage> {
         ),
         backgroundColor: AppTheme.surface(context),
         foregroundColor: AppTheme.text(context),
-        actions: [
-          // Refresh button
-          IconButton(
-            onPressed: () => _bloc.add(const LearningPathsEvent.refresh()),
-            icon: const Icon(Icons.refresh),
-          ),
-        ],
       ),
       backgroundColor: AppTheme.background(context),
       body: BlocBuilder<LearningPathsBloc, LearningPathsState>(
@@ -96,8 +89,8 @@ class _LearningPathsHomePageState extends State<LearningPathsHomePage> {
         itemCount: learningPaths.length + 1, // +1 for the add card
         itemBuilder: (context, index) {
           if (index == 0) {
-            // Add new learning path card at the top
-            return AddLearningPathCard(
+            // Add new learning path card at the top - use smaller version when paths exist
+            return SmallAddLearningPathCard(
               onTap: () => _navigateToSubCategorySelection(),
             );
           } else {

@@ -23,8 +23,12 @@ class PageRouter {
     PageName.splash: (context) => const SplashPage(),
     PageName.authentication: (context) => const AuthenticationPage(),
     PageName.levelSelection: (context) => const LevelSelectionPage(),
-    PageName.learningFocusSelection:
-        (context) => const LearningFocusSelectionPage(),
+    PageName.learningFocusSelection: (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final selectedLevel = args?['selectedLevel'] as String?;
+      return LearningFocusSelectionPage(selectedLevel: selectedLevel);
+    },
     // Conversation page (replacing Daily Lessons)
     PageName.dailyLessons: (context) => const DailyLessonsPage(),
     // Profile page
@@ -41,7 +45,15 @@ class PageRouter {
     // Learning paths home page
     PageName.learningPathsHome: (context) => const LearningPathsHomePage(),
     // Sub-category selection page
-    PageName.subCategorySelection:
-        (context) => const SubCategorySelectionPage(),
+    PageName.subCategorySelection: (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final selectedLevel = args?['selectedLevel'] as String?;
+      final focusAreas = args?['focusAreas'] as List<String>?;
+      return SubCategorySelectionPage(
+        selectedLevel: selectedLevel,
+        focusAreas: focusAreas,
+      );
+    },
   };
 }

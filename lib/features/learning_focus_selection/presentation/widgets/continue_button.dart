@@ -11,7 +11,9 @@ import 'package:learning_english/l10n/app_localizations.dart';
 /// This button is enabled when there are selected texts or custom text input.
 /// When pressed, it saves the selection (including custom text) and navigates to the daily lessons page.
 class ContinueButton extends StatelessWidget {
-  const ContinueButton({super.key});
+  final String? selectedLevel;
+
+  const ContinueButton({super.key, this.selectedLevel});
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +32,23 @@ class ContinueButton extends StatelessWidget {
           text: l10n.continue_,
           onPressed:
               isEnabled
-                  ? () {
-                    getIt<LearningFocusSelectionCubit>().saveSelection();
-                    Navigator.of(context).pushNamed(PageName.dailyLessons);
+                  ? () async {
+                    await getIt<LearningFocusSelectionCubit>().saveSelection();
+                    // Get the current state to pass focus areas
+                    final currentState =
+                        getIt<LearningFocusSelectionCubit>().state;
+                    final focusAreas = [...currentState.selectedTexts];
+                    if (currentState.customText.trim().isNotEmpty) {
+                      focusAreas.add(currentState.customText.trim());
+                    }
+
+                    Navigator.of(context).pushNamed(
+                      PageName.subCategorySelection,
+                      arguments: {
+                        'selectedLevel': selectedLevel,
+                        'focusAreas': focusAreas,
+                      },
+                    );
                   }
                   : null,
           style: ElevatedButton.styleFrom(

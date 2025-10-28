@@ -234,9 +234,9 @@ class _LearningPathsHomePageState extends State<LearningPathsHomePage> {
     );
   }
 
-  /// Navigates to sub-category selection
+  /// Navigates to level selection to start the learning path creation flow
   void _navigateToSubCategorySelection() {
-    Navigator.of(context).pushNamed(PageName.subCategorySelection);
+    Navigator.of(context).pushNamed(PageName.levelSelection);
   }
 
   /// Navigates to learning path detail page

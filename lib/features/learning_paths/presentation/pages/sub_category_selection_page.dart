@@ -8,6 +8,7 @@ import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/core/widgets/global_widget/g_scaffold.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text.dart';
+import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/l10n/app_localizations.dart';
 import '../bloc/learning_paths_bloc.dart';
 import '../bloc/learning_paths_event.dart';
@@ -19,7 +20,14 @@ import '../../../level_selection/domain/entities/user_profile.dart';
 /// Page for selecting AI-generated sub-categories
 /// Shows generated sub-categories and allows user to select one to create a learning path
 class SubCategorySelectionPage extends StatefulWidget {
-  const SubCategorySelectionPage({super.key});
+  final String? selectedLevel;
+  final List<String>? focusAreas;
+
+  const SubCategorySelectionPage({
+    super.key,
+    this.selectedLevel,
+    this.focusAreas,
+  });
 
   @override
   State<SubCategorySelectionPage> createState() =>
@@ -35,12 +43,14 @@ class _SubCategorySelectionPageState extends State<SubCategorySelectionPage> {
     super.initState();
     _bloc = getIt<LearningPathsBloc>();
 
-    // TODO: Get level and focus areas from user preferences
-    // For now, using default values - this should be passed from the previous page
+    // Get level and focus areas from the previous pages
+    final level = _parseLevel(widget.selectedLevel ?? 'intermediate');
+    final focusAreas = widget.focusAreas ?? ['general'];
+
     _bloc.add(
-      const LearningPathsEvent.generateSubCategories(
-        level: Level.intermediate,
-        focusAreas: ['business'],
+      LearningPathsEvent.generateSubCategories(
+        level: level,
+        focusAreas: focusAreas,
       ),
     );
   }
@@ -72,8 +82,11 @@ class _SubCategorySelectionPageState extends State<SubCategorySelectionPage> {
             subCategoriesLoaded: (subCategories) {},
             allPathsLoaded: (learningPaths) {},
             pathLoaded: (learningPath) {
-              // Navigate back to home page when path is created
-              Navigator.of(context).pop();
+              // Navigate to learning paths home page when path is created
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                PageName.learningPathsHome,
+                (route) => false,
+              );
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
@@ -226,10 +239,13 @@ class _SubCategorySelectionPageState extends State<SubCategorySelectionPage> {
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
+              final level = _parseLevel(widget.selectedLevel ?? 'intermediate');
+              final focusAreas = widget.focusAreas ?? ['general'];
+
               _bloc.add(
-                const LearningPathsEvent.generateSubCategories(
-                  level: Level.intermediate,
-                  focusAreas: ['business'],
+                LearningPathsEvent.generateSubCategories(
+                  level: level,
+                  focusAreas: focusAreas,
                 ),
               );
             },
@@ -250,13 +266,32 @@ class _SubCategorySelectionPageState extends State<SubCategorySelectionPage> {
   /// Creates a learning path with the selected sub-category
   void _createLearningPath() {
     if (_selectedSubCategory != null) {
+      final level = _parseLevel(widget.selectedLevel ?? 'intermediate');
+      final focusAreas = widget.focusAreas ?? ['general'];
+
       _bloc.add(
         LearningPathsEvent.selectSubCategory(
           subCategory: _selectedSubCategory!,
-          level: Level.intermediate, // TODO: Get from user preferences
-          focusAreas: ['business'], // TODO: Get from user preferences
+          level: level,
+          focusAreas: focusAreas,
         ),
       );
+    }
+  }
+
+  /// Parses string level to Level enum
+  Level _parseLevel(String levelString) {
+    switch (levelString.toLowerCase()) {
+      case 'beginner':
+        return Level.beginner;
+      case 'elementary':
+        return Level.elementary;
+      case 'intermediate':
+        return Level.intermediate;
+      case 'advanced':
+        return Level.advanced;
+      default:
+        return Level.intermediate;
     }
   }
 }

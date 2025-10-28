@@ -18,7 +18,9 @@ import '../bloc/learning_focus_selection_cubit.dart';
 /// This page displays a title, a back button, a grid of selectable options, and a continue button.
 /// Custom text input is tracked separately and only added to selections when the continue button is pressed.
 class LearningFocusSelectionPage extends StatefulWidget {
-  const LearningFocusSelectionPage({super.key});
+  final String? selectedLevel;
+
+  const LearningFocusSelectionPage({super.key, this.selectedLevel});
 
   @override
   State<LearningFocusSelectionPage> createState() =>
@@ -93,7 +95,7 @@ class _LearningFocusSelectionPageState
             // Continue button at the bottom, enabled only if at least one option is selected or custom text is entered
             SafeArea(
               minimum: const EdgeInsets.all(16),
-              child: ContinueButton(),
+              child: ContinueButton(selectedLevel: widget.selectedLevel),
             ),
           ],
         ),

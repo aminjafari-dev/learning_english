@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text.dart';
-import 'package:learning_english/core/constants/image_path.dart';
 
 class LevelOptionCard extends StatelessWidget {
   final String title;
@@ -37,7 +36,11 @@ class LevelOptionCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           onTap?.call();
-          Navigator.of(context).pushNamed(PageName.learningFocusSelection);
+          // Pass the selected level to the learning focus selection page
+          Navigator.of(context).pushNamed(
+            PageName.learningFocusSelection,
+            arguments: {'selectedLevel': title.toLowerCase()},
+          );
         },
         borderRadius: BorderRadius.circular(16),
         child: Container(

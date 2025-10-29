@@ -81,6 +81,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
             vocabularies: const VocabulariesState.loading(),
             phrases: const PhrasesState.loading(),
             userPreferences: const UserPreferencesState.loading(),
+            courseCompletion: const CourseCompletionState.initial(),
             isRefreshing: true,
           ),
         );
@@ -225,6 +226,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
           vocabularies: const VocabulariesState.loading(),
           phrases: const PhrasesState.loading(),
           userPreferences: const UserPreferencesState.loading(),
+          courseCompletion: const CourseCompletionState.initial(),
           isRefreshing: true,
         ),
       );

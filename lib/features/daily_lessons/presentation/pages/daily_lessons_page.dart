@@ -96,7 +96,13 @@ class DailyLessonsPage extends StatelessWidget {
                 );
 
                 // Navigate back to learning path detail with result indicating course completion
-                Navigator.of(context).pop(true);
+                // Use addPostFrameCallback to defer navigation until after the current frame completes
+                // This prevents the "Navigator is locked" error
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (context.mounted) {
+                    Navigator.of(context).pop(true);
+                  }
+                });
               },
               error: (message) {
                 // Show error message

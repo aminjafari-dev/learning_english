@@ -64,7 +64,8 @@ class Course extends Equatable {
   }
 
   /// Checks if the course can be accessed
-  bool get canAccess => isUnlocked && !isCompleted;
+  /// Completed courses can be accessed for review purposes
+  bool get canAccess => isUnlocked;
 
   @override
   List<Object?> get props => [
@@ -77,4 +78,3 @@ class Course extends Equatable {
     completionDate,
   ];
 }
-

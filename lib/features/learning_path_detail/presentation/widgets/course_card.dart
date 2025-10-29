@@ -28,7 +28,10 @@ class CourseCard extends StatelessWidget {
               course.canAccess
                   ? [
                     BoxShadow(
-                      color: AppTheme.primary(context).withOpacity(0.2),
+                      color:
+                          course.isCompleted
+                              ? Colors.green.withOpacity(0.3)
+                              : AppTheme.primary(context).withOpacity(0.2),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),
@@ -47,7 +50,35 @@ class CourseCard extends StatelessWidget {
                   color: Colors.green,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: const Icon(Icons.check, color: Colors.white, size: 20),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    GText(
+                      '${course.courseNumber}',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Container(
+                        width: 12,
+                        height: 12,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: const Icon(
+                          Icons.check,
+                          color: Colors.green,
+                          size: 8,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               )
             else if (course.isUnlocked)
               Container(
@@ -131,7 +162,7 @@ class CourseCard extends StatelessWidget {
   /// Gets the status text for the course
   String _getStatusText() {
     if (course.isCompleted) {
-      return 'Done';
+      return 'Review';
     } else if (course.isUnlocked) {
       return 'Start';
     } else {

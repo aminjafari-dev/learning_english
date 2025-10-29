@@ -9,7 +9,16 @@ import 'package:learning_english/l10n/app_localizations.dart';
 /// Header widget for the Daily Lessons page
 /// Displays the main title and settings button
 class DailyLessonsHeader extends StatelessWidget {
-  const DailyLessonsHeader({super.key});
+  final String? pathId;
+  final int? courseNumber;
+  final bool? isCompleted;
+
+  const DailyLessonsHeader({
+    super.key,
+    this.pathId,
+    this.courseNumber,
+    this.isCompleted,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +27,7 @@ class DailyLessonsHeader extends StatelessWidget {
       children: [
         Expanded(
           child: GText(
-            AppLocalizations.of(context)!.yourDailyLessons,
+            _getTitle(context),
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -26,6 +35,18 @@ class DailyLessonsHeader extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  /// Gets the appropriate title based on context
+  String _getTitle(BuildContext context) {
+    if (pathId != null && courseNumber != null) {
+      if (isCompleted == true) {
+        return 'Review Course $courseNumber';
+      } else {
+        return 'Course $courseNumber';
+      }
+    }
+    return AppLocalizations.of(context)!.yourDailyLessons;
   }
 }
 

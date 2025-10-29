@@ -2,6 +2,7 @@
 // Implementation of DailyLessonsRepository
 // Coordinates between local storage, AI services, and learning path management
 
+import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/vocabulary.dart';
@@ -82,17 +83,29 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
 
       if (hasContent) {
         // Return existing content
+        print(
+          '✅ [COURSE_CONTENT] Found existing content for course $courseNumber in path $pathId',
+        );
         final existingContent = await _localDataSource.getCourseContent(
           pathId,
           courseNumber,
         );
         if (existingContent != null) {
-          return right((
-            vocabularies:
-                existingContent.vocabularies.map((v) => v.toEntity()).toList(),
-            phrases: existingContent.phrases.map((p) => p.toEntity()).toList(),
-          ));
+          final vocabularies =
+              existingContent.vocabularies.map((v) => v.toEntity()).toList();
+          final phrases =
+              existingContent.phrases.map((p) => p.toEntity()).toList();
+
+          print(
+            '✅ [COURSE_CONTENT] Returning ${vocabularies.length} vocabularies and ${phrases.length} phrases from cache',
+          );
+
+          return right((vocabularies: vocabularies, phrases: phrases));
         }
+      } else {
+        print(
+          'ℹ️ [COURSE_CONTENT] No existing content found for course $courseNumber in path $pathId, generating new content',
+        );
       }
 
       // Generate new content for the course
@@ -114,10 +127,18 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
             .generateConversationResponse(enhancedPreferences);
 
         return result.fold((failure) => left(failure), (aiResponse) async {
-          // For now, create empty vocabularies and phrases
-          // This should be enhanced to parse the AI response and extract content
-          final vocabularies = <Vocabulary>[];
-          final phrases = <Phrase>[];
+          print(
+            '🔄 [COURSE_CONTENT] Generating new content for course $courseNumber in path $pathId',
+          );
+
+          // Parse the AI response to extract vocabularies and phrases
+          final parsedData = _parseAIResponse(aiResponse);
+          final vocabularies = parsedData.vocabularies;
+          final phrases = parsedData.phrases;
+
+          print(
+            '✅ [COURSE_CONTENT] Generated ${vocabularies.length} vocabularies and ${phrases.length} phrases',
+          );
 
           // Save the course content for future use
           final vocabularyModels =
@@ -131,6 +152,8 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
             vocabularyModels,
             phraseModels,
           );
+
+          print('💾 [COURSE_CONTENT] Saved course content for future use');
 
           return right((vocabularies: vocabularies, phrases: phrases));
         });
@@ -214,6 +237,64 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
       return left(
         ServerFailure('Failed to get user preferences: ${e.toString()}'),
       );
+    }
+  }
+
+  /// Parses AI response to extract vocabularies and phrases
+  /// Handles JSON parsing and validation
+  /// @param aiResponse The AI response string
+  /// @return Parsed vocabularies and phrases
+  ({List<Vocabulary> vocabularies, List<Phrase> phrases}) _parseAIResponse(
+    String aiResponse,
+  ) {
+    try {
+      // Extract JSON from the response (AI might add extra text)
+      final jsonStart = aiResponse.indexOf('{');
+      final jsonEnd = aiResponse.lastIndexOf('}') + 1;
+
+      if (jsonStart == -1 || jsonEnd == 0) {
+        print('❌ [COURSE_CONTENT] No JSON found in AI response');
+        return (vocabularies: <Vocabulary>[], phrases: <Phrase>[]);
+      }
+
+      final jsonString = aiResponse.substring(jsonStart, jsonEnd);
+      final Map<String, dynamic> data = jsonDecode(jsonString);
+
+      // Parse vocabularies
+      final List<dynamic> vocabList = data['vocabularies'] ?? [];
+      final vocabularies =
+          vocabList
+              .map(
+                (e) => Vocabulary(
+                  english: e['english'] ?? '',
+                  persian: e['persian'] ?? '',
+                ),
+              )
+              .where((v) => v.english.isNotEmpty && v.persian.isNotEmpty)
+              .toList();
+
+      // Parse phrases
+      final List<dynamic> phraseList = data['phrases'] ?? [];
+      final phrases =
+          phraseList
+              .map(
+                (e) => Phrase(
+                  english: e['english'] ?? '',
+                  persian: e['persian'] ?? '',
+                ),
+              )
+              .where((p) => p.english.isNotEmpty && p.persian.isNotEmpty)
+              .toList();
+
+      print(
+        '✅ [COURSE_CONTENT] Parsed ${vocabularies.length} vocabularies and ${phrases.length} phrases from AI response',
+      );
+
+      return (vocabularies: vocabularies, phrases: phrases);
+    } catch (e) {
+      print('❌ [COURSE_CONTENT] Failed to parse AI response: $e');
+      // Return empty lists if parsing fails
+      return (vocabularies: <Vocabulary>[], phrases: <Phrase>[]);
     }
   }
 

@@ -37,7 +37,7 @@ class DailyLessonsPage extends StatelessWidget {
 
     // Fetch lessons based on context
     if (pathId != null && courseNumber != null && learningPath != null) {
-      // Course-specific content
+      // Course-specific content (can be new or review of completed course)
       bloc.add(
         DailyLessonsEvent.fetchLessonsWithCourseContext(
           pathId: pathId!,
@@ -57,7 +57,15 @@ class DailyLessonsPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppTheme.background(context),
         elevation: 0,
-        title: const DailyLessonsHeader(),
+        title: DailyLessonsHeader(
+          pathId: pathId,
+          courseNumber: courseNumber,
+          isCompleted:
+              learningPath?.courses
+                  .where((course) => course.courseNumber == courseNumber)
+                  .firstOrNull
+                  ?.isCompleted,
+        ),
         leading:
         // Back button with localized text
         IconButton(

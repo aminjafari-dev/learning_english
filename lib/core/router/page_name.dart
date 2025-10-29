@@ -36,4 +36,7 @@ class PageName {
 
   /// Route for the sub-category selection page
   static const String subCategorySelection = '/subCategorySelection';
+
+  /// Route for the learning path detail page
+  static const String learningPathDetail = '/learningPathDetail';
 }

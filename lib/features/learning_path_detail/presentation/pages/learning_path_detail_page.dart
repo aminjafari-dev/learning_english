@@ -10,9 +10,9 @@ import 'package:learning_english/core/widgets/global_widget/g_scaffold.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
 import 'package:learning_english/l10n/app_localizations.dart';
-import '../bloc/learning_paths_bloc.dart';
-import '../bloc/learning_paths_event.dart';
-import '../bloc/learning_paths_state.dart';
+import '../bloc/learning_path_detail_bloc.dart';
+import '../bloc/learning_path_detail_event.dart';
+import '../bloc/learning_path_detail_state.dart';
 import '../widgets/course_grid.dart';
 
 /// Detail page for a specific learning path
@@ -27,13 +27,13 @@ class LearningPathDetailPage extends StatefulWidget {
 }
 
 class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
-  late final LearningPathsBloc _bloc;
+  late final LearningPathDetailBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = getIt<LearningPathsBloc>();
-    _bloc.add(LearningPathsEvent.loadPathById(pathId: widget.pathId));
+    _bloc = getIt<LearningPathDetailBloc>();
+    _bloc.add(LearningPathDetailEvent.loadPathById(pathId: widget.pathId));
   }
 
   @override
@@ -53,25 +53,24 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
           IconButton(
             onPressed:
                 () => _bloc.add(
-                  LearningPathsEvent.loadPathById(pathId: widget.pathId),
+                  LearningPathDetailEvent.loadPathById(pathId: widget.pathId),
                 ),
             icon: const Icon(Icons.refresh),
           ),
         ],
       ),
       backgroundColor: AppTheme.background(context),
-      body: BlocBuilder<LearningPathsBloc, LearningPathsState>(
+      body: BlocBuilder<LearningPathDetailBloc, LearningPathDetailState>(
         bloc: _bloc,
         builder: (context, state) {
           return state.when(
             initial: () => _buildLoadingState(),
-            loadingSubCategories: () => _buildLoadingState(),
-            subCategoriesLoaded: (subCategories) => _buildLoadingState(),
-            allPathsLoaded: (learningPaths) => _buildLoadingState(),
+            loading: () => _buildLoadingState(),
             pathLoaded: (learningPath) => _buildPathLoadedState(learningPath),
             courseCompleted:
                 (courseNumber, updatedPath) =>
                     _buildPathLoadedState(updatedPath),
+            pathDeleted: () => _buildPathDeletedState(),
             error: (message) => _buildErrorState(message),
           );
         },
@@ -175,6 +174,29 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
     );
   }
 
+  /// Builds the path deleted state
+  Widget _buildPathDeletedState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.check_circle, size: 64, color: Colors.green),
+          GGap.g16,
+          GText(
+            'Learning path deleted successfully',
+            style: Theme.of(context).textTheme.titleLarge,
+            textAlign: TextAlign.center,
+          ),
+          GGap.g16,
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Go Back'),
+          ),
+        ],
+      ),
+    );
+  }
+
   /// Builds the error state
   Widget _buildErrorState(String message) {
     return Center(
@@ -192,7 +214,7 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
           ElevatedButton(
             onPressed:
                 () => _bloc.add(
-                  LearningPathsEvent.loadPathById(pathId: widget.pathId),
+                  LearningPathDetailEvent.loadPathById(pathId: widget.pathId),
                 ),
             child: const Text('Retry'),
           ),
@@ -231,7 +253,7 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  _bloc.add(LearningPathsEvent.deletePath(pathId: pathId));
+                  _bloc.add(LearningPathDetailEvent.deletePath(pathId: pathId));
                 },
                 style: TextButton.styleFrom(foregroundColor: Colors.red),
                 child: const Text('Delete'),

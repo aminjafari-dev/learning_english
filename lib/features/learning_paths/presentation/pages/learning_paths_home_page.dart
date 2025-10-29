@@ -14,10 +14,8 @@ import '../bloc/learning_paths_bloc.dart';
 import '../bloc/learning_paths_event.dart';
 import '../bloc/learning_paths_state.dart';
 import '../widgets/empty_path_card.dart';
-import '../widgets/course_grid.dart';
 import '../widgets/learning_path_card.dart';
 import '../widgets/small_add_learning_path_card.dart';
-import 'learning_path_detail_page.dart';
 
 /// Main page for the Learning Paths feature
 /// Shows either empty state or course grid based on whether user has an active path
@@ -61,10 +59,12 @@ class _LearningPathsHomePageState extends State<LearningPathsHomePage> {
             subCategoriesLoaded: (subCategories) => _buildEmptyState(),
             allPathsLoaded:
                 (learningPaths) => _buildAllPathsLoadedState(learningPaths),
-            pathLoaded: (learningPath) => _buildPathLoadedState(learningPath),
+            pathLoaded:
+                (learningPath) =>
+                    _buildLoadingState(), // This should not happen in home page
             courseCompleted:
                 (courseNumber, updatedPath) =>
-                    _buildPathLoadedState(updatedPath),
+                    _buildLoadingState(), // This should not happen in home page
             error: (message) => _buildErrorState(message),
           );
         },
@@ -111,98 +111,6 @@ class _LearningPathsHomePageState extends State<LearningPathsHomePage> {
     return const Center(child: CircularProgressIndicator());
   }
 
-  /// Builds the state when a learning path is loaded
-  Widget _buildPathLoadedState(learningPath) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Path header
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  AppTheme.primary(context).withOpacity(0.1),
-                  AppTheme.primary(context).withOpacity(0.05),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GText(
-                  learningPath.title,
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.text(context),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                GText(
-                  learningPath.description,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppTheme.text(context).withOpacity(0.7),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Progress indicator
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GText(
-                            'Progress',
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodySmall?.copyWith(
-                              color: AppTheme.text(context).withOpacity(0.6),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          LinearProgressIndicator(
-                            value: learningPath.progressPercentage / 100,
-                            backgroundColor: Colors.grey.withOpacity(0.3),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              AppTheme.primary(context),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    // Delete button
-                    IconButton(
-                      onPressed: () => _showDeleteDialog(learningPath.id),
-                      icon: const Icon(Icons.delete_outline),
-                      color: Colors.red,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 24),
-
-          // Course grid
-          CourseGrid(
-            learningPath: learningPath,
-            onCourseTap: (courseNumber) => _navigateToCourse(courseNumber),
-          ),
-        ],
-      ),
-    );
-  }
-
   /// Builds the error state
   Widget _buildErrorState(String message) {
     return Center(
@@ -233,23 +141,9 @@ class _LearningPathsHomePageState extends State<LearningPathsHomePage> {
 
   /// Navigates to learning path detail page
   void _navigateToLearningPathDetail(String pathId) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => LearningPathDetailPage(pathId: pathId),
-      ),
-    );
-  }
-
-  /// Navigates to a specific course
-  void _navigateToCourse(int courseNumber) {
-    // TODO: Navigate to daily lessons page with course context
-    // This will be implemented when we enhance the daily lessons integration
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Starting Course $courseNumber...'),
-        backgroundColor: AppTheme.primary(context),
-      ),
-    );
+    Navigator.of(
+      context,
+    ).pushNamed(PageName.learningPathDetail, arguments: pathId);
   }
 
   /// Shows delete confirmation dialog

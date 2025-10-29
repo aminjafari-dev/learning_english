@@ -126,4 +126,3 @@ class CourseGrid extends StatelessWidget {
     );
   }
 }
-

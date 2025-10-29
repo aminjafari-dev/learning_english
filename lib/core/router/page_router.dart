@@ -16,6 +16,7 @@ import 'package:learning_english/features/history/presentation/pages/vocabulary_
 import 'package:learning_english/features/history/presentation/pages/request_detail_page.dart';
 import 'package:learning_english/features/learning_paths/presentation/pages/learning_paths_home_page.dart';
 import 'package:learning_english/features/learning_paths/presentation/pages/sub_category_selection_page.dart';
+import 'package:learning_english/features/learning_path_detail/presentation/pages/learning_path_detail_page.dart';
 
 class PageRouter {
   /// Map of all named routes in the app
@@ -54,6 +55,11 @@ class PageRouter {
         selectedLevel: selectedLevel,
         focusAreas: focusAreas,
       );
+    },
+    // Learning path detail page
+    PageName.learningPathDetail: (context) {
+      final pathId = ModalRoute.of(context)!.settings.arguments as String;
+      return LearningPathDetailPage(pathId: pathId);
     },
   };
 }

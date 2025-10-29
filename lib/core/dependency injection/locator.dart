@@ -14,6 +14,7 @@ import 'package:learning_english/core/dependency%20injection/profile_di.dart';
 import 'package:learning_english/core/dependency%20injection/vocabulary_history_di.dart';
 import 'package:learning_english/core/dependency%20injection/localization_di.dart';
 import 'package:learning_english/core/dependency%20injection/learning_paths_di.dart';
+import 'package:learning_english/core/dependency%20injection/learning_path_detail_di.dart';
 import 'package:learning_english/core/theme/cubit/theme_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -62,6 +63,9 @@ Future<void> initDependencies() async {
 
     // Learning Paths Feature
     await initLearningPathsDependencies(getIt);
+
+    // Learning Path Detail Feature
+    await setupLearningPathDetailLocator(getIt);
 
     print('✅ [DI] All dependencies initialized successfully');
   } catch (e) {

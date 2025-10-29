@@ -93,8 +93,8 @@ Future<void> initLearningPathsDependencies(GetIt getIt) async {
   );
 
   // BLoC
-  getIt.registerFactory<LearningPathsBloc>(
-    () => LearningPathsBloc(
+  getIt.registerSingleton<LearningPathsBloc>(
+    LearningPathsBloc(
       generateSubCategoriesUseCase: getIt(),
       createLearningPathUseCase: getIt(),
       getAllLearningPathsUseCase: getIt(),

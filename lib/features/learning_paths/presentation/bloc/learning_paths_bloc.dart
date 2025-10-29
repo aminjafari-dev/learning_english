@@ -58,21 +58,27 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
     GenerateSubCategories event,
     Emitter<LearningPathsState> emit,
   ) async {
-    emit(const LearningPathsState.loadingSubCategories());
+    if (!emit.isDone) {
+      emit(const LearningPathsState.loadingSubCategories());
 
-    final result = await _generateSubCategoriesUseCase(
-      level: event.level,
-      focusAreas: event.focusAreas,
-    );
+      final result = await _generateSubCategoriesUseCase(
+        level: event.level,
+        focusAreas: event.focusAreas,
+      );
 
-    result.fold(
-      (failure) => emit(
-        LearningPathsState.error(message: _mapFailureToMessage(failure)),
-      ),
-      (subCategories) => emit(
-        LearningPathsState.subCategoriesLoaded(subCategories: subCategories),
-      ),
-    );
+      if (!emit.isDone) {
+        result.fold(
+          (failure) => emit(
+            LearningPathsState.error(message: _mapFailureToMessage(failure)),
+          ),
+          (subCategories) => emit(
+            LearningPathsState.subCategoriesLoaded(
+              subCategories: subCategories,
+            ),
+          ),
+        );
+      }
+    }
   }
 
   /// Handles sub-category selection and learning path creation
@@ -80,21 +86,25 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
     SelectSubCategory event,
     Emitter<LearningPathsState> emit,
   ) async {
-    emit(const LearningPathsState.loadingSubCategories());
+    if (!emit.isDone) {
+      emit(const LearningPathsState.loadingSubCategories());
 
-    final result = await _createLearningPathUseCase(
-      level: event.level,
-      focusAreas: event.focusAreas,
-      subCategory: event.subCategory,
-    );
+      final result = await _createLearningPathUseCase(
+        level: event.level,
+        focusAreas: event.focusAreas,
+        subCategory: event.subCategory,
+      );
 
-    result.fold(
-      (failure) => emit(
-        LearningPathsState.error(message: _mapFailureToMessage(failure)),
-      ),
-      (learningPath) =>
-          emit(LearningPathsState.pathLoaded(learningPath: learningPath)),
-    );
+      if (!emit.isDone) {
+        result.fold(
+          (failure) => emit(
+            LearningPathsState.error(message: _mapFailureToMessage(failure)),
+          ),
+          (learningPath) =>
+              emit(LearningPathsState.pathLoaded(learningPath: learningPath)),
+        );
+      }
+    }
   }
 
   /// Handles loading all learning paths
@@ -104,18 +114,24 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
   ) async {
     final result = await _getAllLearningPathsUseCase();
 
-    result.fold(
-      (failure) => emit(
-        LearningPathsState.error(message: _mapFailureToMessage(failure)),
-      ),
-      (learningPaths) {
-        if (learningPaths.isNotEmpty) {
-          emit(LearningPathsState.allPathsLoaded(learningPaths: learningPaths));
-        } else {
-          emit(const LearningPathsState.initial());
-        }
-      },
-    );
+    if (!emit.isDone) {
+      result.fold(
+        (failure) => emit(
+          LearningPathsState.error(message: _mapFailureToMessage(failure)),
+        ),
+        (learningPaths) {
+          if (!emit.isDone) {
+            if (learningPaths.isNotEmpty) {
+              emit(
+                LearningPathsState.allPathsLoaded(learningPaths: learningPaths),
+              );
+            } else {
+              emit(const LearningPathsState.initial());
+            }
+          }
+        },
+      );
+    }
   }
 
   /// Handles loading a specific learning path by ID
@@ -125,18 +141,22 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
   ) async {
     final result = await _getLearningPathByIdUseCase(event.pathId);
 
-    result.fold(
-      (failure) => emit(
-        LearningPathsState.error(message: _mapFailureToMessage(failure)),
-      ),
-      (learningPath) {
-        if (learningPath != null) {
-          emit(LearningPathsState.pathLoaded(learningPath: learningPath));
-        } else {
-          emit(const LearningPathsState.initial());
-        }
-      },
-    );
+    if (!emit.isDone) {
+      result.fold(
+        (failure) => emit(
+          LearningPathsState.error(message: _mapFailureToMessage(failure)),
+        ),
+        (learningPath) {
+          if (!emit.isDone) {
+            if (learningPath != null) {
+              emit(LearningPathsState.pathLoaded(learningPath: learningPath));
+            } else {
+              emit(const LearningPathsState.initial());
+            }
+          }
+        },
+      );
+    }
   }
 
   /// Handles loading the active learning path (for backward compatibility)
@@ -146,18 +166,22 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
   ) async {
     final result = await _getActiveLearningPathUseCase();
 
-    result.fold(
-      (failure) => emit(
-        LearningPathsState.error(message: _mapFailureToMessage(failure)),
-      ),
-      (learningPath) {
-        if (learningPath != null) {
-          emit(LearningPathsState.pathLoaded(learningPath: learningPath));
-        } else {
-          emit(const LearningPathsState.initial());
-        }
-      },
-    );
+    if (!emit.isDone) {
+      result.fold(
+        (failure) => emit(
+          LearningPathsState.error(message: _mapFailureToMessage(failure)),
+        ),
+        (learningPath) {
+          if (!emit.isDone) {
+            if (learningPath != null) {
+              emit(LearningPathsState.pathLoaded(learningPath: learningPath));
+            } else {
+              emit(const LearningPathsState.initial());
+            }
+          }
+        },
+      );
+    }
   }
 
   /// Handles course completion
@@ -170,30 +194,48 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
       event.courseNumber,
     );
 
-    result.fold(
-      (failure) => emit(
-        LearningPathsState.error(message: _mapFailureToMessage(failure)),
-      ),
-      (_) async {
+    if (!emit.isDone) {
+      // Check if course completion was successful
+      final isSuccess = result.fold((failure) => false, (_) => true);
+
+      if (isSuccess) {
         // Reload the learning path to get updated state
         final pathResult = await _getLearningPathByIdUseCase(event.pathId);
-        pathResult.fold(
-          (failure) => emit(
+
+        if (!emit.isDone) {
+          pathResult.fold(
+            (failure) {
+              if (!emit.isDone) {
+                emit(
+                  LearningPathsState.error(
+                    message: _mapFailureToMessage(failure),
+                  ),
+                );
+              }
+            },
+            (learningPath) {
+              if (!emit.isDone && learningPath != null) {
+                emit(
+                  LearningPathsState.courseCompleted(
+                    courseNumber: event.courseNumber,
+                    updatedPath: learningPath,
+                  ),
+                );
+              }
+            },
+          );
+        }
+      } else {
+        // Handle course completion failure - emit error
+        final failure = result.fold((failure) => failure, (_) => null);
+
+        if (!emit.isDone && failure != null) {
+          emit(
             LearningPathsState.error(message: _mapFailureToMessage(failure)),
-          ),
-          (learningPath) {
-            if (learningPath != null) {
-              emit(
-                LearningPathsState.courseCompleted(
-                  courseNumber: event.courseNumber,
-                  updatedPath: learningPath,
-                ),
-              );
-            }
-          },
-        );
-      },
-    );
+          );
+        }
+      }
+    }
   }
 
   /// Handles learning path deletion
@@ -201,31 +243,33 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
     DeletePath event,
     Emitter<LearningPathsState> emit,
   ) async {
+    // First, emit loading state to show user that deletion is in progress
+    if (!emit.isDone) {
+      emit(const LearningPathsState.loadingSubCategories());
+    }
+
     final result = await _deleteLearningPathByIdUseCase(event.pathId);
 
-    result.fold(
-      (failure) => emit(
-        LearningPathsState.error(message: _mapFailureToMessage(failure)),
-      ),
-      (_) async {
-        // After successful deletion, reload all remaining paths
-        final remainingPathsResult = await _getAllLearningPathsUseCase();
-        remainingPathsResult.fold(
-          (failure) => emit(
+    // Check if emitter is still valid after async operation
+    if (!emit.isDone) {
+      // Check if deletion was successful
+      final isSuccess = result.fold((failure) => false, (_) => true);
+
+      if (isSuccess) {
+        // Deletion was successful, now reload all remaining paths
+        // Use the helper method to safely refresh the list
+        await _refreshLearningPathsList(emit);
+      } else {
+        // Handle deletion failure - emit error
+        final failure = result.fold((failure) => failure, (_) => null);
+
+        if (!emit.isDone && failure != null) {
+          emit(
             LearningPathsState.error(message: _mapFailureToMessage(failure)),
-          ),
-          (learningPaths) {
-            if (learningPaths.isNotEmpty) {
-              emit(
-                LearningPathsState.allPathsLoaded(learningPaths: learningPaths),
-              );
-            } else {
-              emit(const LearningPathsState.initial());
-            }
-          },
-        );
-      },
-    );
+          );
+        }
+      }
+    }
   }
 
   /// Handles refresh
@@ -233,7 +277,45 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
     Refresh event,
     Emitter<LearningPathsState> emit,
   ) async {
-    add(const LearningPathsEvent.loadAllPaths());
+    // Use the helper method to safely refresh the list
+    await _refreshLearningPathsList(emit);
+  }
+
+  /// Helper method to safely refresh the learning paths list
+  /// This method handles all the emit.isDone checks properly
+  Future<void> _refreshLearningPathsList(
+    Emitter<LearningPathsState> emit,
+  ) async {
+    if (!emit.isDone) {
+      final result = await _getAllLearningPathsUseCase();
+
+      if (!emit.isDone) {
+        result.fold(
+          (failure) {
+            if (!emit.isDone) {
+              emit(
+                LearningPathsState.error(
+                  message: _mapFailureToMessage(failure),
+                ),
+              );
+            }
+          },
+          (learningPaths) {
+            if (!emit.isDone) {
+              if (learningPaths.isNotEmpty) {
+                emit(
+                  LearningPathsState.allPathsLoaded(
+                    learningPaths: learningPaths,
+                  ),
+                );
+              } else {
+                emit(const LearningPathsState.initial());
+              }
+            }
+          },
+        );
+      }
+    }
   }
 
   /// Maps failure to user-friendly message

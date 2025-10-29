@@ -57,11 +57,13 @@ class CourseCard extends StatelessWidget {
                   color: AppTheme.primary(context),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: GText(
-                  '${course.courseNumber}',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                child: Center(
+                  child: GText(
+                    '${course.courseNumber}',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               )

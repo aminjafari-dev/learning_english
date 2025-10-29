@@ -87,8 +87,8 @@ class DailyLessonsPage extends StatelessWidget {
                   ),
                 );
 
-                // Navigate back to learning path detail
-                Navigator.of(context).pop();
+                // Navigate back to learning path detail with result indicating course completion
+                Navigator.of(context).pop(true);
               },
               error: (message) {
                 // Show error message

@@ -38,6 +38,12 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
     _bloc.add(LearningPathDetailEvent.loadPathById(pathId: widget.pathId));
   }
 
+  /// Refreshes the learning path data
+  /// This method is called when the page needs to refresh
+  void _refreshLearningPath() {
+    _bloc.add(LearningPathDetailEvent.loadPathById(pathId: widget.pathId));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -50,16 +56,7 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
         ),
         backgroundColor: AppTheme.surface(context),
         foregroundColor: AppTheme.text(context),
-        actions: [
-          // Refresh button
-          IconButton(
-            onPressed:
-                () => _bloc.add(
-                  LearningPathDetailEvent.loadPathById(pathId: widget.pathId),
-                ),
-            icon: const Icon(Icons.refresh),
-          ),
-        ],
+        // Removed refresh button - page now refreshes automatically
       ),
       backgroundColor: AppTheme.background(context),
       body: BlocBuilder<LearningPathDetailBloc, LearningPathDetailState>(
@@ -226,7 +223,7 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
   }
 
   /// Navigates to a specific course
-  void _navigateToCourse(int courseNumber) {
+  void _navigateToCourse(int courseNumber) async {
     // Get the current learning path from the state
     final currentState = _bloc.state;
     LearningPath? learningPath;
@@ -242,7 +239,7 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
 
     if (learningPath != null) {
       // Navigate to daily lessons page with course context
-      Navigator.of(context).pushNamed(
+      final result = await Navigator.of(context).pushNamed(
         PageName.dailyLessons,
         arguments: {
           'pathId': learningPath!.id,
@@ -250,6 +247,11 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
           'learningPath': learningPath!,
         },
       );
+
+      // If a course was completed, refresh the learning path data
+      if (result == true) {
+        _refreshLearningPath();
+      }
     } else {
       // Fallback if learning path is not available
       ScaffoldMessenger.of(context).showSnackBar(

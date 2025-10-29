@@ -9,7 +9,8 @@ import 'daily_lessons_event.dart';
 import 'daily_lessons_state.dart';
 import '../../domain/usecases/get_conversation_lessons_usecase.dart';
 import '../../domain/usecases/get_user_preferences_usecase.dart';
-import '../../domain/entities/user_preferences.dart';
+import '../../domain/usecases/complete_course_usecase.dart';
+import '../../domain/repositories/daily_lessons_repository.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
 import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
 
@@ -21,10 +22,14 @@ import 'package:learning_english/features/learning_paths/domain/entities/learnin
 class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
   final GetConversationLessonsUseCase getConversationLessonsUseCase;
   final GetUserPreferencesUseCase getUserPreferencesUseCase;
+  final CompleteCourseUseCase completeCourseUseCase;
+  final DailyLessonsRepository dailyLessonsRepository;
 
   DailyLessonsBloc({
     required this.getConversationLessonsUseCase,
     required this.getUserPreferencesUseCase,
+    required this.completeCourseUseCase,
+    required this.dailyLessonsRepository,
   }) : super(
          const DailyLessonsState(
            vocabularies: VocabulariesState.initial(),
@@ -33,6 +38,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
            analytics: UserAnalyticsState.initial(),
            dataManagement: UserDataManagementState.initial(),
            conversation: ConversationState.initial(),
+           courseCompletion: CourseCompletionState.initial(),
            isRefreshing: false,
          ),
        ) {
@@ -52,6 +58,12 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
                 ), // Course-specific content
         refreshLessons: () => _onRefreshLessons(emit),
         getUserPreferences: () => _onGetUserPreferences(emit),
+        completeCourse:
+            (pathId, courseNumber) => _onCompleteCourse(
+              emit,
+              pathId,
+              courseNumber,
+            ), // Course completion
       );
     });
   }
@@ -200,7 +212,7 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
 
   /// Fetches lessons with course context for personalized content
   /// Generates content specific to the course, learning path, and user preferences
-  /// This method creates enhanced user preferences that include course-specific context
+  /// This method checks for existing course content first, then generates new if needed
   Future<void> _onFetchLessonsWithCourseContext(
     Emitter<DailyLessonsState> emit,
     String pathId,
@@ -243,24 +255,22 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
 
       if (basePreferences == null) return;
 
-      // Create enhanced preferences with course context
-      final enhancedPreferences = _createEnhancedPreferencesWithCourseContext(
-        basePreferences,
-        learningPath,
-        courseNumber,
-      );
-
       // Emit user preferences state
       if (!emit.isDone) {
         emit(
           state.copyWith(
-            userPreferences: UserPreferencesState.loaded(enhancedPreferences),
+            userPreferences: UserPreferencesState.loaded(basePreferences),
           ),
         );
       }
 
-      // Fetch conversation-based lessons using enhanced preferences
-      final result = await getConversationLessonsUseCase(enhancedPreferences);
+      // Use the daily lessons repository to get course-specific content
+      final result = await dailyLessonsRepository.getCourseLessons(
+        pathId,
+        courseNumber,
+        learningPath,
+      );
+
       result.fold(
         (failure) {
           if (!emit.isDone) {
@@ -279,9 +289,6 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
               state.copyWith(
                 vocabularies: VocabulariesState.loaded(data.vocabularies),
                 phrases: PhrasesState.loaded(data.phrases),
-                conversation: ConversationState.loaded(
-                  lastResponse: data.conversationContext,
-                ),
                 isRefreshing: false,
               ),
             );
@@ -301,28 +308,53 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
     }
   }
 
-  /// Creates enhanced user preferences with course context
-  /// Combines base user preferences with course-specific information
-  /// This helps generate more relevant content for the specific course
-  UserPreferences _createEnhancedPreferencesWithCourseContext(
-    UserPreferences basePreferences,
-    LearningPath learningPath,
+  /// Handles course completion
+  /// Completes the course and unlocks the next one in the learning path
+  Future<void> _onCompleteCourse(
+    Emitter<DailyLessonsState> emit,
+    String pathId,
     int courseNumber,
-  ) {
-    // Create enhanced focus areas that include course context
-    final enhancedFocusAreas = <String>[
-      ...basePreferences.focusAreas,
-      learningPath.subCategory.title.toLowerCase(),
-      'course_${courseNumber}',
-      'learning_path',
-    ];
+  ) async {
+    if (!emit.isDone) {
+      emit(
+        state.copyWith(courseCompletion: const CourseCompletionState.loading()),
+      );
+    }
 
-    // Remove duplicates and ensure we have meaningful focus areas
-    final uniqueFocusAreas = enhancedFocusAreas.toSet().toList();
+    try {
+      final result = await completeCourseUseCase(pathId, courseNumber);
 
-    return UserPreferences(
-      level: basePreferences.level,
-      focusAreas: uniqueFocusAreas,
-    );
+      result.fold(
+        (failure) {
+          if (!emit.isDone) {
+            emit(
+              state.copyWith(
+                courseCompletion: CourseCompletionState.error(failure.message),
+              ),
+            );
+          }
+        },
+        (_) {
+          if (!emit.isDone) {
+            emit(
+              state.copyWith(
+                courseCompletion: CourseCompletionState.completed(
+                  pathId: pathId,
+                  courseNumber: courseNumber,
+                ),
+              ),
+            );
+          }
+        },
+      );
+    } catch (e) {
+      if (!emit.isDone) {
+        emit(
+          state.copyWith(
+            courseCompletion: CourseCompletionState.error(e.toString()),
+          ),
+        );
+      }
+    }
   }
 }

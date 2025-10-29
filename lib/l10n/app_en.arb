@@ -44,6 +44,22 @@
   "@phrases": {
     "description": "Section header for phrases."
   },
+  "courseCompletion": "Course Completion",
+  "@courseCompletion": {
+    "description": "Title for course completion section."
+  },
+  "courseCompletionDescription": "You've completed this course! Tap the button below to mark it as finished and unlock the next course.",
+  "@courseCompletionDescription": {
+    "description": "Description for course completion section."
+  },
+  "completeCourse": "Complete Course",
+  "@completeCourse": {
+    "description": "Button text for completing a course."
+  },
+  "completing": "Completing...",
+  "@completing": {
+    "description": "Loading text while completing a course."
+  },
   "nextLessons": "Next Lessons",
   "errorAuth": "Authentication failed. Please try again.",
   "@errorAuth": {

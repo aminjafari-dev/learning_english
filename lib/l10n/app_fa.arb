@@ -44,6 +44,22 @@
   "@phrases": {
     "description": "سربرگ بخش عبارات."
   },
+  "courseCompletion": "تکمیل دوره",
+  "@courseCompletion": {
+    "description": "عنوان بخش تکمیل دوره."
+  },
+  "courseCompletionDescription": "شما این دوره را تکمیل کرده‌اید! برای علامت‌گذاری به عنوان تمام شده و باز کردن دوره بعدی، دکمه زیر را فشار دهید.",
+  "@courseCompletionDescription": {
+    "description": "توضیحات بخش تکمیل دوره."
+  },
+  "completeCourse": "تکمیل دوره",
+  "@completeCourse": {
+    "description": "متن دکمه تکمیل دوره."
+  },
+  "completing": "در حال تکمیل...",
+  "@completing": {
+    "description": "متن بارگذاری هنگام تکمیل دوره."
+  },
   "nextLessons": "درس‌های بعدی",
   "errorAuth": "احراز هویت ناموفق بود. لطفاً دوباره تلاش کنید.",
   "@errorAuth": {

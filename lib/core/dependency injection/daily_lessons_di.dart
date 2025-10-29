@@ -26,8 +26,12 @@ import 'package:learning_english/core/repositories/user_repository.dart'
     as core_user;
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_conversation_lessons_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_user_preferences_usecase.dart';
+import 'package:learning_english/features/daily_lessons/domain/usecases/complete_course_usecase.dart';
+import 'package:learning_english/features/daily_lessons/domain/repositories/daily_lessons_repository.dart';
+import 'package:learning_english/features/daily_lessons/data/repositories/daily_lessons_repository_impl.dart';
 import 'package:learning_english/features/daily_lessons/data/datasources/remote/gemini_conversation_service.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_bloc.dart';
+import 'package:learning_english/features/learning_paths/domain/repositories/learning_paths_repository.dart';
 
 /// Call this function to register all dependencies for Daily Lessons
 /// @param getIt The GetIt instance for dependency injection
@@ -96,6 +100,16 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
       ),
     );
 
+    // Daily Lessons Repository - handles course content and completion
+    getIt.registerLazySingleton<DailyLessonsRepository>(
+      () => DailyLessonsRepositoryImpl(
+        localDataSource: getIt<DailyLessonsLocalDataSource>(),
+        conversationRepository: getIt<ConversationRepository>(),
+        userPreferencesRepository: getIt<UserPreferencesRepository>(),
+        learningPathsRepository: getIt<LearningPathsRepository>(),
+      ),
+    );
+
     getIt.registerFactory(
       () => GetConversationLessonsUseCase(
         getIt<ConversationRepository>(),
@@ -108,11 +122,17 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
       () => GetUserPreferencesUseCase(getIt<UserPreferencesRepository>()),
     );
 
+    getIt.registerFactory(
+      () => CompleteCourseUseCase(repository: getIt<DailyLessonsRepository>()),
+    );
+
     // Bloc
     getIt.registerSingleton<DailyLessonsBloc>(
       DailyLessonsBloc(
         getConversationLessonsUseCase: getIt<GetConversationLessonsUseCase>(),
         getUserPreferencesUseCase: getIt<GetUserPreferencesUseCase>(),
+        completeCourseUseCase: getIt<CompleteCourseUseCase>(),
+        dailyLessonsRepository: getIt<DailyLessonsRepository>(),
       ),
     );
 

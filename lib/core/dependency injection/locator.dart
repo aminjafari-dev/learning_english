@@ -48,8 +48,11 @@ Future<void> initDependencies() async {
     // Learning Focus Selection Feature (must be before daily lessons)
     setupLearningFocusSelectionDI(getIt);
 
+    // Learning Paths Feature (must be before daily lessons as it depends on it)
+    await initLearningPathsDependencies(getIt);
+
     // Daily Lessons Feature (now async due to Hive initialization)
-    // This depends on LearningFocusSelectionRepository, so it must come after
+    // This depends on LearningFocusSelectionRepository and LearningPathsRepository
     await setupDailyLessonsDI(getIt);
 
     // Profile Feature
@@ -60,9 +63,6 @@ Future<void> initDependencies() async {
 
     // Localization Feature
     await setupLocalizationDI(getIt);
-
-    // Learning Paths Feature
-    await initLearningPathsDependencies(getIt);
 
     // Learning Path Detail Feature
     await setupLearningPathDetailLocator(getIt);

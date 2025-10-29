@@ -69,11 +69,62 @@ class DailyLessonsPage extends StatelessWidget {
       backgroundColor: AppTheme.background(context),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: BlocBuilder<DailyLessonsBloc, DailyLessonsState>(
+        child: BlocListener<DailyLessonsBloc, DailyLessonsState>(
           bloc: bloc,
-          builder: (context, state) {
-            return DailyLessonsContent(state: state);
+          listener: (context, state) {
+            // Handle course completion
+            state.courseCompletion.when(
+              initial: () {},
+              loading: () {},
+              completed: (pathId, courseNumber) {
+                // Show success message
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Course $courseNumber completed successfully!',
+                    ),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+
+                // Navigate back to learning path detail
+                Navigator.of(context).pop();
+              },
+              error: (message) {
+                // Show error message
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Error completing course: $message'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              },
+            );
           },
+          child: BlocBuilder<DailyLessonsBloc, DailyLessonsState>(
+            bloc: bloc,
+            builder: (context, state) {
+              return DailyLessonsContent(
+                state: state,
+                pathId: pathId,
+                courseNumber: courseNumber,
+                onCompleteCourse: () {
+                  if (pathId != null && courseNumber != null) {
+                    bloc.add(
+                      DailyLessonsEvent.completeCourse(
+                        pathId: pathId!,
+                        courseNumber: courseNumber!,
+                      ),
+                    );
+                  }
+                },
+                isCompletingCourse: state.courseCompletion.maybeWhen(
+                  loading: () => true,
+                  orElse: () => false,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

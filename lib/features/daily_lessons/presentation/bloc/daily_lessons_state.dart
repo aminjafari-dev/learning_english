@@ -64,6 +64,18 @@ class ConversationState with _$ConversationState {
 }
 
 @freezed
+class CourseCompletionState with _$CourseCompletionState {
+  const factory CourseCompletionState.initial() = CourseCompletionInitial;
+  const factory CourseCompletionState.loading() = CourseCompletionLoading;
+  const factory CourseCompletionState.completed({
+    required String pathId,
+    required int courseNumber,
+  }) = CourseCompletionCompleted;
+  const factory CourseCompletionState.error(String message) =
+      CourseCompletionError;
+}
+
+@freezed
 abstract class DailyLessonsState with _$DailyLessonsState {
   const factory DailyLessonsState({
     required VocabulariesState vocabularies,
@@ -72,6 +84,7 @@ abstract class DailyLessonsState with _$DailyLessonsState {
     required UserAnalyticsState analytics,
     required UserDataManagementState dataManagement,
     required ConversationState conversation,
+    required CourseCompletionState courseCompletion,
     @Default(false) bool isRefreshing,
   }) = _DailyLessonsState;
 }

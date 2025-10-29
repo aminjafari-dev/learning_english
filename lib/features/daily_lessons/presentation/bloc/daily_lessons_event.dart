@@ -32,6 +32,13 @@ class DailyLessonsEvent with _$DailyLessonsEvent {
   /// Event to get user preferences for personalized content
   /// Returns user's level and selected learning focus areas
   const factory DailyLessonsEvent.getUserPreferences() = GetUserPreferences;
+
+  /// Event to complete a course
+  /// Used when user finishes a course in learning path context
+  const factory DailyLessonsEvent.completeCourse({
+    required String pathId,
+    required int courseNumber,
+  }) = CompleteCourse;
 }
 
 // Example usage:

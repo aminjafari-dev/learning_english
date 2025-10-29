@@ -3600,6 +3600,626 @@ abstract class ConversationError implements ConversationState {
 }
 
 /// @nodoc
+mixin _$CourseCompletionState {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String pathId, int courseNumber) completed,
+    required TResult Function(String message) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String pathId, int courseNumber)? completed,
+    TResult? Function(String message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String pathId, int courseNumber)? completed,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CourseCompletionInitial value) initial,
+    required TResult Function(CourseCompletionLoading value) loading,
+    required TResult Function(CourseCompletionCompleted value) completed,
+    required TResult Function(CourseCompletionError value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CourseCompletionInitial value)? initial,
+    TResult? Function(CourseCompletionLoading value)? loading,
+    TResult? Function(CourseCompletionCompleted value)? completed,
+    TResult? Function(CourseCompletionError value)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CourseCompletionInitial value)? initial,
+    TResult Function(CourseCompletionLoading value)? loading,
+    TResult Function(CourseCompletionCompleted value)? completed,
+    TResult Function(CourseCompletionError value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CourseCompletionStateCopyWith<$Res> {
+  factory $CourseCompletionStateCopyWith(CourseCompletionState value,
+          $Res Function(CourseCompletionState) then) =
+      _$CourseCompletionStateCopyWithImpl<$Res, CourseCompletionState>;
+}
+
+/// @nodoc
+class _$CourseCompletionStateCopyWithImpl<$Res,
+        $Val extends CourseCompletionState>
+    implements $CourseCompletionStateCopyWith<$Res> {
+  _$CourseCompletionStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$CourseCompletionInitialImplCopyWith<$Res> {
+  factory _$$CourseCompletionInitialImplCopyWith(
+          _$CourseCompletionInitialImpl value,
+          $Res Function(_$CourseCompletionInitialImpl) then) =
+      __$$CourseCompletionInitialImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$CourseCompletionInitialImplCopyWithImpl<$Res>
+    extends _$CourseCompletionStateCopyWithImpl<$Res,
+        _$CourseCompletionInitialImpl>
+    implements _$$CourseCompletionInitialImplCopyWith<$Res> {
+  __$$CourseCompletionInitialImplCopyWithImpl(
+      _$CourseCompletionInitialImpl _value,
+      $Res Function(_$CourseCompletionInitialImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$CourseCompletionInitialImpl implements CourseCompletionInitial {
+  const _$CourseCompletionInitialImpl();
+
+  @override
+  String toString() {
+    return 'CourseCompletionState.initial()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CourseCompletionInitialImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String pathId, int courseNumber) completed,
+    required TResult Function(String message) error,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String pathId, int courseNumber)? completed,
+    TResult? Function(String message)? error,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String pathId, int courseNumber)? completed,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CourseCompletionInitial value) initial,
+    required TResult Function(CourseCompletionLoading value) loading,
+    required TResult Function(CourseCompletionCompleted value) completed,
+    required TResult Function(CourseCompletionError value) error,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CourseCompletionInitial value)? initial,
+    TResult? Function(CourseCompletionLoading value)? loading,
+    TResult? Function(CourseCompletionCompleted value)? completed,
+    TResult? Function(CourseCompletionError value)? error,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CourseCompletionInitial value)? initial,
+    TResult Function(CourseCompletionLoading value)? loading,
+    TResult Function(CourseCompletionCompleted value)? completed,
+    TResult Function(CourseCompletionError value)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CourseCompletionInitial implements CourseCompletionState {
+  const factory CourseCompletionInitial() = _$CourseCompletionInitialImpl;
+}
+
+/// @nodoc
+abstract class _$$CourseCompletionLoadingImplCopyWith<$Res> {
+  factory _$$CourseCompletionLoadingImplCopyWith(
+          _$CourseCompletionLoadingImpl value,
+          $Res Function(_$CourseCompletionLoadingImpl) then) =
+      __$$CourseCompletionLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$CourseCompletionLoadingImplCopyWithImpl<$Res>
+    extends _$CourseCompletionStateCopyWithImpl<$Res,
+        _$CourseCompletionLoadingImpl>
+    implements _$$CourseCompletionLoadingImplCopyWith<$Res> {
+  __$$CourseCompletionLoadingImplCopyWithImpl(
+      _$CourseCompletionLoadingImpl _value,
+      $Res Function(_$CourseCompletionLoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$CourseCompletionLoadingImpl implements CourseCompletionLoading {
+  const _$CourseCompletionLoadingImpl();
+
+  @override
+  String toString() {
+    return 'CourseCompletionState.loading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CourseCompletionLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String pathId, int courseNumber) completed,
+    required TResult Function(String message) error,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String pathId, int courseNumber)? completed,
+    TResult? Function(String message)? error,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String pathId, int courseNumber)? completed,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CourseCompletionInitial value) initial,
+    required TResult Function(CourseCompletionLoading value) loading,
+    required TResult Function(CourseCompletionCompleted value) completed,
+    required TResult Function(CourseCompletionError value) error,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CourseCompletionInitial value)? initial,
+    TResult? Function(CourseCompletionLoading value)? loading,
+    TResult? Function(CourseCompletionCompleted value)? completed,
+    TResult? Function(CourseCompletionError value)? error,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CourseCompletionInitial value)? initial,
+    TResult Function(CourseCompletionLoading value)? loading,
+    TResult Function(CourseCompletionCompleted value)? completed,
+    TResult Function(CourseCompletionError value)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CourseCompletionLoading implements CourseCompletionState {
+  const factory CourseCompletionLoading() = _$CourseCompletionLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$CourseCompletionCompletedImplCopyWith<$Res> {
+  factory _$$CourseCompletionCompletedImplCopyWith(
+          _$CourseCompletionCompletedImpl value,
+          $Res Function(_$CourseCompletionCompletedImpl) then) =
+      __$$CourseCompletionCompletedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String pathId, int courseNumber});
+}
+
+/// @nodoc
+class __$$CourseCompletionCompletedImplCopyWithImpl<$Res>
+    extends _$CourseCompletionStateCopyWithImpl<$Res,
+        _$CourseCompletionCompletedImpl>
+    implements _$$CourseCompletionCompletedImplCopyWith<$Res> {
+  __$$CourseCompletionCompletedImplCopyWithImpl(
+      _$CourseCompletionCompletedImpl _value,
+      $Res Function(_$CourseCompletionCompletedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pathId = null,
+    Object? courseNumber = null,
+  }) {
+    return _then(_$CourseCompletionCompletedImpl(
+      pathId: null == pathId
+          ? _value.pathId
+          : pathId // ignore: cast_nullable_to_non_nullable
+              as String,
+      courseNumber: null == courseNumber
+          ? _value.courseNumber
+          : courseNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CourseCompletionCompletedImpl implements CourseCompletionCompleted {
+  const _$CourseCompletionCompletedImpl(
+      {required this.pathId, required this.courseNumber});
+
+  @override
+  final String pathId;
+  @override
+  final int courseNumber;
+
+  @override
+  String toString() {
+    return 'CourseCompletionState.completed(pathId: $pathId, courseNumber: $courseNumber)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CourseCompletionCompletedImpl &&
+            (identical(other.pathId, pathId) || other.pathId == pathId) &&
+            (identical(other.courseNumber, courseNumber) ||
+                other.courseNumber == courseNumber));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, pathId, courseNumber);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CourseCompletionCompletedImplCopyWith<_$CourseCompletionCompletedImpl>
+      get copyWith => __$$CourseCompletionCompletedImplCopyWithImpl<
+          _$CourseCompletionCompletedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String pathId, int courseNumber) completed,
+    required TResult Function(String message) error,
+  }) {
+    return completed(pathId, courseNumber);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String pathId, int courseNumber)? completed,
+    TResult? Function(String message)? error,
+  }) {
+    return completed?.call(pathId, courseNumber);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String pathId, int courseNumber)? completed,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (completed != null) {
+      return completed(pathId, courseNumber);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CourseCompletionInitial value) initial,
+    required TResult Function(CourseCompletionLoading value) loading,
+    required TResult Function(CourseCompletionCompleted value) completed,
+    required TResult Function(CourseCompletionError value) error,
+  }) {
+    return completed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CourseCompletionInitial value)? initial,
+    TResult? Function(CourseCompletionLoading value)? loading,
+    TResult? Function(CourseCompletionCompleted value)? completed,
+    TResult? Function(CourseCompletionError value)? error,
+  }) {
+    return completed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CourseCompletionInitial value)? initial,
+    TResult Function(CourseCompletionLoading value)? loading,
+    TResult Function(CourseCompletionCompleted value)? completed,
+    TResult Function(CourseCompletionError value)? error,
+    required TResult orElse(),
+  }) {
+    if (completed != null) {
+      return completed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CourseCompletionCompleted implements CourseCompletionState {
+  const factory CourseCompletionCompleted(
+      {required final String pathId,
+      required final int courseNumber}) = _$CourseCompletionCompletedImpl;
+
+  String get pathId;
+  int get courseNumber;
+  @JsonKey(ignore: true)
+  _$$CourseCompletionCompletedImplCopyWith<_$CourseCompletionCompletedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CourseCompletionErrorImplCopyWith<$Res> {
+  factory _$$CourseCompletionErrorImplCopyWith(
+          _$CourseCompletionErrorImpl value,
+          $Res Function(_$CourseCompletionErrorImpl) then) =
+      __$$CourseCompletionErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$CourseCompletionErrorImplCopyWithImpl<$Res>
+    extends _$CourseCompletionStateCopyWithImpl<$Res,
+        _$CourseCompletionErrorImpl>
+    implements _$$CourseCompletionErrorImplCopyWith<$Res> {
+  __$$CourseCompletionErrorImplCopyWithImpl(_$CourseCompletionErrorImpl _value,
+      $Res Function(_$CourseCompletionErrorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$CourseCompletionErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CourseCompletionErrorImpl implements CourseCompletionError {
+  const _$CourseCompletionErrorImpl(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'CourseCompletionState.error(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CourseCompletionErrorImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CourseCompletionErrorImplCopyWith<_$CourseCompletionErrorImpl>
+      get copyWith => __$$CourseCompletionErrorImplCopyWithImpl<
+          _$CourseCompletionErrorImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String pathId, int courseNumber) completed,
+    required TResult Function(String message) error,
+  }) {
+    return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String pathId, int courseNumber)? completed,
+    TResult? Function(String message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String pathId, int courseNumber)? completed,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CourseCompletionInitial value) initial,
+    required TResult Function(CourseCompletionLoading value) loading,
+    required TResult Function(CourseCompletionCompleted value) completed,
+    required TResult Function(CourseCompletionError value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CourseCompletionInitial value)? initial,
+    TResult? Function(CourseCompletionLoading value)? loading,
+    TResult? Function(CourseCompletionCompleted value)? completed,
+    TResult? Function(CourseCompletionError value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CourseCompletionInitial value)? initial,
+    TResult Function(CourseCompletionLoading value)? loading,
+    TResult Function(CourseCompletionCompleted value)? completed,
+    TResult Function(CourseCompletionError value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CourseCompletionError implements CourseCompletionState {
+  const factory CourseCompletionError(final String message) =
+      _$CourseCompletionErrorImpl;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$CourseCompletionErrorImplCopyWith<_$CourseCompletionErrorImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$DailyLessonsState {
   VocabulariesState get vocabularies => throw _privateConstructorUsedError;
   PhrasesState get phrases => throw _privateConstructorUsedError;
@@ -3609,6 +4229,8 @@ mixin _$DailyLessonsState {
   UserDataManagementState get dataManagement =>
       throw _privateConstructorUsedError;
   ConversationState get conversation => throw _privateConstructorUsedError;
+  CourseCompletionState get courseCompletion =>
+      throw _privateConstructorUsedError;
   bool get isRefreshing => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -3629,6 +4251,7 @@ abstract class $DailyLessonsStateCopyWith<$Res> {
       UserAnalyticsState analytics,
       UserDataManagementState dataManagement,
       ConversationState conversation,
+      CourseCompletionState courseCompletion,
       bool isRefreshing});
 
   $VocabulariesStateCopyWith<$Res> get vocabularies;
@@ -3637,6 +4260,7 @@ abstract class $DailyLessonsStateCopyWith<$Res> {
   $UserAnalyticsStateCopyWith<$Res> get analytics;
   $UserDataManagementStateCopyWith<$Res> get dataManagement;
   $ConversationStateCopyWith<$Res> get conversation;
+  $CourseCompletionStateCopyWith<$Res> get courseCompletion;
 }
 
 /// @nodoc
@@ -3658,6 +4282,7 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
     Object? analytics = null,
     Object? dataManagement = null,
     Object? conversation = null,
+    Object? courseCompletion = null,
     Object? isRefreshing = null,
   }) {
     return _then(_value.copyWith(
@@ -3685,6 +4310,10 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
           ? _value.conversation
           : conversation // ignore: cast_nullable_to_non_nullable
               as ConversationState,
+      courseCompletion: null == courseCompletion
+          ? _value.courseCompletion
+          : courseCompletion // ignore: cast_nullable_to_non_nullable
+              as CourseCompletionState,
       isRefreshing: null == isRefreshing
           ? _value.isRefreshing
           : isRefreshing // ignore: cast_nullable_to_non_nullable
@@ -3740,6 +4369,15 @@ class _$DailyLessonsStateCopyWithImpl<$Res, $Val extends DailyLessonsState>
       return _then(_value.copyWith(conversation: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CourseCompletionStateCopyWith<$Res> get courseCompletion {
+    return $CourseCompletionStateCopyWith<$Res>(_value.courseCompletion,
+        (value) {
+      return _then(_value.copyWith(courseCompletion: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -3757,6 +4395,7 @@ abstract class _$$DailyLessonsStateImplCopyWith<$Res>
       UserAnalyticsState analytics,
       UserDataManagementState dataManagement,
       ConversationState conversation,
+      CourseCompletionState courseCompletion,
       bool isRefreshing});
 
   @override
@@ -3771,6 +4410,8 @@ abstract class _$$DailyLessonsStateImplCopyWith<$Res>
   $UserDataManagementStateCopyWith<$Res> get dataManagement;
   @override
   $ConversationStateCopyWith<$Res> get conversation;
+  @override
+  $CourseCompletionStateCopyWith<$Res> get courseCompletion;
 }
 
 /// @nodoc
@@ -3790,6 +4431,7 @@ class __$$DailyLessonsStateImplCopyWithImpl<$Res>
     Object? analytics = null,
     Object? dataManagement = null,
     Object? conversation = null,
+    Object? courseCompletion = null,
     Object? isRefreshing = null,
   }) {
     return _then(_$DailyLessonsStateImpl(
@@ -3817,6 +4459,10 @@ class __$$DailyLessonsStateImplCopyWithImpl<$Res>
           ? _value.conversation
           : conversation // ignore: cast_nullable_to_non_nullable
               as ConversationState,
+      courseCompletion: null == courseCompletion
+          ? _value.courseCompletion
+          : courseCompletion // ignore: cast_nullable_to_non_nullable
+              as CourseCompletionState,
       isRefreshing: null == isRefreshing
           ? _value.isRefreshing
           : isRefreshing // ignore: cast_nullable_to_non_nullable
@@ -3835,6 +4481,7 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
       required this.analytics,
       required this.dataManagement,
       required this.conversation,
+      required this.courseCompletion,
       this.isRefreshing = false});
 
   @override
@@ -3850,12 +4497,14 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
   @override
   final ConversationState conversation;
   @override
+  final CourseCompletionState courseCompletion;
+  @override
   @JsonKey()
   final bool isRefreshing;
 
   @override
   String toString() {
-    return 'DailyLessonsState(vocabularies: $vocabularies, phrases: $phrases, userPreferences: $userPreferences, analytics: $analytics, dataManagement: $dataManagement, conversation: $conversation, isRefreshing: $isRefreshing)';
+    return 'DailyLessonsState(vocabularies: $vocabularies, phrases: $phrases, userPreferences: $userPreferences, analytics: $analytics, dataManagement: $dataManagement, conversation: $conversation, courseCompletion: $courseCompletion, isRefreshing: $isRefreshing)';
   }
 
   @override
@@ -3874,13 +4523,23 @@ class _$DailyLessonsStateImpl implements _DailyLessonsState {
                 other.dataManagement == dataManagement) &&
             (identical(other.conversation, conversation) ||
                 other.conversation == conversation) &&
+            (identical(other.courseCompletion, courseCompletion) ||
+                other.courseCompletion == courseCompletion) &&
             (identical(other.isRefreshing, isRefreshing) ||
                 other.isRefreshing == isRefreshing));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, vocabularies, phrases,
-      userPreferences, analytics, dataManagement, conversation, isRefreshing);
+  int get hashCode => Object.hash(
+      runtimeType,
+      vocabularies,
+      phrases,
+      userPreferences,
+      analytics,
+      dataManagement,
+      conversation,
+      courseCompletion,
+      isRefreshing);
 
   @JsonKey(ignore: true)
   @override
@@ -3898,6 +4557,7 @@ abstract class _DailyLessonsState implements DailyLessonsState {
       required final UserAnalyticsState analytics,
       required final UserDataManagementState dataManagement,
       required final ConversationState conversation,
+      required final CourseCompletionState courseCompletion,
       final bool isRefreshing}) = _$DailyLessonsStateImpl;
 
   @override
@@ -3912,6 +4572,8 @@ abstract class _DailyLessonsState implements DailyLessonsState {
   UserDataManagementState get dataManagement;
   @override
   ConversationState get conversation;
+  @override
+  CourseCompletionState get courseCompletion;
   @override
   bool get isRefreshing;
   @override

@@ -24,6 +24,7 @@ mixin _$DailyLessonsEvent {
         fetchLessonsWithCourseContext,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
+    required TResult Function(String pathId, int courseNumber) completeCourse,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -34,6 +35,7 @@ mixin _$DailyLessonsEvent {
         fetchLessonsWithCourseContext,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
+    TResult? Function(String pathId, int courseNumber)? completeCourse,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,6 +46,7 @@ mixin _$DailyLessonsEvent {
         fetchLessonsWithCourseContext,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
+    TResult Function(String pathId, int courseNumber)? completeCourse,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -54,6 +57,7 @@ mixin _$DailyLessonsEvent {
         fetchLessonsWithCourseContext,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
+    required TResult Function(CompleteCourse value) completeCourse,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +67,7 @@ mixin _$DailyLessonsEvent {
         fetchLessonsWithCourseContext,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
+    TResult? Function(CompleteCourse value)? completeCourse,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,6 +77,7 @@ mixin _$DailyLessonsEvent {
         fetchLessonsWithCourseContext,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
+    TResult Function(CompleteCourse value)? completeCourse,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -139,6 +145,7 @@ class _$FetchLessonsImpl implements FetchLessons {
         fetchLessonsWithCourseContext,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
+    required TResult Function(String pathId, int courseNumber) completeCourse,
   }) {
     return fetchLessons();
   }
@@ -152,6 +159,7 @@ class _$FetchLessonsImpl implements FetchLessons {
         fetchLessonsWithCourseContext,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
+    TResult? Function(String pathId, int courseNumber)? completeCourse,
   }) {
     return fetchLessons?.call();
   }
@@ -165,6 +173,7 @@ class _$FetchLessonsImpl implements FetchLessons {
         fetchLessonsWithCourseContext,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
+    TResult Function(String pathId, int courseNumber)? completeCourse,
     required TResult orElse(),
   }) {
     if (fetchLessons != null) {
@@ -181,6 +190,7 @@ class _$FetchLessonsImpl implements FetchLessons {
         fetchLessonsWithCourseContext,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
+    required TResult Function(CompleteCourse value) completeCourse,
   }) {
     return fetchLessons(this);
   }
@@ -193,6 +203,7 @@ class _$FetchLessonsImpl implements FetchLessons {
         fetchLessonsWithCourseContext,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
+    TResult? Function(CompleteCourse value)? completeCourse,
   }) {
     return fetchLessons?.call(this);
   }
@@ -205,6 +216,7 @@ class _$FetchLessonsImpl implements FetchLessons {
         fetchLessonsWithCourseContext,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
+    TResult Function(CompleteCourse value)? completeCourse,
     required TResult orElse(),
   }) {
     if (fetchLessons != null) {
@@ -316,6 +328,7 @@ class _$FetchLessonsWithCourseContextImpl
         fetchLessonsWithCourseContext,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
+    required TResult Function(String pathId, int courseNumber) completeCourse,
   }) {
     return fetchLessonsWithCourseContext(pathId, courseNumber, learningPath);
   }
@@ -329,6 +342,7 @@ class _$FetchLessonsWithCourseContextImpl
         fetchLessonsWithCourseContext,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
+    TResult? Function(String pathId, int courseNumber)? completeCourse,
   }) {
     return fetchLessonsWithCourseContext?.call(
         pathId, courseNumber, learningPath);
@@ -343,6 +357,7 @@ class _$FetchLessonsWithCourseContextImpl
         fetchLessonsWithCourseContext,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
+    TResult Function(String pathId, int courseNumber)? completeCourse,
     required TResult orElse(),
   }) {
     if (fetchLessonsWithCourseContext != null) {
@@ -359,6 +374,7 @@ class _$FetchLessonsWithCourseContextImpl
         fetchLessonsWithCourseContext,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
+    required TResult Function(CompleteCourse value) completeCourse,
   }) {
     return fetchLessonsWithCourseContext(this);
   }
@@ -371,6 +387,7 @@ class _$FetchLessonsWithCourseContextImpl
         fetchLessonsWithCourseContext,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
+    TResult? Function(CompleteCourse value)? completeCourse,
   }) {
     return fetchLessonsWithCourseContext?.call(this);
   }
@@ -383,6 +400,7 @@ class _$FetchLessonsWithCourseContextImpl
         fetchLessonsWithCourseContext,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
+    TResult Function(CompleteCourse value)? completeCourse,
     required TResult orElse(),
   }) {
     if (fetchLessonsWithCourseContext != null) {
@@ -452,6 +470,7 @@ class _$RefreshLessonsImpl implements RefreshLessons {
         fetchLessonsWithCourseContext,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
+    required TResult Function(String pathId, int courseNumber) completeCourse,
   }) {
     return refreshLessons();
   }
@@ -465,6 +484,7 @@ class _$RefreshLessonsImpl implements RefreshLessons {
         fetchLessonsWithCourseContext,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
+    TResult? Function(String pathId, int courseNumber)? completeCourse,
   }) {
     return refreshLessons?.call();
   }
@@ -478,6 +498,7 @@ class _$RefreshLessonsImpl implements RefreshLessons {
         fetchLessonsWithCourseContext,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
+    TResult Function(String pathId, int courseNumber)? completeCourse,
     required TResult orElse(),
   }) {
     if (refreshLessons != null) {
@@ -494,6 +515,7 @@ class _$RefreshLessonsImpl implements RefreshLessons {
         fetchLessonsWithCourseContext,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
+    required TResult Function(CompleteCourse value) completeCourse,
   }) {
     return refreshLessons(this);
   }
@@ -506,6 +528,7 @@ class _$RefreshLessonsImpl implements RefreshLessons {
         fetchLessonsWithCourseContext,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
+    TResult? Function(CompleteCourse value)? completeCourse,
   }) {
     return refreshLessons?.call(this);
   }
@@ -518,6 +541,7 @@ class _$RefreshLessonsImpl implements RefreshLessons {
         fetchLessonsWithCourseContext,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
+    TResult Function(CompleteCourse value)? completeCourse,
     required TResult orElse(),
   }) {
     if (refreshLessons != null) {
@@ -575,6 +599,7 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
         fetchLessonsWithCourseContext,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
+    required TResult Function(String pathId, int courseNumber) completeCourse,
   }) {
     return getUserPreferences();
   }
@@ -588,6 +613,7 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
         fetchLessonsWithCourseContext,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
+    TResult? Function(String pathId, int courseNumber)? completeCourse,
   }) {
     return getUserPreferences?.call();
   }
@@ -601,6 +627,7 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
         fetchLessonsWithCourseContext,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
+    TResult Function(String pathId, int courseNumber)? completeCourse,
     required TResult orElse(),
   }) {
     if (getUserPreferences != null) {
@@ -617,6 +644,7 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
         fetchLessonsWithCourseContext,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
+    required TResult Function(CompleteCourse value) completeCourse,
   }) {
     return getUserPreferences(this);
   }
@@ -629,6 +657,7 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
         fetchLessonsWithCourseContext,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
+    TResult? Function(CompleteCourse value)? completeCourse,
   }) {
     return getUserPreferences?.call(this);
   }
@@ -641,6 +670,7 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
         fetchLessonsWithCourseContext,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
+    TResult Function(CompleteCourse value)? completeCourse,
     required TResult orElse(),
   }) {
     if (getUserPreferences != null) {
@@ -652,4 +682,178 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
 
 abstract class GetUserPreferences implements DailyLessonsEvent {
   const factory GetUserPreferences() = _$GetUserPreferencesImpl;
+}
+
+/// @nodoc
+abstract class _$$CompleteCourseImplCopyWith<$Res> {
+  factory _$$CompleteCourseImplCopyWith(_$CompleteCourseImpl value,
+          $Res Function(_$CompleteCourseImpl) then) =
+      __$$CompleteCourseImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String pathId, int courseNumber});
+}
+
+/// @nodoc
+class __$$CompleteCourseImplCopyWithImpl<$Res>
+    extends _$DailyLessonsEventCopyWithImpl<$Res, _$CompleteCourseImpl>
+    implements _$$CompleteCourseImplCopyWith<$Res> {
+  __$$CompleteCourseImplCopyWithImpl(
+      _$CompleteCourseImpl _value, $Res Function(_$CompleteCourseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pathId = null,
+    Object? courseNumber = null,
+  }) {
+    return _then(_$CompleteCourseImpl(
+      pathId: null == pathId
+          ? _value.pathId
+          : pathId // ignore: cast_nullable_to_non_nullable
+              as String,
+      courseNumber: null == courseNumber
+          ? _value.courseNumber
+          : courseNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CompleteCourseImpl implements CompleteCourse {
+  const _$CompleteCourseImpl(
+      {required this.pathId, required this.courseNumber});
+
+  @override
+  final String pathId;
+  @override
+  final int courseNumber;
+
+  @override
+  String toString() {
+    return 'DailyLessonsEvent.completeCourse(pathId: $pathId, courseNumber: $courseNumber)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CompleteCourseImpl &&
+            (identical(other.pathId, pathId) || other.pathId == pathId) &&
+            (identical(other.courseNumber, courseNumber) ||
+                other.courseNumber == courseNumber));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, pathId, courseNumber);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CompleteCourseImplCopyWith<_$CompleteCourseImpl> get copyWith =>
+      __$$CompleteCourseImplCopyWithImpl<_$CompleteCourseImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetchLessons,
+    required TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)
+        fetchLessonsWithCourseContext,
+    required TResult Function() refreshLessons,
+    required TResult Function() getUserPreferences,
+    required TResult Function(String pathId, int courseNumber) completeCourse,
+  }) {
+    return completeCourse(pathId, courseNumber);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetchLessons,
+    TResult? Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
+    TResult? Function()? refreshLessons,
+    TResult? Function()? getUserPreferences,
+    TResult? Function(String pathId, int courseNumber)? completeCourse,
+  }) {
+    return completeCourse?.call(pathId, courseNumber);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetchLessons,
+    TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
+    TResult Function()? refreshLessons,
+    TResult Function()? getUserPreferences,
+    TResult Function(String pathId, int courseNumber)? completeCourse,
+    required TResult orElse(),
+  }) {
+    if (completeCourse != null) {
+      return completeCourse(pathId, courseNumber);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchLessonsWithCourseContext value)
+        fetchLessonsWithCourseContext,
+    required TResult Function(RefreshLessons value) refreshLessons,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
+    required TResult Function(CompleteCourse value) completeCourse,
+  }) {
+    return completeCourse(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
+    TResult? Function(RefreshLessons value)? refreshLessons,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
+    TResult? Function(CompleteCourse value)? completeCourse,
+  }) {
+    return completeCourse?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
+    TResult Function(RefreshLessons value)? refreshLessons,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
+    TResult Function(CompleteCourse value)? completeCourse,
+    required TResult orElse(),
+  }) {
+    if (completeCourse != null) {
+      return completeCourse(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CompleteCourse implements DailyLessonsEvent {
+  const factory CompleteCourse(
+      {required final String pathId,
+      required final int courseNumber}) = _$CompleteCourseImpl;
+
+  String get pathId;
+  int get courseNumber;
+  @JsonKey(ignore: true)
+  _$$CompleteCourseImplCopyWith<_$CompleteCourseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

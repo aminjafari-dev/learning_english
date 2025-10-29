@@ -65,7 +65,6 @@ class _LearningPathsHomePageState extends State<LearningPathsHomePage> {
             courseCompleted:
                 (courseNumber, updatedPath) =>
                     _buildPathLoadedState(updatedPath),
-            pathDeleted: () => _buildEmptyState(),
             error: (message) => _buildErrorState(message),
           );
         },

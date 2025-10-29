@@ -39,9 +39,6 @@ class LearningPathsState with _$LearningPathsState {
     required LearningPath updatedPath,
   }) = CourseCompleted;
 
-  /// Path deleted successfully
-  const factory LearningPathsState.pathDeleted() = PathDeleted;
-
   /// Error state
   const factory LearningPathsState.error({required String message}) = Error;
 }

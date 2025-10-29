@@ -207,7 +207,24 @@ class LearningPathsBloc extends Bloc<LearningPathsEvent, LearningPathsState> {
       (failure) => emit(
         LearningPathsState.error(message: _mapFailureToMessage(failure)),
       ),
-      (_) => emit(const LearningPathsState.pathDeleted()),
+      (_) async {
+        // After successful deletion, reload all remaining paths
+        final remainingPathsResult = await _getAllLearningPathsUseCase();
+        remainingPathsResult.fold(
+          (failure) => emit(
+            LearningPathsState.error(message: _mapFailureToMessage(failure)),
+          ),
+          (learningPaths) {
+            if (learningPaths.isNotEmpty) {
+              emit(
+                LearningPathsState.allPathsLoaded(learningPaths: learningPaths),
+              );
+            } else {
+              emit(const LearningPathsState.initial());
+            }
+          },
+        );
+      },
     );
   }
 

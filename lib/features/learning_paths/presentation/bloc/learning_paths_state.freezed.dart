@@ -26,7 +26,6 @@ mixin _$LearningPathsState {
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
-    required TResult Function() pathDeleted,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,7 +38,6 @@ mixin _$LearningPathsState {
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult? Function()? pathDeleted,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -52,7 +50,6 @@ mixin _$LearningPathsState {
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult Function()? pathDeleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -65,7 +62,6 @@ mixin _$LearningPathsState {
     required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
-    required TResult Function(PathDeleted value) pathDeleted,
     required TResult Function(Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -77,7 +73,6 @@ mixin _$LearningPathsState {
     TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
-    TResult? Function(PathDeleted value)? pathDeleted,
     TResult? Function(Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -89,7 +84,6 @@ mixin _$LearningPathsState {
     TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
-    TResult Function(PathDeleted value)? pathDeleted,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) =>
@@ -160,7 +154,6 @@ class _$InitialImpl implements Initial {
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
-    required TResult Function() pathDeleted,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -176,7 +169,6 @@ class _$InitialImpl implements Initial {
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult? Function()? pathDeleted,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -192,7 +184,6 @@ class _$InitialImpl implements Initial {
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult Function()? pathDeleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -211,7 +202,6 @@ class _$InitialImpl implements Initial {
     required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
-    required TResult Function(PathDeleted value) pathDeleted,
     required TResult Function(Error value) error,
   }) {
     return initial(this);
@@ -226,7 +216,6 @@ class _$InitialImpl implements Initial {
     TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
-    TResult? Function(PathDeleted value)? pathDeleted,
     TResult? Function(Error value)? error,
   }) {
     return initial?.call(this);
@@ -241,7 +230,6 @@ class _$InitialImpl implements Initial {
     TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
-    TResult Function(PathDeleted value)? pathDeleted,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -303,7 +291,6 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
-    required TResult Function() pathDeleted,
     required TResult Function(String message) error,
   }) {
     return loadingSubCategories();
@@ -319,7 +306,6 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult? Function()? pathDeleted,
     TResult? Function(String message)? error,
   }) {
     return loadingSubCategories?.call();
@@ -335,7 +321,6 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult Function()? pathDeleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -354,7 +339,6 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
-    required TResult Function(PathDeleted value) pathDeleted,
     required TResult Function(Error value) error,
   }) {
     return loadingSubCategories(this);
@@ -369,7 +353,6 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
-    TResult? Function(PathDeleted value)? pathDeleted,
     TResult? Function(Error value)? error,
   }) {
     return loadingSubCategories?.call(this);
@@ -384,7 +367,6 @@ class _$LoadingSubCategoriesImpl implements LoadingSubCategories {
     TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
-    TResult Function(PathDeleted value)? pathDeleted,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -481,7 +463,6 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
-    required TResult Function() pathDeleted,
     required TResult Function(String message) error,
   }) {
     return subCategoriesLoaded(subCategories);
@@ -497,7 +478,6 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult? Function()? pathDeleted,
     TResult? Function(String message)? error,
   }) {
     return subCategoriesLoaded?.call(subCategories);
@@ -513,7 +493,6 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult Function()? pathDeleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -532,7 +511,6 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
-    required TResult Function(PathDeleted value) pathDeleted,
     required TResult Function(Error value) error,
   }) {
     return subCategoriesLoaded(this);
@@ -547,7 +525,6 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
-    TResult? Function(PathDeleted value)? pathDeleted,
     TResult? Function(Error value)? error,
   }) {
     return subCategoriesLoaded?.call(this);
@@ -562,7 +539,6 @@ class _$SubCategoriesLoadedImpl implements SubCategoriesLoaded {
     TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
-    TResult Function(PathDeleted value)? pathDeleted,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -665,7 +641,6 @@ class _$AllPathsLoadedImpl implements AllPathsLoaded {
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
-    required TResult Function() pathDeleted,
     required TResult Function(String message) error,
   }) {
     return allPathsLoaded(learningPaths);
@@ -681,7 +656,6 @@ class _$AllPathsLoadedImpl implements AllPathsLoaded {
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult? Function()? pathDeleted,
     TResult? Function(String message)? error,
   }) {
     return allPathsLoaded?.call(learningPaths);
@@ -697,7 +671,6 @@ class _$AllPathsLoadedImpl implements AllPathsLoaded {
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult Function()? pathDeleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -716,7 +689,6 @@ class _$AllPathsLoadedImpl implements AllPathsLoaded {
     required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
-    required TResult Function(PathDeleted value) pathDeleted,
     required TResult Function(Error value) error,
   }) {
     return allPathsLoaded(this);
@@ -731,7 +703,6 @@ class _$AllPathsLoadedImpl implements AllPathsLoaded {
     TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
-    TResult? Function(PathDeleted value)? pathDeleted,
     TResult? Function(Error value)? error,
   }) {
     return allPathsLoaded?.call(this);
@@ -746,7 +717,6 @@ class _$AllPathsLoadedImpl implements AllPathsLoaded {
     TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
-    TResult Function(PathDeleted value)? pathDeleted,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -840,7 +810,6 @@ class _$PathLoadedImpl implements PathLoaded {
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
-    required TResult Function() pathDeleted,
     required TResult Function(String message) error,
   }) {
     return pathLoaded(learningPath);
@@ -856,7 +825,6 @@ class _$PathLoadedImpl implements PathLoaded {
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult? Function()? pathDeleted,
     TResult? Function(String message)? error,
   }) {
     return pathLoaded?.call(learningPath);
@@ -872,7 +840,6 @@ class _$PathLoadedImpl implements PathLoaded {
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult Function()? pathDeleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -891,7 +858,6 @@ class _$PathLoadedImpl implements PathLoaded {
     required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
-    required TResult Function(PathDeleted value) pathDeleted,
     required TResult Function(Error value) error,
   }) {
     return pathLoaded(this);
@@ -906,7 +872,6 @@ class _$PathLoadedImpl implements PathLoaded {
     TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
-    TResult? Function(PathDeleted value)? pathDeleted,
     TResult? Function(Error value)? error,
   }) {
     return pathLoaded?.call(this);
@@ -921,7 +886,6 @@ class _$PathLoadedImpl implements PathLoaded {
     TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
-    TResult Function(PathDeleted value)? pathDeleted,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -1026,7 +990,6 @@ class _$CourseCompletedImpl implements CourseCompleted {
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
-    required TResult Function() pathDeleted,
     required TResult Function(String message) error,
   }) {
     return courseCompleted(courseNumber, updatedPath);
@@ -1042,7 +1005,6 @@ class _$CourseCompletedImpl implements CourseCompleted {
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult? Function()? pathDeleted,
     TResult? Function(String message)? error,
   }) {
     return courseCompleted?.call(courseNumber, updatedPath);
@@ -1058,7 +1020,6 @@ class _$CourseCompletedImpl implements CourseCompleted {
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult Function()? pathDeleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -1077,7 +1038,6 @@ class _$CourseCompletedImpl implements CourseCompleted {
     required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
-    required TResult Function(PathDeleted value) pathDeleted,
     required TResult Function(Error value) error,
   }) {
     return courseCompleted(this);
@@ -1092,7 +1052,6 @@ class _$CourseCompletedImpl implements CourseCompleted {
     TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
-    TResult? Function(PathDeleted value)? pathDeleted,
     TResult? Function(Error value)? error,
   }) {
     return courseCompleted?.call(this);
@@ -1107,7 +1066,6 @@ class _$CourseCompletedImpl implements CourseCompleted {
     TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
-    TResult Function(PathDeleted value)? pathDeleted,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -1128,148 +1086,6 @@ abstract class CourseCompleted implements LearningPathsState {
   @JsonKey(ignore: true)
   _$$CourseCompletedImplCopyWith<_$CourseCompletedImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$PathDeletedImplCopyWith<$Res> {
-  factory _$$PathDeletedImplCopyWith(
-          _$PathDeletedImpl value, $Res Function(_$PathDeletedImpl) then) =
-      __$$PathDeletedImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$PathDeletedImplCopyWithImpl<$Res>
-    extends _$LearningPathsStateCopyWithImpl<$Res, _$PathDeletedImpl>
-    implements _$$PathDeletedImplCopyWith<$Res> {
-  __$$PathDeletedImplCopyWithImpl(
-      _$PathDeletedImpl _value, $Res Function(_$PathDeletedImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$PathDeletedImpl implements PathDeleted {
-  const _$PathDeletedImpl();
-
-  @override
-  String toString() {
-    return 'LearningPathsState.pathDeleted()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$PathDeletedImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loadingSubCategories,
-    required TResult Function(List<SubCategory> subCategories)
-        subCategoriesLoaded,
-    required TResult Function(List<LearningPath> learningPaths) allPathsLoaded,
-    required TResult Function(LearningPath learningPath) pathLoaded,
-    required TResult Function(int courseNumber, LearningPath updatedPath)
-        courseCompleted,
-    required TResult Function() pathDeleted,
-    required TResult Function(String message) error,
-  }) {
-    return pathDeleted();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loadingSubCategories,
-    TResult? Function(List<SubCategory> subCategories)? subCategoriesLoaded,
-    TResult? Function(List<LearningPath> learningPaths)? allPathsLoaded,
-    TResult? Function(LearningPath learningPath)? pathLoaded,
-    TResult? Function(int courseNumber, LearningPath updatedPath)?
-        courseCompleted,
-    TResult? Function()? pathDeleted,
-    TResult? Function(String message)? error,
-  }) {
-    return pathDeleted?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loadingSubCategories,
-    TResult Function(List<SubCategory> subCategories)? subCategoriesLoaded,
-    TResult Function(List<LearningPath> learningPaths)? allPathsLoaded,
-    TResult Function(LearningPath learningPath)? pathLoaded,
-    TResult Function(int courseNumber, LearningPath updatedPath)?
-        courseCompleted,
-    TResult Function()? pathDeleted,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (pathDeleted != null) {
-      return pathDeleted();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(LoadingSubCategories value) loadingSubCategories,
-    required TResult Function(SubCategoriesLoaded value) subCategoriesLoaded,
-    required TResult Function(AllPathsLoaded value) allPathsLoaded,
-    required TResult Function(PathLoaded value) pathLoaded,
-    required TResult Function(CourseCompleted value) courseCompleted,
-    required TResult Function(PathDeleted value) pathDeleted,
-    required TResult Function(Error value) error,
-  }) {
-    return pathDeleted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Initial value)? initial,
-    TResult? Function(LoadingSubCategories value)? loadingSubCategories,
-    TResult? Function(SubCategoriesLoaded value)? subCategoriesLoaded,
-    TResult? Function(AllPathsLoaded value)? allPathsLoaded,
-    TResult? Function(PathLoaded value)? pathLoaded,
-    TResult? Function(CourseCompleted value)? courseCompleted,
-    TResult? Function(PathDeleted value)? pathDeleted,
-    TResult? Function(Error value)? error,
-  }) {
-    return pathDeleted?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(LoadingSubCategories value)? loadingSubCategories,
-    TResult Function(SubCategoriesLoaded value)? subCategoriesLoaded,
-    TResult Function(AllPathsLoaded value)? allPathsLoaded,
-    TResult Function(PathLoaded value)? pathLoaded,
-    TResult Function(CourseCompleted value)? courseCompleted,
-    TResult Function(PathDeleted value)? pathDeleted,
-    TResult Function(Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (pathDeleted != null) {
-      return pathDeleted(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class PathDeleted implements LearningPathsState {
-  const factory PathDeleted() = _$PathDeletedImpl;
 }
 
 /// @nodoc
@@ -1344,7 +1160,6 @@ class _$ErrorImpl implements Error {
     required TResult Function(LearningPath learningPath) pathLoaded,
     required TResult Function(int courseNumber, LearningPath updatedPath)
         courseCompleted,
-    required TResult Function() pathDeleted,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -1360,7 +1175,6 @@ class _$ErrorImpl implements Error {
     TResult? Function(LearningPath learningPath)? pathLoaded,
     TResult? Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult? Function()? pathDeleted,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -1376,7 +1190,6 @@ class _$ErrorImpl implements Error {
     TResult Function(LearningPath learningPath)? pathLoaded,
     TResult Function(int courseNumber, LearningPath updatedPath)?
         courseCompleted,
-    TResult Function()? pathDeleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -1395,7 +1208,6 @@ class _$ErrorImpl implements Error {
     required TResult Function(AllPathsLoaded value) allPathsLoaded,
     required TResult Function(PathLoaded value) pathLoaded,
     required TResult Function(CourseCompleted value) courseCompleted,
-    required TResult Function(PathDeleted value) pathDeleted,
     required TResult Function(Error value) error,
   }) {
     return error(this);
@@ -1410,7 +1222,6 @@ class _$ErrorImpl implements Error {
     TResult? Function(AllPathsLoaded value)? allPathsLoaded,
     TResult? Function(PathLoaded value)? pathLoaded,
     TResult? Function(CourseCompleted value)? courseCompleted,
-    TResult? Function(PathDeleted value)? pathDeleted,
     TResult? Function(Error value)? error,
   }) {
     return error?.call(this);
@@ -1425,7 +1236,6 @@ class _$ErrorImpl implements Error {
     TResult Function(AllPathsLoaded value)? allPathsLoaded,
     TResult Function(PathLoaded value)? pathLoaded,
     TResult Function(CourseCompleted value)? courseCompleted,
-    TResult Function(PathDeleted value)? pathDeleted,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {

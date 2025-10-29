@@ -72,7 +72,6 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
             courseCompleted:
                 (courseNumber, updatedPath) =>
                     _buildPathLoadedState(updatedPath),
-            pathDeleted: () => _buildPathDeletedState(),
             error: (message) => _buildErrorState(message),
           );
         },
@@ -170,29 +169,6 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
           CourseGrid(
             learningPath: learningPath,
             onCourseTap: (courseNumber) => _navigateToCourse(courseNumber),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// Builds the path deleted state
-  Widget _buildPathDeletedState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.check_circle_outline, size: 64, color: Colors.green),
-          GGap.g16,
-          GText(
-            'Learning path deleted successfully',
-            style: Theme.of(context).textTheme.titleMedium,
-            textAlign: TextAlign.center,
-          ),
-          GGap.g16,
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Go Back'),
           ),
         ],
       ),

@@ -97,7 +97,6 @@ class _SubCategorySelectionPageState extends State<SubCategorySelectionPage> {
               );
             },
             courseCompleted: (courseNumber, updatedPath) {},
-            pathDeleted: () {},
             error: (message) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(message), backgroundColor: Colors.red),
@@ -117,7 +116,6 @@ class _SubCategorySelectionPageState extends State<SubCategorySelectionPage> {
               pathLoaded: (learningPath) => _buildLoadingState(),
               courseCompleted:
                   (courseNumber, updatedPath) => _buildLoadingState(),
-              pathDeleted: () => _buildLoadingState(),
               error: (message) => _buildErrorState(message),
             );
           },

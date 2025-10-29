@@ -9,7 +9,9 @@ import 'daily_lessons_event.dart';
 import 'daily_lessons_state.dart';
 import '../../domain/usecases/get_conversation_lessons_usecase.dart';
 import '../../domain/usecases/get_user_preferences_usecase.dart';
+import '../../domain/entities/user_preferences.dart';
 import 'package:learning_english/core/usecase/usecase.dart';
+import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
 
 /// Bloc for managing daily lessons (vocabularies and phrases)
 /// Now uses conversation-based lessons to avoid repetitive content
@@ -40,6 +42,14 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
             () => _onFetchConversationLessons(
               emit,
             ), // New conversation-based method
+        fetchLessonsWithCourseContext:
+            (pathId, courseNumber, learningPath) =>
+                _onFetchLessonsWithCourseContext(
+                  emit,
+                  pathId,
+                  courseNumber,
+                  learningPath,
+                ), // Course-specific content
         refreshLessons: () => _onRefreshLessons(emit),
         getUserPreferences: () => _onGetUserPreferences(emit),
       );
@@ -188,7 +198,131 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
     add(const DailyLessonsEvent.fetchLessons());
   }
 
+  /// Fetches lessons with course context for personalized content
+  /// Generates content specific to the course, learning path, and user preferences
+  /// This method creates enhanced user preferences that include course-specific context
+  Future<void> _onFetchLessonsWithCourseContext(
+    Emitter<DailyLessonsState> emit,
+    String pathId,
+    int courseNumber,
+    LearningPath learningPath,
+  ) async {
+    if (!emit.isDone) {
+      emit(
+        state.copyWith(
+          vocabularies: const VocabulariesState.loading(),
+          phrases: const PhrasesState.loading(),
+          userPreferences: const UserPreferencesState.loading(),
+          isRefreshing: true,
+        ),
+      );
+    }
 
+    try {
+      // First get user preferences
+      final preferencesResult = await getUserPreferencesUseCase(NoParams());
+      final basePreferences = preferencesResult.fold((failure) {
+        if (!emit.isDone) {
+          emit(
+            state.copyWith(
+              vocabularies: VocabulariesState.error(
+                'Failed to get user preferences: ${failure.message}',
+              ),
+              phrases: PhrasesState.error(
+                'Failed to get user preferences: ${failure.message}',
+              ),
+              userPreferences: UserPreferencesState.error(
+                'Failed to get user preferences: ${failure.message}',
+              ),
+              isRefreshing: false,
+            ),
+          );
+        }
+        return null;
+      }, (preferences) => preferences);
+
+      if (basePreferences == null) return;
+
+      // Create enhanced preferences with course context
+      final enhancedPreferences = _createEnhancedPreferencesWithCourseContext(
+        basePreferences,
+        learningPath,
+        courseNumber,
+      );
+
+      // Emit user preferences state
+      if (!emit.isDone) {
+        emit(
+          state.copyWith(
+            userPreferences: UserPreferencesState.loaded(enhancedPreferences),
+          ),
+        );
+      }
+
+      // Fetch conversation-based lessons using enhanced preferences
+      final result = await getConversationLessonsUseCase(enhancedPreferences);
+      result.fold(
+        (failure) {
+          if (!emit.isDone) {
+            emit(
+              state.copyWith(
+                vocabularies: VocabulariesState.error(failure.message),
+                phrases: PhrasesState.error(failure.message),
+                isRefreshing: false,
+              ),
+            );
+          }
+        },
+        (data) {
+          if (!emit.isDone) {
+            emit(
+              state.copyWith(
+                vocabularies: VocabulariesState.loaded(data.vocabularies),
+                phrases: PhrasesState.loaded(data.phrases),
+                conversation: ConversationState.loaded(
+                  lastResponse: data.conversationContext,
+                ),
+                isRefreshing: false,
+              ),
+            );
+          }
+        },
+      );
+    } catch (e) {
+      if (!emit.isDone) {
+        emit(
+          state.copyWith(
+            vocabularies: VocabulariesState.error(e.toString()),
+            phrases: PhrasesState.error(e.toString()),
+            isRefreshing: false,
+          ),
+        );
+      }
+    }
+  }
+
+  /// Creates enhanced user preferences with course context
+  /// Combines base user preferences with course-specific information
+  /// This helps generate more relevant content for the specific course
+  UserPreferences _createEnhancedPreferencesWithCourseContext(
+    UserPreferences basePreferences,
+    LearningPath learningPath,
+    int courseNumber,
+  ) {
+    // Create enhanced focus areas that include course context
+    final enhancedFocusAreas = <String>[
+      ...basePreferences.focusAreas,
+      learningPath.subCategory.title.toLowerCase(),
+      'course_${courseNumber}',
+      'learning_path',
+    ];
+
+    // Remove duplicates and ensure we have meaningful focus areas
+    final uniqueFocusAreas = enhancedFocusAreas.toSet().toList();
+
+    return UserPreferences(
+      level: basePreferences.level,
+      focusAreas: uniqueFocusAreas,
+    );
+  }
 }
-
-

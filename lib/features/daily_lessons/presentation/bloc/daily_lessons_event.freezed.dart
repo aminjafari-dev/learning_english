@@ -19,6 +19,9 @@ mixin _$DailyLessonsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchLessons,
+    required TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)
+        fetchLessonsWithCourseContext,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
   }) =>
@@ -26,6 +29,9 @@ mixin _$DailyLessonsEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchLessons,
+    TResult? Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
   }) =>
@@ -33,6 +39,9 @@ mixin _$DailyLessonsEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchLessons,
+    TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
     required TResult orElse(),
@@ -41,6 +50,8 @@ mixin _$DailyLessonsEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchLessonsWithCourseContext value)
+        fetchLessonsWithCourseContext,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
   }) =>
@@ -48,6 +59,8 @@ mixin _$DailyLessonsEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) =>
@@ -55,6 +68,8 @@ mixin _$DailyLessonsEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
@@ -119,6 +134,9 @@ class _$FetchLessonsImpl implements FetchLessons {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchLessons,
+    required TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)
+        fetchLessonsWithCourseContext,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
   }) {
@@ -129,6 +147,9 @@ class _$FetchLessonsImpl implements FetchLessons {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchLessons,
+    TResult? Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
   }) {
@@ -139,6 +160,9 @@ class _$FetchLessonsImpl implements FetchLessons {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchLessons,
+    TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
     required TResult orElse(),
@@ -153,6 +177,8 @@ class _$FetchLessonsImpl implements FetchLessons {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchLessonsWithCourseContext value)
+        fetchLessonsWithCourseContext,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
   }) {
@@ -163,6 +189,8 @@ class _$FetchLessonsImpl implements FetchLessons {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) {
@@ -173,6 +201,8 @@ class _$FetchLessonsImpl implements FetchLessons {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
@@ -186,6 +216,196 @@ class _$FetchLessonsImpl implements FetchLessons {
 
 abstract class FetchLessons implements DailyLessonsEvent {
   const factory FetchLessons() = _$FetchLessonsImpl;
+}
+
+/// @nodoc
+abstract class _$$FetchLessonsWithCourseContextImplCopyWith<$Res> {
+  factory _$$FetchLessonsWithCourseContextImplCopyWith(
+          _$FetchLessonsWithCourseContextImpl value,
+          $Res Function(_$FetchLessonsWithCourseContextImpl) then) =
+      __$$FetchLessonsWithCourseContextImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String pathId, int courseNumber, LearningPath learningPath});
+}
+
+/// @nodoc
+class __$$FetchLessonsWithCourseContextImplCopyWithImpl<$Res>
+    extends _$DailyLessonsEventCopyWithImpl<$Res,
+        _$FetchLessonsWithCourseContextImpl>
+    implements _$$FetchLessonsWithCourseContextImplCopyWith<$Res> {
+  __$$FetchLessonsWithCourseContextImplCopyWithImpl(
+      _$FetchLessonsWithCourseContextImpl _value,
+      $Res Function(_$FetchLessonsWithCourseContextImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pathId = null,
+    Object? courseNumber = null,
+    Object? learningPath = null,
+  }) {
+    return _then(_$FetchLessonsWithCourseContextImpl(
+      pathId: null == pathId
+          ? _value.pathId
+          : pathId // ignore: cast_nullable_to_non_nullable
+              as String,
+      courseNumber: null == courseNumber
+          ? _value.courseNumber
+          : courseNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      learningPath: null == learningPath
+          ? _value.learningPath
+          : learningPath // ignore: cast_nullable_to_non_nullable
+              as LearningPath,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FetchLessonsWithCourseContextImpl
+    implements FetchLessonsWithCourseContext {
+  const _$FetchLessonsWithCourseContextImpl(
+      {required this.pathId,
+      required this.courseNumber,
+      required this.learningPath});
+
+  @override
+  final String pathId;
+  @override
+  final int courseNumber;
+  @override
+  final LearningPath learningPath;
+
+  @override
+  String toString() {
+    return 'DailyLessonsEvent.fetchLessonsWithCourseContext(pathId: $pathId, courseNumber: $courseNumber, learningPath: $learningPath)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FetchLessonsWithCourseContextImpl &&
+            (identical(other.pathId, pathId) || other.pathId == pathId) &&
+            (identical(other.courseNumber, courseNumber) ||
+                other.courseNumber == courseNumber) &&
+            (identical(other.learningPath, learningPath) ||
+                other.learningPath == learningPath));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, pathId, courseNumber, learningPath);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FetchLessonsWithCourseContextImplCopyWith<
+          _$FetchLessonsWithCourseContextImpl>
+      get copyWith => __$$FetchLessonsWithCourseContextImplCopyWithImpl<
+          _$FetchLessonsWithCourseContextImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetchLessons,
+    required TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)
+        fetchLessonsWithCourseContext,
+    required TResult Function() refreshLessons,
+    required TResult Function() getUserPreferences,
+  }) {
+    return fetchLessonsWithCourseContext(pathId, courseNumber, learningPath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetchLessons,
+    TResult? Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
+    TResult? Function()? refreshLessons,
+    TResult? Function()? getUserPreferences,
+  }) {
+    return fetchLessonsWithCourseContext?.call(
+        pathId, courseNumber, learningPath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetchLessons,
+    TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
+    TResult Function()? refreshLessons,
+    TResult Function()? getUserPreferences,
+    required TResult orElse(),
+  }) {
+    if (fetchLessonsWithCourseContext != null) {
+      return fetchLessonsWithCourseContext(pathId, courseNumber, learningPath);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchLessonsWithCourseContext value)
+        fetchLessonsWithCourseContext,
+    required TResult Function(RefreshLessons value) refreshLessons,
+    required TResult Function(GetUserPreferences value) getUserPreferences,
+  }) {
+    return fetchLessonsWithCourseContext(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
+    TResult? Function(RefreshLessons value)? refreshLessons,
+    TResult? Function(GetUserPreferences value)? getUserPreferences,
+  }) {
+    return fetchLessonsWithCourseContext?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
+    TResult Function(RefreshLessons value)? refreshLessons,
+    TResult Function(GetUserPreferences value)? getUserPreferences,
+    required TResult orElse(),
+  }) {
+    if (fetchLessonsWithCourseContext != null) {
+      return fetchLessonsWithCourseContext(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class FetchLessonsWithCourseContext implements DailyLessonsEvent {
+  const factory FetchLessonsWithCourseContext(
+          {required final String pathId,
+          required final int courseNumber,
+          required final LearningPath learningPath}) =
+      _$FetchLessonsWithCourseContextImpl;
+
+  String get pathId;
+  int get courseNumber;
+  LearningPath get learningPath;
+  @JsonKey(ignore: true)
+  _$$FetchLessonsWithCourseContextImplCopyWith<
+          _$FetchLessonsWithCourseContextImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -227,6 +447,9 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchLessons,
+    required TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)
+        fetchLessonsWithCourseContext,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
   }) {
@@ -237,6 +460,9 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchLessons,
+    TResult? Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
   }) {
@@ -247,6 +473,9 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchLessons,
+    TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
     required TResult orElse(),
@@ -261,6 +490,8 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchLessonsWithCourseContext value)
+        fetchLessonsWithCourseContext,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
   }) {
@@ -271,6 +502,8 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) {
@@ -281,6 +514,8 @@ class _$RefreshLessonsImpl implements RefreshLessons {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),
@@ -335,6 +570,9 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchLessons,
+    required TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)
+        fetchLessonsWithCourseContext,
     required TResult Function() refreshLessons,
     required TResult Function() getUserPreferences,
   }) {
@@ -345,6 +583,9 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchLessons,
+    TResult? Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
     TResult? Function()? refreshLessons,
     TResult? Function()? getUserPreferences,
   }) {
@@ -355,6 +596,9 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchLessons,
+    TResult Function(
+            String pathId, int courseNumber, LearningPath learningPath)?
+        fetchLessonsWithCourseContext,
     TResult Function()? refreshLessons,
     TResult Function()? getUserPreferences,
     required TResult orElse(),
@@ -369,6 +613,8 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(FetchLessons value) fetchLessons,
+    required TResult Function(FetchLessonsWithCourseContext value)
+        fetchLessonsWithCourseContext,
     required TResult Function(RefreshLessons value) refreshLessons,
     required TResult Function(GetUserPreferences value) getUserPreferences,
   }) {
@@ -379,6 +625,8 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(FetchLessons value)? fetchLessons,
+    TResult? Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
     TResult? Function(RefreshLessons value)? refreshLessons,
     TResult? Function(GetUserPreferences value)? getUserPreferences,
   }) {
@@ -389,6 +637,8 @@ class _$GetUserPreferencesImpl implements GetUserPreferences {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(FetchLessons value)? fetchLessons,
+    TResult Function(FetchLessonsWithCourseContext value)?
+        fetchLessonsWithCourseContext,
     TResult Function(RefreshLessons value)? refreshLessons,
     TResult Function(GetUserPreferences value)? getUserPreferences,
     required TResult orElse(),

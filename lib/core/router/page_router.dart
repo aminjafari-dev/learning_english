@@ -17,6 +17,7 @@ import 'package:learning_english/features/history/presentation/pages/request_det
 import 'package:learning_english/features/learning_paths/presentation/pages/learning_paths_home_page.dart';
 import 'package:learning_english/features/learning_paths/presentation/pages/sub_category_selection_page.dart';
 import 'package:learning_english/features/learning_path_detail/presentation/pages/learning_path_detail_page.dart';
+import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
 
 class PageRouter {
   /// Map of all named routes in the app
@@ -31,7 +32,19 @@ class PageRouter {
       return LearningFocusSelectionPage(selectedLevel: selectedLevel);
     },
     // Conversation page (replacing Daily Lessons)
-    PageName.dailyLessons: (context) => const DailyLessonsPage(),
+    PageName.dailyLessons: (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final pathId = args?['pathId'] as String?;
+      final courseNumber = args?['courseNumber'] as int?;
+      final learningPath = args?['learningPath'] as LearningPath?;
+
+      return DailyLessonsPage(
+        pathId: pathId,
+        courseNumber: courseNumber,
+        learningPath: learningPath,
+      );
+    },
     // Profile page
     PageName.profile: (context) => const ProfilePage(),
     // Main navigation page

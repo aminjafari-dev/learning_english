@@ -9,7 +9,9 @@ import 'package:learning_english/core/theme/app_theme.dart';
 import 'package:learning_english/core/widgets/global_widget/g_scaffold.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
+import 'package:learning_english/core/router/page_name.dart';
 import 'package:learning_english/l10n/app_localizations.dart';
+import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
 import '../bloc/learning_path_detail_bloc.dart';
 import '../bloc/learning_path_detail_event.dart';
 import '../bloc/learning_path_detail_state.dart';
@@ -225,14 +227,38 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
 
   /// Navigates to a specific course
   void _navigateToCourse(int courseNumber) {
-    // TODO: Navigate to daily lessons page with course context
-    // This will be implemented when we enhance the daily lessons integration
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Starting Course $courseNumber...'),
-        backgroundColor: AppTheme.primary(context),
-      ),
+    // Get the current learning path from the state
+    final currentState = _bloc.state;
+    LearningPath? learningPath;
+
+    currentState.when(
+      initial: () {},
+      loading: () {},
+      pathLoaded: (path) => learningPath = path,
+      courseCompleted: (courseNum, updatedPath) => learningPath = updatedPath,
+      pathDeleted: () {},
+      error: (message) {},
     );
+
+    if (learningPath != null) {
+      // Navigate to daily lessons page with course context
+      Navigator.of(context).pushNamed(
+        PageName.dailyLessons,
+        arguments: {
+          'pathId': learningPath!.id,
+          'courseNumber': courseNumber,
+          'learningPath': learningPath!,
+        },
+      );
+    } else {
+      // Fallback if learning path is not available
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Unable to start course. Please try again.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   /// Shows delete confirmation dialog

@@ -1,6 +1,7 @@
 // daily_lessons_page.dart
 // Main page for the Daily Lessons feature.
 // This page displays vocabularies, phrases, and lesson sections, using Bloc for state management.
+// Now supports course-specific content when launched from learning paths.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,18 +13,44 @@ import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';
 import 'package:learning_english/features/daily_lessons/presentation/widgets/daily_lessons_header.dart';
 import 'package:learning_english/features/daily_lessons/presentation/widgets/daily_lessons_content.dart';
+import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
 
 /// The main Daily Lessons page widget.
+/// Can be used for general daily lessons or course-specific content.
 class DailyLessonsPage extends StatelessWidget {
-  const DailyLessonsPage({super.key});
+  /// Optional course context for personalized content
+  final String? pathId;
+  final int? courseNumber;
+  final LearningPath? learningPath;
+
+  const DailyLessonsPage({
+    super.key,
+    this.pathId,
+    this.courseNumber,
+    this.learningPath,
+  });
 
   @override
   Widget build(BuildContext context) {
     // Use getIt for dependency injection instead of BlocProvider in the UI
     final bloc = getIt<DailyLessonsBloc>();
 
-    // Fetch both lessons and user preferences
-    bloc.add(const DailyLessonsEvent.fetchLessons());
+    // Fetch lessons based on context
+    if (pathId != null && courseNumber != null && learningPath != null) {
+      // Course-specific content
+      bloc.add(
+        DailyLessonsEvent.fetchLessonsWithCourseContext(
+          pathId: pathId!,
+          courseNumber: courseNumber!,
+          learningPath: learningPath!,
+        ),
+      );
+    } else {
+      // General daily lessons
+      bloc.add(const DailyLessonsEvent.fetchLessons());
+    }
+
+    // Always fetch user preferences for personalization
     bloc.add(const DailyLessonsEvent.getUserPreferences());
 
     return GScaffold(

@@ -81,47 +81,6 @@ class CourseGrid extends StatelessWidget {
           },
         ),
 
-        const SizedBox(height: 24),
-
-        // Next course info
-        if (learningPath.nextUnlockedCourse != null)
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              color: AppTheme.primary(context).withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: AppTheme.primary(context).withOpacity(0.3),
-                width: 1,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GText(
-                  'Next Course: ${learningPath.nextUnlockedCourse}',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.primary(context),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                GText(
-                  learningPath.courses
-                      .firstWhere(
-                        (c) =>
-                            c.courseNumber == learningPath.nextUnlockedCourse,
-                      )
-                      .title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppTheme.text(context).withOpacity(0.8),
-                  ),
-                ),
-              ],
-            ),
-          ),
       ],
     );
   }

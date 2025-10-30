@@ -148,13 +148,6 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
                         ],
                       ),
                     ),
-                    GGap.g16,
-                    // Delete button
-                    IconButton(
-                      onPressed: () => _showDeleteDialog(learningPath.id),
-                      icon: const Icon(Icons.delete_outline),
-                      color: Colors.red,
-                    ),
                   ],
                 ),
               ],
@@ -261,33 +254,5 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
         ),
       );
     }
-  }
-
-  /// Shows delete confirmation dialog
-  void _showDeleteDialog(String pathId) {
-    showDialog(
-      context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Delete Learning Path'),
-            content: const Text(
-              'Are you sure you want to delete this learning path? This action cannot be undone.',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _bloc.add(LearningPathDetailEvent.deletePath(pathId: pathId));
-                },
-                style: TextButton.styleFrom(foregroundColor: Colors.red),
-                child: const Text('Delete'),
-              ),
-            ],
-          ),
-    );
   }
 }

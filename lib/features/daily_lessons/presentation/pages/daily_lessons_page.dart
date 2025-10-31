@@ -14,10 +14,11 @@ import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_
 import 'package:learning_english/features/daily_lessons/presentation/widgets/daily_lessons_header.dart';
 import 'package:learning_english/features/daily_lessons/presentation/widgets/daily_lessons_content.dart';
 import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
+import 'package:learning_english/core/router/page_name.dart';
 
 /// The main Daily Lessons page widget.
 /// Can be used for general daily lessons or course-specific content.
-class DailyLessonsPage extends StatelessWidget {
+class DailyLessonsPage extends StatefulWidget {
   /// Optional course context for personalized content
   final String? pathId;
   final int? courseNumber;
@@ -31,38 +32,70 @@ class DailyLessonsPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    // Use getIt for dependency injection instead of BlocProvider in the UI
-    final bloc = getIt<DailyLessonsBloc>();
+  State<DailyLessonsPage> createState() => _DailyLessonsPageState();
+}
+
+class _DailyLessonsPageState extends State<DailyLessonsPage> {
+  DailyLessonsBloc? _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = getIt<DailyLessonsBloc>();
+    _fetchLessons();
+  }
+
+  @override
+  void didUpdateWidget(DailyLessonsPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Fetch lessons when course number or pathId changes
+    // This ensures data is refreshed when navigating to a new course
+    if (widget.courseNumber != oldWidget.courseNumber ||
+        widget.pathId != oldWidget.pathId) {
+      _fetchLessons();
+    }
+  }
+
+  /// Fetches lessons based on the current context
+  /// Only fetches when course context actually changes to avoid duplicate requests
+  void _fetchLessons() {
+    if (_bloc == null) return;
 
     // Fetch lessons based on context
-    if (pathId != null && courseNumber != null && learningPath != null) {
+    if (widget.pathId != null &&
+        widget.courseNumber != null &&
+        widget.learningPath != null) {
       // Course-specific content (can be new or review of completed course)
-      bloc.add(
+      _bloc!.add(
         DailyLessonsEvent.fetchLessonsWithCourseContext(
-          pathId: pathId!,
-          courseNumber: courseNumber!,
-          learningPath: learningPath!,
+          pathId: widget.pathId!,
+          courseNumber: widget.courseNumber!,
+          learningPath: widget.learningPath!,
         ),
       );
     } else {
       // General daily lessons
-      bloc.add(const DailyLessonsEvent.fetchLessons());
+      _bloc!.add(const DailyLessonsEvent.fetchLessons());
     }
 
     // Always fetch user preferences for personalization
-    bloc.add(const DailyLessonsEvent.getUserPreferences());
+    _bloc!.add(const DailyLessonsEvent.getUserPreferences());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = _bloc!;
 
     return GScaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.background(context),
         elevation: 0,
         title: DailyLessonsHeader(
-          pathId: pathId,
-          courseNumber: courseNumber,
+          pathId: widget.pathId,
+          courseNumber: widget.courseNumber,
           isCompleted:
-              learningPath?.courses
-                  .where((course) => course.courseNumber == courseNumber)
+              widget.learningPath?.courses
+                  .where((course) => course.courseNumber == widget.courseNumber)
                   .firstOrNull
                   ?.isCompleted,
         ),
@@ -85,22 +118,18 @@ class DailyLessonsPage extends StatelessWidget {
               initial: () {},
               loading: () {},
               completed: (pathId, courseNumber) {
-                // Show success message
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Course $courseNumber completed successfully!',
-                    ),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-
-                // Navigate back to learning path detail with result indicating course completion
-                // Use addPostFrameCallback to defer navigation until after the current frame completes
-                // This prevents the "Navigator is locked" error
+                // After completing current course, navigate to the next course lesson
+                final nextCourse = courseNumber + 1;
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (context.mounted) {
-                    Navigator.of(context).pop(true);
+                  if (context.mounted && widget.learningPath != null) {
+                    Navigator.of(context).pushReplacementNamed(
+                      PageName.dailyLessons,
+                      arguments: {
+                        'pathId': pathId,
+                        'courseNumber': nextCourse,
+                        'learningPath': widget.learningPath,
+                      },
+                    );
                   }
                 });
               },
@@ -120,22 +149,18 @@ class DailyLessonsPage extends StatelessWidget {
             builder: (context, state) {
               return DailyLessonsContent(
                 state: state,
-                pathId: pathId,
-                courseNumber: courseNumber,
-                onCompleteCourse: () {
-                  if (pathId != null && courseNumber != null) {
+                pathId: widget.pathId,
+                courseNumber: widget.courseNumber,
+                onNextLessons: () {
+                  if (widget.pathId != null && widget.courseNumber != null) {
                     bloc.add(
                       DailyLessonsEvent.completeCourse(
-                        pathId: pathId!,
-                        courseNumber: courseNumber!,
+                        pathId: widget.pathId!,
+                        courseNumber: widget.courseNumber!,
                       ),
                     );
                   }
                 },
-                isCompletingCourse: state.courseCompletion.maybeWhen(
-                  loading: () => true,
-                  orElse: () => false,
-                ),
               );
             },
           ),

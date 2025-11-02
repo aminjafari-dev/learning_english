@@ -16,6 +16,9 @@ import 'package:learning_english/features/daily_lessons/presentation/widgets/dai
 import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
 import 'package:learning_english/core/router/page_name.dart';
 
+import '../../../learning_path_detail/presentation/bloc/learning_path_detail_bloc.dart';
+import '../../../learning_path_detail/presentation/bloc/learning_path_detail_event.dart';
+
 /// The main Daily Lessons page widget.
 /// Can be used for general daily lessons or course-specific content.
 class DailyLessonsPage extends StatefulWidget {
@@ -147,18 +150,48 @@ class _DailyLessonsPageState extends State<DailyLessonsPage> {
           child: BlocBuilder<DailyLessonsBloc, DailyLessonsState>(
             bloc: bloc,
             builder: (context, state) {
+              // Check if current course is already completed
+              final currentCourse =
+                  widget.learningPath?.courses
+                      .where(
+                        (course) => course.courseNumber == widget.courseNumber,
+                      )
+                      .firstOrNull;
+              final isCurrentCourseCompleted =
+                  currentCourse?.isCompleted ?? false;
+
               return DailyLessonsContent(
                 state: state,
                 pathId: widget.pathId,
                 courseNumber: widget.courseNumber,
                 onNextLessons: () {
-                  if (widget.pathId != null && widget.courseNumber != null) {
-                    bloc.add(
-                      DailyLessonsEvent.completeCourse(
-                        pathId: widget.pathId!,
-                        courseNumber: widget.courseNumber!,
-                      ),
-                    );
+                  if (widget.pathId != null &&
+                      widget.courseNumber != null &&
+                      widget.learningPath != null) {
+                    // If course is already completed, navigate directly to next course
+                    if (isCurrentCourseCompleted) {
+                      final nextCourse = widget.courseNumber! + 1;
+                      Navigator.of(context).pushReplacementNamed(
+                        PageName.dailyLessons,
+                        arguments: {
+                          'pathId': widget.pathId,
+                          'courseNumber': nextCourse,
+                          'learningPath': widget.learningPath,
+                        },
+                      );
+                    } else {
+                      // If not completed, complete it first
+                      // Navigation will happen in the BlocListener when completion succeeds
+                      bloc.add(
+                        DailyLessonsEvent.completeCourse(
+                          pathId: widget.pathId!,
+                          courseNumber: widget.courseNumber!,
+                        ),
+                      );
+
+                    }
+                  } else {
+                    print("object");
                   }
                 },
               );

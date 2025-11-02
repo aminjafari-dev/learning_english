@@ -60,23 +60,6 @@ class CourseCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      child: Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: const Icon(
-                          Icons.check,
-                          color: Colors.green,
-                          size: 8,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               )

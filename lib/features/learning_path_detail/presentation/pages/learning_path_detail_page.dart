@@ -47,7 +47,7 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
+    _refreshLearningPath();
     return GScaffold(
       appBar: AppBar(
         title: GText(

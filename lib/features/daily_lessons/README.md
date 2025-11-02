@@ -2,7 +2,7 @@
 
 ## Description
 
-The Daily Lessons feature provides AI-generated English vocabulary and phrases for daily learning with **conversation mode capabilities**. It follows Clean Architecture principles with a simplified, focused architecture that emphasizes personalized content generation, cost optimization, and interactive learning through conversations.
+The Daily Lessons feature provides AI-generated English vocabulary and phrases for daily learning. It follows Clean Architecture principles with a simplified, focused architecture that emphasizes personalized content generation based on user preferences (level and learning focus areas). The feature generates single lessons with vocabularies and phrases tailored to the user's learning needs.
 
 ## Architecture
 
@@ -12,79 +12,71 @@ The daily lessons feature is structured according to Clean Architecture principl
 - `entities/` - Business objects:
   - `vocabulary.dart` - Vocabulary entity with English and Persian translations
   - `phrase.dart` - Phrase entity with English and Persian translations
-  - `ai_usage_metadata.dart` - Metadata for AI usage tracking and cost analysis
-  - `user_preferences.dart` - User preferences for personalized content
+  - `learning_request.dart` - Learning request entity for tracking lesson generation
+  - `user_preferences.dart` - User preferences for personalized content (level and focus areas)
 - `repositories/` - Abstract repository interfaces:
   - `daily_lessons_repository.dart` - Core lesson generation repository
-  - `conversation_repository.dart` - Conversation management repository
   - `user_preferences_repository.dart` - User preferences management repository
-- `usecases/` - Business logic (simplified):
-  - `get_daily_lessons_usecase.dart` - **Cost-effective**: Fetches personalized lessons in one request
+- `usecases/` - Business logic:
+  - `get_daily_lessons_usecase.dart` - Fetches personalized lessons based on user preferences
   - `get_user_preferences_usecase.dart` - Fetches user preferences for personalization
-  - `send_conversation_message_usecase.dart` - Handles conversation messaging
+  - `complete_course_usecase.dart` - Handles course completion
 
 ### **Data Layer**
 - `datasources/` - Data sources:
-  - `remote/` - AI providers:
-    - `ai_lessons_remote_data_source.dart` - Abstract interface for AI providers
-    - `openai_lessons_remote_data_source.dart` - OpenAI implementation
-    - `gemini_lessons_remote_data_source.dart` - Gemini implementation
-    - `deepseek_lessons_remote_data_source.dart` - DeepSeek implementation
-    - `ai_prompts.dart` - Centralized prompts with personalization support
-    - `gemini_conversation_service.dart` - AI conversation service
-    - `firebase_lessons_remote_data_source.dart` - Background sync with Firebase
-  - `local/` - Specialized local storage (composition pattern):
+  - `remote/` - AI services:
+    - `gemini_lessons_service.dart` - Gemini AI service for lesson generation
+    - `lesson_prompts.dart` - Centralized prompts for lesson generation
+  - `local/` - Local storage (composition pattern):
     - `daily_lessons_local_data_source.dart` - Main coordinator using composition
     - `learning_requests_local_data_source.dart` - Learning request CRUD operations
-    
-    - `analytics_local_data_source.dart` - Analytics and statistics calculation
+    - `course_content_local_data_source.dart` - Course content storage
 - `models/` - Data models:
-  - `vocabulary_model.dart` - Vocabulary data model
-  - `phrase_model.dart` - Phrase data model
-  
-  - `learning_request_model.dart` - Learning request data model
+  - `vocabulary_model.dart` - Vocabulary data model with Hive adapter
+  - `phrase_model.dart` - Phrase data model with Hive adapter
+  - `learning_request_model.dart` - Learning request data model with Hive adapter
+  - `ai_provider_type.dart` - AI provider enumeration
+  - `level_type.dart` - User level enumeration
 - `repositories/` - Repository implementations:
-  - `daily_lessons_repository_impl.dart` - Core lesson generation
-  - `conversation_repository_impl.dart` - Conversation management
-  - `user_preferences_repository_impl.dart` - User preferences management
-- `services/` - Background services:
-  - `background_content_sync_service.dart` - Firebase sync service
-  - `content_sync_event_bus.dart` - Event bus for background sync
-  - `content_sync_manager.dart` - Sync management
-  - `content_sync_service_factory.dart` - Service factory
+  - `daily_lessons_repository_impl.dart` - Core lesson generation implementation
+  - `user_preferences_repository_impl.dart` - User preferences management implementation
 
 ### **Presentation Layer**
 - `bloc/` - State management:
-  - `daily_lessons_bloc.dart` - **Simplified**: Main bloc with conversation + lessons functionality
-  - `daily_lessons_event.dart` - **Simplified**: 4 core events (fetchLessons, refreshLessons, getUserPreferences, sendConversationMessage)
-  - `daily_lessons_state.dart` - **Enhanced**: Combined state management for lessons and conversations
+  - `daily_lessons_bloc.dart` - Main bloc with lesson generation functionality
+  - `daily_lessons_event.dart` - Events: fetchLessons, refreshLessons, getUserPreferences, fetchLessonsWithCourseContext, completeCourse
+  - `daily_lessons_state.dart` - Combined state management for lessons, preferences, analytics, and course completion
 - `pages/` - UI screens:
   - `daily_lessons_page.dart` - Main lessons page
 - `widgets/` - Reusable components:
   - `daily_lessons_content.dart` - Content display widget
   - `daily_lessons_header.dart` - Header widget
-  - Various other UI components
+  - `phrase_card.dart` - Phrase card widget
+  - `section_header.dart` - Section header widget
+  - `user_preferences_display.dart` - User preferences display widget
+  - `course_completion_button.dart` - Course completion button widget
+  - `next_lessons_button.dart` - Next lessons button widget
 
 ## Use Cases
 
 ### **1. Get Personalized Daily Lessons** ⭐
 - **Use Case:** `GetDailyLessonsUseCase`
-- **Description:** Fetches personalized vocabularies and phrases in a single AI request based on user preferences, reducing costs by 25-40%
-- **Data Flow:** Page -> Bloc -> UseCase -> Repository -> AI DataSource
+- **Description:** Fetches personalized vocabularies and phrases based on user preferences (level and focus areas)
+- **Data Flow:** Page -> Bloc -> UseCase -> Repository -> Gemini Service -> Local Storage
 
 ### **2. Get User Preferences**
 - **Use Case:** `GetUserPreferencesUseCase`
 - **Description:** Fetches user's English level and learning focus areas for content personalization
 - **Data Flow:** Page -> Bloc -> UseCase -> UserPreferencesRepository -> Level/Focus Repositories
 
-### **3. Send Conversation Message** ⭐ **NEW**
-- **Use Case:** `SendConversationMessageUseCase`
-- **Description:** Handles AI-powered conversation for interactive learning sessions with thread persistence
-- **Data Flow:** Page -> Bloc -> UseCase -> ConversationRepository -> AI Conversation Service
+### **3. Complete Course**
+- **Use Case:** `CompleteCourseUseCase`
+- **Description:** Completes a course and unlocks the next one in the learning path
+- **Data Flow:** Page -> Bloc -> UseCase -> DailyLessonsRepository -> LearningPathsRepository
 
-## **Personalized Content Generation** ⭐ **NEW FEATURE**
+## **Personalized Content Generation** ⭐
 
-The feature now supports personalized content generation based on user preferences:
+The feature supports personalized content generation based on user preferences:
 
 ### **User Preferences Entity**
 ```dart
@@ -94,100 +86,86 @@ class UserPreferences {
 }
 ```
 
-### **Enhanced AI Prompts**
-The `AiPrompts` class now provides personalized prompts:
-- `getPersonalizedVocabularySystemPrompt(preferences)` - Level and focus-specific vocabulary prompts
-- `getPersonalizedPhraseSystemPrompt(preferences)` - Level and focus-specific phrase prompts
-- `getPersonalizedLessonsSystemPrompt(preferences)` - Combined personalized prompts
+### **Lesson Prompts**
+The `LessonPrompts` class provides personalized prompts:
+- `getLessonPrompt(preferences)` - Level and focus-specific lesson prompts
+- `getCourseLessonPrompt(preferences, courseTitle, courseNumber)` - Course-specific lesson prompts
 
-### **Example Personalized Prompts**
-- **Beginner + Business:** "You are an English teacher specializing in beginner level English. Provide 4 useful English vocabulary words suitable for beginner level learners, focused on these areas: business..."
-- **Advanced + Travel:** "You are an English teacher specializing in advanced level English. Provide 4 useful English vocabulary words suitable for advanced level learners, focused on these areas: travel..."
-
-### **Usage in Bloc**
-```dart
-// Fetch personalized content
-context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchPersonalizedLessons());
-
-// Get user preferences
-context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.getUserPreferences());
-```
+### **AI Service**
+The `GeminiLessonsService` handles AI interactions:
+- Direct API calls to Google's Gemini API
+- JSON response parsing and validation
+- Error handling and retry logic
+- Supports both general and course-specific lesson generation
 
 ## Data Flow
 
-### **Personalized Lessons Flow** ⭐
-1. User opens Daily Lessons page
-2. `DailyLessonsBloc` triggers `FetchLessons` event
-3. `GetUserPreferencesUseCase` fetches user's level and focus areas
-4. `GetDailyLessonsUseCase` calls repository with user preferences
-5. Repository creates personalized AI prompts based on preferences
-6. AI generates level-appropriate and focus-specific content in a single request
-7. Content is saved locally with analytics metadata and displayed to user
-8. Background sync service silently saves content to Firebase for global reuse
+1. **User launches Daily Lessons page**
+   - BLoC is created via `BlocProvider`
+   - Initial state is set with all states as `initial()`
 
-### **Conversation Flow** ⭐ **NEW**
-1. User starts conversation or sends message
-2. `DailyLessonsBloc` triggers `SendConversationMessage` event with preferences and message
-3. `SendConversationMessageUseCase` calls conversation repository
-4. Repository finds existing thread for preferences or creates new one
-5. AI conversation service generates context-aware response
-6. Conversation is saved locally with thread persistence
-7. Response is displayed to user
+2. **Fetch lessons event is triggered**
+   - `FetchLessons` event is added to the BLoC
+   - BLoC emits loading states for vocabularies, phrases, and preferences
+   - User preferences are fetched from local storage
+   - Gemini service generates lessons based on preferences
+   - AI response is parsed to extract vocabularies and phrases
+   - Generated content is saved to local storage for tracking
+   - BLoC emits loaded states with the data
+
+3. **User views lessons**
+   - UI displays vocabularies and phrases using widgets
+   - User preferences are shown in the header
+   - Each vocabulary/phrase is displayed in a card
+
+4. **Course-specific lessons**
+   - `FetchLessonsWithCourseContext` event is added with path and course info
+   - Repository checks for existing course content in local storage
+   - If not found, generates new content using course-specific prompts
+   - Saves course content for future use
+   - BLoC emits loaded states with course-specific data
+
+5. **Course completion**
+   - `CompleteCourse` event is added with path and course number
+   - Repository updates learning path progress
+   - Unlocks next course in the learning path
+   - BLoC emits completed state
 
 ## Key Components
 
-- **AI Providers:** OpenAI, Gemini, DeepSeek with unified interface
-- **Cost Optimization:** Combined requests reduce API costs by 25-40%
-- **Specialized Local Storage:** Hive-based persistence using composition pattern
-- **Analytics:** Learning progress and usage analytics through specialized data source
-- **Personalization:** Level and focus-specific content generation
-- **Conversation Mode:** Persistent AI conversations with thread management
-- **Background Sync:** Firebase integration for content sharing with event-driven architecture
-- **Clean Architecture:** Simplified, focused separation of concerns
+- **Gemini AI** - Google's Gemini API for generating personalized lessons
+- **BLoC** - State management for lesson generation and user preferences
+- **Hive** - Local storage for caching lessons and tracking analytics
+- **Clean Architecture** - Separation of concerns across domain, data, and presentation layers
+- **Dartz** - Functional programming with `Either` for error handling
+- **Freezed** - Immutable state and event classes
 
-## **Personalization Benefits** ⭐
+## Local Storage
 
-1. **Relevant Content:** Users get vocabulary and phrases appropriate for their English level
-2. **Focus-Specific Learning:** Content is tailored to user's selected learning areas (business, travel, social, etc.)
-3. **Better Engagement:** Personalized content increases user engagement and learning effectiveness
-4. **Progressive Learning:** Content difficulty matches user's proficiency level
-5. **Contextual Learning:** Real-world vocabulary and phrases for specific situations
+The feature uses Hive for local storage:
+- **Learning Requests** - Tracks all lesson generation requests with metadata
+- **Course Content** - Caches course-specific lessons for offline access
+- **User Preferences** - Stores user level and focus areas
+
+## Error Handling
+
+The feature implements comprehensive error handling:
+- **Network Errors** - Handled with fallback to cached content
+- **AI Service Errors** - Logged and displayed to user
+- **Parsing Errors** - Returns empty lists with error messages
+- **State Management Errors** - Uses `emit.isDone` checks to prevent emission after disposal
+
+## Testing
+
+The feature supports testing with:
+- **Unit Tests** - Test use cases, repositories, and services
+- **Widget Tests** - Test UI components and user interactions
+- **Integration Tests** - Test complete user flows
 
 ## Future Enhancements
 
-- Add more AI providers for better cost optimization
-- Implement content quality ratings and feedback
-- Add spaced repetition algorithms
-- Include pronunciation and audio features
-- Expand personalization with learning style preferences
-- Add content difficulty progression tracking
-
-## Usage
-
-To use the daily lessons feature with personalization and conversation capabilities:
-
-```dart
-// Fetch personalized lessons (automatically uses user preferences)
-context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.fetchLessons());
-
-// Refresh lessons
-context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.refreshLessons());
-
-// Get user preferences
-context.read<DailyLessonsBloc>().add(const DailyLessonsEvent.getUserPreferences());
-
-// Start conversation mode ⭐ NEW
-final preferences = UserPreferences(
-  level: UserLevel.intermediate,
-  focusAreas: ['business'],
-);
-
-context.read<DailyLessonsBloc>().add(
-  DailyLessonsEvent.sendConversationMessage(
-    preferences: preferences,
-    message: "Can you help me practice business English?",
-  ),
-);
-```
-
-The feature automatically adapts to the user's English level and selected learning focus areas, providing personalized content and context-aware conversations for an engaging learning experience.
+- Add support for multiple AI providers (OpenAI, Anthropic, etc.)
+- Implement lesson history and progress tracking
+- Add gamification features (streaks, achievements, etc.)
+- Support offline lesson generation with cached AI responses
+- Add lesson difficulty adjustment based on user performance

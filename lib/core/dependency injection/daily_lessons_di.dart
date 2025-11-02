@@ -17,19 +17,17 @@ import 'package:learning_english/features/daily_lessons/data/datasources/local/d
 import 'package:learning_english/features/daily_lessons/data/datasources/local/learning_requests_local_data_source.dart';
 
 import 'package:learning_english/features/daily_lessons/data/repositories/user_preferences_repository_impl.dart';
-import 'package:learning_english/features/daily_lessons/data/repositories/conversation_repository_impl.dart';
-import 'package:learning_english/features/daily_lessons/domain/repositories/conversation_repository.dart';
 import 'package:learning_english/features/daily_lessons/domain/repositories/user_preferences_repository.dart';
 import 'package:learning_english/features/level_selection/domain/repositories/user_repository.dart';
 import 'package:learning_english/features/learning_focus_selection/domain/repositories/learning_focus_selection_repository.dart';
 import 'package:learning_english/core/repositories/user_repository.dart'
     as core_user;
-import 'package:learning_english/features/daily_lessons/domain/usecases/get_conversation_lessons_usecase.dart';
+import 'package:learning_english/features/daily_lessons/domain/usecases/get_daily_lessons_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/get_user_preferences_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/usecases/complete_course_usecase.dart';
 import 'package:learning_english/features/daily_lessons/domain/repositories/daily_lessons_repository.dart';
 import 'package:learning_english/features/daily_lessons/data/repositories/daily_lessons_repository_impl.dart';
-import 'package:learning_english/features/daily_lessons/data/datasources/remote/gemini_conversation_service.dart';
+import 'package:learning_english/features/daily_lessons/data/datasources/remote/gemini_lessons_service.dart';
 import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_bloc.dart';
 import 'package:learning_english/features/learning_paths/domain/repositories/learning_paths_repository.dart';
 
@@ -74,9 +72,9 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     // Note: Learning requests cloud storage is now handled by Supabase functions
     // No need for remote data source registration
 
-    // Gemini Conversation Service
-    getIt.registerLazySingleton<GeminiConversationService>(
-      () => GeminiConversationService(
+    // Gemini Lessons Service
+    getIt.registerLazySingleton<GeminiLessonsService>(
+      () => GeminiLessonsService(
         getIt<DailyLessonsLocalDataSource>(),
         _getGeminiApiKey(),
       ),
@@ -91,30 +89,20 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
       ),
     );
 
-    // Conversation Repository - handles AI conversation threads and messaging
-    getIt.registerLazySingleton<ConversationRepository>(
-      () => ConversationRepositoryImpl(
+    // Daily Lessons Repository - handles course content and lesson generation
+    getIt.registerLazySingleton<DailyLessonsRepository>(
+      () => DailyLessonsRepositoryImpl(
         localDataSource: getIt<DailyLessonsLocalDataSource>(),
-        geminiConversationService: getIt<GeminiConversationService>(),
+        geminiLessonsService: getIt<GeminiLessonsService>(),
+        userPreferencesRepository: getIt<UserPreferencesRepository>(),
+        learningPathsRepository: getIt<LearningPathsRepository>(),
         coreUserRepository: getIt<core_user.UserRepository>(),
       ),
     );
 
-    // Daily Lessons Repository - handles course content and completion
-    getIt.registerLazySingleton<DailyLessonsRepository>(
-      () => DailyLessonsRepositoryImpl(
-        localDataSource: getIt<DailyLessonsLocalDataSource>(),
-        conversationRepository: getIt<ConversationRepository>(),
-        userPreferencesRepository: getIt<UserPreferencesRepository>(),
-        learningPathsRepository: getIt<LearningPathsRepository>(),
-      ),
-    );
-
     getIt.registerFactory(
-      () => GetConversationLessonsUseCase(
-        getIt<ConversationRepository>(),
-        getIt<DailyLessonsLocalDataSource>(),
-        getIt<core_user.UserRepository>(),
+      () => GetDailyLessonsUseCase(
+        getIt<DailyLessonsRepository>(),
       ),
     );
 
@@ -129,7 +117,7 @@ Future<void> setupDailyLessonsDI(GetIt getIt) async {
     // Bloc
     getIt.registerSingleton<DailyLessonsBloc>(
       DailyLessonsBloc(
-        getConversationLessonsUseCase: getIt<GetConversationLessonsUseCase>(),
+        getDailyLessonsUseCase: getIt<GetDailyLessonsUseCase>(),
         getUserPreferencesUseCase: getIt<GetUserPreferencesUseCase>(),
         completeCourseUseCase: getIt<CompleteCourseUseCase>(),
         dailyLessonsRepository: getIt<DailyLessonsRepository>(),
@@ -149,17 +137,7 @@ String _getGeminiApiKey() {
   return dotenv.env['GEMINI_API_KEY'] ?? '';
 }
 
-// Removed OpenAI and DeepSeek API helpers as we only use conversation mode via Gemini
-
 // Example usage:
 // setupDailyLessonsDI(getIt);
 // final bloc = getIt<DailyLessonsBloc>();
-//
-// // Personalized content usage:
-// final preferences = await bloc.getUserPreferences();
-// preferences.fold(
-//   (failure) => print('Error: ${failure.message}'),
-//   (prefs) => {
-//     final personalizedResult = await bloc.getPersonalizedDailyLessons(prefs);
-//   },
-// );
+// bloc.add(const DailyLessonsEvent.fetchLessons());

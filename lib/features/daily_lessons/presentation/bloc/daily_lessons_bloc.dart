@@ -1,13 +1,13 @@
 // daily_lessons_bloc.dart
 // Bloc for managing daily lessons operations.
-// Now uses conversation-based lessons to avoid repetitive content.
+// Generates personalized lessons based on user preferences.
 // Now includes user-specific data management and analytics functionality.
 // Now supports personalized content generation based on user preferences.
 
 import 'package:bloc/bloc.dart';
 import 'daily_lessons_event.dart';
 import 'daily_lessons_state.dart';
-import '../../domain/usecases/get_conversation_lessons_usecase.dart';
+import '../../domain/usecases/get_daily_lessons_usecase.dart';
 import '../../domain/usecases/get_user_preferences_usecase.dart';
 import '../../domain/usecases/complete_course_usecase.dart';
 import '../../domain/repositories/daily_lessons_repository.dart';
@@ -15,18 +15,17 @@ import 'package:learning_english/core/usecase/usecase.dart';
 import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
 
 /// Bloc for managing daily lessons (vocabularies and phrases)
-/// Now uses conversation-based lessons to avoid repetitive content
+/// Generates personalized lessons based on user preferences
 /// Includes user-specific data management and analytics functionality
-/// Now supports personalized content generation based on user preferences
-/// Now includes conversation mode functionality
+/// Supports personalized content generation based on user preferences
 class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
-  final GetConversationLessonsUseCase getConversationLessonsUseCase;
+  final GetDailyLessonsUseCase getDailyLessonsUseCase;
   final GetUserPreferencesUseCase getUserPreferencesUseCase;
   final CompleteCourseUseCase completeCourseUseCase;
   final DailyLessonsRepository dailyLessonsRepository;
 
   DailyLessonsBloc({
-    required this.getConversationLessonsUseCase,
+    required this.getDailyLessonsUseCase,
     required this.getUserPreferencesUseCase,
     required this.completeCourseUseCase,
     required this.dailyLessonsRepository,
@@ -37,7 +36,6 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
            userPreferences: UserPreferencesState.initial(),
            analytics: UserAnalyticsState.initial(),
            dataManagement: UserDataManagementState.initial(),
-           conversation: ConversationState.initial(),
            courseCompletion: CourseCompletionState.initial(),
            isRefreshing: false,
          ),
@@ -45,9 +43,9 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
     on<DailyLessonsEvent>((event, emit) async {
       await event.when(
         fetchLessons:
-            () => _onFetchConversationLessons(
+            () => _onFetchDailyLessons(
               emit,
-            ), // New conversation-based method
+            ), // Fetch daily lessons
         fetchLessonsWithCourseContext:
             (pathId, courseNumber, learningPath) =>
                 _onFetchLessonsWithCourseContext(
@@ -68,10 +66,10 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
     });
   }
 
-  /// Fetches lessons through conversation mode to avoid repetitive content
-  /// This method uses AI conversation to suggest new vocabularies and phrases
+  /// Fetches personalized daily lessons based on user preferences
+  /// This method generates new vocabularies and phrases using AI
   /// Generated content is automatically saved to local storage for tracking
-  Future<void> _onFetchConversationLessons(
+  Future<void> _onFetchDailyLessons(
     Emitter<DailyLessonsState> emit,
   ) async {
     try {
@@ -120,8 +118,8 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
         );
       }
 
-      // Then fetch conversation-based lessons using the preferences
-      final result = await getConversationLessonsUseCase(preferences);
+      // Then fetch daily lessons using the preferences
+      final result = await getDailyLessonsUseCase(preferences);
       result.fold(
         (failure) {
           if (!emit.isDone) {
@@ -151,10 +149,10 @@ class DailyLessonsBloc extends Bloc<DailyLessonsEvent, DailyLessonsState> {
         emit(
           state.copyWith(
             vocabularies: VocabulariesState.error(
-              'Failed to fetch conversation lessons: ${e.toString()}',
+              'Failed to fetch daily lessons: ${e.toString()}',
             ),
             phrases: PhrasesState.error(
-              'Failed to fetch conversation lessons: ${e.toString()}',
+              'Failed to fetch daily lessons: ${e.toString()}',
             ),
             isRefreshing: false,
           ),

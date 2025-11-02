@@ -4,41 +4,50 @@
 
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
+import 'package:learning_english/core/repositories/user_repository.dart'
+    as core_user;
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/vocabulary.dart';
 import '../../domain/entities/phrase.dart';
 import '../../domain/entities/user_preferences.dart';
 import '../../domain/repositories/daily_lessons_repository.dart';
-import '../../domain/repositories/conversation_repository.dart';
 import '../../domain/repositories/user_preferences_repository.dart';
 import '../../../learning_paths/domain/entities/learning_path.dart';
 import '../../../learning_paths/domain/repositories/learning_paths_repository.dart';
 import '../datasources/local/daily_lessons_local_data_source.dart';
+import '../datasources/remote/gemini_lessons_service.dart';
 import '../models/vocabulary_model.dart';
 import '../models/phrase_model.dart';
+import '../models/learning_request_model.dart';
+import '../models/ai_provider_type.dart';
+import '../models/level_type.dart';
 
 /// Implementation of DailyLessonsRepository
 /// Handles daily lessons operations using local storage and AI services
 class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
   final DailyLessonsLocalDataSource _localDataSource;
-  final ConversationRepository _conversationRepository;
+  final GeminiLessonsService _geminiLessonsService;
   final UserPreferencesRepository _userPreferencesRepository;
   final LearningPathsRepository _learningPathsRepository;
+  final core_user.UserRepository _coreUserRepository;
 
   /// Constructor
   /// @param localDataSource Local data source for daily lessons
-  /// @param conversationRepository Conversation repository
+  /// @param geminiLessonsService Gemini lessons service for AI generation
   /// @param userPreferencesRepository User preferences repository
   /// @param learningPathsRepository Learning paths repository
+  /// @param coreUserRepository Core user repository
   DailyLessonsRepositoryImpl({
     required DailyLessonsLocalDataSource localDataSource,
-    required ConversationRepository conversationRepository,
+    required GeminiLessonsService geminiLessonsService,
     required UserPreferencesRepository userPreferencesRepository,
     required LearningPathsRepository learningPathsRepository,
+    required core_user.UserRepository coreUserRepository,
   }) : _localDataSource = localDataSource,
-       _conversationRepository = conversationRepository,
+       _geminiLessonsService = geminiLessonsService,
        _userPreferencesRepository = userPreferencesRepository,
-       _learningPathsRepository = learningPathsRepository;
+       _learningPathsRepository = learningPathsRepository,
+       _coreUserRepository = coreUserRepository;
 
   @override
   Future<
@@ -46,17 +55,46 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
   >
   getPersonalizedDailyLessons(UserPreferences preferences) async {
     try {
-      // Use conversation repository to get personalized lessons
-      final result = await _conversationRepository.generateConversationResponse(
-        preferences,
+      print('📚 [LESSONS] Getting personalized daily lessons');
+      print(
+        '📋 [LESSONS] User preferences: level=${preferences.level}, areas=${preferences.focusAreas}',
       );
 
-      return result.fold((failure) => left(failure), (aiResponse) {
-        // For now, return empty lists - this should be enhanced to parse the AI response
-        // and extract vocabularies and phrases
-        return right((vocabularies: <Vocabulary>[], phrases: <Phrase>[]));
-      });
+      // Get user ID for tracking
+      final userId = await _coreUserRepository.getUserId() ?? 'current_user';
+
+      // Convert UserLevel to the model's UserLevel
+      final userLevel = _convertToModelUserLevel(preferences.level);
+
+      // Generate lessons using Gemini service
+      final aiResponse = await _geminiLessonsService.generateLessonsResponse(
+        userLevel: userLevel,
+        focusAreas: preferences.focusAreas,
+      );
+
+      print('✅ [LESSONS] Received AI response');
+
+      // Parse the AI response to extract vocabularies and phrases
+      final parsedData = _parseAIResponse(aiResponse);
+      final vocabularies = parsedData.vocabularies;
+      final phrases = parsedData.phrases;
+
+      print(
+        '✅ [LESSONS] Generated ${vocabularies.length} vocabularies and ${phrases.length} phrases',
+      );
+
+      // Save the generated content to local storage
+      await _saveGeneratedContent(
+        userId,
+        preferences,
+        vocabularies,
+        phrases,
+        aiResponse,
+      );
+
+      return right((vocabularies: vocabularies, phrases: phrases));
     } catch (e) {
+      print('❌ [LESSONS] Failed to get personalized daily lessons: $e');
       return left(
         ServerFailure(
           'Failed to get personalized daily lessons: ${e.toString()}',
@@ -122,43 +160,57 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
           courseNumber,
         );
 
-        // Get lessons using conversation repository
-        final result = await _conversationRepository
-            .generateConversationResponse(enhancedPreferences);
+        // Convert UserLevel to the model's UserLevel
+        final userLevel = _convertToModelUserLevel(enhancedPreferences.level);
 
-        return result.fold((failure) => left(failure), (aiResponse) async {
-          print(
-            '🔄 [COURSE_CONTENT] Generating new content for course $courseNumber in path $pathId',
-          );
+        // Get the course from the learning path
+        final course = learningPath.courses.firstWhere(
+          (c) => c.courseNumber == courseNumber,
+          orElse: () => learningPath.courses.first,
+        );
 
-          // Parse the AI response to extract vocabularies and phrases
-          final parsedData = _parseAIResponse(aiResponse);
-          final vocabularies = parsedData.vocabularies;
-          final phrases = parsedData.phrases;
+        // Generate course-specific lessons using Gemini service with subcategory
+        final aiResponse = await _geminiLessonsService
+            .generateCourseLessonResponse(
+              userLevel: userLevel,
+              focusAreas: enhancedPreferences.focusAreas,
+              courseTitle: course.title,
+              courseNumber: courseNumber,
+              subCategory: learningPath.subCategory.title,
+            );
 
-          print(
-            '✅ [COURSE_CONTENT] Generated ${vocabularies.length} vocabularies and ${phrases.length} phrases',
-          );
+        print(
+          '🔄 [COURSE_CONTENT] Generating new content for course $courseNumber in path $pathId',
+        );
 
-          // Save the course content for future use
-          final vocabularyModels =
-              vocabularies.map((v) => VocabularyModel.fromEntity(v)).toList();
-          final phraseModels =
-              phrases.map((p) => PhraseModel.fromEntity(p)).toList();
+        // Parse the AI response to extract vocabularies and phrases
+        final parsedData = _parseAIResponse(aiResponse);
+        final vocabularies = parsedData.vocabularies;
+        final phrases = parsedData.phrases;
 
-          await _localDataSource.saveCourseContent(
-            pathId,
-            courseNumber,
-            vocabularyModels,
-            phraseModels,
-          );
+        print(
+          '✅ [COURSE_CONTENT] Generated ${vocabularies.length} vocabularies and ${phrases.length} phrases',
+        );
 
-          print('💾 [COURSE_CONTENT] Saved course content for future use');
+        // Save the course content for future use
+        final vocabularyModels =
+            vocabularies.map((v) => VocabularyModel.fromEntity(v)).toList();
+        final phraseModels =
+            phrases.map((p) => PhraseModel.fromEntity(p)).toList();
 
-          return right((vocabularies: vocabularies, phrases: phrases));
-        });
+        await _localDataSource.saveCourseContent(
+          pathId,
+          courseNumber,
+          vocabularyModels,
+          phraseModels,
+        );
+
+        print('💾 [COURSE_CONTENT] Saved course content for future use');
+
+        return right((vocabularies: vocabularies, phrases: phrases));
       });
     } catch (e) {
+      print('❌ [COURSE_CONTENT] Failed to get course lessons: $e');
       return left(
         ServerFailure('Failed to get course lessons: ${e.toString()}'),
       );
@@ -237,6 +289,104 @@ class DailyLessonsRepositoryImpl implements DailyLessonsRepository {
       return left(
         ServerFailure('Failed to get user preferences: ${e.toString()}'),
       );
+    }
+  }
+
+  /// Saves generated content to local storage
+  /// Creates a learning request for proper tracking
+  /// @param userId User ID
+  /// @param preferences User preferences
+  /// @param vocabularies List of vocabularies to save
+  /// @param phrases List of phrases to save
+  /// @param aiResponse AI response string
+  Future<void> _saveGeneratedContent(
+    String userId,
+    UserPreferences preferences,
+    List<Vocabulary> vocabularies,
+    List<Phrase> phrases,
+    String aiResponse,
+  ) async {
+    try {
+      print('💾 [LESSONS] Saving generated content to local storage');
+      print(
+        '💾 [LESSONS] Vocabularies: ${vocabularies.length}, Phrases: ${phrases.length}',
+      );
+
+      // Convert domain entities to models for storage
+      final vocabularyModels =
+          vocabularies
+              .map(
+                (vocab) => VocabularyModel(
+                  english: vocab.english,
+                  persian: vocab.persian,
+                  isUsed: false,
+                ),
+              )
+              .toList();
+
+      final phraseModels =
+          phrases
+              .map(
+                (phrase) => PhraseModel(
+                  english: phrase.english,
+                  persian: phrase.persian,
+                  isUsed: false,
+                ),
+              )
+              .toList();
+
+      // Create learning request
+      final learningRequest = LearningRequestModel(
+        requestId: 'lesson_${DateTime.now().millisecondsSinceEpoch}',
+        userId: userId,
+        userLevel: _convertToModelUserLevel(preferences.level),
+        focusAreas: preferences.focusAreas,
+        aiProvider: AiProviderType.gemini,
+        aiModel: 'gemini-2.5-flash',
+        totalTokensUsed: 0,
+        estimatedCost: 0.0,
+        requestTimestamp: DateTime.now(),
+        createdAt: DateTime.now(),
+        systemPrompt: 'Daily lesson generation',
+        userPrompt: aiResponse.substring(
+          0,
+          aiResponse.length > 200 ? 200 : aiResponse.length,
+        ),
+        vocabularies: vocabularyModels,
+        phrases: phraseModels,
+        metadata: {
+          'source': 'daily_lessons',
+          'preferences': {
+            'level': preferences.level.name,
+            'focusAreas': preferences.focusAreas,
+          },
+        },
+      );
+
+      // Save to local storage
+      await _localDataSource.saveLearningRequest(learningRequest);
+      print('✅ [LESSONS] Successfully saved content locally');
+    } catch (e) {
+      print('❌ [LESSONS] Failed to save content: $e');
+      // Don't throw here to avoid breaking the main flow
+    }
+  }
+
+  /// Converts domain UserLevel to model UserLevel for storage
+  /// @param preferencesLevel Domain level
+  /// @return Model level
+  UserLevel _convertToModelUserLevel(dynamic preferencesLevel) {
+    switch (preferencesLevel.toString()) {
+      case 'UserLevel.beginner':
+        return UserLevel.beginner;
+      case 'UserLevel.elementary':
+        return UserLevel.elementary;
+      case 'UserLevel.intermediate':
+        return UserLevel.intermediate;
+      case 'UserLevel.advanced':
+        return UserLevel.advanced;
+      default:
+        return UserLevel.intermediate; // Default fallback
     }
   }
 

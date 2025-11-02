@@ -55,15 +55,6 @@ class UserDataManagementState with _$UserDataManagementState {
 }
 
 @freezed
-class ConversationState with _$ConversationState {
-  const factory ConversationState.initial() = ConversationInitial;
-  const factory ConversationState.loading() = ConversationLoading;
-  const factory ConversationState.loaded({required String? lastResponse}) =
-      ConversationLoaded;
-  const factory ConversationState.error(String message) = ConversationError;
-}
-
-@freezed
 class CourseCompletionState with _$CourseCompletionState {
   const factory CourseCompletionState.initial() = CourseCompletionInitial;
   const factory CourseCompletionState.loading() = CourseCompletionLoading;
@@ -83,7 +74,6 @@ abstract class DailyLessonsState with _$DailyLessonsState {
     required UserPreferencesState userPreferences,
     required UserAnalyticsState analytics,
     required UserDataManagementState dataManagement,
-    required ConversationState conversation,
     required CourseCompletionState courseCompletion,
     @Default(false) bool isRefreshing,
   }) = _DailyLessonsState;

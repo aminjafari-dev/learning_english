@@ -32,9 +32,9 @@
   "learningFocusCustomLabel": "تمرکز یادگیری سفارشی",
   "learningFocusSavedSnack": "انتخاب ذخیره شد! در حال انتقال...",
   "focusAreasSelection": "تمرکز های یادگیری",
-  "yourDailyLessons": "درس‌های روزانه شما",
-  "@yourDailyLessons": {
-    "description": "عنوان صفحه درس‌های روزانه."
+  "yourCourses": "دوره‌های شما",
+  "@yourCourses": {
+    "description": "عنوان صفحه دوره‌ها."
   },
   "vocabularies": "واژگان",
   "@vocabularies": {

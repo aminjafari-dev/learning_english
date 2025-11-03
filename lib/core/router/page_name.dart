@@ -16,8 +16,8 @@ class PageName {
   /// Route for the learning focus selection page
   static const String learningFocusSelection = '/learning_focus_selection';
 
-  /// Route for the Conversation page (replaced Daily Lessons)
-  static const String dailyLessons = '/dailyLessons';
+  /// Route for the Courses page
+  static const String courses = '/courses';
 
   /// Route for the profile page
   static const String profile = '/profile';

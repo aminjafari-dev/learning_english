@@ -7,7 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learning_english/core/dependency%20injection/core_di.dart';
 import 'package:learning_english/core/dependency%20injection/sign_in_di.dart';
 import 'package:learning_english/core/dependency%20injection/level_selection_di.dart';
-import 'package:learning_english/core/dependency%20injection/daily_lessons_di.dart';
+import 'package:learning_english/core/dependency%20injection/courses_di.dart';
 import 'package:learning_english/core/dependency%20injection/learning_focus_selection_di.dart';
 import 'package:learning_english/core/dependency%20injection/splash_di.dart';
 import 'package:learning_english/core/dependency%20injection/profile_di.dart';
@@ -51,9 +51,9 @@ Future<void> initDependencies() async {
     // Learning Paths Feature (must be before daily lessons as it depends on it)
     await initLearningPathsDependencies(getIt);
 
-    // Daily Lessons Feature (now async due to Hive initialization)
+    // Courses Feature (now async due to Hive initialization)
     // This depends on LearningFocusSelectionRepository and LearningPathsRepository
-    await setupDailyLessonsDI(getIt);
+    await setupCoursesDI(getIt);
 
     // Profile Feature
     await setupProfileDI(getIt);

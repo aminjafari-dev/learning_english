@@ -8,7 +8,7 @@ import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
 import 'package:learning_english/core/widgets/audio_button.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
-import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';
+import 'package:learning_english/features/course/presentation/bloc/courses_state.dart';
 import 'package:learning_english/core/services/tts_service.dart';
 import 'package:learning_english/core/dependency injection/locator.dart';
 

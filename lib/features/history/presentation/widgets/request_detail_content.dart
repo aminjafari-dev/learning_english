@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
-import 'package:learning_english/features/daily_lessons/presentation/widgets/section_header.dart';
+import 'package:learning_english/features/course/presentation/bloc/courses_state.dart';
+import 'package:learning_english/features/course/presentation/widgets/section_header.dart';
 import 'package:learning_english/core/widgets/vocabulary_section.dart';
 import 'package:learning_english/core/widgets/phrases_list_section.dart';
-import 'package:learning_english/features/daily_lessons/domain/entities/phrase.dart';
-import 'package:learning_english/features/daily_lessons/domain/entities/vocabulary.dart';
-import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';
+import 'package:learning_english/features/course/domain/entities/phrase.dart';
+import 'package:learning_english/features/course/domain/entities/vocabulary.dart';
 import 'package:learning_english/features/history/presentation/bloc/vocabulary_history_state.dart';
 import 'package:learning_english/l10n/app_localizations.dart';
   

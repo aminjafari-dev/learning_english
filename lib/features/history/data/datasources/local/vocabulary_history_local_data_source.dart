@@ -17,7 +17,7 @@ import '../../../domain/entities/vocabulary_history_item.dart';
 import '../../../domain/entities/phrase_history_item.dart';
 import '../../../domain/entities/history_request.dart';
 // Import the daily lessons models to reuse them instead of duplicating
-import '../../../../daily_lessons/data/models/learning_request_model.dart';
+import '../../../../course/data/models/learning_request_model.dart';
 
 /// Local data source for vocabulary history using Hive storage
 /// Leverages existing daily lessons storage to provide history functionality

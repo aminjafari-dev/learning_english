@@ -4,7 +4,7 @@ import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
 import '../../domain/entities/history_request.dart';
-import '../../../daily_lessons/data/models/level_type.dart';
+import '../../../course/data/models/level_type.dart';
 
 /// Card widget for displaying history requests
 /// This widget shows a summary of a learning request including

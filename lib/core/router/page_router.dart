@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:learning_english/core/router/page_name.dart';
-import 'package:learning_english/features/daily_lessons/presentation/pages/daily_lessons_page.dart';
+import 'package:learning_english/features/course/presentation/pages/courses_page.dart';
 import 'package:learning_english/features/splash/presentation/pages/splash_page.dart';
 import 'package:learning_english/features/authentication/presentation/pages/authentication_page.dart';
 import 'package:learning_english/features/level_selection/presentation/pages/level_selection_page.dart';
@@ -31,15 +31,15 @@ class PageRouter {
       final selectedLevel = args?['selectedLevel'] as String?;
       return LearningFocusSelectionPage(selectedLevel: selectedLevel);
     },
-    // Conversation page (replacing Daily Lessons)
-    PageName.dailyLessons: (context) {
+    // Courses page
+    PageName.courses: (context) {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
       final pathId = args?['pathId'] as String?;
       final courseNumber = args?['courseNumber'] as int?;
       final learningPath = args?['learningPath'] as LearningPath?;
 
-      return DailyLessonsPage(
+      return CoursesPage(
         pathId: pathId,
         courseNumber: courseNumber,
         learningPath: learningPath,

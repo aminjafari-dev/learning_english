@@ -1,87 +1,69 @@
+// learning_request_model.dart
+// Data model for learning requests with Hive persistence support.
+// This model represents complete AI requests with all metadata and generated content.
+
+import 'package:hive/hive.dart';
 import 'package:learning_english/features/course/data/models/level_type.dart';
+import '../../domain/entities/learning_request.dart';
+import 'ai_provider_type.dart';
+import 'vocabulary_model.dart';
+import 'phrase_model.dart';
 
-import 'vocabulary_history_item.dart';
-import 'phrase_history_item.dart';
-import '../../../course/data/models/ai_provider_type.dart';
+part 'learning_request_model.g.dart';
 
-/// HistoryRequest represents a complete learning request made by the user.
-/// This entity groups vocabulary and phrase items by their request ID and creation date,
-/// providing a comprehensive view of what was generated in a single learning session.
-/// Now includes comprehensive metadata about the request including user context, AI provider details, and costs.
-///
-/// Usage Example:
-///   final request = HistoryRequest(
-///     requestId: 'req_123',
-///     userId: 'user_456',
-///     userLevel: Level.intermediate,
-///     focusAreas: ['business', 'travel'],
-///     aiProvider: AiProviderType.openai,
-///     aiModel: 'gpt-3.5-turbo',
-///     totalTokensUsed: 150,
-///     estimatedCost: 0.0003,
-///     requestTimestamp: DateTime.now(),
-///     createdAt: DateTime.now(),
-///     systemPrompt: 'Generate vocabulary for...',
-///     userPrompt: 'I want to learn business English',
-///     status: RequestStatus.success,
-///     vocabularies: [vocab1, vocab2],
-///     phrases: [phrase1, phrase2],
-///   );
-///
-/// This entity is used to organize history data by request for better user experience.
-class HistoryRequest {
-  /// The unique identifier for this learning request
+/// Hive type adapter for LearningRequestModel
+/// Stores complete request data with embedded vocabulary and phrase models
+@HiveType(typeId: 3)
+class LearningRequestModel {
+  @HiveField(0)
   final String requestId;
 
-  /// The user ID who made this request
+  @HiveField(1)
   final String userId;
 
-  /// The user's English proficiency level
+  @HiveField(2)
   final UserLevel userLevel;
 
-  /// The learning focus areas selected by the user
+  @HiveField(3)
   final List<String> focusAreas;
 
-  /// The AI provider used for this request
+  @HiveField(4)
   final AiProviderType aiProvider;
 
-  /// The specific AI model used
+  @HiveField(5)
   final String aiModel;
 
-  /// Total tokens used in this request
+  @HiveField(6)
   final int totalTokensUsed;
 
-  /// Estimated cost of this request in USD
+  @HiveField(7)
   final double estimatedCost;
 
-  /// When the request was made to the AI
+  @HiveField(8)
   final DateTime requestTimestamp;
 
-  /// When this request was created and saved
+  @HiveField(9)
   final DateTime createdAt;
 
-  /// The system prompt used for this request
+  @HiveField(10)
   final String systemPrompt;
 
-  /// The user prompt used for this request
+  @HiveField(11)
   final String userPrompt;
 
-
-  /// Error message if the request failed
+  @HiveField(12)
   final String? errorMessage;
 
-  /// List of vocabulary items generated for this request
-  final List<VocabularyHistoryItem> vocabularies;
+  @HiveField(13)
+  final List<VocabularyModel> vocabularies;
 
-  /// List of phrase items generated for this request
-  final List<PhraseHistoryItem> phrases;
+  @HiveField(14)
+  final List<PhraseModel> phrases;
 
-  /// Additional metadata for this request
+  @HiveField(15)
   final Map<String, dynamic>? metadata;
 
-  /// Constructor for HistoryRequest
-  /// All fields are required to maintain complete request information
-  const HistoryRequest({
+  const LearningRequestModel({
     required this.requestId,
     required this.userId,
     required this.userLevel,
@@ -100,9 +82,61 @@ class HistoryRequest {
     this.metadata,
   });
 
-  /// Creates a copy of HistoryRequest with updated fields
-  /// Useful for updating specific properties while keeping others unchanged
-  HistoryRequest copyWith({
+  /// Creates a LearningRequestModel from a domain entity
+  /// Converts domain entities to data models for storage
+  factory LearningRequestModel.fromEntity(LearningRequest request) {
+    return LearningRequestModel(
+      requestId: request.requestId,
+      userId: request.userId,
+      userLevel: request.userLevel,
+      focusAreas: request.focusAreas,
+      aiProvider: request.aiProvider,
+      aiModel: request.aiModel,
+      totalTokensUsed: request.totalTokensUsed,
+      estimatedCost: request.estimatedCost,
+      requestTimestamp: request.requestTimestamp,
+      createdAt: request.createdAt,
+      systemPrompt: request.systemPrompt,
+      userPrompt: request.userPrompt,
+      errorMessage: request.errorMessage,
+      vocabularies:
+          request.vocabularies
+              .map((vocab) => VocabularyModel.fromEntity(vocab))
+              .toList(),
+      phrases:
+          request.phrases
+              .map((phrase) => PhraseModel.fromEntity(phrase))
+              .toList(),
+      metadata: request.metadata,
+    );
+  }
+
+  /// Converts LearningRequestModel to domain entity
+  /// Converts data models back to domain entities
+  LearningRequest toEntity() {
+    return LearningRequest(
+      requestId: requestId,
+      userId: userId,
+      userLevel: userLevel,
+      focusAreas: focusAreas,
+      aiProvider: aiProvider,
+      aiModel: aiModel,
+      totalTokensUsed: totalTokensUsed,
+      estimatedCost: estimatedCost,
+      requestTimestamp: requestTimestamp,
+      createdAt: createdAt,
+      systemPrompt: systemPrompt,
+      userPrompt: userPrompt,
+      errorMessage: errorMessage,
+      vocabularies: vocabularies.map((vocab) => vocab.toEntity()).toList(),
+      phrases: phrases.map((phrase) => phrase.toEntity()).toList(),
+      metadata: metadata,
+    );
+  }
+
+  /// Creates a copy of LearningRequestModel with updated fields
+  /// Used for updating request data
+  LearningRequestModel copyWith({
     String? requestId,
     String? userId,
     UserLevel? userLevel,
@@ -116,11 +150,11 @@ class HistoryRequest {
     String? systemPrompt,
     String? userPrompt,
     String? errorMessage,
-    List<VocabularyHistoryItem>? vocabularies,
-    List<PhraseHistoryItem>? phrases,
+    List<VocabularyModel>? vocabularies,
+    List<PhraseModel>? phrases,
     Map<String, dynamic>? metadata,
   }) {
-    return HistoryRequest(
+    return LearningRequestModel(
       requestId: requestId ?? this.requestId,
       userId: userId ?? this.userId,
       userLevel: userLevel ?? this.userLevel,
@@ -140,31 +174,15 @@ class HistoryRequest {
     );
   }
 
-  /// Gets the total number of items in this request
-  /// Useful for displaying summary information
-  int get totalItems => vocabularies.length + phrases.length;
-
-  /// Gets the number of vocabulary items in this request
-  int get vocabularyCount => vocabularies.length;
-
-  /// Gets the number of phrase items in this request
-  int get phraseCount => phrases.length;
-
-  /// Checks if this request has any vocabulary items
-  bool get hasVocabularies => vocabularies.isNotEmpty;
-
-  /// Checks if this request has any phrase items
-  bool get hasPhrases => phrases.isNotEmpty;
-
-  /// Converts the entity to a JSON map
-  /// Used for serialization and data transfer
+  /// Converts LearningRequestModel to JSON for serialization
+  /// Used for debugging and data export
   Map<String, dynamic> toJson() {
     return {
       'requestId': requestId,
       'userId': userId,
-      'userLevel': userLevel.name,
+      'userLevel': userLevel.toString(),
       'focusAreas': focusAreas,
-      'aiProvider': aiProvider.name,
+      'aiProvider': aiProvider.toString(),
       'aiModel': aiModel,
       'totalTokensUsed': totalTokensUsed,
       'estimatedCost': estimatedCost,
@@ -179,24 +197,22 @@ class HistoryRequest {
     };
   }
 
-  /// Creates a HistoryRequest from a JSON map
-  /// Used for deserialization and data transfer
-  factory HistoryRequest.fromJson(Map<String, dynamic> json) {
-    return HistoryRequest(
+  /// Creates LearningRequestModel from JSON
+  /// Used for data import and debugging
+  factory LearningRequestModel.fromJson(Map<String, dynamic> json) {
+    return LearningRequestModel(
       requestId: json['requestId'] as String,
       userId: json['userId'] as String,
       userLevel: UserLevel.values.firstWhere(
-        (e) => e.name == json['userLevel'],
-        orElse: () => UserLevel.beginner,
+        (e) => e.toString() == json['userLevel'],
       ),
       focusAreas: List<String>.from(json['focusAreas'] as List),
       aiProvider: AiProviderType.values.firstWhere(
-        (e) => e.name == json['aiProvider'],
-        orElse: () => AiProviderType.openai,
+        (e) => e.toString() == json['aiProvider'],
       ),
       aiModel: json['aiModel'] as String,
       totalTokensUsed: json['totalTokensUsed'] as int,
-      estimatedCost: (json['estimatedCost'] as num).toDouble(),
+      estimatedCost: json['estimatedCost'] as double,
       requestTimestamp: DateTime.parse(json['requestTimestamp'] as String),
       createdAt: DateTime.parse(json['createdAt'] as String),
       systemPrompt: json['systemPrompt'] as String,
@@ -204,14 +220,11 @@ class HistoryRequest {
       errorMessage: json['errorMessage'] as String?,
       vocabularies:
           (json['vocabularies'] as List)
-              .map(
-                (v) =>
-                    VocabularyHistoryItem.fromJson(v as Map<String, dynamic>),
-              )
+              .map((v) => VocabularyModel.fromJson(v as Map<String, dynamic>))
               .toList(),
       phrases:
           (json['phrases'] as List)
-              .map((p) => PhraseHistoryItem.fromJson(p as Map<String, dynamic>))
+              .map((p) => PhraseModel.fromJson(p as Map<String, dynamic>))
               .toList(),
       metadata: json['metadata'] as Map<String, dynamic>?,
     );
@@ -220,7 +233,7 @@ class HistoryRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is HistoryRequest &&
+    return other is LearningRequestModel &&
         other.requestId == requestId &&
         other.userId == userId &&
         other.userLevel == userLevel &&
@@ -261,6 +274,11 @@ class HistoryRequest {
 
   @override
   String toString() {
-    return 'HistoryRequest(requestId: $requestId, userId: $userId, userLevel: $userLevel, focusAreas: $focusAreas, aiProvider: $aiProvider, totalTokensUsed: $totalTokensUsed, estimatedCost: $estimatedCost, vocabularies: ${vocabularies.length}, phrases: ${phrases.length})';
+    return 'LearningRequestModel(requestId: $requestId, userId: $userId, userLevel: $userLevel, focusAreas: $focusAreas, aiProvider: $aiProvider, aiModel: $aiModel, totalTokensUsed: $totalTokensUsed, estimatedCost: $estimatedCost, requestTimestamp: $requestTimestamp, createdAt: $createdAt, systemPrompt: $systemPrompt, userPrompt: $userPrompt, errorMessage: $errorMessage, vocabularies: $vocabularies, phrases: $phrases, metadata: $metadata)';
   }
 }
+
+// Example usage:
+// final requestModel = LearningRequestModel.fromEntity(learningRequest);
+// final entity = requestModel.toEntity();
+// final updatedModel = requestModel.copyWith(status: RequestStatus.success);

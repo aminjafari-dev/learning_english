@@ -233,7 +233,7 @@ class _LearningPathDetailPageState extends State<LearningPathDetailPage> {
     if (learningPath != null) {
       // Navigate to daily lessons page with course context
       final result = await Navigator.of(context).pushNamed(
-        PageName.dailyLessons,
+        PageName.courses,
         arguments: {
           'pathId': learningPath!.id,
           'courseNumber': courseNumber,

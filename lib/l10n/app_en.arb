@@ -32,9 +32,9 @@
   "learningFocusCustomLabel": "Custom Learning Focus",
   "learningFocusSavedSnack": "Selection saved! Navigating...",
   "focusAreasSelection": "Focus Areas",
-  "yourDailyLessons": "Your Daily Lessons",
-  "@yourDailyLessons": {
-    "description": "Title for the daily lessons page."
+  "yourCourses": "Your Courses",
+  "@yourCourses": {
+    "description": "Title for the courses page."
   },
   "vocabularies": "Vocabularies",
   "@vocabularies": {

@@ -7,9 +7,9 @@
 import 'package:flutter/material.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
-import 'package:learning_english/features/daily_lessons/presentation/widgets/phrase_card.dart';
-import 'package:learning_english/features/daily_lessons/presentation/bloc/daily_lessons_state.dart';
-import 'package:learning_english/features/daily_lessons/domain/entities/phrase.dart';
+import 'package:learning_english/features/course/presentation/widgets/phrase_card.dart';
+import 'package:learning_english/features/course/presentation/bloc/courses_state.dart';
+import 'package:learning_english/features/course/domain/entities/phrase.dart';
 
 /// Widget that displays the phrases list section
 /// Handles different states: initial, loading, loaded, and error

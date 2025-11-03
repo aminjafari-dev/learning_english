@@ -7,26 +7,18 @@
 import 'package:bloc/bloc.dart';
 import 'courses_event.dart';
 import 'courses_state.dart';
-import '../../domain/usecases/get_courses_usecase.dart';
-import '../../domain/usecases/get_user_preferences_usecase.dart';
 import '../../domain/usecases/complete_course_usecase.dart';
 import '../../domain/repositories/courses_repository.dart';
-import 'package:learning_english/core/usecase/usecase.dart';
 import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
 
 /// Bloc for managing courses (vocabularies and phrases)
-/// Generates personalized lessons based on user preferences
+/// Generates personalized lessons based on learning path information
 /// Includes user-specific data management and analytics functionality
-/// Supports personalized content generation based on user preferences
 class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
-  final GetCoursesUseCase getCoursesUseCase;
-  final GetUserPreferencesUseCase getUserPreferencesUseCase;
   final CompleteCourseUseCase completeCourseUseCase;
   final CoursesRepository coursesRepository;
 
   CoursesBloc({
-    required this.getCoursesUseCase,
-    required this.getUserPreferencesUseCase,
     required this.completeCourseUseCase,
     required this.coursesRepository,
   }) : super(
@@ -42,10 +34,7 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
        ) {
     on<CoursesEvent>((event, emit) async {
       await event.when(
-        fetchLessons:
-            () => _onFetchCourses(
-              emit,
-            ), // Fetch courses
+        fetchLessons: () => _onFetchCourses(emit), // Fetch courses
         fetchLessonsWithCourseContext:
             (pathId, courseNumber, learningPath) =>
                 _onFetchLessonsWithCourseContext(
@@ -66,151 +55,49 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
     });
   }
 
-  /// Fetches personalized courses based on user preferences
-  /// This method generates new vocabularies and phrases using AI
-  /// Generated content is automatically saved to local storage for tracking
-  Future<void> _onFetchCourses(
-    Emitter<CoursesState> emit,
-  ) async {
-    try {
-      if (!emit.isDone) {
-        emit(
-          state.copyWith(
-            vocabularies: const VocabulariesState.loading(),
-            phrases: const PhrasesState.loading(),
-            userPreferences: const UserPreferencesState.loading(),
-            courseCompletion: const CourseCompletionState.initial(),
-            isRefreshing: true,
+  /// Placeholder method for fetchLessons event
+  /// This should not be called anymore as courses are always accessed through learning paths
+  Future<void> _onFetchCourses(Emitter<CoursesState> emit) async {
+    // This method is deprecated - courses should be accessed via learning paths
+    // For now, emit an error state
+    if (!emit.isDone) {
+      emit(
+        state.copyWith(
+          vocabularies: const VocabulariesState.error(
+            'This feature is deprecated. Please access courses through learning paths.',
           ),
-        );
-      }
-
-      // First get user preferences
-      final preferencesResult = await getUserPreferencesUseCase(NoParams());
-      final preferences = preferencesResult.fold((failure) {
-        if (!emit.isDone) {
-          emit(
-            state.copyWith(
-              vocabularies: VocabulariesState.error(
-                'Failed to get user preferences: ${failure.message}',
-              ),
-              phrases: PhrasesState.error(
-                'Failed to get user preferences: ${failure.message}',
-              ),
-              userPreferences: UserPreferencesState.error(
-                'Failed to get user preferences: ${failure.message}',
-              ),
-              isRefreshing: false,
-            ),
-          );
-        }
-        return null;
-      }, (preferences) => preferences);
-
-      if (preferences == null) return;
-
-      // Emit user preferences state
-      if (!emit.isDone) {
-        emit(
-          state.copyWith(
-            userPreferences: UserPreferencesState.loaded(preferences),
+          phrases: const PhrasesState.error(
+            'This feature is deprecated. Please access courses through learning paths.',
           ),
-        );
-      }
-
-      // Then fetch courses using the preferences
-      final result = await getCoursesUseCase(preferences);
-      result.fold(
-        (failure) {
-          if (!emit.isDone) {
-            emit(
-              state.copyWith(
-                vocabularies: VocabulariesState.error(failure.message),
-                phrases: PhrasesState.error(failure.message),
-                isRefreshing: false,
-              ),
-            );
-          }
-        },
-        (data) {
-          if (!emit.isDone) {
-            emit(
-              state.copyWith(
-                vocabularies: VocabulariesState.loaded(data.vocabularies),
-                phrases: PhrasesState.loaded(data.phrases),
-                isRefreshing: false,
-              ),
-            );
-          }
-        },
+        ),
       );
-    } catch (e) {
-      if (!emit.isDone) {
-        emit(
-          state.copyWith(
-            vocabularies: VocabulariesState.error(
-              'Failed to fetch courses: ${e.toString()}',
-            ),
-            phrases: PhrasesState.error(
-              'Failed to fetch courses: ${e.toString()}',
-            ),
-            isRefreshing: false,
-          ),
-        );
-      }
     }
   }
 
-  /// Gets user preferences for personalized content generation
-  /// Returns user's level and selected learning focus areas
+  /// Placeholder method for getUserPreferences event
+  /// This should not be called anymore as user info is in learning paths
   Future<void> _onGetUserPreferences(Emitter<CoursesState> emit) async {
-    try {
-      if (!emit.isDone) {
-        emit(
-          state.copyWith(userPreferences: const UserPreferencesState.loading()),
-        );
-      }
-
-      final result = await getUserPreferencesUseCase(NoParams());
-      result.fold(
-        (failure) {
-          if (!emit.isDone) {
-            emit(
-              state.copyWith(
-                userPreferences: UserPreferencesState.error(failure.message),
-              ),
-            );
-          }
-        },
-        (preferences) {
-          if (!emit.isDone) {
-            emit(
-              state.copyWith(
-                userPreferences: UserPreferencesState.loaded(preferences),
-              ),
-            );
-          }
-        },
-      );
-    } catch (e) {
-      if (!emit.isDone) {
-        emit(
-          state.copyWith(
-            userPreferences: UserPreferencesState.error(e.toString()),
+    // This method is deprecated - user info is now in learning paths
+    // For now, emit an error state
+    if (!emit.isDone) {
+      emit(
+        state.copyWith(
+          userPreferences: const UserPreferencesState.error(
+            'This feature is deprecated. User info is in learning paths.',
           ),
-        );
-      }
+        ),
+      );
     }
   }
 
   /// Refreshes all courses content
-  /// Clears local cache and fetches fresh content from conversation
+  /// Currently disabled as courses are accessed through learning paths
   Future<void> _onRefreshLessons(Emitter<CoursesState> emit) async {
-    add(const CoursesEvent.fetchLessons());
+    // Disabled for now
   }
 
   /// Fetches lessons with course context for personalized content
-  /// Generates content specific to the course, learning path, and user preferences
+  /// Generates content specific to the course and learning path
   /// This method checks for existing course content first, then generates new if needed
   Future<void> _onFetchLessonsWithCourseContext(
     Emitter<CoursesState> emit,
@@ -223,47 +110,12 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
         state.copyWith(
           vocabularies: const VocabulariesState.loading(),
           phrases: const PhrasesState.loading(),
-          userPreferences: const UserPreferencesState.loading(),
-          courseCompletion: const CourseCompletionState.initial(),
           isRefreshing: true,
         ),
       );
     }
 
     try {
-      // First get user preferences
-      final preferencesResult = await getUserPreferencesUseCase(NoParams());
-      final basePreferences = preferencesResult.fold((failure) {
-        if (!emit.isDone) {
-          emit(
-            state.copyWith(
-              vocabularies: VocabulariesState.error(
-                'Failed to get user preferences: ${failure.message}',
-              ),
-              phrases: PhrasesState.error(
-                'Failed to get user preferences: ${failure.message}',
-              ),
-              userPreferences: UserPreferencesState.error(
-                'Failed to get user preferences: ${failure.message}',
-              ),
-              isRefreshing: false,
-            ),
-          );
-        }
-        return null;
-      }, (preferences) => preferences);
-
-      if (basePreferences == null) return;
-
-      // Emit user preferences state
-      if (!emit.isDone) {
-        emit(
-          state.copyWith(
-            userPreferences: UserPreferencesState.loaded(basePreferences),
-          ),
-        );
-      }
-
       // Use the courses repository to get course-specific content
       final result = await coursesRepository.getCourseLessons(
         pathId,

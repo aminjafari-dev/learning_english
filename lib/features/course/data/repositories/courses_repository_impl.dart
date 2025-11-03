@@ -4,104 +4,35 @@
 
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
-import 'package:learning_english/core/repositories/user_repository.dart'
-    as core_user;
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/vocabulary.dart';
 import '../../domain/entities/phrase.dart';
-import '../../domain/entities/user_preferences.dart';
 import '../../domain/repositories/courses_repository.dart';
-import '../../domain/repositories/user_preferences_repository.dart';
 import '../../../learning_paths/domain/entities/learning_path.dart';
 import '../../../learning_paths/domain/repositories/learning_paths_repository.dart';
 import '../datasources/local/courses_local_data_source.dart';
 import '../datasources/remote/gemini_lessons_service.dart';
 import '../models/vocabulary_model.dart';
 import '../models/phrase_model.dart';
-import '../models/learning_request_model.dart';
-import '../models/ai_provider_type.dart';
-import '../models/level_type.dart';
 
 /// Implementation of CoursesRepository
 /// Handles courses operations using local storage and AI services
 class CoursesRepositoryImpl implements CoursesRepository {
   final CoursesLocalDataSource _localDataSource;
   final GeminiLessonsService _geminiLessonsService;
-  final UserPreferencesRepository _userPreferencesRepository;
   final LearningPathsRepository _learningPathsRepository;
-  final core_user.UserRepository _coreUserRepository;
 
   /// Constructor
   /// @param localDataSource Local data source for courses
   /// @param geminiLessonsService Gemini lessons service for AI generation
-  /// @param userPreferencesRepository User preferences repository
   /// @param learningPathsRepository Learning paths repository
-  /// @param coreUserRepository Core user repository
   CoursesRepositoryImpl({
     required CoursesLocalDataSource localDataSource,
     required GeminiLessonsService geminiLessonsService,
-    required UserPreferencesRepository userPreferencesRepository,
     required LearningPathsRepository learningPathsRepository,
-    required core_user.UserRepository coreUserRepository,
   }) : _localDataSource = localDataSource,
        _geminiLessonsService = geminiLessonsService,
-       _userPreferencesRepository = userPreferencesRepository,
-       _learningPathsRepository = learningPathsRepository,
-       _coreUserRepository = coreUserRepository;
-
-  @override
-  Future<
-    Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>
-  >
-  getPersonalizedCourses(UserPreferences preferences) async {
-    try {
-      print('📚 [COURSES] Getting personalized courses');
-      print(
-        '📋 [COURSES] User preferences: level=${preferences.level}, areas=${preferences.focusAreas}',
-      );
-
-      // Get user ID for tracking
-      final userId = await _coreUserRepository.getUserId() ?? 'current_user';
-
-      // Convert UserLevel to the model's UserLevel
-      final userLevel = _convertToModelUserLevel(preferences.level);
-
-      // Generate lessons using Gemini service
-      final aiResponse = await _geminiLessonsService.generateLessonsResponse(
-        userLevel: userLevel,
-        focusAreas: preferences.focusAreas,
-      );
-
-      print('✅ [COURSES] Received AI response');
-
-      // Parse the AI response to extract vocabularies and phrases
-      final parsedData = _parseAIResponse(aiResponse);
-      final vocabularies = parsedData.vocabularies;
-      final phrases = parsedData.phrases;
-
-      print(
-        '✅ [COURSES] Generated ${vocabularies.length} vocabularies and ${phrases.length} phrases',
-      );
-
-      // Save the generated content to local storage
-      await _saveGeneratedContent(
-        userId,
-        preferences,
-        vocabularies,
-        phrases,
-        aiResponse,
-      );
-
-      return right((vocabularies: vocabularies, phrases: phrases));
-    } catch (e) {
-      print('❌ [COURSES] Failed to get personalized courses: $e');
-      return left(
-        ServerFailure(
-          'Failed to get personalized courses: ${e.toString()}',
-        ),
-      );
-    }
-  }
+       _learningPathsRepository = learningPathsRepository;
 
   @override
   Future<
@@ -146,69 +77,50 @@ class CoursesRepositoryImpl implements CoursesRepository {
         );
       }
 
-      // Generate new content for the course
-      final userPreferences =
-          await _userPreferencesRepository.getUserPreferences();
+      // Generate new content for the course using learning path information
+      // Get the course from the learning path
+      final course = learningPath.courses.firstWhere(
+        (c) => c.courseNumber == courseNumber,
+        orElse: () => learningPath.courses.first,
+      );
 
-      return userPreferences.fold((failure) => left(failure), (
-        preferences,
-      ) async {
-        // Create enhanced preferences with course context
-        final enhancedPreferences = _createEnhancedPreferencesWithCourseContext(
-          preferences,
-          learningPath,
-          courseNumber,
-        );
+      // Generate course-specific lessons using Gemini service
+      final aiResponse = await _geminiLessonsService
+          .generateCourseLessonResponse(
+            learningPath: learningPath,
+            courseTitle: course.title,
+            courseNumber: courseNumber,
+          );
 
-        // Convert UserLevel to the model's UserLevel
-        final userLevel = _convertToModelUserLevel(enhancedPreferences.level);
+      print(
+        '🔄 [COURSE_CONTENT] Generating new content for course $courseNumber in path $pathId',
+      );
 
-        // Get the course from the learning path
-        final course = learningPath.courses.firstWhere(
-          (c) => c.courseNumber == courseNumber,
-          orElse: () => learningPath.courses.first,
-        );
+      // Parse the AI response to extract vocabularies and phrases
+      final parsedData = _parseAIResponse(aiResponse);
+      final vocabularies = parsedData.vocabularies;
+      final phrases = parsedData.phrases;
 
-        // Generate course-specific lessons using Gemini service with subcategory
-        final aiResponse = await _geminiLessonsService
-            .generateCourseLessonResponse(
-              userLevel: userLevel,
-              focusAreas: enhancedPreferences.focusAreas,
-              courseTitle: course.title,
-              courseNumber: courseNumber,
-              subCategory: learningPath.subCategory.title,
-            );
+      print(
+        '✅ [COURSE_CONTENT] Generated ${vocabularies.length} vocabularies and ${phrases.length} phrases',
+      );
 
-        print(
-          '🔄 [COURSE_CONTENT] Generating new content for course $courseNumber in path $pathId',
-        );
+      // Save the course content for future use
+      final vocabularyModels =
+          vocabularies.map((v) => VocabularyModel.fromEntity(v)).toList();
+      final phraseModels =
+          phrases.map((p) => PhraseModel.fromEntity(p)).toList();
 
-        // Parse the AI response to extract vocabularies and phrases
-        final parsedData = _parseAIResponse(aiResponse);
-        final vocabularies = parsedData.vocabularies;
-        final phrases = parsedData.phrases;
+      await _localDataSource.saveCourseContent(
+        pathId,
+        courseNumber,
+        vocabularyModels,
+        phraseModels,
+      );
 
-        print(
-          '✅ [COURSE_CONTENT] Generated ${vocabularies.length} vocabularies and ${phrases.length} phrases',
-        );
+      print('💾 [COURSE_CONTENT] Saved course content for future use');
 
-        // Save the course content for future use
-        final vocabularyModels =
-            vocabularies.map((v) => VocabularyModel.fromEntity(v)).toList();
-        final phraseModels =
-            phrases.map((p) => PhraseModel.fromEntity(p)).toList();
-
-        await _localDataSource.saveCourseContent(
-          pathId,
-          courseNumber,
-          vocabularyModels,
-          phraseModels,
-        );
-
-        print('💾 [COURSE_CONTENT] Saved course content for future use');
-
-        return right((vocabularies: vocabularies, phrases: phrases));
-      });
+      return right((vocabularies: vocabularies, phrases: phrases));
     } catch (e) {
       print('❌ [COURSE_CONTENT] Failed to get course lessons: $e');
       return left(
@@ -281,115 +193,6 @@ class CoursesRepositoryImpl implements CoursesRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, UserPreferences>> getUserPreferences() async {
-    try {
-      return await _userPreferencesRepository.getUserPreferences();
-    } catch (e) {
-      return left(
-        ServerFailure('Failed to get user preferences: ${e.toString()}'),
-      );
-    }
-  }
-
-  /// Saves generated content to local storage
-  /// Creates a learning request for proper tracking
-  /// @param userId User ID
-  /// @param preferences User preferences
-  /// @param vocabularies List of vocabularies to save
-  /// @param phrases List of phrases to save
-  /// @param aiResponse AI response string
-  Future<void> _saveGeneratedContent(
-    String userId,
-    UserPreferences preferences,
-    List<Vocabulary> vocabularies,
-    List<Phrase> phrases,
-    String aiResponse,
-  ) async {
-    try {
-      print('💾 [COURSES] Saving generated content to local storage');
-      print(
-        '💾 [COURSES] Vocabularies: ${vocabularies.length}, Phrases: ${phrases.length}',
-      );
-
-      // Convert domain entities to models for storage
-      final vocabularyModels =
-          vocabularies
-              .map(
-                (vocab) => VocabularyModel(
-                  english: vocab.english,
-                  persian: vocab.persian,
-                  isUsed: false,
-                ),
-              )
-              .toList();
-
-      final phraseModels =
-          phrases
-              .map(
-                (phrase) => PhraseModel(
-                  english: phrase.english,
-                  persian: phrase.persian,
-                  isUsed: false,
-                ),
-              )
-              .toList();
-
-      // Create learning request
-      final learningRequest = LearningRequestModel(
-        requestId: 'lesson_${DateTime.now().millisecondsSinceEpoch}',
-        userId: userId,
-        userLevel: _convertToModelUserLevel(preferences.level),
-        focusAreas: preferences.focusAreas,
-        aiProvider: AiProviderType.gemini,
-        aiModel: 'gemini-2.5-flash',
-        totalTokensUsed: 0,
-        estimatedCost: 0.0,
-        requestTimestamp: DateTime.now(),
-        createdAt: DateTime.now(),
-        systemPrompt: 'Course generation',
-        userPrompt: aiResponse.substring(
-          0,
-          aiResponse.length > 200 ? 200 : aiResponse.length,
-        ),
-        vocabularies: vocabularyModels,
-        phrases: phraseModels,
-        metadata: {
-          'source': 'courses',
-          'preferences': {
-            'level': preferences.level.name,
-            'focusAreas': preferences.focusAreas,
-          },
-        },
-      );
-
-      // Save to local storage
-      await _localDataSource.saveLearningRequest(learningRequest);
-      print('✅ [COURSES] Successfully saved content locally');
-    } catch (e) {
-      print('❌ [COURSES] Failed to save content: $e');
-      // Don't throw here to avoid breaking the main flow
-    }
-  }
-
-  /// Converts domain UserLevel to model UserLevel for storage
-  /// @param preferencesLevel Domain level
-  /// @return Model level
-  UserLevel _convertToModelUserLevel(dynamic preferencesLevel) {
-    switch (preferencesLevel.toString()) {
-      case 'UserLevel.beginner':
-        return UserLevel.beginner;
-      case 'UserLevel.elementary':
-        return UserLevel.elementary;
-      case 'UserLevel.intermediate':
-        return UserLevel.intermediate;
-      case 'UserLevel.advanced':
-        return UserLevel.advanced;
-      default:
-        return UserLevel.intermediate; // Default fallback
-    }
-  }
-
   /// Parses AI response to extract vocabularies and phrases
   /// Handles JSON parsing and validation
   /// @param aiResponse The AI response string
@@ -446,25 +249,5 @@ class CoursesRepositoryImpl implements CoursesRepository {
       // Return empty lists if parsing fails
       return (vocabularies: <Vocabulary>[], phrases: <Phrase>[]);
     }
-  }
-
-  /// Creates enhanced preferences with course context
-  /// @param basePreferences Base user preferences
-  /// @param learningPath The learning path
-  /// @param courseNumber The course number
-  /// @return Enhanced preferences with course context
-  UserPreferences _createEnhancedPreferencesWithCourseContext(
-    UserPreferences basePreferences,
-    LearningPath learningPath,
-    int courseNumber,
-  ) {
-    // Create enhanced focus areas that include course-specific context
-    final enhancedFocusAreas = [
-      ...basePreferences.focusAreas,
-      learningPath.subCategory.title.toLowerCase(),
-      'course_$courseNumber',
-    ];
-
-    return basePreferences.copyWith(focusAreas: enhancedFocusAreas);
   }
 }

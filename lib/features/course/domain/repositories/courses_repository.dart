@@ -6,20 +6,11 @@ import 'package:dartz/dartz.dart';
 import '../../../../../core/error/failure.dart';
 import '../entities/vocabulary.dart';
 import '../entities/phrase.dart';
-import '../entities/user_preferences.dart';
 import '../../../learning_paths/domain/entities/learning_path.dart';
 
 /// Repository interface for courses operations
 /// Defines the contract for courses management
 abstract class CoursesRepository {
-  /// Gets personalized courses based on user preferences
-  /// @param preferences User's learning preferences
-  /// @return Either Failure or tuple of vocabularies and phrases
-  Future<
-    Either<Failure, ({List<Vocabulary> vocabularies, List<Phrase> phrases})>
-  >
-  getPersonalizedCourses(UserPreferences preferences);
-
   /// Gets course-specific lessons for a learning path course
   /// @param pathId The learning path ID
   /// @param courseNumber The course number
@@ -57,8 +48,4 @@ abstract class CoursesRepository {
   /// @param courseNumber The course number to complete
   /// @return Either Failure or void
   Future<Either<Failure, void>> completeCourse(String pathId, int courseNumber);
-
-  /// Gets user preferences for personalization
-  /// @return Either Failure or UserPreferences
-  Future<Either<Failure, UserPreferences>> getUserPreferences();
 }

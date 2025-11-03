@@ -16,14 +16,6 @@ import 'package:learning_english/features/course/data/models/ai_provider_type.da
 import 'package:learning_english/features/course/data/datasources/local/courses_local_data_source.dart';
 import 'package:learning_english/features/course/data/datasources/local/learning_requests_local_data_source.dart';
 
-import 'package:learning_english/features/course/data/repositories/user_preferences_repository_impl.dart';
-import 'package:learning_english/features/course/domain/repositories/user_preferences_repository.dart';
-import 'package:learning_english/features/level_selection/domain/repositories/user_repository.dart';
-import 'package:learning_english/features/learning_focus_selection/domain/repositories/learning_focus_selection_repository.dart';
-import 'package:learning_english/core/repositories/user_repository.dart'
-    as core_user;
-import 'package:learning_english/features/course/domain/usecases/get_courses_usecase.dart';
-import 'package:learning_english/features/course/domain/usecases/get_user_preferences_usecase.dart';
 import 'package:learning_english/features/course/domain/usecases/complete_course_usecase.dart';
 import 'package:learning_english/features/course/domain/repositories/courses_repository.dart';
 import 'package:learning_english/features/course/data/repositories/courses_repository_impl.dart';
@@ -80,34 +72,13 @@ Future<void> setupCoursesDI(GetIt getIt) async {
       ),
     );
 
-    // User Preferences Repository - handles user settings and preferences
-    getIt.registerLazySingleton<UserPreferencesRepository>(
-      () => UserPreferencesRepositoryImpl(
-        userRepository: getIt<UserRepository>(),
-        learningFocusRepository: getIt<LearningFocusSelectionRepository>(),
-        coreUserRepository: getIt<core_user.UserRepository>(),
-      ),
-    );
-
     // Courses Repository - handles course content and lesson generation
     getIt.registerLazySingleton<CoursesRepository>(
       () => CoursesRepositoryImpl(
         localDataSource: getIt<CoursesLocalDataSource>(),
         geminiLessonsService: getIt<GeminiLessonsService>(),
-        userPreferencesRepository: getIt<UserPreferencesRepository>(),
         learningPathsRepository: getIt<LearningPathsRepository>(),
-        coreUserRepository: getIt<core_user.UserRepository>(),
       ),
-    );
-
-    getIt.registerFactory(
-      () => GetCoursesUseCase(
-        getIt<CoursesRepository>(),
-      ),
-    );
-
-    getIt.registerFactory(
-      () => GetUserPreferencesUseCase(getIt<UserPreferencesRepository>()),
     );
 
     getIt.registerFactory(
@@ -117,8 +88,6 @@ Future<void> setupCoursesDI(GetIt getIt) async {
     // Bloc
     getIt.registerSingleton<CoursesBloc>(
       CoursesBloc(
-        getCoursesUseCase: getIt<GetCoursesUseCase>(),
-        getUserPreferencesUseCase: getIt<GetUserPreferencesUseCase>(),
         completeCourseUseCase: getIt<CompleteCourseUseCase>(),
         coursesRepository: getIt<CoursesRepository>(),
       ),

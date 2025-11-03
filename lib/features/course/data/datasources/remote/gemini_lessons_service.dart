@@ -18,9 +18,8 @@
 
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:learning_english/features/course/data/models/level_type.dart';
 import 'package:learning_english/features/course/data/datasources/remote/lesson_prompts.dart';
-import 'package:learning_english/features/course/domain/entities/user_preferences.dart';
+import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
 import '../local/courses_local_data_source.dart';
 
 /// Direct Gemini API service for generating educational content
@@ -60,16 +59,10 @@ class GeminiLessonsService {
   /// This method directly calls Google's Gemini API and returns educational content
   ///
   /// Parameters:
-  /// - userLevel: User's English proficiency level
-  /// - focusAreas: Topics the user wants to focus on
-  /// - subCategory: Optional subcategory title for more specific content
+  /// - learningPath: The learning path containing level, focus areas, and subcategory
   ///
   /// Returns: AI-generated response with vocabularies and phrases
-  Future<String> generateLessonsResponse({
-    UserLevel? userLevel,
-    List<String>? focusAreas,
-    String? subCategory,
-  }) async {
+  Future<String> generateLessonsResponse(LearningPath learningPath) async {
     try {
       // Validate API key
       if (_apiKey.isEmpty) {
@@ -78,17 +71,8 @@ class GeminiLessonsService {
         );
       }
 
-      // Create user preferences from parameters
-      final preferences = UserPreferences(
-        level: userLevel ?? UserLevel.intermediate,
-        focusAreas: focusAreas ?? ['general'],
-      );
-
-      // Get the lesson prompt with optional subcategory
-      final prompt = LessonPrompts.getLessonPrompt(
-        preferences,
-        subCategory: subCategory,
-      );
+      // Get the lesson prompt from learning path
+      final prompt = LessonPrompts.getLessonPrompt(learningPath);
 
       // Prepare the API request (without API key in URL)
       final requestUrl = '$_baseUrl/$_model:generateContent';
@@ -202,19 +186,15 @@ class GeminiLessonsService {
   /// This method generates lessons for specific courses within a learning path
   ///
   /// Parameters:
-  /// - userLevel: User's English proficiency level
-  /// - focusAreas: Topics the user wants to focus on
+  /// - learningPath: The learning path containing level, focus areas, and subcategory
   /// - courseTitle: Title of the course
   /// - courseNumber: Number of the course
-  /// - subCategory: Subcategory title for context
   ///
   /// Returns: AI-generated response with vocabularies and phrases
   Future<String> generateCourseLessonResponse({
-    UserLevel? userLevel,
-    List<String>? focusAreas,
+    required LearningPath learningPath,
     required String courseTitle,
     required int courseNumber,
-    required String subCategory,
   }) async {
     try {
       // Validate API key
@@ -224,18 +204,11 @@ class GeminiLessonsService {
         );
       }
 
-      // Create user preferences from parameters
-      final preferences = UserPreferences(
-        level: userLevel ?? UserLevel.intermediate,
-        focusAreas: focusAreas ?? ['general'],
-      );
-
-      // Get the course-specific lesson prompt
+      // Get the course-specific lesson prompt from learning path
       final prompt = LessonPrompts.getCourseLessonPrompt(
-        preferences,
+        learningPath,
         courseTitle,
         courseNumber,
-        subCategory,
       );
 
       // Prepare the API request (without API key in URL)

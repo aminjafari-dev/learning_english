@@ -77,9 +77,6 @@ class _CoursesPageState extends State<CoursesPage> {
       // General courses
       _bloc!.add(const CoursesEvent.fetchLessons());
     }
-
-    // Always fetch user preferences for personalization
-    _bloc!.add(const CoursesEvent.getUserPreferences());
   }
 
   @override
@@ -119,19 +116,19 @@ class _CoursesPageState extends State<CoursesPage> {
               loading: () {},
               completed: (pathId, courseNumber) {
                 // After completing current course, navigate to the next course lesson
-                final nextCourse = courseNumber + 1;
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (context.mounted && widget.learningPath != null) {
-                    Navigator.of(context).pushReplacementNamed(
-                      PageName.courses,
-                      arguments: {
-                        'pathId': pathId,
-                        'courseNumber': nextCourse,
-                        'learningPath': widget.learningPath,
-                      },
-                    );
-                  }
-                });
+                // final nextCourse = courseNumber + 1;
+                // WidgetsBinding.instance.addPostFrameCallback((_) {
+                //   if (context.mounted && widget.learningPath != null) {
+                //     Navigator.of(context).pushReplacementNamed(
+                //       PageName.courses,
+                //       arguments: {
+                //         'pathId': pathId,
+                //         'courseNumber': nextCourse,
+                //         'learningPath': widget.learningPath,
+                //       },
+                //     );
+                //   }
+                // });
               },
               error: (message) {
                 // Show error message
@@ -161,33 +158,31 @@ class _CoursesPageState extends State<CoursesPage> {
                 state: state,
                 pathId: widget.pathId,
                 courseNumber: widget.courseNumber,
+                learningPath: widget.learningPath,
                 onNextLessons: () {
                   if (widget.pathId != null &&
                       widget.courseNumber != null &&
                       widget.learningPath != null) {
                     // If course is already completed, navigate directly to next course
-                    if (isCurrentCourseCompleted) {
-                      final nextCourse = widget.courseNumber! + 1;
-                      Navigator.of(context).pushReplacementNamed(
-                        PageName.courses,
-                        arguments: {
-                          'pathId': widget.pathId,
-                          'courseNumber': nextCourse,
-                          'learningPath': widget.learningPath,
-                        },
-                      );
-                    } else {
-                      // If not completed, complete it first
-                      // Navigation will happen in the BlocListener when completion succeeds
-                      bloc.add(
-                        CoursesEvent.completeCourse(
-                          pathId: widget.pathId!,
-                          courseNumber: widget.courseNumber!,
-                        ),
-                      );
-                    }
-                  } else {
-                    print("object");
+
+                    final nextCourse = widget.courseNumber! + 1;
+                    Navigator.of(context).pushReplacementNamed(
+                      PageName.courses,
+                      arguments: {
+                        'pathId': widget.pathId,
+                        'courseNumber': nextCourse,
+                        'learningPath': widget.learningPath,
+                      },
+                    );
+
+                    // If not completed, complete it first
+                    // Navigation will happen in the BlocListener when completion succeeds
+                    bloc.add(
+                      CoursesEvent.completeCourse(
+                        pathId: widget.pathId!,
+                        courseNumber: widget.courseNumber!,
+                      ),
+                    );
                   }
                 },
                 // Retry callback - triggers appropriate fetch event based on context
@@ -207,8 +202,6 @@ class _CoursesPageState extends State<CoursesPage> {
                     // Retry general lessons
                     bloc.add(const CoursesEvent.fetchLessons());
                   }
-                  // Also refresh user preferences
-                  bloc.add(const CoursesEvent.getUserPreferences());
                 },
               );
             },

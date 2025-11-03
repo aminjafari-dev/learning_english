@@ -1,56 +1,40 @@
-// user_preferences_display.dart
-// Widget to display user preferences (level and focus areas) in the daily lessons page.
-// This widget shows the user's selected level and learning focus areas in a beautiful design.
+// learning_path_info_display.dart
+// Widget to display learning path information (level and focus areas) in the courses page.
+// This widget shows the user's learning path level and focus areas in a beautiful design.
 // Usage: Place this widget above the vocabulary section to show user's learning context.
+// Example: LearningPathInfoDisplay(learningPath: learningPath)
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learning_english/core/dependency%20injection/locator.dart';
 import 'package:learning_english/core/widgets/global_widget/g_gap.dart';
 import 'package:learning_english/core/widgets/global_widget/g_text.dart';
 import 'package:learning_english/core/theme/app_theme.dart';
-import 'package:learning_english/features/course/presentation/bloc/courses_bloc.dart';
-import 'package:learning_english/features/course/presentation/bloc/courses_event.dart';
-import 'package:learning_english/features/course/presentation/bloc/courses_state.dart';
-import '../../domain/entities/user_preferences.dart';
-import '../../data/models/level_type.dart';
+import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
+import 'package:learning_english/features/level_selection/domain/entities/user_profile.dart';
 import 'package:learning_english/l10n/app_localizations.dart';
 
-/// Widget to display user preferences in the daily lessons page
-/// Shows the user's selected level and learning focus areas
+/// Widget to display learning path information in the courses page
+/// Shows the learning path's level and focus areas
 /// Designed to be placed above the vocabulary section
-class UserPreferencesDisplay extends StatelessWidget {
-  const UserPreferencesDisplay({super.key});
+class LearningPathInfoDisplay extends StatelessWidget {
+  /// The learning path to display information from
+  /// If null, the widget will not be displayed
+  final LearningPath? learningPath;
+
+  const LearningPathInfoDisplay({super.key, this.learningPath});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CoursesBloc, CoursesState>(
-      bloc: getIt<CoursesBloc>(),
-      builder: (context, state) {
-        if (state.userPreferences is UserPreferencesLoaded) {
-          final preferences =
-              (state.userPreferences as UserPreferencesLoaded).preferences;
-          return _buildPreferencesCard(context, preferences);
-        } else if (state.userPreferences is UserPreferencesLoading) {
-          return _buildLoadingCard(context);
-        } else if (state.userPreferences is UserPreferencesError) {
-          return _buildErrorCard(
-            context,
-            (state.userPreferences as UserPreferencesError).message,
-          );
-        }
+    // Don't show anything if learning path is not provided
+    if (learningPath == null) {
+      return const SizedBox.shrink();
+    }
 
-        // Don't show anything if preferences are not loaded yet
-        return const SizedBox.shrink();
-      },
-    );
+    return _buildInfoCard(context, learningPath!);
   }
 
-  /// Builds the main preferences display card
-  Widget _buildPreferencesCard(
-    BuildContext context,
-    UserPreferences preferences,
-  ) {
+  /// Builds the main learning path info display card
+  /// Shows level and focus areas from the learning path
+  Widget _buildInfoCard(BuildContext context, LearningPath learningPath) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 16),
@@ -70,127 +54,42 @@ class UserPreferencesDisplay extends StatelessWidget {
           Row(
             children: [
               // Level Badge
-              _buildPreferenceInfo(
+              _buildInfoItem(
                 context,
                 title: AppLocalizations.of(context)!.levelSelection,
-                value: _getLevelDisplayText(preferences.level, context),
+                value: _getLevelDisplayText(learningPath.level, context),
               ),
               GGap.g12,
-              _buildPreferenceInfo(
+              _buildInfoItem(
                 context,
                 title: AppLocalizations.of(context)!.focusAreasSelection,
-                value: preferences.focusAreas.join(', '),
+                value: learningPath.focusAreas.join(', '),
               ),
-
-              // Focus Areas
             ],
           ),
-          // Debug button for testing conversation mode
-          if (const bool.fromEnvironment('DEBUG_MODE', defaultValue: false))
-            Padding(
-              padding: const EdgeInsets.only(top: 12),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Test conversation mode
-                  final bloc = context.read<CoursesBloc>();
-                  bloc.add(const CoursesEvent.fetchLessons());
-                },
-                child: const Text('Test Conversation Mode'),
-              ),
-            ),
         ],
       ),
     );
   }
 
-  /// Builds loading state card
-  Widget _buildLoadingCard(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppTheme.primary(context).withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: AppTheme.primary(context).withValues(alpha: 0.2),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 16,
-            height: 16,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                AppTheme.primary(context),
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          GText(
-            'Loading your preferences...',
-            style: TextStyle(
-              color: AppTheme.primary(context),
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// Builds error state card
-  Widget _buildErrorCard(BuildContext context, String errorMessage) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppTheme.error(context).withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: AppTheme.error(context).withValues(alpha: 0.2),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.error_outline, color: AppTheme.error(context), size: 16),
-          const SizedBox(width: 8),
-          Expanded(
-            child: GText(
-              'Could not load preferences',
-              style: TextStyle(
-                color: AppTheme.error(context),
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// Gets display text for user level
-  String _getLevelDisplayText(UserLevel level, BuildContext context) {
+  /// Gets display text for learning path level
+  /// Maps Level enum to localized string for display
+  String _getLevelDisplayText(Level level, BuildContext context) {
     switch (level) {
-      case UserLevel.beginner:
+      case Level.beginner:
         return AppLocalizations.of(context)!.levelBeginner;
-      case UserLevel.elementary:
+      case Level.elementary:
         return AppLocalizations.of(context)!.levelElementary;
-      case UserLevel.intermediate:
+      case Level.intermediate:
         return AppLocalizations.of(context)!.levelIntermediate;
-      case UserLevel.advanced:
+      case Level.advanced:
         return AppLocalizations.of(context)!.levelAdvanced;
     }
   }
 
-  Widget _buildPreferenceInfo(
+  /// Builds an info item widget showing title and value
+  /// Used to display level and focus areas information
+  Widget _buildInfoItem(
     BuildContext context, {
     required String? title,
     required String value,
@@ -225,4 +124,4 @@ class UserPreferencesDisplay extends StatelessWidget {
 }
 
 // Example usage:
-// UserPreferencesDisplay()
+// LearningPathInfoDisplay(learningPath: learningPath)

@@ -11,6 +11,7 @@ import 'package:learning_english/features/course/presentation/widgets/section_he
 import 'package:learning_english/core/widgets/vocabulary_section.dart';
 import 'package:learning_english/core/widgets/phrases_list_section.dart';
 import 'package:learning_english/features/course/presentation/widgets/user_preferences_display.dart';
+import 'package:learning_english/features/learning_paths/domain/entities/learning_path.dart';
 import 'package:learning_english/features/course/presentation/widgets/next_lessons_button.dart';
 import 'package:learning_english/features/course/presentation/widgets/courses_error_widget.dart';
 import 'package:learning_english/features/course/presentation/bloc/courses_state.dart';
@@ -24,8 +25,9 @@ class CoursesContent extends StatelessWidget {
   final CoursesState state;
   final String? pathId;
   final int? courseNumber;
+  final LearningPath? learningPath;
   final VoidCallback? onNextLessons;
-  
+
   /// Callback function triggered when retry button is pressed in error state
   final VoidCallback? onRetry;
 
@@ -34,6 +36,7 @@ class CoursesContent extends StatelessWidget {
     required this.state,
     this.pathId,
     this.courseNumber,
+    this.learningPath,
     this.onNextLessons,
     this.onRetry,
   });
@@ -43,13 +46,10 @@ class CoursesContent extends StatelessWidget {
   /// This ensures we show a clean error UI instead of partial content with errors
   bool _hasError() {
     return state.vocabularies.maybeWhen(
-      error: (_) => true,
-      orElse: () => false,
-    ) ||
-        state.phrases.maybeWhen(
-      error: (_) => true,
-      orElse: () => false,
-    );
+          error: (_) => true,
+          orElse: () => false,
+        ) ||
+        state.phrases.maybeWhen(error: (_) => true, orElse: () => false);
   }
 
   /// Gets the error message from either vocabularies or phrases state
@@ -57,10 +57,11 @@ class CoursesContent extends StatelessWidget {
   String _getErrorMessage() {
     return state.vocabularies.maybeWhen(
       error: (message) => message,
-      orElse: () => state.phrases.maybeWhen(
-        error: (message) => message,
-        orElse: () => 'Unknown error',
-      ),
+      orElse:
+          () => state.phrases.maybeWhen(
+            error: (message) => message,
+            orElse: () => 'Unknown error',
+          ),
     );
   }
 
@@ -81,8 +82,8 @@ class CoursesContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GGap.g16,
-          // User Preferences Display - shows user's level and focus areas
-          const UserPreferencesDisplay(),
+          // Learning Path Info Display - shows learning path level and focus areas
+          LearningPathInfoDisplay(learningPath: learningPath),
           GGap.g16,
           SectionHeader(title: AppLocalizations.of(context)!.vocabularies),
           GGap.g4,

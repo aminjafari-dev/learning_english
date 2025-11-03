@@ -91,7 +91,7 @@ Create a JSON response with the following structure:
 }
 
 Requirements:
-1. Generate 10 vocabulary words appropriate for $level level related to "$courseTitle"
+1. Generate 5 vocabulary words appropriate for $level level related to "$courseTitle"
 2. Generate 5 useful phrases appropriate for $level level related to "$courseTitle"
 3. Focus on the course theme: "$courseTitle"
 4. Context: This lesson is part of the "$subCategory" subcategory learning path

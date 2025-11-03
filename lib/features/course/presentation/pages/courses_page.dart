@@ -185,11 +185,30 @@ class _CoursesPageState extends State<CoursesPage> {
                           courseNumber: widget.courseNumber!,
                         ),
                       );
-
                     }
                   } else {
                     print("object");
                   }
+                },
+                // Retry callback - triggers appropriate fetch event based on context
+                onRetry: () {
+                  if (widget.pathId != null &&
+                      widget.courseNumber != null &&
+                      widget.learningPath != null) {
+                    // Retry with course-specific context
+                    bloc.add(
+                      CoursesEvent.fetchLessonsWithCourseContext(
+                        pathId: widget.pathId!,
+                        courseNumber: widget.courseNumber!,
+                        learningPath: widget.learningPath!,
+                      ),
+                    );
+                  } else {
+                    // Retry general lessons
+                    bloc.add(const CoursesEvent.fetchLessons());
+                  }
+                  // Also refresh user preferences
+                  bloc.add(const CoursesEvent.getUserPreferences());
                 },
               );
             },

@@ -13,11 +13,15 @@ class LessonPrompts {
   /// Parameters:
   /// - learningPath: Learning path containing level, focus areas, and subcategory
   /// - subCategoryOverride: Optional subcategory title override for more specific content
+  /// - previousVocabularies: List of English vocabulary words used in previous courses of this learning path (to avoid duplicates)
+  /// - previousPhrases: List of English phrases used in previous courses of this learning path (to avoid duplicates)
   ///
   /// Returns: Prompt string for AI generation
   static String getLessonPrompt(
     LearningPath learningPath, {
     String? subCategoryOverride,
+    List<String> previousVocabularies = const [],
+    List<String> previousPhrases = const [],
   }) {
     final level = _getLevelDescription(learningPath.level);
     final focusAreas = learningPath.focusAreas.join(', ');
@@ -26,6 +30,12 @@ class LessonPrompts {
     final subCategory = subCategoryOverride ?? learningPath.subCategory.title;
     final subCategoryContext =
         subCategory.isNotEmpty ? ' for the "$subCategory" subcategory' : '';
+
+    // Build the exclusion section if there are previous vocabularies/phrases
+    final exclusionSection = _buildExclusionSection(
+      previousVocabularies,
+      previousPhrases,
+    );
 
     return '''
 Generate a daily English lesson for a $level level learner focusing on: $focusAreas$subCategoryContext.
@@ -50,6 +60,7 @@ Requirements:
 5. Ensure all Persian translations are accurate and natural
 6. Choose practical and commonly used words and phrases
 7. Make sure the content is suitable for $level level learners
+$exclusionSection
 
 Return ONLY the JSON response without any additional text or explanation.
 ''';
@@ -62,16 +73,26 @@ Return ONLY the JSON response without any additional text or explanation.
   /// - learningPath: Learning path containing level and focus areas
   /// - courseTitle: Title of the course
   /// - courseNumber: Number of the course
+  /// - previousVocabularies: List of English vocabulary words used in previous courses of this learning path (to avoid duplicates)
+  /// - previousPhrases: List of English phrases used in previous courses of this learning path (to avoid duplicates)
   ///
   /// Returns: Prompt string for AI generation
   static String getCourseLessonPrompt(
     LearningPath learningPath,
     String courseTitle,
-    int courseNumber,
-  ) {
+    int courseNumber, {
+    List<String> previousVocabularies = const [],
+    List<String> previousPhrases = const [],
+  }) {
     final level = _getLevelDescription(learningPath.level);
     final focusAreas = learningPath.focusAreas.join(', ');
     final subCategory = learningPath.subCategory.title;
+
+    // Build the exclusion section if there are previous vocabularies/phrases
+    final exclusionSection = _buildExclusionSection(
+      previousVocabularies,
+      previousPhrases,
+    );
 
     return '''
 Generate a daily English lesson for Course $courseNumber: "$courseTitle" in the "$subCategory" subcategory for a $level level learner.
@@ -98,6 +119,7 @@ Requirements:
 7. Choose practical and commonly used words and phrases relevant to the course and subcategory
 8. Make sure the content is suitable for $level level learners
 9. Content should be specific to Course $courseNumber in the "$subCategory" learning path
+$exclusionSection
 
 Return ONLY the JSON response without any additional text or explanation.
 ''';
@@ -119,5 +141,48 @@ Return ONLY the JSON response without any additional text or explanation.
     if (levelStr.contains('advanced')) return 'advanced';
 
     return 'intermediate'; // default
+  }
+
+  /// Builds the exclusion section for the prompt
+  /// Creates instructions to avoid previously used vocabularies and phrases
+  ///
+  /// Parameters:
+  /// - previousVocabularies: List of English vocabulary words to avoid
+  /// - previousPhrases: List of English phrases to avoid
+  ///
+  /// Returns: Exclusion instructions string (empty if no previous content)
+  static String _buildExclusionSection(
+    List<String> previousVocabularies,
+    List<String> previousPhrases,
+  ) {
+    // Only include exclusion section if there are previous vocabularies or phrases
+    if (previousVocabularies.isEmpty && previousPhrases.isEmpty) {
+      return '';
+    }
+
+    final buffer = StringBuffer();
+    buffer.writeln();
+
+    // Add vocabulary exclusion
+    if (previousVocabularies.isNotEmpty) {
+      final vocabList = previousVocabularies.join(', ');
+      buffer.writeln(
+        '10. AVOID using these vocabulary words that were already used in previous courses of this learning path: $vocabList',
+      );
+    }
+
+    // Add phrase exclusion
+    if (previousPhrases.isNotEmpty) {
+      final phraseList = previousPhrases.join(', ');
+      buffer.writeln(
+        '11. AVOID using these phrases that were already used in previous courses of this learning path: $phraseList',
+      );
+    }
+
+    buffer.writeln(
+      '12. Generate completely NEW vocabulary words and phrases that are different from the ones listed above',
+    );
+
+    return buffer.toString();
   }
 }

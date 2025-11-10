@@ -84,12 +84,53 @@ class CoursesRepositoryImpl implements CoursesRepository {
         orElse: () => learningPath.courses.first,
       );
 
-      // Generate course-specific lessons using Gemini service
+      // Fetch previous course content from the same learning path to avoid duplicates
+      // Extract English vocabularies and phrases from previous courses (excluding current course)
+      final previousVocabularies = <String>[];
+      final previousPhrases = <String>[];
+
+      try {
+        // Get all course content for this learning path
+        final pathContent = await _localDataSource.getPathContent(pathId);
+
+        // Extract vocabularies and phrases from previous courses (exclude current course)
+        for (final entry in pathContent.entries) {
+          // Skip the current course - only get vocabularies/phrases from previous courses
+          if (entry.key < courseNumber) {
+            // Extract English vocabularies (only English, not Persian)
+            for (final vocab in entry.value.vocabularies) {
+              if (vocab.english.isNotEmpty) {
+                previousVocabularies.add(vocab.english);
+              }
+            }
+
+            // Extract English phrases (only English, not Persian)
+            for (final phrase in entry.value.phrases) {
+              if (phrase.english.isNotEmpty) {
+                previousPhrases.add(phrase.english);
+              }
+            }
+          }
+        }
+
+        print(
+          '✅ [COURSE_CONTENT] Found ${previousVocabularies.length} previous vocabularies and ${previousPhrases.length} previous phrases to avoid duplicates',
+        );
+      } catch (e) {
+        // If fetching previous content fails, continue without it (log but don't fail)
+        print(
+          '⚠️ [COURSE_CONTENT] Could not fetch previous course content: $e. Continuing without exclusion list.',
+        );
+      }
+
+      // Generate course-specific lessons using Gemini service with previous vocabularies/phrases
       final aiResponse = await _geminiLessonsService
           .generateCourseLessonResponse(
             learningPath: learningPath,
             courseTitle: course.title,
             courseNumber: courseNumber,
+            previousVocabularies: previousVocabularies,
+            previousPhrases: previousPhrases,
           );
 
       print(

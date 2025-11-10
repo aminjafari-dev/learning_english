@@ -60,9 +60,15 @@ class GeminiLessonsService {
   ///
   /// Parameters:
   /// - learningPath: The learning path containing level, focus areas, and subcategory
+  /// - previousVocabularies: List of English vocabulary words used in previous courses (to avoid duplicates)
+  /// - previousPhrases: List of English phrases used in previous courses (to avoid duplicates)
   ///
   /// Returns: AI-generated response with vocabularies and phrases
-  Future<String> generateLessonsResponse(LearningPath learningPath) async {
+  Future<String> generateLessonsResponse(
+    LearningPath learningPath, {
+    List<String> previousVocabularies = const [],
+    List<String> previousPhrases = const [],
+  }) async {
     try {
       // Validate API key
       if (_apiKey.isEmpty) {
@@ -71,8 +77,12 @@ class GeminiLessonsService {
         );
       }
 
-      // Get the lesson prompt from learning path
-      final prompt = LessonPrompts.getLessonPrompt(learningPath);
+      // Get the lesson prompt from learning path with previous vocabularies and phrases
+      final prompt = LessonPrompts.getLessonPrompt(
+        learningPath,
+        previousVocabularies: previousVocabularies,
+        previousPhrases: previousPhrases,
+      );
 
       // Prepare the API request (without API key in URL)
       final requestUrl = '$_baseUrl/$_model:generateContent';
@@ -189,12 +199,16 @@ class GeminiLessonsService {
   /// - learningPath: The learning path containing level, focus areas, and subcategory
   /// - courseTitle: Title of the course
   /// - courseNumber: Number of the course
+  /// - previousVocabularies: List of English vocabulary words used in previous courses (to avoid duplicates)
+  /// - previousPhrases: List of English phrases used in previous courses (to avoid duplicates)
   ///
   /// Returns: AI-generated response with vocabularies and phrases
   Future<String> generateCourseLessonResponse({
     required LearningPath learningPath,
     required String courseTitle,
     required int courseNumber,
+    List<String> previousVocabularies = const [],
+    List<String> previousPhrases = const [],
   }) async {
     try {
       // Validate API key
@@ -204,11 +218,13 @@ class GeminiLessonsService {
         );
       }
 
-      // Get the course-specific lesson prompt from learning path
+      // Get the course-specific lesson prompt from learning path with previous vocabularies and phrases
       final prompt = LessonPrompts.getCourseLessonPrompt(
         learningPath,
         courseTitle,
         courseNumber,
+        previousVocabularies: previousVocabularies,
+        previousPhrases: previousPhrases,
       );
 
       // Prepare the API request (without API key in URL)
